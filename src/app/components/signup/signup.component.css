@@ -1,0 +1,87 @@
+.contain{
+    height: 750px;
+    width: 100%;
+    /* background-color: #2c2c2c ; */
+}
+.wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.textsection{
+    height: 80%;
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+   flex-direction: column;
+   margin: 40px;
+   color: #c7a600;
+ 
+
+}
+.formsection{
+    height: 80%;
+    width: 35%;
+    /* background-color: white; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   /* flex-direction: column; */
+   margin: 40px;
+   border-radius: 20px;
+   border: 1px;
+}
+.comment{
+    /* position: absolute; */
+height: 250px;
+width: 950px;
+/* background-color:#ffffff; */
+margin-top: 100px;
+display: flex;
+
+border-radius: 10px;
+
+}
+
+.rounded-start{
+    background-color: #c7a600;
+    height: 180px;
+    width: 180px;
+    border-radius: 100%;
+    margin: 30px;
+}
+.comment-card{
+    width: 950px;
+    height: 250px;
+    background-color: white;
+    /* opacity: 0.2; */
+}
+.comment-card p{
+    color: #000000;
+    opacity: 1;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+input{
+    width: 400px;
+    height: 60px;
+    border: 2px solid #38006b;
+}
+
+.btn{
+    background-color: #c7a600;
+    height: 50px;
+    width:400px;
+    color: #000;
+    border-radius: 15px;
+    margin-top: 25px;
+}
+.signup{
+    color: #c7a600;
+    font-weight: bold;
+}

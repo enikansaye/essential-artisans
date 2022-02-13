@@ -1,0 +1,109 @@
+<div class="contain">
+  
+  <div class="wrapper">
+    <div class="textsection">
+      <h1>Want a bigger audience for your service business?</h1>
+      <p>
+        Be a part of a community of service experts that have trusted and seen
+        their business amplify with Housejoy’s service platform.
+      </p>
+      <div class="comment">
+        <div class="card mb-3 comment-card">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <!-- <img src="..." class="img-fluid rounded-start" alt="..."> -->
+              <div class=" rounded-start"></div>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formsection">
+      <form [formGroup]="signupForm" (ngSubmit)="signup()">
+        <h1 class="signup">SIGN UP</h1>
+        <div class="form-group mb-3">
+          <label for="exampleFormControlInput1" class="form-label">User Name</label>
+          <input
+            required
+            formControlName="username"
+            type="text"
+            class="form-control form"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              signupForm.controls['username'].dirty &&
+              signupForm.hasError('required', 'username')
+            "
+            >this password required</span
+          >
+        </div>
+        <div class="form-group mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+          <input
+            required
+            formControlName="email"
+            type="text"
+            class="form-control form"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              signupForm.controls['email'].dirty &&
+              signupForm.hasError('required', 'email')
+            "
+            >this password required</span
+          >
+        </div>
+        <div class="form-group mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
+          <input
+            required
+            formControlName="phonenumber"
+            type="number"
+            class="form-control form"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              signupForm.controls['phonenumber'].dirty &&
+              signupForm.hasError('required', 'phonenumber')
+            "
+            >this password required</span
+          >
+        </div>
+        <div class="form-group mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Password</label
+          >
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+              signupForm.controls['password'].dirty &&
+              signupForm.hasError('required', 'password')
+            "
+          >
+            this password required</span
+          >
+        </div>
+
+        <button [disabled]="signupForm.invalid" type="submit" class="btn">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

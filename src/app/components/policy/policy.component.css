@@ -1,0 +1,26 @@
+.contain{
+    margin-top: 40px ;
+    margin-bottom: 50px;
+
+}
+ul{
+  width: 100%;  
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+li{
+    /* background-color: #ffd700; */
+    margin-right: 10px;
+    height: 100px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 15px;
+  
+}
+.active{
+    background-color: #ffd700;
+}

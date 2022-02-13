@@ -1,0 +1,16 @@
+.card{
+    background-color: #7b1fa2;
+    display: flex;
+    width: 500px;
+    height: 400px;
+    align-items: center; 
+    justify-content: center;
+}
+.container{
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center;  */
+    color: white;
+    width: 500px;
+    height: 400px;
+}
