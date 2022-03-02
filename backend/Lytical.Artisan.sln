@@ -7,19 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1D357716-036
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BB61FBEA-DC44-4570-895E-7388125EE20A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.API", "src\Lytical.Artisan.API\Lytical.Artisan.API.csproj", "{9B074E1D-F3D7-4EF3-9131-9E09374F07FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.API", "src\Lytical.Artisan.API\Lytical.Artisan.API.csproj", "{9B074E1D-F3D7-4EF3-9131-9E09374F07FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.Domain", "src\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj", "{1F2C4B6A-4952-4E2B-B765-0EF9DFD42BA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.Domain", "src\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj", "{1F2C4B6A-4952-4E2B-B765-0EF9DFD42BA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.Application", "src\Lytical.Artisan.Application\Lytical.Artisan.Application.csproj", "{6E7E5E07-DE1E-4896-AA51-D9DB15D0843A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.Application", "src\Lytical.Artisan.Application\Lytical.Artisan.Application.csproj", "{6E7E5E07-DE1E-4896-AA51-D9DB15D0843A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.Infrastructure", "src\Lytical.Artisan.Infrastructure\Lytical.Artisan.Infrastructure.csproj", "{D4B07223-C1C7-40C0-8DFE-6E18A5ED81D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.Infrastructure", "src\Lytical.Artisan.Infrastructure\Lytical.Artisan.Infrastructure.csproj", "{D4B07223-C1C7-40C0-8DFE-6E18A5ED81D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.Domian.Tests", "tests\Lytical.Artisan.Domian.Tests\Lytical.Artisan.Domian.Tests.csproj", "{A161A4F4-DA3C-4FE2-A3BD-FCA47A9705B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.Domian.Tests", "tests\Lytical.Artisan.Domian.Tests\Lytical.Artisan.Domian.Tests.csproj", "{A161A4F4-DA3C-4FE2-A3BD-FCA47A9705B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.Application.Tests", "tests\Lytical.Artisan.Application.Tests\Lytical.Artisan.Application.Tests.csproj", "{C759AD21-1FC5-4A3C-BAFA-313281A34366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.Application.Tests", "tests\Lytical.Artisan.Application.Tests\Lytical.Artisan.Application.Tests.csproj", "{C759AD21-1FC5-4A3C-BAFA-313281A34366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lytical.Artisan.Infrastructure.Tests", "tests\Lytical.Artisan.Infrastructure.Tests\Lytical.Artisan.Infrastructure.Tests.csproj", "{F5132373-201E-4200-A232-CFAB1A208F27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lytical.Artisan.Infrastructure.Tests", "tests\Lytical.Artisan.Infrastructure.Tests\Lytical.Artisan.Infrastructure.Tests.csproj", "{F5132373-201E-4200-A232-CFAB1A208F27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "..\..\Demo\dotnet-6-signup-verification-api-master\WebApi.csproj", "{6C6EBB2B-B8B3-4093-B2BF-CB1F47117A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{F5132373-201E-4200-A232-CFAB1A208F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5132373-201E-4200-A232-CFAB1A208F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5132373-201E-4200-A232-CFAB1A208F27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C6EBB2B-B8B3-4093-B2BF-CB1F47117A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C6EBB2B-B8B3-4093-B2BF-CB1F47117A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C6EBB2B-B8B3-4093-B2BF-CB1F47117A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C6EBB2B-B8B3-4093-B2BF-CB1F47117A2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
