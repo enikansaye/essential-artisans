@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentEmail.MailKit" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lytical.Artisan.Application\Lytical.Artisan.Application.csproj" />
     <ProjectReference Include="..\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj" />
+    <ProjectReference Include="..\Lytical.Artisan.Infrastructure\Lytical.Artisan.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

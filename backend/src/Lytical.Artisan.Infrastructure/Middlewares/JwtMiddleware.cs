@@ -1,12 +1,8 @@
-﻿using System.Security.Claims;
-using Lytical.Artisan.Domain.Services;
-using Lytical.Artisan.Domain.Settings;
-
-namespace Lytical.Artisan.API.Middleware
+﻿namespace Lytical.Artisan.Infrastructure.Middlewares
 {
-    public class JwtValidatorMiddleware
+    public class JwtMiddleware
     {
-        public JwtValidatorMiddleware(RequestDelegate request)
+        public JwtMiddleware(RequestDelegate request)
         {
             _request = request;
         }

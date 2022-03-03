@@ -1,4 +1,6 @@
-﻿namespace Lytical.Artisan.Infrastructure.Services;
+﻿using Lytical.Artisan.Infrastructure.Middlewares;
+
+namespace Lytical.Artisan.Infrastructure.Services;
 public static class AuthService
 {
     public static void AddAuthService(this WebApplicationBuilder builder)
@@ -36,5 +38,14 @@ public static class AuthService
               ValidAudience = builder.Configuration["JwtSettings:Audience"],
               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
           });
+    }
+
+    public static void UseArtisanAuth(this WebApplication app)
+    {
+        // global error handler
+        app.UseMiddleware<ErrorMiddleware>();
+
+        // custom jwt auth middleware
+        app.UseMiddleware<JwtMiddleware>();
     }
 }

@@ -9,3 +9,7 @@ global using Microsoft.AspNetCore.Http;
 global using System.Security.Claims;
 global using System.IdentityModel.Tokens.Jwt;
 global using Lytical.Artisan.Infrastructure.Services;
+global using Lytical.Artisan.Domain.Entities;
+global using Lytical.Artisan.Domain.Services;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.Filters;

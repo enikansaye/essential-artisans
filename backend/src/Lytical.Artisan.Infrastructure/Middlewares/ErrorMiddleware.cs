@@ -1,12 +1,13 @@
 ﻿using System.Net;
 using System.Text.Json;
 using Lytical.Artisan.Domain.Exceptions;
+using Microsoft.Extensions.Logging;
 
-namespace Lytical.Artisan.API.Middleware
+namespace Lytical.Artisan.Infrastructure.Middlewares
 {
-    public class ExceptionHandlerMiddleware
+    public class ErrorMiddleware
     {
-        public ExceptionHandlerMiddleware(RequestDelegate request, ILogger logger)
+        public ErrorMiddleware(RequestDelegate request, ILogger<ErrorMiddleware> logger)
         {
             _request = request;
             _logger = logger;

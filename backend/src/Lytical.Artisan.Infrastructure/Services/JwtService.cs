@@ -1,12 +1,4 @@
-﻿using System.Security.Claims;
-using Lytical.Artisan.Domain.Entities;
-using Lytical.Artisan.Domain.Services;
-using Lytical.Artisan.Domain.Settings;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-
-namespace Lytical.Artisan.Infrastructure.Services
+﻿namespace Lytical.Artisan.Infrastructure.Services
 {
     public class JwtService : ITokenService
     {
