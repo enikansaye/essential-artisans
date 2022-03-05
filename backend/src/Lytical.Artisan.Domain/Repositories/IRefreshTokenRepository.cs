@@ -1,4 +1,4 @@
-﻿namespace Lytical.Artisan.Domain.Data.Repositories
+﻿namespace Lytical.Artisan.Domain.Repositories
 {
     public interface IRefreshTokenRepository
     {

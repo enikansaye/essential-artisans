@@ -30,9 +30,10 @@ namespace Lytical.Artisan.Domain.Exceptions
         public static ErrorCode InvalidRefreshToken => new(nameof(InvalidRefreshToken));
 
         public static ErrorCode EmailExistInDatabase =>
-            new(nameof(EmailExistInDatabase), "Email already exist in database.");
+            new(nameof(EmailExistInDatabase), "Email already exist in our database.");
 
-
+        public static ErrorCode InvalidEmailConfirmationToken =>
+       new(nameof(InvalidEmailConfirmationToken), "Provided token is invalid.");
         public static ErrorCode ProductNotAcceptCharms => new(nameof(ProductNotAcceptCharms));
 
         public static ErrorCode EmailTemplateNotExists(string name)
@@ -50,9 +51,9 @@ namespace Lytical.Artisan.Domain.Exceptions
 
         public static ErrorCode InvalidChangePasswordToken =>
             new(nameof(InvalidChangePasswordToken), "Provided token is invalid.");
-
         public static ErrorCode OrderNotFound => new(nameof(OrderNotFound), HttpStatusCode.NotFound);
         public static ErrorCode ServiceNotFound => new(nameof(ServiceNotFound), HttpStatusCode.NotFound);
+        public static ErrorCode ErroWhileSavingToDatabase => new(nameof(ErroWhileSavingToDatabase), HttpStatusCode.InternalServerError);
         public static ErrorCode PaymentDoesNotExists => new(nameof(PaymentDoesNotExists));
 
         public static ErrorCode InvalidPaymentType => new(nameof(InvalidPaymentType));

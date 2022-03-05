@@ -1,10 +1,8 @@
 ﻿using FluentEmail.MailKitSmtp;
-using Lytical.Artisan.Domain.Services;
-using Lytical.Artisan.Infrastructure.Services;
 
-namespace Lytical.Artisan.API.Extensions
+namespace Lytical.Artisan.Infrastructure.Extensions
 {
-    public static class EmailExtension
+    public static class EmailExt
     {
         public static void AddEmailService(this WebApplicationBuilder builder)
         {

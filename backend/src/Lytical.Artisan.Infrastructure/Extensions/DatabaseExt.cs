@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Lytical.Artisan.Infrastructure.Services
+﻿
+namespace Lytical.Artisan.Infrastructure.Extensions
 {
-    public static class DatabaseService
+    public static class DatabaseExt
     {
         public static void AddDatabaseContext(this IServiceCollection services)
         {
             services.AddDbContext<ArtisanDbContext>();
+            services.AddScoped<IDbContext, ArtisanDbContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         /// <summary>

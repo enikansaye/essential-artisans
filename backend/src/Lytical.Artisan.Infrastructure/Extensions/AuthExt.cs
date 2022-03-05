@@ -1,17 +1,10 @@
 ﻿using Lytical.Artisan.Infrastructure.Middlewares;
 
-namespace Lytical.Artisan.Infrastructure.Services;
+namespace Lytical.Artisan.Infrastructure.Extensions;
 public static class AuthService
 {
     public static void AddAuthService(this WebApplicationBuilder builder)
     {
-        builder.Services.Configure<CookiePolicyOptions>(options =>
-        {
-            options.CheckConsentNeeded = context => true;
-            options.MinimumSameSitePolicy = SameSiteMode.None;
-            options.HttpOnly = HttpOnlyPolicy.Always;
-            options.Secure = CookieSecurePolicy.Always;
-        });
         builder.Services.AddAuthentication(auth =>
         {
             auth.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
