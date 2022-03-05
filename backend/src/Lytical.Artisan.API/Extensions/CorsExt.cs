@@ -6,7 +6,7 @@
         public static void AddArtisanCors(this IServiceCollection services)
         {
             services.AddCors(options => options.AddPolicy(name: "ArtisanApp",
-                            builder => builder.WithOrigins("https://localhost:44342")));
+                            builder => builder.WithOrigins("https://localhost:7130")));
         }
 
         public static void UseArtisanCors(this IApplicationBuilder app)

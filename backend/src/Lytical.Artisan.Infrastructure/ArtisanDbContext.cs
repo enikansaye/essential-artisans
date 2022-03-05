@@ -1,5 +1,4 @@
 ﻿using Lytical.Artisan.Domain.Exceptions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Lytical.Artisan.Infrastructure

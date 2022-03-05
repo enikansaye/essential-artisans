@@ -24,8 +24,7 @@ namespace Lytical.Artisan.Domain.Exceptions
         public static ErrorCode InvalidUserCredentials => new(nameof(InvalidUserCredentials),
             "Invalid email or password", HttpStatusCode.UnprocessableEntity);
 
-        public static ErrorCode InvalidUserClaimName =>
-            new(nameof(InvalidUserClaimName), HttpStatusCode.Unauthorized);
+        public static ErrorCode Unauthorized => new(nameof(Unauthorized), HttpStatusCode.Unauthorized);
 
         public static ErrorCode InvalidRefreshToken => new(nameof(InvalidRefreshToken));
 

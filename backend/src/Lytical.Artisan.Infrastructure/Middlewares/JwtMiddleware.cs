@@ -12,7 +12,11 @@
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
             if (token != null)
-                context.User.AddIdentity(new ClaimsIdentity(service.ValidateToken(token, settings.SecretKey)));
+            {
+                var claims = service.ValidateToken(token, settings.SecretKey);
+                if (claims.Any())
+                    context.User.AddIdentity(new ClaimsIdentity(claims));
+            }
 
             await _request(context);
         }

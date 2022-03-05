@@ -5,6 +5,7 @@ using Lytical.Artisan.Application.Commands.Register;
 using Lytical.Artisan.Application.Commands.ResetPassword;
 using Lytical.Artisan.Application.Commands.VerifyEmail;
 using Lytical.Artisan.Domain.Settings;
+using Lytical.Artisan.Infrastructure.Filters;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -70,7 +71,7 @@ namespace Lytical.Artisan.API.Controllers
         {
             return Ok(new { message = "Password reset successful, you can now login", a = command });
         }
-        [Authorize]
+        [AthorizeAttribute]
         [HttpPost("logout")]
         public IActionResult Logout()
         {
@@ -84,7 +85,7 @@ namespace Lytical.Artisan.API.Controllers
 
             return NoContent(); //TODO: Redirect to login html page
         }
-        [Authorize]
+        [Athorize]
 
         [HttpGet]
         public ActionResult<IEnumerable<LoginDto>> GetAll()

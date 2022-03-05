@@ -29,7 +29,7 @@ app.UseRouting();
 app.UseArtisanCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<JwtMiddleware>();
+//app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 app.Run();
 

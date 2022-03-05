@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.Json;
 using Lytical.Artisan.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 
@@ -53,8 +52,7 @@ namespace Lytical.Artisan.Infrastructure.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
 
-            var responseBody = JsonSerializer.Serialize(new { errorCode, message });
-            await context.Response.WriteAsync(responseBody);
+            await context.Response.WriteAsJsonAsync(new { statusCode, errorCode, message });
         }
 
         private readonly RequestDelegate _request;
