@@ -1,16 +1,16 @@
 .nav1{
     background-color: #000000;
-    height: 80px;
+    height: 100%;
     color: white;
     /* min-height: 100%; */
 }
-
 
 .logo{
     height: 65px;
     background-color: #ffd700;
     width: 65px;
     border-radius: 50%;
+   
 }
 .bi-search{
     display: flex;
@@ -69,4 +69,72 @@ color: #000000;
 }
 .header2{
     color: #ffd700;
+}
+
+@media screen and (width: 320px) {
+    .nav1{
+        /* background-color: #ffd700; */
+        /* height: 80px; */
+        width: 320px;
+        color: white;
+        padding: 10px;
+        /* min-height: 100%; */
+    }
+    
+    .logo{
+        height: 55px;
+        background-color: #ffd700;
+        width: 55px;
+        border-radius: 50%;
+        object-fit: cover;
+       
+    }
+    .loginbtn{
+        height: 40px;
+        width: 80px;
+        border-radius: 40px;
+        margin-right: 15px;
+        font-weight: bold;
+        background-color:#ffd700;
+        color: #000000;
+        margin: 10px 0px 10px 0px;
+        /* border: 1px solid #000000 */
+        }
+    .bi-search{
+        display: flex;
+        /* justify-content: center; */
+        /* align-items: center; */
+       position: absolute;
+       z-index: 0;
+       justify-content: end;
+       padding-left: 21% ; 
+       padding-top: 15px;
+    
+    }
+   
+    .login{
+        display: flex;
+        width: 280px;
+        padding: 10px 10px 10px 0px;
+    }
+   
+    .partner{
+        font-weight: 50px;
+        color: #ffd700;
+        font-size: 20px;
+        margin-top: 20px;
+    }
+  
+    .nav2{
+        display: none;
+    }
+    span{
+        background-color: #ffd700;
+    }
+    .collapse{
+        width: 320px;
+        height: auto;
+        background-color: #000000;
+    }
+    
 }

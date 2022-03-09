@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Emitters } from 'src/emitters/emitters';
 
 @Component({
   selector: 'app-header',
@@ -10,11 +11,18 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  public signinForm !: FormGroup
+  public signinForm !: FormGroup;
+  authenticated = false;
 
   constructor(private formBuilder: FormBuilder, private http : HttpClient, private router: Router) { }
 
   ngOnInit(): void {
+    Emitters.authEmitter.subscribe(
+     ( auth:boolean)=>{
+       this.authenticated = auth
+
+     }
+    )
     this.signinForm = this.formBuilder.group({
       email: ['', Validators.required],
         password: ['', Validators.required]
@@ -32,13 +40,21 @@ export class HeaderComponent implements OnInit {
       this.signinForm.reset()
       let ref = document.getElementById('cancel'); //this is to close the modal form automatically
         ref?.click();
-      this.router.navigate(['dashboard'])
+      this.router.navigate(['home'])
     } else {
       alert("user not found")
     }(err: any) =>{
       alert("something went wrong")
     }
   })
+  }
+  logout(){
+    this.http.post("http://localhost:3000/signupUser", {withCredentials:true})
+    .subscribe(()=>{
+      // this.
+    }, err=>{
+
+    })
   }
 
 }

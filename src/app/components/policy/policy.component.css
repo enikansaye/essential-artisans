@@ -24,3 +24,48 @@ li{
 .active{
     background-color: #ffd700;
 }
+@media screen and (max-width: 320px) {
+    li{
+        /* background-color: #ffd700; */
+        margin-right: 10px;
+        height: 50px;
+        width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        font-size: 8px;
+        font-weight: 400;
+      
+    }
+}
+@media screen and (max-width: 480px) {
+    li{
+        /* background-color: #ffd700; */
+        margin-right: 10px;
+        height: 60px;
+        width: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        font-size: 10px;
+        font-weight: 400;
+      
+    }
+}
+@media screen and (width: 768px) {
+    li{
+        /* background-color: #ffd700; */
+        margin-right: 10px;
+        height: 60px;
+        width: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        font-size: 10px;
+        font-weight: 400;
+      
+    }
+}

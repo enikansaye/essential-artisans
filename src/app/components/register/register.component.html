@@ -1,0 +1,106 @@
+<div class="register">
+  <div class=" signup">
+    <div>SIGN UP</div>
+    <p routerLink="/partnerregister">signup as Artisan</p>
+    <form [formGroup]="signupForm">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>FULL NAME</mat-label>
+        <input matInput formControlName="username" placeholder="Ex. john paul" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['username'].dirty &&
+            signupForm.hasError('required', 'username')
+          "
+        >
+         Full name is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>LOCATION</mat-label>
+        <input matInput formControlName="location" placeholder="Ex. lekki" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['location'].dirty &&
+            signupForm.hasError('required', 'location')
+          "
+        >
+          Your location required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill" >
+        <mat-label>ADDRESS</mat-label>
+        <input matInput formControlName="address" placeholder="Ex. 22 kabiru" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['address'].dirty &&
+            signupForm.hasError('required', 'address')
+          "
+        >
+        Your Address is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>PHONE NUMBER</mat-label>
+        <input matInput formControlName="phone" placeholder="Ex. 22 kabiru" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['phone'].dirty &&
+            signupForm.hasError('required', 'phone')
+          "
+        >
+          Phone number is required</mat-error
+        >
+      </mat-form-field>
+    
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+        <mat-error   *ngIf="
+        signupForm.controls['email'].dirty &&
+        signupForm.hasError('required', 'email')
+      ">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="signupForm.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'"  formControlName="password" >
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+       
+        </button>
+        <mat-error   *ngIf="
+        signupForm.controls['password'].dirty &&
+        signupForm.hasError('required', 'minLength')
+      ">
+        password cann't be less than four
+        </mat-error>
+        <mat-error *ngIf="signupForm.hasError('required')">
+         password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>  
+      <div>
+  <p>      <a routerLink="/signin">Already User? <strong>signin</strong></a>
+  </p>     
+      </div>
+    
+      <button
+        class="btn btn-primary"
+        [disabled]="signupForm.invalid"
+        (click)="signup()"
+      >
+        SIGN UP
+      </button>
+    
+    </form> 
+    
+    
+  </div>
+</div>

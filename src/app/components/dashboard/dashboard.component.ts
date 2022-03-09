@@ -13,10 +13,10 @@ export class DashboardComponent implements OnInit {
 
   customOptions: OwlOptions = {
     loop: false,
-    mouseDrag: false,
+    mouseDrag: true,
     touchDrag: true,
-    pullDrag: false,
-    dots: false,
+    pullDrag: true,
+    dots: true,
     navSpeed: 700,
     navText: ['Previous', 'Next'],
     responsive: {
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
         items: 3
       },
       940: {
-        items: 4
+        items: 3
       }
     },
     nav: true
