@@ -44,6 +44,8 @@ import { EmailComponent } from './components/email/email.component';
 import { MyorderComponent } from './components/myorder/myorder.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -110,7 +112,13 @@ MatSidenavModule,
       {path: "partnerregister" , component: PartnerregisterComponent },
       // {path: "acrepair/fan" , component: AcrepairComponent },
 
-    ])
+    ]),
+      ServiceWorkerModule.register('ngsw-worker.js', {
+        enabled: environment.production,
+        // Register the ServiceWorker as soon as the app is stable
+        // or after 30 seconds (whichever comes first).
+        registrationStrategy: 'registerWhenStable:30000'
+      })
   ],
   providers: [
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
