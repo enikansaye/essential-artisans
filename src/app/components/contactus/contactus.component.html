@@ -1,0 +1,266 @@
+<div class="container">
+  <div class="section">
+    <div class="sect col-md-6">
+     <div class="section1">
+      <h4>Contact Us</h4>
+     </div>
+
+     <div >
+      <form [formGroup]="contactForm" (ngSubmit)="sendMessage()">
+        <!-- <h1 class="signup">SIGN UP</h1> -->
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label" 
+            ></label -->
+       
+          <input
+            required
+            formControlName="username"
+            type="text"
+            class="form-control form"
+            placeholder="NAME"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['username'].dirty &&
+              contactForm.hasError('required', 'username')
+            "
+            >this password required</span
+          >
+        </div>
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label">Email</label> -->
+          <input
+            required
+            formControlName="email"
+            type="text"
+            class="form-control form"
+            placeholder="EMAIL"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['email'].dirty &&
+              contactForm.hasError('required', 'email')
+            "
+            >this password required</span
+          >
+        </div>
+       
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label"
+            >Phone Number</label -->
+       
+          <input
+            required
+            formControlName="phonenumber"
+            type="number"
+            class="form-control form"
+            placeholder="PHONE NUMBER"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['phonenumber'].dirty &&
+              contactForm.hasError('required', 'phonenumber')
+            "
+            >this password required</span
+          >
+        </div>
+
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label">Email</label> -->
+          <textarea
+            required
+            formControlName="email"
+            type="text"
+            class="form-control form"
+            placeholder="MESSAGE"
+          ></textarea>
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['email'].dirty &&
+              contactForm.hasError('required', 'email')
+            "
+            >this password required</span
+          >
+        </div>
+
+      <div class="btnsect">
+        <button [disabled]="contactForm.invalid" type="submit" class="btn">
+          SUBMIT
+        </button>
+      </div>
+      </form>
+     </div>
+    </div>
+    <div class="section2 col-md-6">
+      <div class="section1">
+        <h4>Contact Us</h4>
+       </div>
+       <h4>Join Us</h4>
+       <p>If you are a business or pro interested in joining our network, <span routerLink="signup">click here</span>.</p>
+    <h4>Alliances & Partnerships</h4>
+    <p>For any alliance or partnership please write to us at alliances@housejoy.in.</p>
+  <p>For any B2B & Facilities Services Supplier Partnership, AMC, Contracts requirements please write to us at b2b@housejoy.in.</p>   
+  <h4>Support</h4>
+  <p>if you are a professional or a service provider and would like to join our network, write to us at services@housejoy.in.</p>
+<h4>Address</h4>
+<p>Artisan Finder <br> 1 shikiru alada <br> Lagos, Nigeria</p>
+<h4>
+  <p>Call : <span>09057659451</span></p>
+</h4>
+</div>
+  </div>
+  <div class="reversesection">
+
+    <div class="section2 col-md-6">
+      <div class="section1">
+        <h4>Contact Us</h4>
+       </div>
+       <h4>Join Us</h4>
+       <p>If you are a business or pro interested in joining our network, <span routerLink="signup">click here</span>.</p>
+    <h4>Alliances & Partnerships</h4>
+    <p>For any alliance or partnership please write to us at alliances@housejoy.in.</p>
+  <p>For any B2B & Facilities Services Supplier Partnership, AMC, Contracts requirements please write to us at b2b@housejoy.in.</p>   
+  <h4>Support</h4>
+  <p>if you are a professional or a service provider and would like to join our network, write to us at services@housejoy.in.</p>
+<h4>Address</h4>
+<p>Artisan Finder <br> 1 shikiru alada <br> Lagos, Nigeria</p>
+<h4>
+  <p>Call : <span>09057659451</span></p>
+</h4>
+</div>
+
+    <div class="sect col-md-6">
+     <div class="section1">
+      <h4>Contact Us</h4>
+     </div>
+
+     <div >
+      <form [formGroup]="contactForm" (ngSubmit)="sendMessage()">
+        <!-- <h1 class="signup">SIGN UP</h1> -->
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label" 
+            ></label -->
+       
+          <input
+            required
+            formControlName="username"
+            type="text"
+            class="form-control form"
+            placeholder="NAME"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['username'].dirty &&
+              contactForm.hasError('required', 'username')
+            "
+            >this password required</span
+          >
+        </div>
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label">Email</label> -->
+          <input
+            required
+            formControlName="email"
+            type="text"
+            class="form-control form"
+            placeholder="EMAIL"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['email'].dirty &&
+              contactForm.hasError('required', 'email')
+            "
+            >this password required</span
+          >
+        </div>
+       
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label"
+            >Phone Number</label -->
+       
+          <input
+            required
+            formControlName="phonenumber"
+            type="number"
+            class="form-control form"
+            placeholder="PHONE NUMBER"
+          />
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['phonenumber'].dirty &&
+              contactForm.hasError('required', 'phonenumber')
+            "
+            >this password required</span
+          >
+        </div>
+
+        <div class="form-group mb-3">
+          <!-- <label for="exampleFormControlInput1" class="form-label">Email</label> -->
+          <textarea
+            required
+            formControlName="email"
+            type="text"
+            class="form-control form"
+            placeholder="MESSAGE"
+          ></textarea>
+          <span
+            class="alert alert-danger"
+            *ngIf="
+              contactForm.controls['email'].dirty &&
+              contactForm.hasError('required', 'email')
+            "
+            >this password required</span
+          >
+        </div>
+
+        <!-- <div class="input-group ">
+          <button class="btn btn-outline-secondary" type="button">Button</button>
+          <select class="form-select" id="inputGroupSelect03" aria-label="Example select with button addon">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select> 
+        </div> -->
+
+        <!-- <div class="form-group mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Password</label
+          >
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+              contactForm.controls['password'].dirty &&
+              contactForm.hasError('required', 'password')
+            "
+          >
+            this password required</span
+          >
+        </div> -->
+
+      <div class="btnsect">
+        <button [disabled]="contactForm.invalid" type="submit" class="btn">
+          SUBMIT
+        </button>
+      </div>
+      </form>
+     </div>
+    </div>
+ 
+  </div>
+  <!-- <div>this </div> -->
+</div>
+
+<!-- </div> -->
