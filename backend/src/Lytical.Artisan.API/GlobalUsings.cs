@@ -16,3 +16,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using Lytical.Artisan.Infrastructure.Filters;
 global using Lytical.Artisan.Domain.Repositories;
 global using Lytical.Artisan.Domain.Services;
+global using System.Net;

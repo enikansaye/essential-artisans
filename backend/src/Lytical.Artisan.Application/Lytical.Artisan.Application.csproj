@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="EmailTemplates\EmailVerification.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="EmailTemplates\EmailVerification.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Commands\Logout\" />
     <Folder Include="Queries\" />
   </ItemGroup>

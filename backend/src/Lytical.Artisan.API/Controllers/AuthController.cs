@@ -4,13 +4,29 @@ namespace Lytical.Artisan.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController : BaseController
 {
-    public AuthController(IUserRepository repository, IEmailService email, IPasswordManager password)
+    public AuthController(IUserRepository repository, IEmailService email,
+        IPasswordManager password, AppSettings app)
     {
         _repository = repository;
         _email = email;
         _password = password;
+        _app = app;
+    }
+
+    [AllowAnonymous]
+    [HttpPost("register")]
+    public async Task<IActionResult> RegisterAsync(RegisterCommand command)
+    {
+        var handler = new RegisterCommandHandler(_repository, _email, _password, _app);
+        return await ExecuteCommandAsync(command, handler, HttpStatusCode.BadRequest, HttpStatusCode.OK);
+    }
+    [AllowAnonymous]
+    [HttpPost("verify-email")]
+    public IActionResult VerifyEmail(VerifyEmailCommand command)
+    {
+        return Ok(new { message = "Verification successful, you can now login", a = command });
     }
 
     [HttpPost("login")]
@@ -41,25 +57,7 @@ public class AuthController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync(RegisterCommand command)
-    {
-        command.Validate();
-        var handler = new RegisterCommandHandler(_repository, _email, _password);
-        var result = await handler.HandleAsync(command);
-        if (result.NotSucceeded)
-            return BadRequest(result.Status);
-        return Ok(result.Data);
-    }
-
-
-    [AllowAnonymous]
-    [HttpPost("verify-email")]
-    public IActionResult VerifyEmail(VerifyEmailCommand command)
-    {
-        return Ok(new { message = "Verification successful, you can now login", a = command });
-    }
-
+   
     [HttpPost("forgot-password")]
     public IActionResult ForgotPassword(ForgotPasswordCommand command)
     {
@@ -114,4 +112,5 @@ public class AuthController : ControllerBase
     private readonly IUserRepository _repository;
     private readonly IEmailService _email;
     private readonly IPasswordManager _password;
+    private readonly AppSettings _app;
 }

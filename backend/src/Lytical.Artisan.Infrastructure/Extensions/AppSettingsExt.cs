@@ -7,6 +7,7 @@ namespace Lytical.Artisan.Infrastructure.Extensions
         public static void AddArtisanSettings(this WebApplicationBuilder builder)
         {
             builder.Services.AddSingleton(builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>())
+                            .AddSingleton(builder.Configuration.GetSection(nameof(AppSettings)).Get<AppSettings>())
                             .Configure<CookiePolicyOptions>(options =>
                             {
                                 options.CheckConsentNeeded = context => true;

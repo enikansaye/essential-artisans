@@ -1,19 +1,16 @@
-﻿using Lytical.Artisan.Application.Mappers;
-using Lytical.Artisan.Domain.Entities;
-using Lytical.Artisan.Domain.Exceptions;
-using Lytical.Artisan.Domain.Repositories;
-using Lytical.Artisan.Domain.Services;
-using Lytical.Artisan.Domain.Utilities;
+﻿
 
 namespace Lytical.Artisan.Application.Commands.Register
 {
     public class RegisterCommandHandler : CommandHandler<RegisterCommand, RegisterUserDto>
     {
-        public RegisterCommandHandler(IUserRepository repository, IEmailService email, IPasswordManager password)
+        public RegisterCommandHandler(IUserRepository repository, IEmailService email,
+            IPasswordManager password, AppSettings app)
         {
             _repository = repository;
             _email = email;
             _password = password;
+            _app = app;
         }
         public override async Task<Result<RegisterUserDto>> HandleAsync(RegisterCommand command)
         {
@@ -21,7 +18,7 @@ namespace Lytical.Artisan.Application.Commands.Register
             if (validation.NotSucceeded) return ResultStatus<RegisterUserDto>.Fail(validation.Status);
 
             var userExists = await _repository.ExistsAsync(command.Email);
-            if (userExists.NotSucceeded) return ResultStatus<RegisterUserDto>.Fail(ErrorCode.EmailExistInDatabase.Message);
+            if (userExists.Data) return ResultStatus<RegisterUserDto>.Fail(ErrorCode.EmailExistInDatabase.Message);
 
             var token = _password.GenerateToken();
             var salt = _password.GenerateToken();
@@ -34,19 +31,23 @@ namespace Lytical.Artisan.Application.Commands.Register
             if (dbOperation.NotSucceeded) return ResultStatus<RegisterUserDto>.Fail(dbOperation.Status);
 
 
-            var emailBody = EmbedResource.Extract("EmailConfirmation.html");
+            var emailBody = EmbedResource.Extract("EmailVerification.html")
+                                         .Replace("{userEmail}", user.Email)
+                                         .Replace("{contactEmail}", _app.ContactEmail)
+                                         .Replace("{emailVerificationLink}", $"{_app.Origin}/verify?token={SafeUri.Encode(token)}");
             _email.To(command.Email);
-            _email.Subject("Email Confirmation | BrandMify");
-            _email.Body(emailBody.Replace("token=", $"token={token}"));
+            _email.Subject("Confirm Your Email");
+            _email.Body(emailBody);
             var emailOperation = await _email.SendAsync();
 
             if (emailOperation.NotSucceeded) return ResultStatus<RegisterUserDto>.Fail("Email sending failed.");
 
-            return ResultStatus<RegisterUserDto>.Pass(user.MapEmailDto(), "Registration successful, please check your email for verification instructions");
+            return ResultStatus<RegisterUserDto>.Pass(user.MapEmailDto());
         }
         private readonly IUserRepository _repository;
         private readonly IEmailService _email;
         private readonly IPasswordManager _password;
+        private readonly AppSettings _app;
 
     }
 }

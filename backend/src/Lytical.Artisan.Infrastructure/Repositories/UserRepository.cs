@@ -23,8 +23,8 @@
         public async ValueTask<Result<bool>> ExistsAsync(string email)
         {
             await Task.Delay(1000);
-            FakeDatabase.Users.Any(x => x.NormalizedEmail == email.ToUpper());
-            return ResultStatus<bool>.Pass();
+            var result = FakeDatabase.Users.Any(x => x.NormalizedEmail == email.ToUpper());
+            return ResultStatus<bool>.Pass(result);
         }
 
         public async Task<List<User>> FindAllAsync()
