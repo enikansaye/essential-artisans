@@ -1,28 +1,33 @@
-﻿namespace Lytical.Artisan.API.Controllers;
+﻿
+
+namespace Lytical.Artisan.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : BaseController
+public class AuthController : ControllerBase
 {
-    public AuthController(IMediator mediator) : base(mediator)
+    public AuthController(IUserRepository repository, IEmailService email, IPasswordManager password)
     {
+        _repository = repository;
+        _email = email;
+        _password = password;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> AuthenticateAsync()
     {
-        await _mediator.Send(new RegisterCommand());
+       // await _mediator.Send(new RegisterCommand());
         // var response = _accountService.Authenticate(model, GetIPAddress());
         // SetTokenCookie(response.RefreshToken);
         //  return Ok(response);
         var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, "John"),
-            };
+        {
+            new Claim(ClaimTypes.Name, "John"),
+        };
         var principalUser = new ClaimsPrincipal(
             new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
         await Response.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principalUser);
-
+        
         return Ok();
     }
 
@@ -36,12 +41,17 @@ public class AuthController : BaseController
         return Ok();
     }
 
-    [AllowAnonymous]
     [HttpPost("register")]
-    public IActionResult Register(RegisterCommand command)
+    public async Task<IActionResult> RegisterAsync(RegisterCommand command)
     {
-        return Ok(new { message = "Registration successful, please check your email for verification instructions", a = command });
+        command.Validate();
+        var handler = new RegisterCommandHandler(_repository, _email, _password);
+        var result = await handler.HandleAsync(command);
+        if (result.NotSucceeded)
+            return BadRequest(result.Status);
+        return Ok(result.Data);
     }
+
 
     [AllowAnonymous]
     [HttpPost("verify-email")]
@@ -101,4 +111,7 @@ public class AuthController : BaseController
         else
             return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
     }
+    private readonly IUserRepository _repository;
+    private readonly IEmailService _email;
+    private readonly IPasswordManager _password;
 }

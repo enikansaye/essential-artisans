@@ -1,16 +1,23 @@
 ﻿namespace Lytical.Artisan.Application
 {
-    public interface ICommand : IRequest
+    public interface ICommand<TResponse>
     {
-    }
-    public interface ICommandHandler<TRequest> : IRequestHandler<TRequest> where TRequest : IRequest<Unit>
-    {
-    }
-    public interface ICommand<TRequest> : IRequest<TRequest>
-    {
+        Result<TResponse> Validate();
     }
 
-    public interface ICommandHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    public interface ICommand
     {
+        Result Validate();
+    }
+
+    public interface ICommandHandler<TCommand, TResponse>
+    {
+        Task<TResponse> HandleAsync(TCommand command);
+
+    }
+    public interface ICommandHandler<TCommand>
+    {
+        Task<Result> HandleAsync(TCommand command);
+
     }
 }

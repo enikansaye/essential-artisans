@@ -1,5 +1,4 @@
 ﻿using FluentEmail.Core;
-using Lytical.Artisan.Domain.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Lytical.Artisan.Infrastructure.Services
@@ -36,18 +35,18 @@ namespace Lytical.Artisan.Infrastructure.Services
             return this;
         }
 
-        public async Task<bool> SendAsync()
+        public async Task<Result<bool>> SendAsync()
         {
             try
             {
                 var response = await _email.SendAsync();
 
-                return response.Successful;
+                return ResultStatus<bool>.Pass(response.Successful);
             }
             catch (Exception ex)
             {
                 _logger.LogError("Email from sending failed.", new { ex.Message, ex?.InnerException, ex.StackTrace });
-                return false;
+                return ResultStatus<bool>.Fail("Email from sending failed."); ;
             }
         }
 

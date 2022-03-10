@@ -12,7 +12,8 @@ namespace Lytical.Artisan.Domain.Entities
             {
                 Email = email,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+
             };
         }
         public void SetPasswordHash(string passwordHash) => PasswordHash = passwordHash;
@@ -20,20 +21,29 @@ namespace Lytical.Artisan.Domain.Entities
         public void SetEmail(string email) => Email = email;
         public void SetEmailConfirmation(bool emailConfirmed) => EmailConfirmed = emailConfirmed;
         public void SetPhoneConfirmation(bool phoneConfirmed) => PhoneNumberConfirmed = phoneConfirmed;
-        public int UserId { get; set; }
+        public void IncrementAccessFailedCount() => AccessFailedCount += 1;
+        public void ResetAccessFailedCount() => AccessFailedCount = 0;
         public string FullName => $"{FirstName} {LastName}".ToTitleCase();
+        public string NormalizedEmail => Email.ToUpper();
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; protected set; }
-        public string NormalizedEmail => Email.ToUpper();
         public bool EmailConfirmed { get; protected set; }
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; protected set; }
         public string PasswordHash { get; protected set; }
         public string PasswordSalt { get; protected set; }
+        public string PasswordResetToken { get; set; }
+        public DateTime? PasswordResetStamp { get; set; }
+        public string VerificationToken { get; set; }
+        public DateTime DateRigistered { get; protected set; }
         public UserType UserType { get; set; }
-        public DateTime? PasswordStamp { get; set; }
-        public int AccessFailedCount { get; set; }
+        /// <summary>
+        ///  AccessFailedCount will increase for every failed login attempt
+        ///  and reset once the account is locked out or on sucessful login
+        /// </summary>
+        public int AccessFailedCount { get; protected set; }
         public Guid Id { get; }
     }
 }

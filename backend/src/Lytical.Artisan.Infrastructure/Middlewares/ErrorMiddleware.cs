@@ -56,7 +56,7 @@ namespace Lytical.Artisan.Infrastructure.Middlewares
         }
 
         private readonly RequestDelegate _request;
-        private readonly ILogger _logger;
+        private readonly ILogger<ErrorMiddleware> _logger;
 
     }
 }

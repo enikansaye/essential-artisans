@@ -1,6 +1,6 @@
 ﻿namespace Lytical.Artisan.Application.Commands.Register
 {
-    public class RegisterDto
+    public class RegisterUserDto
     {
         public string Email { get; set; }
     }

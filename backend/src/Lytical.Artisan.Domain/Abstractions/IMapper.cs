@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lytical.Artisan.Domain.Abstractions
+﻿namespace Lytical.Artisan.Domain.Abstractions
 {
     public interface IMapper
     {
@@ -48,7 +42,7 @@ namespace Lytical.Artisan.Domain.Abstractions
         //     The mapped destination object, same instance as the destination object
         TDestination Map<TSource, TDestination>(TSource source, TDestination destination);
 
-      
+
         //
         // Summary:
         //     Execute a mapping from the source object to a new destination object with explicit

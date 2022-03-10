@@ -2,7 +2,6 @@
 global using Lytical.Artisan.API.Extensions;
 global using Lytical.Artisan.Application;
 global using Lytical.Artisan.Infrastructure.Middlewares;
-global using MediatR;
 global using System.Security.Claims;
 global using Lytical.Artisan.Application.Commands.ForgotPassword;
 global using Lytical.Artisan.Application.Commands.Login;
@@ -15,3 +14,5 @@ global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using Lytical.Artisan.Infrastructure.Filters;
+global using Lytical.Artisan.Domain.Repositories;
+global using Lytical.Artisan.Domain.Services;

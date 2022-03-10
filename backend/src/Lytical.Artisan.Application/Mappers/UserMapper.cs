@@ -1,22 +1,17 @@
 ﻿using Lytical.Artisan.Domain.Entities;
-using Lytical.Artisan.Application.Commands.UpdateUser;
+using Lytical.Artisan.Application.Commands.Register;
 
 namespace Lytical.Artisan.Application.Mappers
 {
     public static class UserMapper
     {
-        public static UpdateUserDto ToUserDto(this User user)
+        public static RegisterUserDto MapEmailDto(this User user)
         {
-            return new UpdateUserDto
+            return new RegisterUserDto
             {
-                Name = user.FullName,
+                Email = user.Email,
             };
         }
 
-        public static IEnumerable<UpdateUserDto> ToUserDtos(this IEnumerable<User> users)
-        {
-            foreach (var user in users)
-                yield return ToUserDto(user);
-        }
     }
 }

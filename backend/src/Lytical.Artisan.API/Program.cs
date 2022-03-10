@@ -7,7 +7,6 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddMediatR(typeof(ICommand).Assembly);
 builder.AddArtisanServices();
 
 var app = builder.Build();
