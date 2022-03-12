@@ -1,11 +1,10 @@
 ﻿using System.Security.Claims;
-using Lytical.Artisan.Domain.Entities;
 
 namespace Lytical.Artisan.Domain.Services
 {
-    public interface ITokenService
+    public interface IAuthTokenManger
     {
-        string GenerateToken(User user);
+        string GenerateAccessToken(User user);
         IEnumerable<Claim> ValidateToken(string token, string secretKey);
         string GenerateRefreshToken();
     }

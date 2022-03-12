@@ -1,5 +1,7 @@
 ﻿
 
+using Lytical.Artisan.Domain.Extensions;
+
 namespace Lytical.Artisan.API.Controllers;
 
 [Route("api/[controller]")]
@@ -7,57 +9,102 @@ namespace Lytical.Artisan.API.Controllers;
 public class AuthController : BaseController
 {
     public AuthController(IUserRepository repository, IEmailService email,
-        IPasswordManager password, AppSettings app)
+        IPasswordManager password, AppSettings app, JwtSettings settings,
+        IAuthTokenManger token, IRefreshTokenRepository refresh)
     {
         _repository = repository;
         _email = email;
         _password = password;
         _app = app;
+        _settings = settings;
+        _token = token;
+        _refreshRepo = refresh;
     }
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync(RegisterCommand command)
+    public async Task<IActionResult> RegisterAsync(SignupCommand command)
     {
-        var handler = new RegisterCommandHandler(_repository, _email, _password, _app);
+        var handler = new SignupCommandHandler(_repository, _email, _password, _app);
         return await ExecuteCommandAsync(command, handler, HttpStatusCode.BadRequest, HttpStatusCode.OK);
     }
     [AllowAnonymous]
-    [HttpPost("verify-email")]
-    public IActionResult VerifyEmail(VerifyEmailCommand command)
+    [HttpGet("verify-email")]
+    public async Task<IActionResult> VerifyEmailAsync(string token)
     {
-        return Ok(new { message = "Verification successful, you can now login", a = command });
+        var handler = new VerifyEmailCommandHandler(_repository);
+        return await ExecuteAsync(token, handler, HttpStatusCode.BadRequest, HttpStatusCode.OK);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> AuthenticateAsync()
+    public async Task<IActionResult> AuthenticateAsync(LoginCommand command)
     {
-       // await _mediator.Send(new RegisterCommand());
-        // var response = _accountService.Authenticate(model, GetIPAddress());
-        // SetTokenCookie(response.RefreshToken);
-        //  return Ok(response);
+        if (command == null) return BadRequest("command cannot be null");
+
+        var handler = new LoginCommandHandler(_repository, _password, _token, _refreshRepo, _settings);
+        command.IpAddress = GetIPAddress();
+        var result = await handler.HandleAsync(command);
+        if (result.NotSucceeded)
+            return BadRequest(result.Status);
+
+        var user = result.Data;
+
         var claims = new List<Claim>()
         {
-            new Claim(ClaimTypes.Name, "John"),
+            new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
+            new Claim(ClaimTypes.SerialNumber, user.UserId.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.UserType.ToString()),
+            new Claim(ClaimTypes.GivenName, user.FirstName),
+            new Claim(ClaimTypes.Surname, user.LastName)
         };
         var principalUser = new ClaimsPrincipal(
             new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
-        await Response.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principalUser);
-        
-        return Ok();
+
+        Response.Cookies.Append(_refreshToken, result.Data.RefreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Expires = DateTime.UtcNow.AddMinutes(_settings.RefreshExpiration),
+            IsEssential = true
+        });
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principalUser,
+            new AuthenticationProperties
+            {
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(15),
+                IssuedUtc = DateTime.UtcNow,
+                IsPersistent = false,
+                AllowRefresh = false
+            });
+        return Ok(result);
+
     }
 
     [HttpPost("refresh-token")]
-    public ActionResult<LoginDto> RefreshToken()
+    public async Task<IActionResult> RefreshTokenAsync()
     {
-        // var refreshToken = Request.Cookies["refreshToken"];
-        //  var response = _accountService.RefreshToken(refreshToken, GetIPAddress());
-        // SetTokenCookie(response.RefreshToken);
-        //   return Ok(response);
-        return Ok();
+        var command = new RefreshTokenCommand()
+        {
+            Token = Request.Cookies[_refreshToken],
+            IpAddress = GetIPAddress()
+        };
+        var handler = new RefreshTokenCommandHandler(_repository, _token, _refreshRepo, _settings);
+        var result = await handler.HandleAsync(command);
+        if (result.NotSucceeded)
+            return BadRequest(result.Status);
+
+        Response.Cookies.Append(_refreshToken, result.Data.RefreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Expires = DateTime.UtcNow.AddMinutes(_settings.RefreshExpiration),
+            IsEssential = true
+        });
+        return Ok(result);
     }
 
-   
     [HttpPost("forgot-password")]
     public IActionResult ForgotPassword(ForgotPasswordCommand command)
     {
@@ -69,19 +116,20 @@ public class AuthController : BaseController
     {
         return Ok(new { message = "Password reset successful, you can now login", a = command });
     }
-    [AuthorizeRole]
-    [HttpPost("logout")]
-    public IActionResult Logout()
+    [Authorize]
+    [HttpDelete("logout")]
+    public async Task<IActionResult> LogoutAsync(HttpContext http)
     {
-        //TODO: Take this to handler
-        //string idString = http.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        var idString = http.User.FindFirstValue(ClaimTypes.PrimarySid);
 
-        //bool vaild = Guid.TryParse(idString, out Guid userId);
-        //if (vaild.IsFalse()) return Results.Unauthorized();
+        var vaild = Guid.TryParse(idString, out var userId);
 
-        //await((AccountDbContext)dbContext).RefreshTokenRepository.RemoveAsync(userId);
+        if (vaild.IsFalse()) return Unauthorized();
 
-        return NoContent(); //TODO: Redirect to login html page
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        var handler = new LogoutCommandHandler(_refreshRepo);
+        return await ExecuteCommandAsync(new LogoutCommand(userId), handler, HttpStatusCode.Unauthorized, HttpStatusCode.NoContent);
     }
 
     [AuthorizeRole]
@@ -92,25 +140,20 @@ public class AuthController : BaseController
     }
     // helper methods
 
-    private void SetTokenCookie(string token, JwtSettings settings)
-    {
-        Response.Cookies.Append("access_token", token, new CookieOptions
-        {
-            HttpOnly = true,
-            SameSite = SameSiteMode.Lax,
-            Expires = DateTime.UtcNow.AddDays(settings.RefreshExpiration)
-        });
-    }
 
     private string GetIPAddress()
     {
         if (Request.Headers.ContainsKey("X-Forwarded-For"))
             return Request.Headers["X-Forwarded-For"];
         else
-            return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
     }
     private readonly IUserRepository _repository;
+    private readonly IRefreshTokenRepository _refreshRepo;
     private readonly IEmailService _email;
     private readonly IPasswordManager _password;
+    private readonly IAuthTokenManger _token;
     private readonly AppSettings _app;
+    private readonly JwtSettings _settings;
+    private readonly string _refreshToken = "refresh_token";
 }

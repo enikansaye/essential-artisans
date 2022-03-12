@@ -12,4 +12,11 @@
         public const string USER = nameof(USER);
         public const string AMIN = nameof(AMIN);
     }
+    public sealed class ConstantValue
+    {
+        public const string LOGIN = "/login";
+        public const string LOGOUT = "/logout";
+        public const string FORBIDDEN = "/forbidden";
+        public const string COOKIE_NAME = "ac_in";
+    }
 }

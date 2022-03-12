@@ -3,10 +3,10 @@
   flex-direction: column;
   align-items: flex-start;
 }
-.login{
+.login {
   width: 100%;
   max-width: 100%;
-  height: 700px;
+  height: 450px;
   max-width: 100%;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@ input {
   /* border-bottom: 2px solid yellow; */
 }
 @media screen and (max-width: 320px) {
-  .login{
+  .login {
     width: 320px;
     max-width: 100%;
     height: 480px;
@@ -70,13 +70,13 @@ input {
     display: flex;
     position: absolute;
     padding: 5px;
-   
+
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 5px;
   }
 }
 @media screen and (width: 480px) {
-  .login{
+  .login {
     width: 480px;
     max-width: 100%;
     height: 700px;
@@ -99,13 +99,13 @@ input {
     display: flex;
     position: absolute;
     padding: 15px;
-  
+
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 5px;
   }
 }
 @media screen and (width: 768px) {
-  .login{
+  .login {
     width: 768px;
     max-width: 100%;
     height: 700px;
@@ -128,13 +128,13 @@ input {
     display: flex;
     position: absolute;
     padding: 5px;
-    
+
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
   }
 }
 @media screen and (width: 992px) {
-  .login{
+  .login {
     width: 992px;
     max-width: 100%;
     height: 700px;
@@ -158,7 +158,7 @@ input {
     position: absolute;
     justify-content: center;
     padding: 40px;
-    
+
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 10px;
   }

@@ -2,8 +2,8 @@
 {
     public interface IPasswordManager
     {
-        string GenerateToken();
+        string GenerateToken(int length);
         string GetHash(string password, string salt);
-        bool CompareHash(string password, string passwordGiven);
+        bool CompareHash(string passwordHash1, string passwordHash2);
     }
 }

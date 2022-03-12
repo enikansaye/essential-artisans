@@ -12,7 +12,7 @@
 
     public interface ICommandHandler<TCommand, TResponse>
     {
-        Task<TResponse> HandleAsync(TCommand command);
+        Task<Result<TResponse>> HandleAsync(TCommand command);
 
     }
     public interface ICommandHandler<TCommand>

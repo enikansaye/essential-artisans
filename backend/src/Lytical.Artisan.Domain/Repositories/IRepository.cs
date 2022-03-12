@@ -1,6 +1,4 @@
-﻿using Lytical.Artisan.Domain.Entities;
-
-namespace Lytical.Artisan.Domain.Repositories
+﻿namespace Lytical.Artisan.Domain.Repositories
 {
     public interface IRepository<T> where T : IEntity
     {

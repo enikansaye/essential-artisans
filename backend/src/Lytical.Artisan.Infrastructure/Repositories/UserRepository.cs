@@ -15,9 +15,10 @@
             return ResultStatus<bool>.Pass();
         }
 
-        public ValueTask<bool> VerifyEmailAsync(string token)
+        public async Task<User> VerifyEmailAsync(string token)
         {
-            throw new NotImplementedException();
+            await Task.Delay(1000);
+            return FakeDatabase.Users.FirstOrDefault(x => x.VerificationToken == token);
         }
 
         public async ValueTask<Result<bool>> ExistsAsync(string email)

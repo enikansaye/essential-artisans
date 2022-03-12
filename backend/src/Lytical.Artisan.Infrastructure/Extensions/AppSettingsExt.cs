@@ -10,7 +10,8 @@ namespace Lytical.Artisan.Infrastructure.Extensions
                             .AddSingleton(builder.Configuration.GetSection(nameof(AppSettings)).Get<AppSettings>())
                             .Configure<CookiePolicyOptions>(options =>
                             {
-                                options.CheckConsentNeeded = context => true;
+                                options.ConsentCookie.IsEssential = true;
+                                options.CheckConsentNeeded = context => false;
                                 options.MinimumSameSitePolicy = SameSiteMode.None;
                                 options.HttpOnly = HttpOnlyPolicy.Always;
                                 options.Secure = CookieSecurePolicy.Always;

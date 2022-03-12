@@ -7,6 +7,7 @@ namespace Lytical.Artisan.Domian.Tests
         [SetUp]
         public void Setup()
         {
+            
         }
 
         [Test]

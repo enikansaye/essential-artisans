@@ -1,17 +1,28 @@
 ﻿using System.Security.Cryptography;
-using Lytical.Artisan.Domain.Extensions;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Lytical.Artisan.Infrastructure.Services
 {
     public class PasswordManager : IPasswordManager
     {
-        public string GenerateToken()
+        public string GenerateToken(int length)
         {
-            var salt = new byte[128 / 8];
-            using (var rngCsp = RandomNumberGenerator.Create())
-                rngCsp.GetNonZeroBytes(salt);
-            return Convert.ToBase64String(salt);
+            if (length <= 0)
+            {
+                var salt = new byte[128 / 8];
+                using (var rngCsp = RandomNumberGenerator.Create())
+                    rngCsp.GetNonZeroBytes(salt);
+                return Convert.ToBase64String(salt);
+            }
+            string saltString = null;
+            for (var i = 0; i < length; i++)
+            {
+                var salt = new byte[128 / 8];
+                using (var rngCsp = RandomNumberGenerator.Create())
+                    rngCsp.GetNonZeroBytes(salt);
+                saltString += Convert.ToBase64String(salt);
+            }
+            return saltString;
         }
         public string GetHash(string password, string salt)
         {
@@ -22,11 +33,9 @@ namespace Lytical.Artisan.Infrastructure.Services
                    iterationCount: 100000,
                    numBytesRequested: 256 / 8));
         }
-        public bool CompareHash(string password, string passwordGiven)
+        public bool CompareHash(string passwordHash1, string passwordHash2)
         {
-            if (password.IsValidString() || passwordGiven.IsValidString())
-                return password.Equals(passwordGiven);
-            return false;
+            return passwordHash1.Equals(passwordHash2);
         }
     }
 }

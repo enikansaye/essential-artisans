@@ -7,7 +7,7 @@
             _request = request;
         }
 
-        public async Task InvokeAsync(HttpContext context, JwtSettings settings, ITokenService service)
+        public async Task InvokeAsync(HttpContext context, JwtSettings settings, IAuthTokenManger service)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 

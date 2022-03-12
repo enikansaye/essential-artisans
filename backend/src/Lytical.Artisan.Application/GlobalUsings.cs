@@ -5,3 +5,4 @@ global using Lytical.Artisan.Domain.Repositories;
 global using Lytical.Artisan.Domain.Services;
 global using Lytical.Artisan.Domain.Settings;
 global using Lytical.Artisan.Domain.Utilities;
+global using Lytical.Artisan.Domain.Extensions;

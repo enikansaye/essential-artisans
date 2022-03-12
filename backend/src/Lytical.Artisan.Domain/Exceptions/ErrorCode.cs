@@ -26,8 +26,6 @@ namespace Lytical.Artisan.Domain.Exceptions
 
         public static ErrorCode Unauthorized => new(nameof(Unauthorized), HttpStatusCode.Unauthorized);
 
-        public static ErrorCode InvalidRefreshToken => new(nameof(InvalidRefreshToken));
-
         public static ErrorCode EmailExistInDatabase =>
             new(nameof(EmailExistInDatabase), "Email already exist in our database.");
 

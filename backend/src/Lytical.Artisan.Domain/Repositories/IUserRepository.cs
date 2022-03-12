@@ -7,6 +7,6 @@ namespace Lytical.Artisan.Domain.Repositories
     {
         ValueTask<Result<bool>> ExistsAsync(string email);
         Task<User> FindbyEmailAsync(string email);
-        ValueTask<bool> VerifyEmailAsync(string token);
+        Task<User> VerifyEmailAsync(string token);
     }
 }

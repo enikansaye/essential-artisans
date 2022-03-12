@@ -1,11 +1,9 @@
-﻿namespace Lytical.Artisan.Domain.Repositories
+﻿
+namespace Lytical.Artisan.Domain.Repositories
 {
-    public interface IRefreshTokenRepository
+    public interface IRefreshTokenRepository : IDataAccess, IRepository<RefreshToken>
     {
-        //Task AddAsync(IToken entity);
-        //Task<IToken> FindbyTokenAsync(string token);
-        //Task<IToken> FindbyIdAsync(Guid userId);
-        //Task RemoveAsync(int id);
-        //Task RemoveAsync(Guid userId);
+        Task<RefreshToken> FindbyTokenAsync(string token);
+        ValueTask<Result<bool>> RemoveAllByUserIdAsync(Guid userId);
     }
 }

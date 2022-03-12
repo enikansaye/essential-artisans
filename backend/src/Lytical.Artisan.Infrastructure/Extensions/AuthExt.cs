@@ -1,4 +1,5 @@
-﻿using Lytical.Artisan.Infrastructure.Middlewares;
+﻿using Lytical.Artisan.Domain.Constants;
+using Lytical.Artisan.Infrastructure.Middlewares;
 
 namespace Lytical.Artisan.Infrastructure.Extensions;
 public static class AuthService
@@ -12,8 +13,10 @@ public static class AuthService
                 auth.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie(options =>
             {
-                options.LoginPath = "/api/auth/login";
-                options.LogoutPath = "/api/auth/logout";
+                options.LoginPath = ConstantValue.LOGIN;
+                options.LogoutPath = ConstantValue.LOGOUT;
+                options.AccessDeniedPath = ConstantValue.FORBIDDEN;
+                options.Cookie.Name = ConstantValue.COOKIE_NAME;
                 options.Cookie.MaxAge = TimeSpan.FromMinutes(15);
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
                 options.Cookie.HttpOnly = true;

@@ -19,17 +19,19 @@ namespace Lytical.Artisan.Domain.Entities
         public void SetPasswordHash(string passwordHash) => PasswordHash = passwordHash;
         public void SetPasswordSalt(string passwordSalt) => PasswordSalt = passwordSalt;
         public void SetEmail(string email) => Email = email;
-        public void SetEmailConfirmation(bool emailConfirmed) => EmailConfirmed = emailConfirmed;
+        public void SetEmailConfirmation(DateTime? date) => EmailConfirmed = date;
         public void SetPhoneConfirmation(bool phoneConfirmed) => PhoneNumberConfirmed = phoneConfirmed;
         public void IncrementAccessFailedCount() => AccessFailedCount += 1;
         public void ResetAccessFailedCount() => AccessFailedCount = 0;
+        public void ClearEmailConfirmation() => VerificationToken = null;
         public string FullName => $"{FirstName} {LastName}".ToTitleCase();
         public string NormalizedEmail => Email.ToUpper();
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; protected set; }
-        public bool EmailConfirmed { get; protected set; }
+        public bool IsEmailConfirmed => EmailConfirmed != null;
+        public DateTime? EmailConfirmed { get; protected set; }
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; protected set; }
         public string PasswordHash { get; protected set; }

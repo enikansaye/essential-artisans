@@ -1,9 +1,9 @@
 ﻿namespace Lytical.Artisan.Infrastructure.Services
 {
-    public class JwtService : ITokenService
+    public class JwtService : IAuthTokenManger
     {
         public JwtService(JwtSettings settings) => _settings = settings;
-        public string GenerateToken(User user)
+        public string GenerateAccessToken(User user)
         {
             List<Claim> claims = new()
             {

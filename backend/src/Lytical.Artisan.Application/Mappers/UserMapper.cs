@@ -1,15 +1,15 @@
-﻿using Lytical.Artisan.Domain.Entities;
-using Lytical.Artisan.Application.Commands.Register;
+﻿using Lytical.Artisan.Application.Commands;
 
 namespace Lytical.Artisan.Application.Mappers
 {
     public static class UserMapper
     {
-        public static RegisterUserDto MapEmailDto(this User user)
+        public static SignupDto MapEmailDto(this User user)
         {
-            return new RegisterUserDto
+            return new SignupDto
             {
                 Email = user.Email,
+                Status = "Registration successful. Please your email for account activation token."
             };
         }
 
