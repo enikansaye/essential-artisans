@@ -1,5 +1,5 @@
-﻿using Lytical.Artisan.Domain.Constants;
 using Lytical.Artisan.Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Lytical.Artisan.Infrastructure.Extensions;
 public static class AuthService
@@ -9,19 +9,9 @@ public static class AuthService
         builder.Services.AddSingleton<IPasswordManager, PasswordManager>()
             .AddAuthentication(auth =>
             {
-                auth.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(options =>
-            {
-                options.LoginPath = ConstantValue.LOGIN;
-                options.LogoutPath = ConstantValue.LOGOUT;
-                options.AccessDeniedPath = ConstantValue.FORBIDDEN;
-                options.Cookie.Name = ConstantValue.COOKIE_NAME;
-                options.Cookie.MaxAge = TimeSpan.FromMinutes(15);
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.None;
-                options.Cookie.SameSite = SameSiteMode.Lax;
+                auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
           {
@@ -33,7 +23,7 @@ public static class AuthService
               ClockSkew = TimeSpan.Zero,
               ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
               ValidAudience = builder.Configuration["JwtSettings:Audience"],
-              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])),
           });
     }
 

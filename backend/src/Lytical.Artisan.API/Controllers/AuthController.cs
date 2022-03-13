@@ -20,7 +20,7 @@ public class AuthController : BaseController
         _token = token;
         _refreshRepo = refresh;
     }
-
+   
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync(SignupCommand command)
@@ -47,20 +47,6 @@ public class AuthController : BaseController
         if (result.NotSucceeded)
             return BadRequest(result.Message);
 
-        var user = result.Data;
-
-        var claims = new List<Claim>()
-        {
-            new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
-            new Claim(ClaimTypes.SerialNumber, user.UserId.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.UserType.ToString()),
-            new Claim(ClaimTypes.GivenName, user.FirstName),
-            new Claim(ClaimTypes.Surname, user.LastName)
-        };
-        var principalUser = new ClaimsPrincipal(
-            new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme));
-
         Response.Cookies.Append(_refreshToken, result.Data.RefreshToken, new CookieOptions
         {
             HttpOnly = true,
@@ -69,14 +55,6 @@ public class AuthController : BaseController
             Expires = DateTime.UtcNow.AddMinutes(_settings.RefreshExpiration),
             IsEssential = true
         });
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principalUser,
-            new AuthenticationProperties
-            {
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(15),
-                IssuedUtc = DateTime.UtcNow,
-                IsPersistent = false,
-                AllowRefresh = false
-            });
         return Ok(result);
 
     }

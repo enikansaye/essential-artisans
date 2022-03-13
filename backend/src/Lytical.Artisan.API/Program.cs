@@ -23,9 +23,9 @@ app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseRouting();
 app.UseArtisanCors();
+app.UseMiddleware<JwtMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 app.Run();
 
