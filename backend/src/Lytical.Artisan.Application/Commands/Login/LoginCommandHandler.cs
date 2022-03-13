@@ -17,11 +17,11 @@
             var user = await _repository.FindbyEmailAsync(command.Email);
 
             if (user == null || user.IsEmailConfirmed.IsFalse())
-                return ResultStatus<LoginDto>.Fail("Account does not exists or requires email varification.");
+                return ResultStatus<LoginDto>.Fail(HttpStatusCode.Unauthorized, "Account does not exists or requires email varification.");
 
             var hash = _password.GetHash(command.Password, user.PasswordSalt);
             if (_password.CompareHash(hash, user.PasswordHash).IsFalse())
-                return ResultStatus<LoginDto>.Fail("Email or password is incorrect");
+                return ResultStatus<LoginDto>.Fail(HttpStatusCode.Unauthorized, "Email or password is incorrect");
 
             var access_token = _token.GenerateAccessToken(user);
             var refresh_token = _token.GenerateRefreshToken();
@@ -39,9 +39,9 @@
                 UserId = user.Id,
                 RefreshToken = refresh_token,
                 AccessToken = access_token,
-                UserType = user.UserType
+                UserType = user.UserType,
 
-            });
+            }, HttpStatusCode.OK, "Login successful.");
         }
 
         private readonly IUserRepository _repository;

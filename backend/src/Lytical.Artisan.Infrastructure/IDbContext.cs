@@ -4,7 +4,7 @@
     {
         DbSet<User> Users { get; set; }
 
-        Task<Result<bool>> CommitAsync();
+        Task<bool> CommitAsync();
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         bool EnsureDatabaseCreated();

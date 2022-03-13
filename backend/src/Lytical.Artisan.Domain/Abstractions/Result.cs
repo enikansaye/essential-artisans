@@ -1,22 +1,26 @@
-﻿namespace Lytical.Artisan
+﻿using System.Net;
+
+namespace Lytical.Artisan
 {
     public class Result
     {
-        public Result(bool isSuccess, string message = null)
+        public Result(bool isSuccess, HttpStatusCode code, string message = null)
         {
             Succeeded = isSuccess;
-            Status = message;
+            Message = message;
+            StatusCode = code;
         }
 
         public bool Succeeded { get; set; }
         public bool NotSucceeded => !Succeeded;
-        public string Status { get; set; }
+        public string Message { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
     }
 
     public class Result<TResult> : Result
     {
-        public Result(TResult result, bool isSuccess, string message = null) : base(isSuccess, message) => Data = result;
-        public Result(bool isSuccess, string message = null) : base(isSuccess, message) { }
+        public Result(TResult result, bool isSuccess, HttpStatusCode code, string message = null) : base(isSuccess, code, message) => Data = result;
+        public Result(bool isSuccess, HttpStatusCode code, string message = null) : base(isSuccess, code, message) { }
         public TResult Data { get; }
     }
 }

@@ -6,3 +6,4 @@ global using Lytical.Artisan.Domain.Services;
 global using Lytical.Artisan.Domain.Settings;
 global using Lytical.Artisan.Domain.Utilities;
 global using Lytical.Artisan.Domain.Extensions;
+global using System.Net;

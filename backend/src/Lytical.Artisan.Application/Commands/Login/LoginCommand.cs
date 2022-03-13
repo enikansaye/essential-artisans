@@ -5,12 +5,11 @@
         public Result<LoginDto> Validate()
         {
             if (Email.IsNotValidEmailString())
-                return ResultStatus<LoginDto>.Fail("A valid email is required.");
+                return ResultStatus<LoginDto>.Fail(HttpStatusCode.BadRequest, "A valid email is required.");
             if (Password.IsNotValidString())
-                return ResultStatus<LoginDto>.Fail("Password is required.");
+                return ResultStatus<LoginDto>.Fail(HttpStatusCode.BadRequest, "Password is required.");
 
-            return ResultStatus<LoginDto>.Pass();
-
+            return ResultStatus<LoginDto>.Pass(HttpStatusCode.OK);
         }
         public string Email { get; set; }
         public string IpAddress { get; set; }

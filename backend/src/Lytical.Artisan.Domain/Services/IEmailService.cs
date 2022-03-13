@@ -6,6 +6,6 @@
         IEmailService From(string email, string name = null);
         IEmailService Subject(string subject);
         IEmailService Body(string emailBody);
-        Task<Result<bool>> SendAsync();
+        Task<bool> SendAsync();
     }
 }

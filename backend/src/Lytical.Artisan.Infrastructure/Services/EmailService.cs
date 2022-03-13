@@ -35,18 +35,18 @@ namespace Lytical.Artisan.Infrastructure.Services
             return this;
         }
 
-        public async Task<Result<bool>> SendAsync()
+        public async Task<bool> SendAsync()
         {
             try
             {
                 var response = await _email.SendAsync();
 
-                return ResultStatus<bool>.Pass(response.Successful);
+                return response.Successful;
             }
             catch (Exception ex)
             {
                 _logger.LogError("Email from sending failed.", new { ex.Message, ex?.InnerException, ex.StackTrace });
-                return ResultStatus<bool>.Fail("Email from sending failed."); ;
+                return true;
             }
         }
 

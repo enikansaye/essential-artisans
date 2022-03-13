@@ -4,63 +4,54 @@ namespace Lytical.Artisan.API.Controllers
 {
     public class BaseController : ControllerBase
     {
-        protected async Task<IActionResult> ExecuteCommandAsync<TCommand>(TCommand command, ICommandHandler<TCommand> handler, HttpStatusCode errorCode, HttpStatusCode successCode) where TCommand : ICommand
+        protected async Task<IActionResult> ExecuteCommandAsync<TCommand>(TCommand command, ICommandHandler<TCommand> handler) where TCommand : ICommand
         {
-           // if (dataAccess == null) return GetResult(errorCode, "DbContext cannot be null");
-
-            if (command == null) return GetResult(errorCode, "command cannot be null");
+            if (command == null) return GetResult(HttpStatusCode.BadRequest, "command cannot be null");
 
             var validate = command.Validate();
             if (validate.NotSucceeded)
-                return GetResult(errorCode, validate.Status);
+                return GetResult(validate.StatusCode, validate.Message);
 
             var result = await handler.HandleAsync(command);
             if (result.NotSucceeded)
-                return GetResult(errorCode, result.Status);
+                return GetResult(result.StatusCode, result.Message);
 
-            return GetResult(successCode, result.Status);
+            return GetResult(result.StatusCode, result.Message);
         }
-        protected async Task<IActionResult> ExecuteAsync<TCommand>(TCommand command, ICommandHandler<TCommand> handler, HttpStatusCode errorCode, HttpStatusCode successCode) //where TCommand : ICommand
+        protected async Task<IActionResult> ExecuteAsync<TCommand>(TCommand command, ICommandHandler<TCommand> handler) //where TCommand : ICommand
         {
-           // if (dataAccess == null) return GetResult(errorCode, "DbContext cannot be null");
-
-            if (command == null) return GetResult(errorCode, "command cannot be null");
+            if (command == null) return GetResult(HttpStatusCode.BadRequest, "command cannot be null");
 
             var result = await handler.HandleAsync(command);
             if (result.NotSucceeded)
-                return GetResult(errorCode, result.Status);
+                return GetResult(result.StatusCode, result.Message);
 
-            return GetResult(successCode, result.Status);
+            return GetResult(result.StatusCode, result.Message);
         }
-        protected async Task<IActionResult> ExecuteCommandAsync<TCommand, TResponse>(TCommand command, ICommandHandler<TCommand, TResponse> handler, HttpStatusCode errorCode, HttpStatusCode successCode) where TCommand : ICommand<TResponse>
+        protected async Task<IActionResult> ExecuteCommandAsync<TCommand, TResponse>(TCommand command, ICommandHandler<TCommand, TResponse> handler) where TCommand : ICommand<TResponse>
         {
-           // if (dataAccess == null) return GetResult(errorCode, "DbContext cannot be null");
-
-            if (command == null) return GetResult(errorCode, "command cannot be null");
+            if (command == null) return GetResult(HttpStatusCode.BadRequest, "command cannot be null");
 
             var validate = command.Validate();
             if (validate.NotSucceeded)
-                return GetResult(errorCode, validate.Status);
+                return GetResult(validate.StatusCode, validate.Message);
 
             var result = await handler.HandleAsync(command);
             if (result.NotSucceeded)
-                return GetResult(errorCode, result.Status);
+                return GetResult(result.StatusCode, result.Message);
 
-            return GetResult(successCode, result.Data);
+            return GetResult(result.StatusCode, result.Data);
         }
-        protected async Task<IActionResult> ExecuteAsync<TCommand, TResponse>(TCommand command, ICommandHandler<TCommand, TResponse> handler, HttpStatusCode errorCode, HttpStatusCode successCode) //where TCommand : ICommand<TResponse>
+        protected async Task<IActionResult> ExecuteAsync<TCommand, TResponse>(TCommand command, ICommandHandler<TCommand, TResponse> handler) //where TCommand : ICommand<TResponse>
         {
-           // if (dataAccess == null) return GetResult(errorCode, "DbContext cannot be null");
-
-            if (command == null) return GetResult(errorCode, "command cannot be null");
+            if (command == null) return GetResult(HttpStatusCode.BadRequest, "command cannot be null");
 
             var result = await handler.HandleAsync(command);
             if (result.NotSucceeded)
-                return GetResult(errorCode, result.Status);
+                return GetResult(result.StatusCode, result.Message);
 
-            return GetResult(successCode, result.Data);
+            return GetResult(result.StatusCode, result.Data);
         }
-
         private IActionResult GetResult(HttpStatusCode code, object value = null)
         {
             return code switch
@@ -69,6 +60,8 @@ namespace Lytical.Artisan.API.Controllers
                 HttpStatusCode.BadRequest => BadRequest(value),
                 HttpStatusCode.Unauthorized => Unauthorized(),
                 HttpStatusCode.NoContent => NoContent(),
+                HttpStatusCode.Conflict => Conflict(value),
+                HttpStatusCode.Forbidden => Forbid(),
                 _ => BadRequest(value),
             };
         }

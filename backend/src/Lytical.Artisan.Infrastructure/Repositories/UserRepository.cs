@@ -6,13 +6,13 @@
         {
             _context = context;
         }
-        public async ValueTask<Result<bool>> AddAsync(User entity)
+        public async ValueTask<bool> AddAsync(User entity)
         {
             //await _context.Users.AddAsync(entity);
             //return await _context.CommitAsync();
             await Task.Delay(1000);
             FakeDatabase.Users.Add(entity);
-            return ResultStatus<bool>.Pass();
+            return true;
         }
 
         public async Task<User> VerifyEmailAsync(string token)
@@ -21,11 +21,11 @@
             return FakeDatabase.Users.FirstOrDefault(x => x.VerificationToken == token);
         }
 
-        public async ValueTask<Result<bool>> ExistsAsync(string email)
+        public async ValueTask<bool> ExistsAsync(string email)
         {
             await Task.Delay(1000);
             var result = FakeDatabase.Users.Any(x => x.NormalizedEmail == email.ToUpper());
-            return ResultStatus<bool>.Pass(result);
+            return true;
         }
 
         public async Task<List<User>> FindAllAsync()
@@ -56,7 +56,7 @@
             return FakeDatabase.Users.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public async ValueTask<Result<bool>> RemoveAsync(User entity)
+        public async ValueTask<bool> RemoveAsync(User entity)
         {
             //_context.Users.Remove(entity);
             //return await _context.CommitAsync();
@@ -64,10 +64,10 @@
 
             var user = FakeDatabase.Users.Where(x => x.NormalizedEmail == entity.Email.ToUpper()).FirstOrDefault();
             FakeDatabase.Users.Remove(user);
-            return ResultStatus<bool>.Pass();
+            return true;
         }
 
-        public async ValueTask<Result<bool>> UpdateAsync(User entity)
+        public async ValueTask<bool> UpdateAsync(User entity)
         {
             //_context.Users.Update(entity);
             //return await _context.CommitAsync();
@@ -75,7 +75,7 @@
             var user = FakeDatabase.Users.Where(x => x.NormalizedEmail == entity.Email.ToUpper()).FirstOrDefault();
             user.FirstName = entity.FirstName;
             user.LastName = entity.LastName;
-            return ResultStatus<bool>.Pass();
+            return true;
         }
 
         private readonly IDbContext _context;

@@ -11,15 +11,15 @@
             var user = await _repository.VerifyEmailAsync(command);
 
             if (user == null)
-                return ResultStatus.Fail(ErrorCode.InvalidEmailConfirmationToken.Message);
+                return ResultStatus.Fail(HttpStatusCode.BadRequest, ErrorCode.InvalidEmailConfirmationToken.Message);
 
             user.ClearEmailConfirmation();
             user.SetEmailConfirmation(DateTime.UtcNow);
 
             var dbOperation = await _repository.UpdateAsync(user);
-            if (dbOperation.NotSucceeded) return ResultStatus.Fail(dbOperation.Status);
+            if (dbOperation.IsFalse()) return ResultStatus.Fail(HttpStatusCode.InternalServerError, ErrorCode.FaultWhileSavingToDatabase.Message);
 
-            return ResultStatus.Pass("Email verification successful.");
+            return ResultStatus.Pass(HttpStatusCode.OK, "Email verification successful.");
 
         }
         private readonly IUserRepository _repository;

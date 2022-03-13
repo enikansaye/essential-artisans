@@ -9,7 +9,9 @@
         public async Task<Result> HandleAsync(LogoutCommand command)
         {
             var dbOperations = await _refreshRepository.RemoveAllByUserIdAsync(command.UserId);
-            return ResultStatus<bool>.Pass(dbOperations.Data);
+            if (dbOperations.IsFalse())
+                return ResultStatus<bool>.Fail(HttpStatusCode.InternalServerError, "Failed to delete user refresh token");
+            return ResultStatus<bool>.Pass(HttpStatusCode.NoContent);
         }
         private readonly IRefreshTokenRepository _refreshRepository;
     }

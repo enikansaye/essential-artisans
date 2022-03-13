@@ -15,7 +15,7 @@ namespace Lytical.Artisan.Application.Commands
         public async Task<Result<SignupDto>> HandleAsync(SignupCommand command)
         {
             var userExists = await _repository.ExistsAsync(command.Email);
-            if (userExists.Data) return ResultStatus<SignupDto>.Fail(ErrorCode.EmailExistInDatabase.Message);
+            if (userExists.IsFalse()) return ResultStatus<SignupDto>.Fail(HttpStatusCode.Conflict, ErrorCode.EmailExistInDatabase.Message);
 
             var token = _password.GenerateToken(2);
             var salt = _password.GenerateToken(0);
@@ -25,7 +25,7 @@ namespace Lytical.Artisan.Application.Commands
             user.VerificationToken = token;
 
             var dbOperation = await _repository.AddAsync(user);
-            if (dbOperation.NotSucceeded) return ResultStatus<SignupDto>.Fail(dbOperation.Status);
+            if (dbOperation.IsFalse()) return ResultStatus<SignupDto>.Fail(HttpStatusCode.InternalServerError, ErrorCode.FaultWhileSavingToDatabase.Message);
 
 
             var emailBody = EmbedResource.Extract("EmailVerification.html")
@@ -37,9 +37,9 @@ namespace Lytical.Artisan.Application.Commands
             _email.Body(emailBody);
             var emailOperation = await _email.SendAsync();
 
-            if (emailOperation.NotSucceeded) return ResultStatus<SignupDto>.Fail("Email sending failed.");
+            if (emailOperation.IsFalse()) return ResultStatus<SignupDto>.Fail(HttpStatusCode.InternalServerError, "Email sending failed.");
 
-            return ResultStatus<SignupDto>.Pass(user.MapEmailDto());
+            return ResultStatus<SignupDto>.Pass(user.MapEmailDto(), HttpStatusCode.OK);
         }
         private readonly IUserRepository _repository;
         private readonly IEmailService _email;

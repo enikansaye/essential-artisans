@@ -2,7 +2,7 @@
 {
     public class RefreshTokenRepository : IRefreshTokenRepository
     {
-        public ValueTask<Result<bool>> AddAsync(RefreshToken entity)
+        public ValueTask<bool> AddAsync(RefreshToken entity)
         {
             throw new NotImplementedException();
         }
@@ -27,17 +27,17 @@
             throw new NotImplementedException();
         }
 
-        public ValueTask<Result<bool>> RemoveAllByUserIdAsync(Guid userId)
+        public ValueTask<bool> RemoveAllByUserIdAsync(Guid userId)
         {
             throw new NotImplementedException();
         }
 
-        public ValueTask<Result<bool>> RemoveAsync(RefreshToken entity)
+        public ValueTask<bool> RemoveAsync(RefreshToken entity)
         {
             throw new NotImplementedException();
         }
 
-        public ValueTask<Result<bool>> UpdateAsync(RefreshToken entity)
+        public ValueTask<bool> UpdateAsync(RefreshToken entity)
         {
             throw new NotImplementedException();
         }

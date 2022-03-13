@@ -26,14 +26,14 @@ public class AuthController : BaseController
     public async Task<IActionResult> RegisterAsync(SignupCommand command)
     {
         var handler = new SignupCommandHandler(_repository, _email, _password, _app);
-        return await ExecuteCommandAsync(command, handler, HttpStatusCode.BadRequest, HttpStatusCode.OK);
+        return await ExecuteCommandAsync(command, handler);
     }
     [AllowAnonymous]
     [HttpGet("verify-email")]
     public async Task<IActionResult> VerifyEmailAsync(string token)
     {
         var handler = new VerifyEmailCommandHandler(_repository);
-        return await ExecuteAsync(token, handler, HttpStatusCode.BadRequest, HttpStatusCode.OK);
+        return await ExecuteAsync(token, handler);
     }
 
     [HttpPost("login")]
@@ -45,7 +45,7 @@ public class AuthController : BaseController
         command.IpAddress = GetIPAddress();
         var result = await handler.HandleAsync(command);
         if (result.NotSucceeded)
-            return BadRequest(result.Status);
+            return BadRequest(result.Message);
 
         var user = result.Data;
 
@@ -86,13 +86,12 @@ public class AuthController : BaseController
     {
         var command = new RefreshTokenCommand()
         {
-            Token = Request.Cookies[_refreshToken],
-            IpAddress = GetIPAddress()
+            Token = Request.Cookies[_refreshToken]
         };
         var handler = new RefreshTokenCommandHandler(_repository, _token, _refreshRepo, _settings);
         var result = await handler.HandleAsync(command);
         if (result.NotSucceeded)
-            return BadRequest(result.Status);
+            return BadRequest(result.Message);
 
         Response.Cookies.Append(_refreshToken, result.Data.RefreshToken, new CookieOptions
         {
@@ -129,7 +128,7 @@ public class AuthController : BaseController
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
         var handler = new LogoutCommandHandler(_refreshRepo);
-        return await ExecuteCommandAsync(new LogoutCommand(userId), handler, HttpStatusCode.Unauthorized, HttpStatusCode.NoContent);
+        return await ExecuteCommandAsync(new LogoutCommand(userId), handler);
     }
 
     [AuthorizeRole]

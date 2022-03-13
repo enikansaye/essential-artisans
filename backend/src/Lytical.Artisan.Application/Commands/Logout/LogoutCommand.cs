@@ -6,9 +6,9 @@
         public Result Validate()
         {
             if (UserId.IsNotValidGuid())
-                return ResultStatus<LoginDto>.Fail("A valid email is required.");
+                return ResultStatus<LoginDto>.Fail(HttpStatusCode.Unauthorized, "A valid email is required.");
 
-            return ResultStatus<LoginDto>.Pass();
+            return ResultStatus<LoginDto>.Pass(HttpStatusCode.OK);
         }
         public Guid UserId { get; set; }
     }
