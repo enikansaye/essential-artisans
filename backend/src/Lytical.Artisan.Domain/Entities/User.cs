@@ -1,5 +1,4 @@
-﻿using Lytical.Artisan.Domain.Enums;
-using Lytical.Artisan.Domain.Extensions;
+﻿using Lytical.Artisan.Domain.Extensions;
 
 namespace Lytical.Artisan.Domain.Entities
 {

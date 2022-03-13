@@ -32,7 +32,7 @@
             var access_token = _token.GenerateAccessToken(user);
             var refresh_token = _token.GenerateRefreshToken();
 
-            refreshToken.ChangeRefreshToken(command.IpAddress, refresh_token);
+            refreshToken.ChangeRefreshToken(refresh_token);
             await _refreshRepository.UpdateAsync(refreshToken);
 
             return ResultStatus<RefreshTokenDto>.Pass(new RefreshTokenDto

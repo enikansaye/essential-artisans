@@ -8,6 +8,7 @@ namespace Lytical.Artisan.Infrastructure.Extensions
             services.AddDbContext<ArtisanDbContext>();
             services.AddScoped<IDbContext, ArtisanDbContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         }
 
         /// <summary>

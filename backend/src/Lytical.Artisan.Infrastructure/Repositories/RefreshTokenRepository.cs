@@ -27,6 +27,11 @@
             throw new NotImplementedException();
         }
 
+        public ValueTask<Result<bool>> RemoveAllByUserIdAsync(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public ValueTask<Result<bool>> RemoveAsync(RefreshToken entity)
         {
             throw new NotImplementedException();

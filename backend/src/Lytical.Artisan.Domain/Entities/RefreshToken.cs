@@ -3,7 +3,7 @@
     public class RefreshToken : IEntity
     {
         protected RefreshToken() { }
-        public static RefreshToken Create(Guid userUniqueId, int userId, string token, DateTime expires, string ipAddress)
+        public static RefreshToken Create(Guid userUniqueId, int userId, string token, DateTime expires)
         {
             return new RefreshToken
             {
@@ -11,14 +11,12 @@
                 UniqueUserId = userUniqueId,
                 Token = token,
                 Expires = expires,
-                Created = DateTime.UtcNow,
-                CreatedByIp = ipAddress
+                Created = DateTime.UtcNow
             };
         }
-        public void ChangeRefreshToken(string ipAddress, string replacedByToken)
+        public void ChangeRefreshToken(string replacedByToken)
         {
             Changed = DateTime.UtcNow;
-            ChangedByIp = ipAddress;
             Token = replacedByToken;
         }
         public Guid Id { get; protected set; }
@@ -27,9 +25,7 @@
         public string Token { get; protected set; }
         public DateTime Expires { get; protected set; }
         public DateTime Created { get; protected set; }
-        public string CreatedByIp { get; set; }
         public DateTime? Changed { get; set; }
-        public string ChangedByIp { get; set; }
         public bool IsExpired => DateTime.UtcNow >= Expires;
         public bool IsChanged => Changed != null;
         public bool IsActive => Changed == null && !IsExpired;

@@ -27,7 +27,7 @@
             var refresh_token = _token.GenerateRefreshToken();
             var date = DateTime.UtcNow.AddMinutes(_settings.RefreshExpiration);
 
-            var refreshToken = RefreshToken.Create(user.Id, user.UserId, refresh_token, date, command.IpAddress);
+            var refreshToken = RefreshToken.Create(user.Id, user.UserId, refresh_token, date);
             await _refreshRepository.AddAsync(refreshToken);
 
             return ResultStatus<LoginDto>.Pass(new LoginDto
