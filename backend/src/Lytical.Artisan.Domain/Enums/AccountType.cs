@@ -1,6 +1,6 @@
 ﻿namespace Lytical.Artisan.Domain.Enums
 {
-    public enum UserType
+    public enum AccountType
     {
         ADMIN, CUSTOMER, ARTISAN
     }

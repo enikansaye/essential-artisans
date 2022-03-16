@@ -1,5 +1,6 @@
 ﻿
 
+using Lytical.Artisan.Domain.Constants;
 using Lytical.Artisan.Domain.Extensions;
 
 namespace Lytical.Artisan.API.Controllers;
@@ -10,7 +11,7 @@ public class AuthController : BaseController
 {
     public AuthController(IUserRepository repository, IEmailService email,
         IPasswordManager password, AppSettings app, JwtSettings settings,
-        IAuthTokenManger token, IRefreshTokenRepository refresh)
+        IAuthTokenManger token)
     {
         _repository = repository;
         _email = email;
@@ -18,7 +19,6 @@ public class AuthController : BaseController
         _app = app;
         _settings = settings;
         _token = token;
-        _refreshRepo = refresh;
     }
    
     [AllowAnonymous]
@@ -41,19 +41,19 @@ public class AuthController : BaseController
     {
         if (command == null) return BadRequest("command cannot be null");
 
-        var handler = new LoginCommandHandler(_repository, _password, _token, _refreshRepo, _settings);
-        command.IpAddress = GetIPAddress();
+        var handler = new LoginCommandHandler(_repository, _password, _token, _settings);
         var result = await handler.HandleAsync(command);
         if (result.NotSucceeded)
             return BadRequest(result.Message);
 
-        Response.Cookies.Append(_refreshToken, result.Data.RefreshToken, new CookieOptions
+        Response.Cookies.Append(ConstantValue.COOKIE_NAME, result.Data.RefreshToken, new CookieOptions
         {
             HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.Lax,
             Expires = DateTime.UtcNow.AddMinutes(_settings.RefreshExpiration),
-            IsEssential = true
+            IsEssential = true,
+            Path = ConstantValue.COOKIE_PATH
         });
         return Ok(result);
 
@@ -64,14 +64,14 @@ public class AuthController : BaseController
     {
         var command = new RefreshTokenCommand()
         {
-            Token = Request.Cookies[_refreshToken]
+            Token = Request.Cookies[ConstantValue.COOKIE_NAME]
         };
-        var handler = new RefreshTokenCommandHandler(_repository, _token, _refreshRepo, _settings);
+        var handler = new RefreshTokenCommandHandler(_repository, _token, _settings);
         var result = await handler.HandleAsync(command);
         if (result.NotSucceeded)
             return BadRequest(result.Message);
 
-        Response.Cookies.Append(_refreshToken, result.Data.RefreshToken, new CookieOptions
+        Response.Cookies.Append(ConstantValue.COOKIE_NAME, result.Data.RefreshToken, new CookieOptions
         {
             HttpOnly = true,
             Secure = true,
@@ -105,7 +105,7 @@ public class AuthController : BaseController
 
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        var handler = new LogoutCommandHandler(_refreshRepo);
+        var handler = new LogoutCommandHandler(_repository);
         return await ExecuteCommandAsync(new LogoutCommand(userId), handler);
     }
 
@@ -115,22 +115,10 @@ public class AuthController : BaseController
     {
         return Ok();
     }
-    // helper methods
-
-
-    private string GetIPAddress()
-    {
-        if (Request.Headers.ContainsKey("X-Forwarded-For"))
-            return Request.Headers["X-Forwarded-For"];
-        else
-            return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
-    }
     private readonly IUserRepository _repository;
-    private readonly IRefreshTokenRepository _refreshRepo;
     private readonly IEmailService _email;
     private readonly IPasswordManager _password;
     private readonly IAuthTokenManger _token;
     private readonly AppSettings _app;
     private readonly JwtSettings _settings;
-    private readonly string _refreshToken = "refresh_token";
 }

@@ -34,7 +34,6 @@ namespace Lytical.Artisan.Infrastructure
             return true;
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         private readonly IConfiguration _configuration;
     }

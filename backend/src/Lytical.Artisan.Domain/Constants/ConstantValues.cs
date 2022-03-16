@@ -18,5 +18,6 @@
         public const string LOGOUT = "/logout";
         public const string FORBIDDEN = "/forbidden";
         public const string COOKIE_NAME = "ac_in";
+        public const string COOKIE_PATH = "/api/auth/refresh-token";
     }
 }

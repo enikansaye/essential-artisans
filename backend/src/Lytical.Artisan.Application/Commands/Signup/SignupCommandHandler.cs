@@ -22,7 +22,7 @@ namespace Lytical.Artisan.Application.Commands
             var hash = _password.GetHash(command.Password, salt);
 
             var user = User.Create(command.Email, hash, salt);
-            user.VerificationToken = token;
+            user.EmailVerificationToken = token;
 
             var dbOperation = await _repository.AddAsync(user);
             if (dbOperation.IsFalse()) return ResultStatus<SignupDto>.Fail(HttpStatusCode.InternalServerError, ErrorCode.FaultWhileSavingToDatabase.Message);

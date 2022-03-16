@@ -10,7 +10,7 @@ namespace Lytical.Artisan.Application.Commands
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public UserType UserType { get; set; }
+        public AccountType UserType { get; set; }
         public string AccessToken { get; set; }
 
         [JsonIgnore] // refresh token is returned in http only cookie
