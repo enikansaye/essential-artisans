@@ -1,6 +1,6 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class RefreshTokenCommandHandler : ICommandHandler<RefreshTokenCommand, RefreshTokenDto>
+    public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenDto>
     {
         public RefreshTokenCommandHandler(IUserRepository repository, IAuthTokenManger token, JwtSettings settings)
         {
@@ -8,13 +8,13 @@
             _token = token;
             _settings = settings;
         }
-        public async Task<Result<RefreshTokenDto>> HandleAsync(RefreshTokenCommand command)
+        public async Task<Result<RefreshTokenDto>> HandleAsync(RefreshTokenCommand request)
         {
-            var claims = _token.ValidateToken(command.Token, _settings.RefreshKey);
+            var claims = _token.ValidateToken(request.Token, _settings.RefreshKey);
             if (claims.NotAny())
                 return ResultStatus<RefreshTokenDto>.Fail(HttpStatusCode.Unauthorized, "Invalid refresh token");
 
-            var user = await _repository.FindbyTokenAsync(command.Token);
+            var user = await _repository.FindbyTokenAsync(request.Token);
 
             if (user == null)
                 return ResultStatus<RefreshTokenDto>.Fail(HttpStatusCode.BadRequest, "User not found.");

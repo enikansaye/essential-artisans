@@ -1,6 +1,8 @@
-﻿namespace Lytical.Artisan.Application.Commands
+﻿using Lytical.Artisan.Domain.Enums;
+
+namespace Lytical.Artisan.Application.Commands
 {
-    public class SignupCommand : ICommand<SignupDto>
+    public class SignupCommand : IRequest<SignupDto>
     {
         public Result<SignupDto> Validate()
         {
@@ -14,5 +16,6 @@
         }
         public string Email { get; set; }
         public string Password { get; set; }
+        public AccountType AccountType { get; set; }
     }
 }

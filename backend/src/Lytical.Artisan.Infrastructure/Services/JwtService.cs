@@ -8,11 +8,9 @@
             List<Claim> claims = new()
             {
                 new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
-                new Claim(ClaimTypes.SerialNumber, user.UserId.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.UserType.ToString()),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
+                new Claim(ClaimTypes.SerialNumber, user.UniqueId.ToString()),
+                new Claim(ClaimTypes.Role, user.AccountType.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             return CreateToken(_settings.SecretKey, _settings.Expiration, claims);

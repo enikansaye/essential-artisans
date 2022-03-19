@@ -51,16 +51,8 @@
         {
             // return await _context.Users.Where(x => x.UserId == id).FirstOrDefaultAsync();
             await Task.Delay(1000);
-            return FakeDatabase.Users.Where(x => x.UserId == id).FirstOrDefault();
-        }
-
-        public async Task<User> FindbyIdAsync(Guid id)
-        {
-            // return await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
-            await Task.Delay(1000);
             return FakeDatabase.Users.Where(x => x.Id == id).FirstOrDefault();
         }
-
         public async ValueTask<bool> RemoveAsync(User entity)
         {
             //_context.Users.Remove(entity);
@@ -80,6 +72,20 @@
             var user = FakeDatabase.Users.Where(x => x.Email.ToUpper() == entity.Email.ToUpper()).FirstOrDefault();
             user.FirstName = entity.FirstName;
             user.LastName = entity.LastName;
+            return true;
+        }
+
+        public async Task<Domain.Entities.Artificer> FindArtisanByIdAsync(int id)
+        {
+            // return await _context.Users.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            await Task.Delay(1000);
+            return FakeDatabase.Artisans.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public async ValueTask<bool> AddAsync(Artificer artificer)
+        {
+            await Task.Delay(1000);
+            FakeDatabase.Artisans.Add(artificer);
             return true;
         }
 

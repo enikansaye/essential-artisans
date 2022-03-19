@@ -1,6 +1,6 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class LoginCommandHandler : ICommandHandler<LoginCommand, LoginDto>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginDto>
     {
         public LoginCommandHandler(IUserRepository repository, IPasswordManager password,
                                    IAuthTokenManger token, JwtSettings settings)
@@ -10,14 +10,14 @@
             _token = token;
             _settings = settings;
         }
-        public async Task<Result<LoginDto>> HandleAsync(LoginCommand command)
+        public async Task<Result<LoginDto>> HandleAsync(LoginCommand request)
         {
-            var user = await _repository.FindbyEmailAsync(command.Email);
+            var user = await _repository.FindbyEmailAsync(request.Email);
 
             if (user == null || user.ConfirmEmail().IsFalse())
                 return ResultStatus<LoginDto>.Fail(HttpStatusCode.Unauthorized, "Account does not exists or requires email varification.");
 
-            var hash = _password.GetHash(command.Password, user.PasswordSalt);
+            var hash = _password.GetHash(request.Password, user.PasswordSalt);
             if (_password.CompareHash(hash, user.PasswordHash).IsFalse())
             {
                 user.IncrementAccessFailedCount();
@@ -34,14 +34,13 @@
 
             return ResultStatus<LoginDto>.Pass(new LoginDto
             {
-                Email = command.Email,
+                Email = request.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Id = user.UserId,
-                UserId = user.Id,
+                Id = user.Id,
                 RefreshToken = refresh_token,
                 AccessToken = access_token,
-                UserType = user.UserType,
+                UserType = user.AccountType,
 
             }, HttpStatusCode.OK, "Login successful.");
         }

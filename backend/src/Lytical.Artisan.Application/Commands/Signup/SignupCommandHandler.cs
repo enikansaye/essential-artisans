@@ -1,8 +1,8 @@
-﻿
+﻿using Lytical.Artisan.Domain.Enums;
 
 namespace Lytical.Artisan.Application.Commands
 {
-    public class SignupCommandHandler : ICommandHandler<SignupCommand, SignupDto>
+    public class SignupCommandHandler : IRequestHandler<SignupCommand, SignupDto>
     {
         public SignupCommandHandler(IUserRepository repository, IEmailService email,
             IPasswordManager password, AppSettings app)
@@ -12,16 +12,19 @@ namespace Lytical.Artisan.Application.Commands
             _password = password;
             _app = app;
         }
-        public async Task<Result<SignupDto>> HandleAsync(SignupCommand command)
+        public async Task<Result<SignupDto>> HandleAsync(SignupCommand request)
         {
-            var userExists = await _repository.ExistsAsync(command.Email);
+            var userExists = await _repository.ExistsAsync(request.Email);
             if (userExists.IsFalse()) return ResultStatus<SignupDto>.Fail(HttpStatusCode.Conflict, ErrorCode.EmailExistInDatabase.Message);
 
             var token = _password.GenerateToken(2);
             var salt = _password.GenerateToken(0);
-            var hash = _password.GetHash(command.Password, salt);
-
-            var user = User.Create(command.Email, hash, salt);
+            var hash = _password.GetHash(request.Password, salt);
+            User user;
+            if (request.AccountType == AccountType.ARTISAN)
+                user = Artificer.Create(request.Email, hash, salt);
+            else
+                user = User.Create(request.Email, hash, salt);
             user.EmailVerificationToken = token;
 
             var dbOperation = await _repository.AddAsync(user);
@@ -32,7 +35,7 @@ namespace Lytical.Artisan.Application.Commands
                                          .Replace("{userEmail}", user.Email)
                                          .Replace("{contactEmail}", _app.ContactEmail)
                                          .Replace("{emailVerificationLink}", $"{_app.Origin}/api/auth/verify-email?token={SafeUri.Encode(token)}");
-            _email.To(command.Email);
+            _email.To(request.Email);
             _email.Subject("Confirm Your Email");
             _email.Body(emailBody);
             var emailOperation = await _email.SendAsync();

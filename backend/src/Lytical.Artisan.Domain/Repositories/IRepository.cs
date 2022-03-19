@@ -7,6 +7,5 @@
         ValueTask<bool> RemoveAsync(T entity);
         Task<List<T>> FindAllAsync();
         Task<T> FindbyIdAsync(int id);
-        Task<T> FindbyIdAsync(Guid id);
     }
 }

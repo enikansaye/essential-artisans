@@ -14,11 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
+    <ProjectReference Include="..\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj" />
+    <Folder Include="Queries\GetAllCustomers\" />
+    <Folder Include="Queries\GetAllArtisans\" />
   </ItemGroup>
 
 </Project>

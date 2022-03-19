@@ -1,9 +1,4 @@
-﻿
-
-using Lytical.Artisan.Domain.Constants;
-using Lytical.Artisan.Domain.Extensions;
-
-namespace Lytical.Artisan.API.Controllers;
+﻿namespace Lytical.Artisan.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -20,13 +15,13 @@ public class AuthController : BaseController
         _settings = settings;
         _token = token;
     }
-   
+
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync(SignupCommand command)
     {
         var handler = new SignupCommandHandler(_repository, _email, _password, _app);
-        return await ExecuteCommandAsync(command, handler);
+        return await ExecuteRequestAsync(command, handler);
     }
     [AllowAnonymous]
     [HttpGet("verify-email")]
@@ -82,39 +77,22 @@ public class AuthController : BaseController
         return Ok(result);
     }
 
-    [HttpPost("forgot-password")]
-    public IActionResult ForgotPassword(ForgotPasswordCommand command)
-    {
-        return Ok(new { message = "Please check your email for password reset instructions", a = command });
-    }
-
-    [HttpPost("reset-password")]
-    public IActionResult ResetPassword(ResetPasswordCommand command)
-    {
-        return Ok(new { message = "Password reset successful, you can now login", a = command });
-    }
     [Authorize]
     [HttpDelete("logout")]
     public async Task<IActionResult> LogoutAsync(HttpContext http)
     {
         var idString = http.User.FindFirstValue(ClaimTypes.PrimarySid);
 
-        var vaild = Guid.TryParse(idString, out var userId);
+        var vaild = int.TryParse(idString, out var userId);
 
         if (vaild.IsFalse()) return Unauthorized();
 
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
         var handler = new LogoutCommandHandler(_repository);
-        return await ExecuteCommandAsync(new LogoutCommand(userId), handler);
+        return await ExecuteRequestAsync(new LogoutCommand(userId), handler);
     }
 
-    [AuthorizeRole]
-    [HttpGet]
-    public ActionResult<IEnumerable<LoginDto>> GetAll()
-    {
-        return Ok();
-    }
     private readonly IUserRepository _repository;
     private readonly IEmailService _email;
     private readonly IPasswordManager _password;

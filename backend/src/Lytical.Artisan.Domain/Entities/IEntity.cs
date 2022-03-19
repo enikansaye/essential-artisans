@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lytical.Artisan.Domain.Entities
+﻿namespace Lytical.Artisan.Domain.Entities
 {
     public interface IEntity
     {
-        Guid Id { get; }
+        int Id { get; set; }
+        Guid UniqueId { get; set; }
     }
 }

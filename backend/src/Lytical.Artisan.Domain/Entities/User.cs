@@ -12,6 +12,7 @@ namespace Lytical.Artisan.Domain.Entities
                 Email = email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
+                AccountType = AccountType.CUSTOMER
 
             };
         }
@@ -31,16 +32,19 @@ namespace Lytical.Artisan.Domain.Entities
         public void RemoveRefreshToken() => RefreshToken = null;
         public bool ConfirmEmail() => EmailConfirmed.HasValue;
         public string GetFullName() => $"{FirstName} {LastName}".ToTitleCase();
-        public int UserId { get; set; }
+        public override string ToString() => FullName;
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; protected set; }
+        public string PhoneNumber { get; set; }
+        public string FullName => GetFullName();
+        public string NormalizedEmail => Email.ToUpper();
         public string PasswordHash { get; protected set; }
         public string PasswordSalt { get; protected set; }
         public string PasswordResetToken { get; set; }
         public string EmailVerificationToken { get; set; }
         public string RefreshToken { get; protected set; }
-        public AccountType UserType { get; set; }
+        public AccountType AccountType { get; protected set; }
         public DateTime? PasswordResetStamp { get; set; }
         public DateTime DateRigistered { get; protected set; }
         public DateTime? RefreshTokenExpires { get; protected set; }
@@ -52,6 +56,8 @@ namespace Lytical.Artisan.Domain.Entities
         ///  and reset once the account is locked out or on sucessful login
         /// </summary>
         public int AccessFailedCount { get; protected set; }
-        public Guid Id { get; }
+        public virtual int Id { get; set; }
+        public virtual Guid UniqueId { get; set; }
+        public virtual IReadOnlyCollection<ServiceOrder> Orders { get; set; }
     }
 }

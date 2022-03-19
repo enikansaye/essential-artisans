@@ -25,9 +25,9 @@ namespace Lytical.Artisan.Domain.Extensions
         {
             return !text.IsNotValidString();
         }
-        public static bool IsNotValidGuid(this Guid guid)
+        public static bool IsNotValidId(this int id)
         {
-            return guid == Guid.Empty;
+            return id <= 0;
         }
 
         public static bool IsNotValidString(this string text)

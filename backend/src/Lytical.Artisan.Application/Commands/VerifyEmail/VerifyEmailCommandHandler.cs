@@ -1,14 +1,14 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class VerifyEmailCommandHandler : ICommandHandler<string>
+    public class VerifyEmailCommandHandler : IRequestHandler<string>
     {
         public VerifyEmailCommandHandler(IUserRepository repository)
         {
             _repository = repository;
         }
-        public async Task<Result> HandleAsync(string command)
+        public async Task<Result> HandleAsync(string request)
         {
-            var user = await _repository.VerifyEmailAsync(command);
+            var user = await _repository.VerifyEmailAsync(request);
 
             if (user == null)
                 return ResultStatus.Fail(HttpStatusCode.BadRequest, ErrorCode.InvalidEmailConfirmationToken.Message);

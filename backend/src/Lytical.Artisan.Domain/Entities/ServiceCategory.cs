@@ -20,8 +20,9 @@
         {
 
         }
-        public IReadOnlyCollection<ArtisanService> Services { get; set; }
+        public virtual IReadOnlyCollection<ArtisanService> Services { get; set; }
         public override string ToString() => Name;
-        public Guid Id { get; }
+        public virtual int Id { get; set; }
+        public virtual Guid UniqueId { get; set; }
     }
 }

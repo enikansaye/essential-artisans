@@ -1,6 +1,6 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class LoginCommand : ICommand<LoginDto>
+    public class LoginCommand : IRequest<LoginDto>
     {
         public Result<LoginDto> Validate()
         {

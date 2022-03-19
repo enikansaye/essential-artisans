@@ -1,14 +1,14 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class LogoutCommandHandler : ICommandHandler<LogoutCommand>
+    public class LogoutCommandHandler : IRequestHandler<LogoutCommand>
     {
         public LogoutCommandHandler(IUserRepository refreshRepository)
         {
             _repository = refreshRepository;
         }
-        public async Task<Result> HandleAsync(LogoutCommand command)
+        public async Task<Result> HandleAsync(LogoutCommand request)
         {
-            var user = await _repository.FindbyIdAsync(command.UserId);
+            var user = await _repository.FindbyIdAsync(request.UserId);
             if (user == null)
                 return ResultStatus<bool>.Fail(HttpStatusCode.Unauthorized, "Please, Log in to continue.");
 
