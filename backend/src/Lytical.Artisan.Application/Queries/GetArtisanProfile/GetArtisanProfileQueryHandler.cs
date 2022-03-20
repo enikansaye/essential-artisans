@@ -23,8 +23,9 @@
                 Address = user.Address,
                 Location = user.Location,
                 Profession = user.Profession,
-                ProfileImageUrl = user.Photo,
-                Rating = user.Rating,
+                ProfileImage = user.ProfileImage,
+                ReviewCount = user.Reviews.Count,
+                Rating = user.GetArtisanRating(),
             }, HttpStatusCode.OK, "Request was successful.");
         }
         private readonly IUserRepository _repository;

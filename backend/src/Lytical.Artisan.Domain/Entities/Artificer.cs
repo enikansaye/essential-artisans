@@ -13,11 +13,15 @@
 
             };
         }
+        public int GetArtisanRating()
+        {
+            return 0;
+        }
         public virtual ArtisanService Service { get; set; }
-        public string Photo { get; set; }
+        public byte[] ProfileImage { get; set; }
         public string Profession { get; set; }
         public string Address { get; set; }
         public string Location { get; set; }
-        public int Rating { get; set; }
+        public virtual IReadOnlyCollection<ArtisanReview> Reviews { get; set; }
     }
 }

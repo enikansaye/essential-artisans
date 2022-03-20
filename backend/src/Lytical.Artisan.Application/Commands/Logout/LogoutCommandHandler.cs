@@ -12,12 +12,12 @@
             if (user == null)
                 return ResultStatus<bool>.Fail(HttpStatusCode.Unauthorized, "Please, Log in to continue.");
 
-            if (user is not User account)
-                return ResultStatus<bool>.Fail(HttpStatusCode.InternalServerError, "Failed to delete user refresh token");
+            user.RemoveRefreshToken();
+            user.ResetAccessFailedCount();
+            var dbOperations = await _repository.UpdateAsync(user);
 
-            account.RemoveRefreshToken();
-            account.ResetAccessFailedCount();
-            await _repository.UpdateAsync(user);
+            if (dbOperations.IsFalse())
+                return ResultStatus<bool>.Fail(HttpStatusCode.InternalServerError, "Failed to delete user refresh token");
 
             return ResultStatus<bool>.Pass(HttpStatusCode.NoContent);
         }

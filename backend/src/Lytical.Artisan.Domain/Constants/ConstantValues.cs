@@ -7,11 +7,6 @@
         public const string EDIT = nameof(EDIT);
         public const string DELETE = nameof(DELETE);
     }
-    public sealed class Role
-    {
-        public const string USER = nameof(USER);
-        public const string AMIN = nameof(AMIN);
-    }
     public sealed class ConstantValue
     {
         public const string LOGIN = "/login";

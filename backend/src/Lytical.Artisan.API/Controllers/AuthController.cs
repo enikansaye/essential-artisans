@@ -79,9 +79,9 @@ public class AuthController : BaseController
 
     [Authorize]
     [HttpDelete("logout")]
-    public async Task<IActionResult> LogoutAsync(HttpContext http)
+    public async Task<IActionResult> LogoutAsync()
     {
-        var idString = http.User.FindFirstValue(ClaimTypes.PrimarySid);
+        var idString = User.FindFirstValue(ClaimTypes.PrimarySid);
 
         var vaild = int.TryParse(idString, out var userId);
 

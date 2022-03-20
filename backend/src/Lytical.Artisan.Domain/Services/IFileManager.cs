@@ -1,7 +1,7 @@
 ﻿namespace Lytical.Artisan.Domain.Services;
 public interface IFileManager
 {
-    string GetFilePath(string path);
-    Task AddFileAsync(string directoryPath, string uniqueFileName);
+    Task AddFileAsync(string uniqueFileName, FileType type, FileSize size);
+    Task<byte[]> GetFileAsync(FileSize size);
     void RemoveFile(string path);
 }

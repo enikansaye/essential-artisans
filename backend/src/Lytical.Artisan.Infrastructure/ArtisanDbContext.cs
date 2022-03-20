@@ -30,7 +30,7 @@ namespace Lytical.Artisan.Infrastructure
         public async Task<bool> CommitAsync()
         {
             if (await SaveChangesAsync() < 0)
-                throw new ArtisanException(ErrorCode.ErroWhileSavingToDatabase, "Cannot save changes in db.");
+                throw new ArtisanException(ErrorCode.ErrorWhileSavingToDatabase, "Cannot save changes in db.");
             return true;
         }
         public DbSet<User> Users { get; set; }

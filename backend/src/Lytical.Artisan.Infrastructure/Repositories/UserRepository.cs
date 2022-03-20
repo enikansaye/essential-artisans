@@ -89,6 +89,21 @@
             return true;
         }
 
+        public async Task<List<Artificer>> FindAllArtisanAsync()
+        {
+            await Task.Delay(1000);
+
+            return FakeDatabase.Artisans.Where(x => x.AccountType == Domain.Enums.AccountType.ARTISAN).ToList();
+        }
+
+        public async Task<List<User>> FindAllCustomerAsync()
+        {
+
+            await Task.Delay(1000);
+
+            return FakeDatabase.Users.Where(x => x.AccountType == Domain.Enums.AccountType.CUSTOMER).ToList();
+        }
+
         private readonly IDbContext _context;
     }
 }

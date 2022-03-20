@@ -15,4 +15,9 @@
     <ProjectReference Include="..\Lytical.Artisan.Infrastructure\Lytical.Artisan.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FileSystem\Imgs\" />
+    <Folder Include="FileSystem\Docs\" />
+  </ItemGroup>
+
 </Project>

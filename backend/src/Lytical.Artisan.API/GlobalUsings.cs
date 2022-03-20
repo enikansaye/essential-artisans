@@ -15,3 +15,7 @@ global using System.Net;
 global using Lytical.Artisan.Domain.Constants;
 global using Lytical.Artisan.Domain.Extensions;
 global using Lytical.Artisan.Application.Queries;
+global using Lytical.Artisan.Infrastructure.Filters;
+global using Lytical.Artisan.Infrastructure.Services;
+
+

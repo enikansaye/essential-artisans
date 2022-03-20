@@ -17,9 +17,4 @@
     <ProjectReference Include="..\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\GetAllCustomers\" />
-    <Folder Include="Queries\GetAllArtisans\" />
-  </ItemGroup>
-
 </Project>
