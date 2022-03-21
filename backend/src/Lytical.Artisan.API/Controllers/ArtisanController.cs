@@ -23,6 +23,12 @@
             var handler = new GetAllArtisansQueryHandler(_repository);
             return await ExecuteRequestAsync(new GetAllArtisansQuery(), handler);
         }
+        [HttpPatch("update")]
+        public async Task<IActionResult> UpdateArtisanProfileAsync(UpdateArtisanCommand request)
+        {
+            var handler = new UpdateArtisanCommandHandler(_repository);
+            return await ExecuteRequestAsync(request, handler);
+        }
         [HttpPost("upload-profile-image")]
         public async Task<IActionResult> UploadProfileImageAsync(IFormFile file)
         {

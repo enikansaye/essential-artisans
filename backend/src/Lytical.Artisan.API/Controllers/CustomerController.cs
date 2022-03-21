@@ -23,6 +23,12 @@
             var handler = new GetAllCustomersQueryHandler(_repository);
             return await ExecuteRequestAsync(new GetAllCustomersQuery(), handler);
         }
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateCustomerProfileAsync(UpdateUserCommand request)
+        {
+            var handler = new UpdateCustomerCommandHandler(_repository);
+            return await ExecuteRequestAsync(request, handler);
+        }
         private readonly IUserRepository _repository;
     }
 }
