@@ -5,8 +5,9 @@
         ValueTask<bool> AddAsync(Artificer artificer);
         ValueTask<bool> ExistsAsync(string email);
         Task<User> FindbyEmailAsync(string email);
-        Task<User> VerifyEmailAsync(string token);
-        Task<User> FindbyTokenAsync(string token);
+        Task<User> FindByEmailVerificationToken(string token);
+        Task<User> FindByRefreshTokenAsync(string token);
+        Task<User> FindByPasswordResetTokenAsync(string token);
         Task<Artificer> FindArtisanByIdAsync(int id);
         Task<List<User>> FindAllCustomerAsync();
         Task<List<Artificer>> FindAllArtisanAsync();

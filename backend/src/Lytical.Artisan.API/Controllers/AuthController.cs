@@ -30,6 +30,20 @@ public class AuthController : BaseController
         var handler = new VerifyEmailCommandHandler(_repository);
         return await ExecuteAsync(token, handler);
     }
+    [AllowAnonymous]
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordCommand command)
+    {
+        var handler = new ForgotPasswordCommandHandler(_repository, _email, _password, _app);
+        return await ExecuteRequestAsync(command, handler);
+    }
+    [AllowAnonymous]
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPasswordAsync(ResetPasswordCommand command)
+    {
+        var handler = new ResetPasswordCommandHandler(_repository, _password);
+        return await ExecuteRequestAsync(command, handler);
+    }
 
     [HttpPost("login")]
     public async Task<IActionResult> AuthenticateAsync(LoginCommand command)

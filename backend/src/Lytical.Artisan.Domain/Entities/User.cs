@@ -1,4 +1,4 @@
-﻿using Lytical.Artisan.Domain.Extensions;
+using Lytical.Artisan.Domain.Extensions;
 
 namespace Lytical.Artisan.Domain.Entities
 {
@@ -20,15 +20,24 @@ namespace Lytical.Artisan.Domain.Entities
         public void SetPasswordSalt(string passwordSalt) => PasswordSalt = passwordSalt;
         public void SetEmail(string email) => Email = email;
         public void SetEmailConfirmation(DateTime? date) => EmailConfirmed = date;
-        public virtual void SetRefreshToken(string token, DateTime expiration)
+        public void SetRefreshToken(string token, DateTime expiration)
         {
             RefreshToken = token;
             RefreshTokenExpires = expiration;
         }
+        public void UpdatePassword(string passwordHash, string passwordSalt)
+        {
+            PasswordHash = passwordHash;
+            PasswordSalt = passwordSalt;
+            PasswordResetStamp = null;
+            PasswordResetToken = null;
+        }
         public void IncrementAccessFailedCount() => AccessFailedCount += 1;
         public void ResetAccessFailedCount() => AccessFailedCount = 0;
         public void ClearEmailConfirmation() => EmailVerificationToken = null;
-        public bool RefreshTokenActived() => DateTime.UtcNow >= RefreshTokenExpires;
+        public bool HasActiveRefreshToken() => DateTime.UtcNow >= RefreshTokenExpires;
+        public bool HasExpiredPasswordRestToken() => PasswordResetStamp.HasValue &&
+                           (DateTime.UtcNow - Convert.ToDateTime(PasswordResetStamp)).Hours >= 24;
         public void RemoveRefreshToken() => RefreshToken = null;
         public bool ConfirmEmail() => EmailConfirmed.HasValue;
         public string GetFullName() => $"{FirstName} {LastName}".ToTitleCase();

@@ -14,12 +14,12 @@
             if (claims.NotAny())
                 return ResultStatus<RefreshTokenDto>.Fail(HttpStatusCode.Unauthorized, "Invalid refresh token");
 
-            var user = await _repository.FindbyTokenAsync(request.Token);
+            var user = await _repository.FindByRefreshTokenAsync(request.Token);
 
             if (user == null)
                 return ResultStatus<RefreshTokenDto>.Fail(HttpStatusCode.BadRequest, "User not found.");
 
-            if (user.RefreshTokenActived().IsFalse())
+            if (user.HasActiveRefreshToken().IsFalse())
             {
                 user.RemoveRefreshToken();
                 return ResultStatus<RefreshTokenDto>.Fail(HttpStatusCode.BadRequest, "Refresh token not found");

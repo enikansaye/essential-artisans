@@ -15,7 +15,7 @@ namespace Lytical.Artisan.Application.Commands
         public async Task<Result<SignupDto>> HandleAsync(SignupCommand request)
         {
             var userExists = await _repository.ExistsAsync(request.Email);
-            if (userExists.IsFalse()) return ResultStatus<SignupDto>.Fail(HttpStatusCode.Conflict, ErrorCode.EmailExistInDatabase.Message);
+            if (userExists) return ResultStatus<SignupDto>.Fail(HttpStatusCode.Conflict, ErrorCode.EmailExistInDatabase.Message);
 
             var token = _password.GenerateToken(2);
             var salt = _password.GenerateToken(0);

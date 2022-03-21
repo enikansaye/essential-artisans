@@ -8,7 +8,7 @@
         }
         public async Task<Result> HandleAsync(string request)
         {
-            var user = await _repository.VerifyEmailAsync(request);
+            var user = await _repository.FindByEmailVerificationToken(request);
 
             if (user == null)
                 return ResultStatus.Fail(HttpStatusCode.BadRequest, ErrorCode.InvalidEmailConfirmationToken.Message);

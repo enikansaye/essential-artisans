@@ -14,13 +14,13 @@
             FakeDatabase.Users.Add(entity);
             return true;
         }
-        public async Task<User> FindbyTokenAsync(string token)
+        public async Task<User> FindByRefreshTokenAsync(string token)
         {
             await Task.Delay(1000);
 
             return FakeDatabase.Users.Where(x => x.RefreshToken == token).FirstOrDefault();
         }
-        public async Task<User> VerifyEmailAsync(string token)
+        public async Task<User> FindByEmailVerificationToken(string token)
         {
             await Task.Delay(1000);
             return FakeDatabase.Users.FirstOrDefault(x => x.EmailVerificationToken == token);
@@ -102,6 +102,13 @@
             await Task.Delay(1000);
 
             return FakeDatabase.Users.Where(x => x.AccountType == Domain.Enums.AccountType.CUSTOMER).ToList();
+        }
+
+        public async Task<User> FindByPasswordResetTokenAsync(string token)
+        {
+            await Task.Delay(1000);
+
+            return FakeDatabase.Users.Where(x => x.PasswordResetToken == token).FirstOrDefault();
         }
 
         private readonly IDbContext _context;
