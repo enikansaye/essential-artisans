@@ -44,6 +44,7 @@ import { EmailComponent } from './components/email/email.component';
 import { MyorderComponent } from './components/myorder/myorder.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
+import { ArtisanprofileComponent } from './components/artisanprofile/artisanprofile.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { UserprofileComponent } from './components/userprofile/userprofile.compo
      ForgetpasswordComponent,
      EmailComponent,
      MyorderComponent,
-     UserprofileComponent
+     UserprofileComponent,
+     ArtisanprofileComponent
   ],
   imports: [
     BrowserModule,
