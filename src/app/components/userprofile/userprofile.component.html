@@ -1,14 +1,17 @@
 
 <div>
   <div>
-    <!-- <mat-toolbar>
-      <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
-      </button>
-    </mat-toolbar> -->
+    
     <mat-sidenav-container>
+      
       <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3">
+        <mat-toolbar class="w-100 d-flex justify-content-end">
+          <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+                   
+            <mat-icon *ngIf="sidenav.opened" class="d-flex justify-content-end">close</mat-icon>
+      
+          </button>
+        </mat-toolbar>
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
         <h4 class="mt-2 mt-md-4">ENIKANSAYE MAYOWA</h4>
         <h4>Software Developer</h4>
@@ -67,9 +70,8 @@
              <mat-toolbar>
       <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
         <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-        <!-- <i class="bi bi-heart me-3 " *ngIf="!sidenav.opened"></i> -->
-        <i class="bi bi-heart me-3 " *ngIf="sidenav.opened"></i>
-        <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+     
+        
   
       </button>
       

@@ -1,311 +1,619 @@
+<div>
+  <section class="container-fluid background pt-5 py-5 mt-5 mb-lg-3">
+    <div class="row align-items-center mt-md-2">
+      <div class="col-lg-7 order-lg-2 mb-lg-0 mb-4 pb-2 pb-lg-0">
+        <img
+          class="d-block mx-auto img-fluid"
+          src="assets/images/background2.jpg"
+          width="600"
+          alt=""
+        />
+      </div>
+      <div class="col-lg-5 order-lg-1 pe-lg-0 ">
+        <h1 class="display-5 mb-4 me-lg-n5 text-lg-start text-center mb-4 ">
+        Find Certified
+          <span class="dropdown d-inline-block h3"
+            ><a
+              class="dropdown-toggle text-decoration-none h2 text-info"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              >Artisans</a
+            ><span class="dropdown-menu dropdown-menu-end my-1"
+              ><a class="dropdown-item fs-base fw-bold" href="#">Hamburg</a
+              ><a class="dropdown-item fs-base fw-bold" href="#">Munich</a
+              ><a class="dropdown-item fs-base fw-bold" href="#"
+                >Frankfurt am Main</a
+              ><a class="dropdown-item fs-base fw-bold" href="#">Stuttgart</a
+              ><a class="dropdown-item fs-base fw-bold" href="#"
+                >Cologne</a
+              ></span
+            ></span
+          >
+        </h1>
+        <p class="text-lg-start text-center mb-4 mb-lg-5 fs-lg lead font-monospace ">
+          Find satisfying Certified Artisans, to ease you of the stress and budden of doing it alone.
+        </p>
+        <!-- Search form-->
+        <div class="me-lg-n5">
+          <form
+            class="form-group d-block d-md-flex position-relative rounded-md-pill me-lg-n5"
+          >
+            <!-- <div class="input-group input-group-lg border-end-md"><span class="input-group-text text-muted rounded-pill ps-3"><i class="bi bi-search"></i></span>
+				  <input class="form-control" type="text" placeholder="What are you looking for?">
+				</div> -->
 
-
-<ng-container>
-    <div class=" contain">
-      <div class="caros">
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <!-- <div class="carousel-item active">
-              <img [src]="image1"  class="d-block w-50" alt="...">
-            </div> -->
-            <div class="carousel-item">
-          <div class="d-flex">
-            <img [src]="image3"  class="d-block w-20" alt="...">
-            <img [src]="image3"  class="d-block w-20" alt="...">
-            <img [src]="image3"  class="d-block w-20" alt="...">
-            <img [src]="image3"  class="d-block w-20" alt="...">
-            <!-- <img [src]="image3"  class="d-block w-20" alt="..."> -->
-          </div>
+            <hr class="d-md-none my-2" />
+            <div class="d-sm-flex">
+              <div class="dropdown w-100 mb-sm-0 mb-3" data-bs-toggle="select">
+                <button
+                  class="btn btn-link btn-lg dropdown-toggle ps-2 ps-sm-3 text-decoration-none"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="bi bi-list me-2"></i
+                  ><span class="dropdown-toggle-label">All Categories</span>
+                </button>
+                <input type="hidden" />
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="#"
+                      ><i class="fi-bed fs-lg opacity-60 me-2"></i
+                      ><span class="dropdown-item-label">AC Repair</span></a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#"
+                      ><i class="fi-cafe fs-lg opacity-60 me-2"></i
+                      ><span class="dropdown-item-label">Carpentary</span></a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#"
+                      ><i class="fi-shopping-bag fs-lg opacity-60 me-2"></i
+                      ><span class="dropdown-item-label">Electrician</span></a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#"
+                      ><i class="fi-museum fs-lg opacity-60 me-2"></i
+                      ><span class="dropdown-item-label">Plumbing</span></a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#"
+                      ><i class="fi-entertainment fs-lg opacity-60 me-2"></i
+                      ><span class="dropdown-item-label">Hair Stylist</span></a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <!-- <button
+                class="btn btn-primary btn-lg rounded-pill w-100 w-md-auto ms-sm-3"
+                type="button"
+              >
+                Search
+              </button> -->
             </div>
-            <div class="carousel-item">
-              <img [src]="image2" class="d-block w-50" alt="...">
-             
-            </div>
-            <!-- <div class="carousel-item">
-              <img [src]="image4" class="d-block w-50" alt="...">
-             
-            </div> -->
-            <!-- <div class="carousel-item">
-              <img [src]="image5" class="d-block w-50" alt="...">
-             
-            </div> -->
-            <!-- <div class="carousel-item">
-              <img [src]="image1" class="d-block w-50" alt="...">
-             
-            </div> -->
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="false"></span>
-            <span class="">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="false"></span>
-            <span class="">Next</span>
-          </button>
+          </form>
         </div>
       </div>
-
-      <div class="container box1">
-        <div class=" " style="max-width: 100%; height: 150px;">
-          <div class="row g-0">
-         <div class="body1 col-md-12">
-           <div class=" body2">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image2" alt="" /></h5>
-              <p class="card-text">AC SERVICES</p>
-            <!-- </div> -->
-           </div>
-           <div class="body2 ">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image3" alt="" /></h5>
-              <p class="card-text">PLUMBING</p>
-            <!-- </div> -->
-           </div>
-           <div class=" body2">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image3" alt="" /></h5>
-              <p class="card-text">CARPENTRY</p>
-            <!-- </div> -->
-           </div>
-           <div class="body2 ">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image2" alt="" /></h5>
-              <p class="card-text">PLUMBING </p>
-            <!-- </div> -->
-           </div>
-           <div class=" body2">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image2" alt="" /></h5>
-              <p class="card-text">PLUMBING</p>
-            <!-- </div> -->
-           </div>
-           <div class=" body2">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image2" alt="" /></h5>
-              <p class="card-text">PLUMBING</p>
-            <!-- </div> -->
-           </div>
-           <div class=" body2">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image2" alt="" /></h5>
-              <p class="card-text">PLUMBING</p>
-            <!-- </div> -->
-           </div>
-           <div class=" body2">
-            <!-- <div class="card-body body "> -->
-              <h5 class="card-title"><img [src]="image2" alt="" /></h5>
-              <p class="card-text">PLUMBING</p>
-            <!-- </div> -->
-           </div>
-         </div>
-          </div>
-        </div>
-      </div>
-      <div class="container box2">
-        <div class="text">AC REPAIR</div>
-        <div class="card mb-3" style="max-width: 100%; height: 300px;">
-          <div class="row g-0">
-            <div class="col-md-2 section1img">
-              <img [src]="image1" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class=" section2 col-md-10">
-              <div class="card-body body ">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">ELECTRICIAN .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">PLUMBING.</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <!-- <h5 class="card-title"><img [src]="image1" alt="" /></h5> -->
-                <!-- <p class="card-text">This is a wider card with .</p> -->
-              </div>
-              <div class="card-body body">
-                <!-- <h5 class="card-title"><img [src]="image1" alt="" /></h5> -->
-                <!-- <p class="card-text">This is a wider card with .</p> -->
-              </div>
-             
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container box2">
-        <div class="text">ELECTRICIAN </div>
-        <div class="card mb-3" style="max-width: 100%; height: 300px;">
-          <div class="row g-0">
-            <div class="col-md-2 section1img">
-              <img [src]="image1" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class=" section2 col-md-10">
-              <div class="card-body body ">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <!-- <h5 class="card-title"><img [src]="image1" alt="" /></h5> -->
-                <!-- <p class="card-text">This is a wider card with .</p> -->
-              </div>
-              <div class="card-body body">
-                <!-- <h5 class="card-title"><img [src]="image1" alt="" /></h5> -->
-                <!-- <p class="card-text">This is a wider card with .</p> -->
-              </div>
-             
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container box2">
-        <div class="text">PLUMBING</div>
-        <div class="card mb-3" style="max-width: 100%; height: 300px;">
-          <div class="row g-0">
-            <div class="col-md-2 section1img">
-              <img [src]="image1" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class=" section2 col-md-10">
-              <div class="card-body body ">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <h5 class="card-title"><img [src]="image1" alt="" /></h5>
-                <p class="card-text">This is a wider card with .</p>
-              </div>
-              <div class="card-body body">
-                <!-- <h5 class="card-title"><img [src]="image1" alt="" /></h5> -->
-                <!-- <p class="card-text">This is a wider card with .</p> -->
-              </div>
-              <div class="card-body body">
-                <!-- <h5 class="card-title"><img [src]="image1" alt="" /></h5> -->
-                <!-- <p class="card-text">This is a wider card with .</p> -->
-              </div>
-             
-            </div>
-          </div>
-        </div>
-      </div>
-
-  
-  
-    <div class="guarantee">
-        <div class="guaranteewrwpper">
-            <div>
-                <img src="" alt="">
-                <h4>HAPPINESS GUARANTEE</h4>
-                <h6>Because your happiness is our goal!
-              </h6>
-            </div>
-            <div class="icontext">
-                <div>
-                    <img src="" alt="">
-                    <h4>Verified Professionals</h4>
-                </div>
-                <div>
-                    <img src="" alt="">
-                    <h4>Insured Work</h4>
-                </div>
-                <div>
-                    <img src="" alt="">
-                    <h4>Re-work Assurance</h4>
-                </div>
-                <div>
-                    <img src="" alt="">
-                    <h4>Professional Support</h4>
-                </div>
-            </div>
-            <div>
-                <button class="btn">Find Out More</button>
-            </div>
-        </div>
     </div>
-  
-  <div class="sponsor">
-  <div class="number">
-      <div>
-          <h1>2 Million+</h1>
-          <p>Customers Served</p>
-      </div>
-      <div>
-          <h1>2 Million+</h1>
-          <p>Customers Served</p>
-      </div>
-      <div>
-          <h1>2 Million+</h1>
-          <p>Customers Served</p>
-      </div>
-  
-  </div>
-  <div>
-    <img src="" alt="">
-    <img src="" alt="">
-    <img src="" alt="">
-    <img src="" alt="">
-  </div>
-  </div>
-  
-  <!-- <iframe src="image6" height="200" width="300" title="Iframe Example"></iframe> -->
+  </section>
 
-</div>
-<!-- <owl-carousel-o [options]="customOptions" >
-  <ng-template carouselSlide>Slide1</ng-template>  
-  <ng-template carouselSlide>Slide1</ng-template>  
-  <ng-template carouselSlide>Slide2</ng-template>  
-  <ng-template carouselSlide>Slide3</ng-template>  
-  <ng-template carouselSlide>Slide3</ng-template>  
-  <ng-template carouselSlide>Slide3</ng-template>  
-  <ng-template carouselSlide>Slide3</ng-template>  
-</owl-carousel-o> -->
+  <div class="collapse account-collapse" id="userNav" data-bs-parent="#mainNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Billing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-red" href="#">Log Out</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- counter -->
+
+  <section class="py-0 py-xl-5">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Counter item -->
+        <div class="col-sm-6 col-xl-3">
+          <div
+            class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
+          >
+            <span class="display-6 lh-1 text-warning mb-0"
+              ><i class="bi bi-tv"></i
+            ></span>
+            <div class="ms-4 h6 fw-normal mb-0">
+              <div class="d-flex">
+                <h5
+                  class="purecounter mb-0 fw-bold"
+                  data-purecounter-start="0"
+                  data-purecounter-end="10"
+                  data-purecounter-delay="200"
+                >
+                 
+                </h5>
+                <span class="mb-0 h5">100K+</span>
+              </div>
+              <p class="mb-0">Reviews</p>
+            </div>
+          </div>
+        </div>
+        <!-- Counter item -->
+        <div class="col-sm-6 col-xl-3">
+          <div
+            class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
+          >
+            <span class="display-6 lh-1 text-blue mb-0"
+              ><i class="bi bi-user-tie"></i
+            ></span>
+            <div class="ms-4 h6 fw-normal mb-0">
+              <div class="d-flex">
+                <h5
+                  class="purecounter mb-0 fw-bold"
+                  data-purecounter-start="0"
+                  data-purecounter-end="200"
+                  data-purecounter-delay="200"
+                >
+                
+                </h5>
+                <span class="mb-0 h5">1.5K+</span>
+              </div>
+              <p class="mb-0">Users</p>
+            </div>
+          </div>
+        </div>
+        <!-- Counter item -->
+        <div class="col-sm-6 col-xl-3">
+          <div
+            class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
+          >
+            <span class="display-6 lh-1 text-purple mb-0"
+              ><i class="bi bi-user-graduate"></i
+            ></span>
+            <div class="ms-4 h6 fw-normal mb-0">
+              <div class="d-flex">
+                <h5
+                  class="purecounter mb-0 fw-bold"
+                  data-purecounter-start="0"
+                  data-purecounter-end="60"
+                  data-purecounter-delay="200"
+                >
+                </h5>
+                <span class="mb-0 h5">200K+</span>
+              </div>
+              <p class="mb-0">Job Done</p>
+            </div>
+          </div>
+        </div>
+        <!-- Counter item -->
+        <div class="col-sm-6 col-xl-3">
+          <div
+            class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
+          >
+            <span class="display-6 lh-1 text-info mb-0"
+              ><i class="bi bi-patch-check-fill"></i
+            ></span>
+            <div class="ms-4 h6 fw-normal mb-0">
+              <div class="d-flex">
+                <h5
+                  class="purecounter mb-0 fw-bold"
+                  data-purecounter-start="0"
+                  data-purecounter-end="6"
+                  data-purecounter-delay="300"
+                >
+                  <!-- 0 -->
+                </h5>
+                <span class="mb-0 h5">100K+</span>
+              </div>
+              <p class="mb-0">Certified Artisans</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- artisans within location -->
+  <section class="pt-3">
+    <div class="container-fluid">
+      <!-- Title -->
+      <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="fs-1">Artisan Within Your Location</h2>
+          <p class="mb-0">
+            Choose from thousand of available Artisans
+          </p>
+        </div>
+      </div>
+
+   
+
+      <!-- Tabs content START -->
+      <div class="tab-content" id="course-pills-tabContent">
+        <!-- Content START -->
+        <div
+          class="tab-pane fade show active"
+          id="course-pills-tabs-1"
+          role="tabpanel"
+          aria-labelledby="course-pills-tab-1"
+        >
+          <div class="row g-4">
+            <!-- Card item START -->
+            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/electrician">
+              <div class="card shadow h-100" >
+                <!-- Image -->
+                <img
+                  src="assets/images/electrician1.jpg"
+                  class="card-img-top h-50 img-fluid"
+                  alt="course image"
+                />
+                <!-- Card body -->
+                <div class="card-body pb-0">
+                  <!-- Badge and favorite -->
+                  <div class="d-flex justify-content-between mb-2">
+                    <a
+                      href="#"
+                      class="badge bg-purple bg-opacity-10 text-purple"
+                      >All level</a
+                    >
+                    <a href="#" class="h6 mb-0"><i class="far fa-heart"></i></a>
+                  </div>
+                  <!-- Title -->
+                  <h5 class="card-title fw-normal">
+                    <a href="#">Sketch from A to Z: for app designer</a>
+                  </h5>
+                  <p class="mb-2 text-truncate-2">
+                    Proposal indulged no do sociable he throwing settling.
+                  </p>
+                  <!-- Rating star -->
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="far fa-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                      4.0/5.0
+                    </li>
+                  </ul>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer pt-0 pb-3">
+                  <hr />
+                  <div>See All Electrical Services <span><i class="bi bi-arrow-right"></i></span></div>
+                </div>
+              </div>
+            </div>
+            <!-- Card item END -->
+
+            <!-- Card item START -->
+            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/acrepair">
+              <div class="card shadow h-100">
+                <!-- Image -->
+                <img
+                  src="assets/images/electrician2.jpg"
+                  class="card-img-top h-50 img-fluid"
+                  alt=""
+                />
+                <div class="card-body pb-0">
+                
+                  <!-- Title -->
+                  <h5 class="card-title fw-normal">
+                    <a href="#">Graphic Design Masterclass</a>
+                  </h5>
+                  <p class="mb-2 text-truncate-2">
+                    Rooms oh fully taken by worse do Points afraid but may end
+                    Rooms Points afraid but may end Rooms
+                  </p>
+                  <!-- Rating star -->
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star-half-alt text-warning"></i>
+                    </li>
+                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                      4.5/5.0
+                    </li>
+                  </ul>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer pt-0 pb-3">
+                  <hr />
+                  <div>See All Ac Repair  Services <span><i class="bi bi-arrow-right"></i></span></div>
+                </div>
+              </div>
+            </div>
+            <!-- Card item END -->
+
+            <!-- Card item START -->
+            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/carpentary">
+              <div class="card shadow h-100">
+                <!-- Image -->
+                <img
+                  src="assets/images/plumbling3.jpg"
+                  class="card-img-top h-50"
+                  alt="course image"
+                />
+                <div class="card-body pb-0">
+                  <!-- Badge and favorite -->
+                  <div class="d-flex justify-content-between mb-2">
+                   
+                    <a href="#" class="h6 fw-light mb-0"
+                      ><i class="far fa-heart"></i
+                    ></a>
+                  </div>
+                  <!-- Title -->
+                  <h5 class="card-title fw-normal">
+                    <a href="#">Create a Design System in Figma</a>
+                  </h5>
+                  <p class="mb-2 text-truncate-2">
+                    Rooms oh fully taken by worse do. Points afraid but may end
+                    afraid but may end.
+                  </p>
+                  <!-- Rating star -->
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star-half-alt text-warning"></i>
+                    </li>
+                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                      4.5/5.0
+                    </li>
+                  </ul>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer pt-0 pb-3">
+                  <hr />
+                  <div>See All Carpentary Services <span><i class="bi bi-arrow-right"></i></span></div>
+                </div>
+              </div>
+            </div>
+            <!-- Card item END -->
+
+            <!-- Card item START -->
+            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/plumbing">
+              <div class="card shadow h-100">
+                <!-- Image -->
+                <img
+                  src="assets/images/electrician3.jpg"
+                  class="card-img-top h-50"
+                  alt="course image"
+                />
+                <div class="card-body pb-0">
+                  <!-- Badge and favorite -->
+                 
+                  <!-- Title -->
+                  <h5 class="card-title fw-normal">
+                    <a href="#">Deep Learning with React-Native </a>
+                  </h5>
+                  <p class="mb-2 text-truncate-2">
+                    Far advanced settling say finished raillery. Offered chiefly
+                    farther
+                  </p>
+                  <!-- Rating star -->
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="far fa-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                      4.0/5.0
+                    </li>
+                  </ul>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer pt-0 pb-3">
+                  <hr />
+                  <div>See All Plumbing Services <span><i class="bi bi-arrow-right"></i></span></div>
+                </div>
+              </div>
+            </div>
+            <!-- Card item END -->
+
+          </div>
+          <!-- Row END -->
+        </div>
+        <!-- Content END -->
+
+      </div>
+      <!-- Tabs content END -->
+    </div>
+  </section>
+
   
-</ng-container>
+   
+<!-- what people says -->
+          <section class="container-fluid pt-md-2 mt-5 bg-primary bg-opacity-10 ">
+            <div class="row">
+              <div class="col-md-5 ">
+                <div class="card h-100 border-0 overflow-hidden px-md-4 background">
+                  <span class="bg-gradient-primary position-absolute top-0 start-0 w-100 h-100 opacity-10 d-none d-md-block"></span>
+                  <div class="card-body d-flex flex-column align-items-center justify-content-center position-relative zindex-2 p-0 pb-2 p-lg-4">
+                    <p class="h2 text-center text-md-start p-lg-4">What People Says About Us</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7 " >
+                <div class="card border-0 shadow-sm p-4 p-xxl-5 bg-primary bg-opacity-10 ">
+                  <div class="d-flex justify-content-between pb-4 mb-2">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner text-center">
+                        <div class="carousel-item active ">
+                          <p class="fs-lg mb-0">Vestibulum nunc lectus auctor quis. Natoque lectus tortor lacus, eu. Nunc feugiat nisl maecenas nulla hac morbi. Vitae, donec facilisis sed nunc netus. Venenatis posuere faucibus enim est. Vel dignissim morbi blandit morbi tellus. Arcu ullamcorper quis enim.</p>
+                          <div class="card-footer border-0 d-flex align-items-center w-100 pb-2 bg-primary bg-opacity-10 ">
+                            <img src="assets/images/may.jpg" width="60" class="rounded-circle img-fluid" alt="Ralph Edwards">
+                            <div class="ps-3">
+                              <h3 class="fw-semibold lh-base mb-0">enikansaye mayowa</h3>
+                              <span class="fs-sm text-muted">Head of Marketing at Lorem Ltd. </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="carousel-item ">
+                          <p class="fs-lg mb-0">Vestibulum nunc lectus auctor quis. Natoque lectus tortor lacus, eu. Nunc feugiat nisl maecenas nulla hac morbi. Vitae, donec facilisis sed nunc netus. Venenatis posuere faucibus enim est. Vel dignissim morbi blandit morbi tellus. Arcu ullamcorper quis enim.</p>
+                          <div class="card-footer border-0 d-flex align-items-center w-100 pb-2">
+                            <img src="assets/images/may.jpg" width="60" class="rounded-circle" alt="Ralph Edwards">
+                            <div class="ps-3">
+                              <h3 class="fw-semibold lh-base mb-0">Ralph Edwards</h3>
+                              <span class="fs-sm text-muted">Head of Marketing at Lorem Ltd. </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="carousel-item ">
+                          <p class="fs-lg mb-0">Vestibulum nunc lectus auctor quis. Natoque lectus tortor lacus, eu. Nunc feugiat nisl maecenas nulla hac morbi. Vitae, donec facilisis sed nunc netus. Venenatis posuere faucibus enim est. Vel dignissim morbi blandit morbi tellus. Arcu ullamcorper quis enim.</p>
+                          <div class="card-footer border-0 d-flex align-items-center w-100 my-2">
+                            <img src="assets/images/may.jpg" width="60" class="rounded-circle" alt="">
+                            <div class="ps-3">
+                              <h3 class="fw-semibold lh-base mb-0">john paul</h3>
+                              <span class="fs-sm text-muted">Head of Marketing at Lorem Ltd. </span>
+                            </div>
+                          </div>
+                        </div>
+                       
+                        
+                      </div>
+                   
+                    </div>
+                  </div>
+                  
+                      
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- supported brands -->
+          <section class="container mt-2 pt-3 pt-lg-5 pb-5">
+            <div class="text-center h2 pb-md-2">Trusted by Leading Companies</div>
+            <div class="swiper mx-n2 " data-swiper-options='{
+              "slidesPerView": 2,
+              "pagination": {
+                "el": ".swiper-pagination",
+                "clickable": true
+              },
+              "breakpoints": {
+                "500": {
+                  "slidesPerView": 3,
+                  "spaceBetween": 8
+                },
+                "650": {
+                  "slidesPerView": 4,
+                  "spaceBetween": 8
+                },
+                "900": {
+                  "slidesPerView": 5,
+                  "spaceBetween": 8
+                },
+                "1100": {
+                  "slidesPerView": 6,
+                  "spaceBetween": 8
+                }
+              }
+            }'>
+              <div class="swiper-wrapper d-flex col">
+    
+                <!-- Item -->
+                <div class="col-md-2 swiper-slide py-3 " >
+                  <a href="#" class="card card-body card-hover px-2 mx-2">
+                    <img src="assets/images/brand1.png" class="d-block mx-auto my-2 img-fluid" style="height: 50px;"   alt="Brand">
+                  </a>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide py-3 col-md-2">
+                  <a href="#" class="card card-body card-hover px-2 mx-2">
+                    <img src="assets/images/brand2.png" class="d-block mx-auto my-2" style="height: 50px;"  alt="Brand">
+                  </a>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide py-3 col-md-2">
+                  <a href="#" class="card card-body card-hover px-2 mx-2">
+                    <img src="assets/images/brand3.png" class="d-block mx-auto my-2"  style="height: 50px;" alt="Brand">
+                  </a>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-25 py-3 col-md-2">
+                  <a href="#" class="card card-body card-hover px-2 mx-2">
+                    <img src="assets/images/brand4.png" class="d-block mx-auto my-2 img-fluid" style="height: 50px;"  alt="Brand">
+                  </a>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-25 py-3 col-md-2">
+                  <a href="#" class="card card-body card-hover px-2 mx-2">
+                    <img src="assets/images/brand5.png" class="d-block mx-auto my-2 img-fluid" style="height: 50px;"  alt="Brand">
+                  </a>
+                </div>
+    
+                <!-- Item -->
+                <div class="swiper-slide h-25 py-3 col-md-2">
+                  <a href="#" class="card card-body card-hover px-2 mx-2">
+                    <img src="assets/images/brand6.png" class="d-block mx-auto my-2 img-fluid" style="height: 50px;"  alt="Brand">
+                  </a>
+                </div>
+              </div>
+    
+              <!-- Pagination (bullets) -->
+              <div class="swiper-pagination position-relative pt-2 mt-4"></div>
+            </div>
+          </section>
+        </div>
+ 

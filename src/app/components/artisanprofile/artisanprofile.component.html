@@ -1,0 +1,552 @@
+
+<!-- <div> -->
+    <div class="pt-5 h-100">
+      
+      <mat-sidenav-container>
+        
+        <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3">
+          <mat-toolbar class="w-100 d-flex justify-content-end">
+            <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+                     
+              <mat-icon *ngIf="sidenav.opened" class="d-flex justify-content-end">close</mat-icon>
+        
+            </button>
+          </mat-toolbar>
+          <img src="assets/images/mayor.jpg" class="image image-fluid ">
+          <h4 class="mt-2 mt-md-4">ENIKANSAYE MAYOWA</h4>
+          <h4>Software Developer</h4>
+      
+
+          <h4>Rank : <strong>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning" ></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star text-warning"></i>
+          </strong></h4>
+         <hr class="divider">
+          <div class="icons py-2 py-md-5">
+            <span class="pb-3" [class.active]="expression == 'match1'" (click)="expression = 'match1'"
+              ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span
+            >
+            <!-- <span class="pb-3" ><i class="bi bi-grid-3x3-gap" ></i> DASHBOARD</span> -->
+            <!-- <span class="pb-3"><i class="bi bi-person"> </i> INFORMATION</span> -->
+            <span class="pb-3" [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="bi bi-gear"> </i> MY ORDERS</span>
+            <span class="pb-3" [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="bi bi-gear"> </i> SERVICES</span>
+            <!-- <span class="pb-3"><i class="bi bi-arrow-down"></i> MY REVIEWS</span> -->
+            <!-- <span class="pb-3"><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span> -->
+          
+            <hr class="divided">
+  
+            
+            
+          </div>
+      
+        <hr class="divided">
+       
+  
+        <div class="dropdown ">
+          <a
+            href="#"
+            class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+            id="dropdownUser2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://github.com/mdo.png"
+              alt=""
+              width="32"
+              height="32"
+              class="rounded-circle me-2"
+            />
+            <strong>mayowa</strong>
+          </a>
+          <ul
+            class="dropdown-menu text-small shadow"
+            aria-labelledby="dropdownUser2"
+          >
+           
+            <!-- <li><hr class="dropdown-divider" /></li> -->
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>
+        <!-- <mat-divider></mat-divider> -->
+        </mat-sidenav>
+        <mat-sidenav-content opened>
+          
+          
+          <div class="content mat-elevation-z4 flex-column ms-3; ms-lg-4">
+               <mat-toolbar>
+        <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+          <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+       
+          
+    
+        </button>
+        
+        
+        <div class="d-flex justify-content-end w-100 ">
+          <i class="bi bi-heart me-3 "></i>
+          <i class="bi bi-cart me-3 "></i>
+          <div>
+            <div class="dropdown">
+              <a
+                href="#"
+                class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                id="dropdownUser2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                
+                <strong>mayowa</strong>
+             <div class="bg-success rounded-circle" >
+              <img 
+              src=""
+              alt=""
+              width="32"
+             height="32"
+              class="img-fluid"
+            />
+             </div>
+              </a>
+              <ul
+                class="dropdown-menu text-small shadow"
+                aria-labelledby="dropdownUser2"
+              >
+               
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
+            </div>
+          </div>
+         </div>
+      </mat-toolbar>
+      <div [ngSwitch]="expression">
+        <div *ngSwitchCase="'match1'" >
+            <section
+              class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
+            >
+           
+            
+              <div class="h5 text-success">EDIT INFORMATION</div>
+  
+              <div class="col align-items-end d-flex">
+                <div class="col-4 col-md-2 rounded-circle me-3 ">
+                  <img src="assets/images/mayor.jpg" class=" img-fluid bg-success rounded" />
+                </div>
+               
+  
+                <div class="align-text-bottom ">
+                  <label for="file-btn" class="btn btn-success"
+                    >Choose a file</label
+                  >
+                  <input type="file" class="pt-5 d-none" id="file-btn" hidden />
+  
+                  <h4 class="d-none d-lg-block pt-2">
+                    Acceptable format, jpg, png only<br /><span>
+                      Max file size is 100kb and min size 70kb</span
+                    >
+                  </h4>
+                </div>
+              </div>
+            </section>
+            <!-- <mat-divider></mat-divider> -->
+  
+            <section class="w-100 p-2 ps-md-5">
+              <div>
+                <div class="h5">ACCOUNT INFORMATION</div>
+                <div>
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >First Name</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputFirstName"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                      >Last Name</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+  
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                      >E-mail</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+                  <!-- <button class="btn btn-success">submit</button> -->
+                </div>
+              </div>
+            </section>
+  
+            <section class="p-2 mb-5 ps-md-5 butt">
+              <div class="d-flex">
+                <button
+                  href="#collapseExample"
+                  class="btn btn-outline-success mx-1"
+                  data-bs-toggle="collapse"
+                  
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                  >Change password</button
+                >
+                <!-- <button class="btn btn-outline-primary mx-1 btn-sm">
+                  Change password
+                </button> -->
+                <button class="btn btn-outline-success mx-1">edit profile</button>
+                <button class="btn btn-outline-danger mx-1">
+                  Delete Account
+                </button>
+              </div>
+              <div class="collapse pt-4" id="collapseExample">
+                <div class="card card-body">
+                  <h2>ChANGE PASSWORD</h2>
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                      >Current Password</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                      >New Password</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                      >Confirm Password</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-success mt-3">Update Changes</button>
+              </div>
+            </section>
+            </div>
+  
+  
+            <div *ngSwitchCase="'match2'" class="p-3">
+            <section>
+              <div class="col d-flex  justify-content-around">
+                <div class="col-3 col1 d-flex flex-column p-3 ">
+                  <span>Total bill</span>
+                  <strong># 20,000</strong>
+                  <!-- <a href="">sdfghjk</a> -->
+                </div>
+                <div class="col-3 col2 d-flex flex-column p-3">
+                  <span>Total order</span>
+                  <strong>10</strong>
+                  <!-- <a href="">sdfghjk</a> -->
+                </div>
+                <div class="col-3 col3 d-flex flex-column p-3 ">
+                  <span>Total bill</span>
+                  <strong># 20,000</strong>
+                  <!-- <a href="">sdfghjk</a> -->
+                </div>
+  
+              </div>
+            </section>
+            <section>
+              <mat-toolbar class="text-success w-100 justify-content-between m-3">
+                <div>Billing History</div>
+                <button class="btn btn-success d-flex  ">Add Order</button>
+              </mat-toolbar>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">20499p</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">30499p</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">40499p</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+           
+         
+              <div *ngSwitchCase="'match3'" class="p-3">
+                <section>
+                  <div class="col d-flex  justify-content-around">
+                    <div class="col-3 col1  d-flex flex-column p-3 "   >
+                      <span>Total bill</span>
+                      <strong># 20,000</strong>
+                      <!-- <a href="">sdfghjk</a> -->
+                    </div>
+                    <div class="col-3 col2 d-flex flex-column p-3 ">
+                      <span>Total order</span>
+                      <strong>10</strong>
+                      <!-- <a href="">sdfghjk</a> -->
+                    </div>
+                    <div class="col-3 col3 d-flex flex-column p-3 " >
+                      <span>Total bill</span>
+                      <strong># 20,000</strong>
+                      <!-- <a href="">sdfghjk</a> -->
+                    </div>
+      
+                  </div>
+                </section>
+                <mat-toolbar class="m-4">
+                  <div class="w-100 d-flex justify-content-between">
+                    <div [class.active]="service == 'completed'" class="mat" (click)="service = 'completed'">All Transactions(10)</div>
+                    <div [class.active]="service == 'completed1'"  class="mat" (click)="service = 'completed1'">Pending Orders(8)</div>
+                    <div [class.active]="service == 'completed2'" class="mat" (click)="service = 'completed2'">Completed Orders(12)</div>
+                    <div [class.active]="service == 'completed3'" class="mat" (click)="service = 'completed3'">Cancel Orders(5)</div>
+                  </div>
+                </mat-toolbar>
+           
+            <section>
+              <div [ngSwitch]="service">
+                <!-- all transaction -->
+                <div *ngSwitchCase="'completed'" >
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">20499p</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>completed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">20499p</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>pending</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">30499p</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>declined</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">40499p</th>
+                        <td >Larry the Bird</td>
+                        <td >Larry the Bird</td>
+                        <td>@twitter</td>
+                        <td>pending</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">40499p</th>
+                        <td >Larry the Bird</td>
+                        <td >Larry the Bird</td>
+                        <td>@twitter</td>
+                        <td>completed</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  <!-- completed transaction -->
+                <div *ngSwitchCase="'completed1'" >
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">20499p</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>pending</td>
+                        <td>
+                          <button class="btn btn-success me-2">Accept</button>
+                          <button class="btn btn-danger">Decline</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">30499p</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>pending</td>
+                        <td>
+                          <button class="btn btn-success me-2">Accept</button>
+                          <button class="btn btn-danger">Decline</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">40499p</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                        <td>pending</td>
+                        <td>
+                          <button class="btn btn-success me-2">Accept</button>
+                          <button class="btn btn-danger">Decline</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  <!-- completed Transactions -->
+                <div *ngSwitchCase="'completed2'" >
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">20499p</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>completed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">30499p</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>completed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">40499p</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>Larry the Bird</td>
+                        <td>completed</td>
+                        <!-- <td>completed</td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+
+                  <!-- cancel orders -->
+                <div *ngSwitchCase="'completed3'" >
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">20499p</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>canceled</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">30499p</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>canceled</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">40499p</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>Larry the Bird</td>
+                        <td>canceled</td>
+                        <!-- <td>completed</td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  </div>
+             
+            </section>
+            </div>
+            
+          
+          </div>
+          </div>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div>
+  <!-- </div> -->
+  
