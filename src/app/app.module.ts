@@ -14,6 +14,7 @@ import {MatFormFieldModule,} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -42,9 +43,14 @@ import { HomeComponent } from './components/home/home.component';
 import { ForgetpasswordComponent } from './components/forgetpassword/forgetpassword.component';
 import { EmailComponent } from './components/email/email.component';
 import { MyorderComponent } from './components/myorder/myorder.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { ArtisanprofileComponent } from './components/artisanprofile/artisanprofile.component';
+<<<<<<< HEAD
+=======
+import { AdminpageComponent } from './components/adminpage/adminpage.component';
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+>>>>>>> master
 
 
 @NgModule({
@@ -74,7 +80,15 @@ import { ArtisanprofileComponent } from './components/artisanprofile/artisanprof
      EmailComponent,
      MyorderComponent,
      UserprofileComponent,
+<<<<<<< HEAD
      ArtisanprofileComponent
+=======
+     ArtisanprofileComponent,
+     AdminpageComponent,
+     PagenotfoundComponent,
+     ForbiddenComponent,
+
+>>>>>>> master
   ],
   imports: [
     BrowserModule,
@@ -96,21 +110,26 @@ MatToolbarModule,
       {path: "", redirectTo: 'signin', pathMatch: 'full'},
       {path: "signin" , component: LoginComponent },
       {path: "signup" , component: SignupComponent },
-      // {path: "dashboard" , component: DashboardComponent },
+      {path: "dashboard" , component: DashboardComponent },
       // {path: "aboutus" , component: AboutusComponent },
       // {path: "contactus" , component: ContactusComponent },
       // {path: "ourpolicy" , component: PolicyComponent },
       // {path: "addtocart" , component: AddtocartComponent },
-      // {path: "electrician" , component: ElectricianComponent },
-      // {path: "plumbing" , component: PlumbingComponent },
-      // {path: "carpentary" , component: CapentaryComponent },
-      // {path: "acrepair" , component: AcrepairComponent },
+      {path: "electrician" , component: ElectricianComponent },
+      {path: "plumbing" , component: PlumbingComponent },
+      {path: "carpentary" , component: CapentaryComponent },
+      {path: "acrepair" , component: AcrepairComponent },
       {path: "register" , component: RegisterComponent },
       {path: "home" , component: HomeComponent },
       {path: "myorder" , component: MyorderComponent },
       {path: "userprofile" , component: UserprofileComponent },
+      {path: "artisanprofile" , component: ArtisanprofileComponent },
       {path: "forgetpassword" , component: ForgetpasswordComponent },
       {path: "partnerregister" , component: PartnerregisterComponent },
+      {path: "pagenotfound" , component: PagenotfoundComponent },
+      {path: "admin" , component: AdminpageComponent },
+      {path: "forbidden" , component: ForbiddenComponent },
+      // {path: "artisanprofile" , component: PartnerregisterComponent },
       // {path: "acrepair/fan" , component: AcrepairComponent },
 
     ])
