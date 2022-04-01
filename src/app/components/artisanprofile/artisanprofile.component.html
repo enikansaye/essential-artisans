@@ -1,6 +1,6 @@
 
 <!-- <div> -->
-    <div class="pt-5 h-100">
+    <div class="pt-5">
       
       <mat-sidenav-container>
         
@@ -25,7 +25,7 @@
             <i class="bi bi-star text-warning"></i>
           </strong></h4>
          <hr class="divider">
-          <div class="icons py-2 py-md-5">
+          <div class="icons  ">
             <span class="pb-3" [class.active]="expression == 'match1'" (click)="expression = 'match1'"
               ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span
             >
@@ -45,38 +45,13 @@
         <hr class="divided">
        
   
-        <div class="dropdown ">
-          <a
-            href="#"
-            class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-            id="dropdownUser2"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://github.com/mdo.png"
-              alt=""
-              width="32"
-              height="32"
-              class="rounded-circle me-2"
-            />
-            <strong>mayowa</strong>
-          </a>
-          <ul
-            class="dropdown-menu text-small shadow"
-            aria-labelledby="dropdownUser2"
-          >
-           
-            <!-- <li><hr class="dropdown-divider" /></li> -->
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
-        </div>
+    
         <!-- <mat-divider></mat-divider> -->
         </mat-sidenav>
         <mat-sidenav-content opened>
           
           
-          <div class="content mat-elevation-z4 flex-column ms-3; ms-lg-4">
+          <div class="content mat-elevation-z4 flex-column ms-3 ms-lg-4">
                <mat-toolbar>
         <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
           <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
