@@ -16,9 +16,9 @@
 
             return GetResult(result.StatusCode, result.Message);
         }
-        protected async Task<IActionResult> ExecuteAsync<TRequest>(TRequest request, IRequestHandler<TRequest> handler) //where TRequest : Irequest
+        protected async Task<IActionResult> ExecuteAsync<TRequest>(TRequest request, IRequestHandler<TRequest> handler) //where TRequest : IRequest
         {
-            if (request == null) return GetResult(HttpStatusCode.BadRequest, "request cannot be null");
+            if (request == null || string.IsNullOrWhiteSpace(request.ToString())) return GetResult(HttpStatusCode.BadRequest, "request cannot be null");
 
             var result = await handler.HandleAsync(request);
             if (result.NotSucceeded)

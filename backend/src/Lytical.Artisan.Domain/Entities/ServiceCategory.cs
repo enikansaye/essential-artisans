@@ -2,26 +2,24 @@
 {
     public class ServiceCategory : IEntity
     {
-
-        public string Name { get; set; }
-        public void AddService(ArtisanService service)
+        protected ServiceCategory()
         {
 
         }
-        public void RemoveService(ArtisanService service)
+        public static ServiceCategory Create(string name)
+        {
+            return new ServiceCategory
+            {
+                Name = name
+            };
+        }
+        public void Add(Artificer artificer)
         {
 
         }
-        public void AddService(IEnumerable<ArtisanService> services)
-        {
-
-        }
-        public void RemoveService(IEnumerable<ArtisanService> services)
-        {
-
-        }
-        public virtual IReadOnlyCollection<ArtisanService> Services { get; set; }
         public override string ToString() => Name;
+        public string Name { get; set; }
+        public virtual IReadOnlyCollection<Artificer> Artisans { get; set; }
         public virtual int Id { get; set; }
         public virtual Guid UniqueId { get; set; }
     }

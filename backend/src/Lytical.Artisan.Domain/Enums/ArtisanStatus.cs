@@ -1,9 +1,8 @@
 ﻿namespace Lytical.Artisan.Domain.Enums
 {
-    public enum ServiceStatus
+    public enum ArtisanStatus
     {
         Available = 1,
-        Unavailable,
-        Deleted
+        Unavailable
     }
 }

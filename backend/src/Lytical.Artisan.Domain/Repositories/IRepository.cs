@@ -4,7 +4,6 @@
     {
         ValueTask<bool> AddAsync(T entity);
         ValueTask<bool> UpdateAsync(T entity);
-        ValueTask<bool> RemoveAsync(T entity);
         Task<List<T>> FindAllAsync();
         Task<T> FindbyIdAsync(int id);
     }

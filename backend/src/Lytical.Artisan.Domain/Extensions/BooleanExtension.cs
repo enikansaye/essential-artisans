@@ -4,7 +4,7 @@ namespace Lytical.Artisan.Domain.Extensions
     {
         public static bool IsFalse(this bool value)
         {
-             if (value)
+            if (value)
                 return false;
             return true;
         }

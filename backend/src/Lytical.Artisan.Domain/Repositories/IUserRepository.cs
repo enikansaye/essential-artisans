@@ -1,6 +1,6 @@
 ﻿namespace Lytical.Artisan.Domain.Repositories
 {
-    public interface IUserRepository : IDataAccess, IRepository<User>
+    public interface IUserRepository : IRepository<User>
     {
         ValueTask<bool> AddAsync(Artificer artificer);
         ValueTask<bool> ExistsAsync(string email);

@@ -1,14 +1,16 @@
 ﻿namespace Lytical.Artisan.API.Controllers
 {
     [Route("api/[controller]")]
-    [AuthorizeArtisan]
+    [AllowArtisan]
     [ApiController]
     public class ArtisanController : BaseController
     {
-        public ArtisanController(IUserRepository repository, IWebHostEnvironment env)
+        public ArtisanController(IUserRepository repository, IServiceCategoryRepository serviceRepository,
+                                    IWebHostEnvironment env)
         {
             _repository = repository;
             _env = env;
+            _serviceRepository = serviceRepository;
         }
         [HttpGet("profile")]
         public async Task<IActionResult> GetArtisanProfileAsync(int id)
@@ -23,10 +25,10 @@
             var handler = new GetAllArtisansQueryHandler(_repository);
             return await ExecuteRequestAsync(new GetAllArtisansQuery(), handler);
         }
-        [HttpPatch("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateArtisanProfileAsync(UpdateArtisanCommand request)
         {
-            var handler = new UpdateArtisanCommandHandler(_repository);
+            var handler = new UpdateArtisanCommandHandler(_repository, _serviceRepository);
             return await ExecuteRequestAsync(request, handler);
         }
         [HttpPost("upload-profile-image")]
@@ -43,6 +45,7 @@
             return await ExecuteRequestAsync(new UploadProfileImageCommand(userId), handler);
         }
         private readonly IUserRepository _repository;
+        private readonly IServiceCategoryRepository _serviceRepository;
         private readonly IWebHostEnvironment _env;
 
     }
