@@ -9,20 +9,21 @@
         {
             _repository = repository;
         }
-
+        [AllowCustomer]
         [HttpGet("profile")]
         public async Task<IActionResult> GetCustomerProfileAsync(int id)
         {
             var handler = new GetCustomerProfileQueryHandler(_repository);
             return await ExecuteRequestAsync(new GetCustomerProfileQuery(id), handler);
         }
-
+        [AllowAdmin]
         [HttpGet("all")]
         public async Task<IActionResult> GetAllCustomersAsync()
         {
             var handler = new GetAllCustomersQueryHandler(_repository);
             return await ExecuteRequestAsync(new GetAllCustomersQuery(), handler);
         }
+        [AllowCustomer]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateCustomerProfileAsync(UpdateUserCommand request)
         {

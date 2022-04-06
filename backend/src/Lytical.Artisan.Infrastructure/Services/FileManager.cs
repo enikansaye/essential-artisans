@@ -1,6 +1,4 @@
-﻿using Lytical.Artisan.Domain.Enums;
-using Lytical.Artisan.Domain.Exceptions;
-using Lytical.Artisan.Domain.Extensions;
+﻿using Lytical.Artisan.Domain.Exceptions;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Lytical.Artisan.Infrastructure.Services;
@@ -12,9 +10,8 @@ public class FileManager : IFileManager
         _file = file;
     }
 
-    public async Task AddFileAsync(string uniqueFileName, FileType type, FileSize size)
+    public async Task<string> AddFileAsync(string uniqueFileName, FileType type, FileSize size)
     {
-        if (_file.Length <= 0 || string.IsNullOrEmpty(_file.FileName)) return;
         if (IsValidFileSize(size).IsFalse()) throw new ArtisanException(ErrorCode.FileSizeLimit, "The file is too large.");
 
         var rootPath = Path.Combine(_env.ContentRootPath, "FileSystem");
@@ -29,6 +26,7 @@ public class FileManager : IFileManager
                 throw new ArtisanException(ErrorCode.UnspportedFileType, "Unsupported file type.");
             await _file.CopyToAsync(stream);
         }
+        return filePath;
     }
 
     public void RemoveFile(string path)
@@ -39,7 +37,7 @@ public class FileManager : IFileManager
 
         var items = Directory.EnumerateDirectories(directoryPath).ToList();
         items.AddRange(Directory.EnumerateFiles(directoryPath));
-        if (!items.Any())
+        if (items.NotAny())
         {
             Directory.Delete(directoryPath);
         }
