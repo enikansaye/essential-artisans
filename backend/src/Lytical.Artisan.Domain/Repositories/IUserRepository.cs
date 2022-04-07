@@ -2,7 +2,7 @@
 {
     public interface IUserRepository : IRepository<User>
     {
-        ValueTask<bool> AddAsync(Artificer artificer);
+        ValueTask<bool> UpdateArtisanAsync(Artificer artificer);
         ValueTask<bool> ExistsAsync(string email);
         Task<User> FindbyEmailAsync(string email);
         Task<User> FindByEmailVerificationToken(string token);

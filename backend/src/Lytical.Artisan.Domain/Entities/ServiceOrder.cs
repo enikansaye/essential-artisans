@@ -13,6 +13,13 @@
                 Date = DateTime.UtcNow
             };
         }
+        public static ServiceOrder New(int id)
+        {
+            return new ServiceOrder
+            {
+                Id = id
+            };
+        }
         public ServiceOrder SetDateTime(DateTime inspectionDate, DateTime inspectionTime)
         {
             InspectionDate = inspectionDate;
@@ -24,6 +31,8 @@
         }
         public override string ToString() => Name;
         public string Name { get; set; }
+
+
         public string PropertyAddress { get; set; }
         public string Issue { get; set; }
         public bool IsApproved { get; set; }

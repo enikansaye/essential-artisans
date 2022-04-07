@@ -22,5 +22,13 @@
         public virtual IReadOnlyCollection<Artificer> Artisans { get; set; }
         public virtual int Id { get; set; }
         public virtual Guid UniqueId { get; set; }
+
+        public static ServiceCategory New(int id)
+        {
+            return new ServiceCategory
+            {
+                Id = id
+            };
+        }
     }
 }

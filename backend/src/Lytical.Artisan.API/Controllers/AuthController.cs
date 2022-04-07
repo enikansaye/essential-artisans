@@ -17,10 +17,19 @@ public class AuthController : BaseController
     }
 
     [AllowAnonymous]
-    [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync(SignupCommand command)
+    [HttpPost("register/customer")]
+    public async Task<IActionResult> RegisterCustomerAsync(SignupCommand command)
     {
         var handler = new SignupCommandHandler(_repository, _email, _password, _app);
+        command.AccountType = Domain.Enums.AccountType.CUSTOMER;
+        return await ExecuteRequestAsync(command, handler);
+    }
+    [AllowAnonymous]
+    [HttpPost("register/partner")]
+    public async Task<IActionResult> RegisterPartnerAsync(SignupCommand command)
+    {
+        var handler = new SignupCommandHandler(_repository, _email, _password, _app);
+        command.AccountType = Domain.Enums.AccountType.ARTISAN;
         return await ExecuteRequestAsync(command, handler);
     }
     [AllowAnonymous]

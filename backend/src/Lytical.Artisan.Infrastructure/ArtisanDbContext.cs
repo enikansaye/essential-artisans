@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Lytical.Artisan.Infrastructure
 {
-    public class ArtisanDbContext : DbContext, IDbContext
+    public class ArtisanDbContext : DbContext
     {
         public ArtisanDbContext(IConfiguration configuration)
         {
@@ -20,12 +20,7 @@ namespace Lytical.Artisan.Infrastructure
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new UserConfiguration());
-        }
-
-        public bool EnsureDatabaseCreated()
-        {
-            return Database.EnsureCreated();
+           // modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
         public async Task<bool> CommitAsync()
         {
@@ -34,6 +29,9 @@ namespace Lytical.Artisan.Infrastructure
             return true;
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Artificer> Artisans { get; set; }
+        public DbSet<ServiceOrder> Orders { get; set; }
+        public DbSet<ServiceCategory> ServiceCategories { get; set; }
 
         private readonly IConfiguration _configuration;
     }

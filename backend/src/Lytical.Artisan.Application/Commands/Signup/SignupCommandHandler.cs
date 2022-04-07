@@ -1,6 +1,4 @@
-﻿using Lytical.Artisan.Domain.Enums;
-
-namespace Lytical.Artisan.Application.Commands
+﻿namespace Lytical.Artisan.Application.Commands
 {
     public class SignupCommandHandler : IRequestHandler<SignupCommand, SignupDto>
     {
@@ -20,11 +18,8 @@ namespace Lytical.Artisan.Application.Commands
             var token = _password.GenerateToken(2);
             var salt = _password.GenerateToken(0);
             var hash = _password.GetHash(request.Password, salt);
-            User user;
-            if (request.AccountType == AccountType.ARTISAN)
-                user = Artificer.Create(request.Email, hash, salt);
-            else
-                user = User.Create(request.Email, hash, salt);
+
+            var user = User.Create(request.Email, request.AccountType, hash, salt);
             user.EmailVerificationToken = token;
 
             var dbOperation = await _repository.AddAsync(user);

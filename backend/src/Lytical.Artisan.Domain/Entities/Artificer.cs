@@ -2,17 +2,6 @@
 {
     public class Artificer : User
     {
-        public static new Artificer Create(string email, string passwordHash, string passwordSalt)
-        {
-            return new Artificer
-            {
-                Email = email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                AccountType = AccountType.ARTISAN
-
-            };
-        }
         public int GetArtisanRating()
         {
             return 0;

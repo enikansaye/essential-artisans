@@ -5,14 +5,21 @@ namespace Lytical.Artisan.Domain.Entities
     public class User : IEntity
     {
         protected User() { }
-        public static User Create(string email, string passwordHash, string passwordSalt)
+        public static User New(int id)
+        {
+            return new User
+            {
+                Id = id,
+            };
+        }
+        public static User Create(string email, AccountType type, string passwordHash, string passwordSalt)
         {
             return new User
             {
                 Email = email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                AccountType = AccountType.CUSTOMER
+                AccountType = type
 
             };
         }

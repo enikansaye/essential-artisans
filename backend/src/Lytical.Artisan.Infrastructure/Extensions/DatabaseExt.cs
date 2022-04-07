@@ -6,7 +6,6 @@ namespace Lytical.Artisan.Infrastructure.Extensions
         public static void AddDatabaseContext(this IServiceCollection services)
         {
             services.AddDbContext<ArtisanDbContext>();
-            services.AddScoped<IDbContext, ArtisanDbContext>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
 

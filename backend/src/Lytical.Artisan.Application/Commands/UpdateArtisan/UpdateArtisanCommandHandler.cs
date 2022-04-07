@@ -26,7 +26,7 @@
             user.Category = service;
             service.Add(user);
 
-            var dbOperation = await _repository.UpdateAsync(user);
+            var dbOperation = await _repository.UpdateArtisanAsync(user);
             var dbOperation1 = await _serviceCategoryRepository.UpdateAsync(service);
             if (dbOperation.IsFalse() || dbOperation1.IsFalse()) return ResultStatus<UpdateArtisanDto>.Fail(HttpStatusCode.InternalServerError, ErrorCode.FaultWhileSavingToDatabase.Message);
 

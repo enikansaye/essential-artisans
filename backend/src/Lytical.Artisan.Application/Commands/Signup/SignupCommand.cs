@@ -1,4 +1,5 @@
-﻿using Lytical.Artisan.Domain.Enums;
+﻿using System.Text.Json.Serialization;
+using Lytical.Artisan.Domain.Enums;
 
 namespace Lytical.Artisan.Application.Commands
 {
@@ -16,6 +17,7 @@ namespace Lytical.Artisan.Application.Commands
         }
         public string Email { get; set; }
         public string Password { get; set; }
+        [JsonIgnore]
         public AccountType AccountType { get; set; }
     }
 }

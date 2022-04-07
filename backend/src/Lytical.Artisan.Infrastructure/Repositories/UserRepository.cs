@@ -1,121 +1,70 @@
 ﻿namespace Lytical.Artisan.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(IDbContext context)
-        {
-            _context = context;
-        }
-        public async ValueTask<bool> AddAsync(User entity)
-        {
-            //await _context.Users.AddAsync(entity);
-            //return await _context.CommitAsync();
-            await Task.Delay(1000);
-            FakeDatabase.Users.Add(entity);
-            return true;
-        }
+        public UserRepository(ArtisanDbContext context) => _context = context;
         public async Task<User> FindByRefreshTokenAsync(string token)
         {
-            await Task.Delay(1000);
-
-            return FakeDatabase.Users.Where(x => x.RefreshToken == token).FirstOrDefault();
+            return await _context.Users.Where(x => x.RefreshToken == token).FirstOrDefaultAsync();
         }
         public async Task<User> FindByEmailVerificationToken(string token)
         {
-            await Task.Delay(1000);
-            return FakeDatabase.Users.FirstOrDefault(x => x.EmailVerificationToken == token);
+            return await _context.Users.Where(x => x.EmailVerificationToken == token).FirstOrDefaultAsync();
         }
 
         public async ValueTask<bool> ExistsAsync(string email)
         {
-            await Task.Delay(1000);
-            var result = FakeDatabase.Users.Any(x => x.Email.ToUpper() == email.ToUpper());
-            return true;
+            return await _context.Users.AnyAsync(x => x.Email.ToUpper() == email.ToUpper());
         }
 
-        public async Task<List<User>> FindAllAsync()
+        public override async Task<List<User>> FindAllAsync()
         {
-            //return await _context.Users.ToListAsync();
-            await Task.Delay(1000);
-            return FakeDatabase.Users;
+            return await _context.Users.ToListAsync();
         }
 
         public async Task<User> FindbyEmailAsync(string email)
         {
-            //return await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
-            await Task.Delay(1000);
-            return FakeDatabase.Users.Where(x => x.Email.ToUpper() == email.ToUpper()).FirstOrDefault();
+            return await _context.Users.Where(x => x.Email.ToUpper() == email.ToUpper()).FirstOrDefaultAsync();
         }
 
-        public async Task<User> FindbyIdAsync(int id)
+        public override async Task<User> FindbyIdAsync(int id)
         {
-            // return await _context.Users.Where(x => x.UserId == id).FirstOrDefaultAsync();
-            await Task.Delay(1000);
-            return FakeDatabase.Users.Where(x => x.Id == id).FirstOrDefault();
+            return await _context.Users.FindAsync(id);
         }
-        public async ValueTask<bool> RemoveAsync(User entity)
+        public override async ValueTask<bool> RemoveAsync(int id)
         {
-            //_context.Users.Remove(entity);
-            //return await _context.CommitAsync();
-            await Task.Delay(1000);
-
-            var user = FakeDatabase.Users.Where(x => x.Email.ToUpper() == entity.Email.ToUpper()).FirstOrDefault();
-            FakeDatabase.Users.Remove(user);
-            return true;
+            _context.Users.Remove(User.New(id));
+            return await _context.CommitAsync();
         }
 
-        public async ValueTask<bool> UpdateAsync(User entity)
+        public async ValueTask<bool> UpdateArtisanAsync(Artificer artificer)
         {
-            //_context.Users.Update(entity);
-            //return await _context.CommitAsync();
-            await Task.Delay(1000);
-            var user = FakeDatabase.Users.Where(x => x.Email.ToUpper() == entity.Email.ToUpper()).FirstOrDefault();
-            user.FirstName = entity.FirstName;
-            user.LastName = entity.LastName;
-            return true;
+            _context.Artisans.Update(artificer);
+            return await _context.CommitAsync();
         }
 
-        public async Task<Domain.Entities.Artificer> FindArtisanByIdAsync(int id)
+        public async Task<Artificer> FindArtisanByIdAsync(int id)
         {
-            // return await _context.Users.Where(x => x.UserId == id).FirstOrDefaultAsync();
-            await Task.Delay(1000);
-            return FakeDatabase.Artisans.Where(x => x.Id == id).FirstOrDefault();
+            return await _context.Artisans.FindAsync(id);
         }
-
-        public async ValueTask<bool> AddAsync(Artificer artificer)
-        {
-            await Task.Delay(1000);
-            FakeDatabase.Artisans.Add(artificer);
-            return true;
-        }
-
         public async Task<List<Artificer>> FindAllArtisanAsync()
         {
-            await Task.Delay(1000);
-
-            return FakeDatabase.Artisans.Where(x => x.AccountType == Domain.Enums.AccountType.ARTISAN).ToList();
+            return await _context.Artisans.ToListAsync();
         }
 
         public async Task<List<User>> FindAllCustomerAsync()
         {
-
-            await Task.Delay(1000);
-
-            return FakeDatabase.Users.Where(x => x.AccountType == Domain.Enums.AccountType.CUSTOMER).ToList();
+            return await _context.Users.Where(x => x.AccountType == AccountType.CUSTOMER).ToListAsync();
         }
 
         public async Task<User> FindByPasswordResetTokenAsync(string token)
         {
-            await Task.Delay(1000);
-
-            return FakeDatabase.Users.Where(x => x.PasswordResetToken == token).FirstOrDefault();
+            return await _context.Users.Where(x => x.PasswordResetToken == token).FirstOrDefaultAsync();
         }
 
-        public Task<List<Artificer>> FindArtisansByLocationAsync(string location)
+        public async Task<List<Artificer>> FindArtisansByLocationAsync(string location)
         {
-            throw new NotImplementedException();
+            return await _context.Artisans.Where(x => x.Location.ToLower() == location.ToLower()).ToListAsync();
         }
-
-        private readonly IDbContext _context;
     }
 }
