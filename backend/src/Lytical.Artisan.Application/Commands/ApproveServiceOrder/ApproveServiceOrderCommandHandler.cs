@@ -1,30 +1,20 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class CreateServiceOrderCommandHandler : IRequestHandler<CreateServiceOrderCommand, CreateServiceOrderDto>
+    public class ApproveServiceOrderCommandHandler : IRequestHandler<ApproveServiceOrderCommand, CreateServiceOrderDto>
     {
-        public CreateServiceOrderCommandHandler(IServiceOrderRepository repository, IUserRepository userRepository)
+        public ApproveServiceOrderCommandHandler(IServiceOrderRepository repository)
         {
             _repository = repository;
-            _userRepository = userRepository;
         }
-        public async Task<Result<CreateServiceOrderDto>> HandleAsync(CreateServiceOrderCommand request)
+        public async Task<Result<CreateServiceOrderDto>> HandleAsync(ApproveServiceOrderCommand request)
         {
-            var customer = await _userRepository.FindbyIdAsync(request.CustomerId);
+            var order = await _repository.FindbyIdAsync(request.OrderId);
 
-            if (customer == null)
-                return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.Unauthorized, "Account does not exists or requires email varification.");
+            if (order == null)
+                return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.BadRequest, "Service order does not exists.");
 
-            var artisan = await _userRepository.FindArtisanByIdAsync(request.ArtisanId);
-
-            if (artisan == null)
-                return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.BadRequest, "The artisan account does not exists.");
-
-            var order = ServiceOrder.Create(request.Name, request.PropertyAddress, request.Issue);
-            order.SetDateTime(request.InspectionDate, request.InspectionTime);
-            order.Customer = customer;
-            order.Artisan = artisan;
-
-            var dbOperation = await _repository.AddAsync(order);
+            order.IsApproved = true;
+            var dbOperation = await _repository.UpdateAsync(order);
             if (dbOperation.IsFalse()) return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.InternalServerError, ErrorCode.FaultWhileSavingToDatabase.Message);
 
             var dto = new CreateServiceOrderDto()
@@ -51,6 +41,5 @@
             return ResultStatus<CreateServiceOrderDto>.Pass(dto, HttpStatusCode.OK);
         }
         private readonly IServiceOrderRepository _repository;
-        private readonly IUserRepository _userRepository;
     }
 }

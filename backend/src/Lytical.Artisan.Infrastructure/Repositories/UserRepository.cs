@@ -111,6 +111,11 @@
             return FakeDatabase.Users.Where(x => x.PasswordResetToken == token).FirstOrDefault();
         }
 
+        public Task<List<Artificer>> FindArtisansByLocationAsync(string location)
+        {
+            throw new NotImplementedException();
+        }
+
         private readonly IDbContext _context;
     }
 }

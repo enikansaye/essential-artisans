@@ -2,6 +2,7 @@
 {
     public class OrderMediaFile : MediaFile
     {
-        public virtual ServiceOrder Order { get; set; }
+        public OrderMediaFile(ServiceOrder order) => Order = order;
+        public virtual ServiceOrder Order { get; protected set; }
     }
 }

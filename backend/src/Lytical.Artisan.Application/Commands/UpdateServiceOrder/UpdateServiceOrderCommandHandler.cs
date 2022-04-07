@@ -1,13 +1,13 @@
 ﻿namespace Lytical.Artisan.Application.Commands
 {
-    public class CreateServiceOrderCommandHandler : IRequestHandler<CreateServiceOrderCommand, CreateServiceOrderDto>
+    public class UpdateServiceOrderCommandHandler : IRequestHandler<UpdateServiceOrderCommand, CreateServiceOrderDto>
     {
-        public CreateServiceOrderCommandHandler(IServiceOrderRepository repository, IUserRepository userRepository)
+        public UpdateServiceOrderCommandHandler(IServiceOrderRepository repository, IUserRepository userRepository)
         {
             _repository = repository;
             _userRepository = userRepository;
         }
-        public async Task<Result<CreateServiceOrderDto>> HandleAsync(CreateServiceOrderCommand request)
+        public async Task<Result<CreateServiceOrderDto>> HandleAsync(UpdateServiceOrderCommand request)
         {
             var customer = await _userRepository.FindbyIdAsync(request.CustomerId);
 
@@ -19,12 +19,21 @@
             if (artisan == null)
                 return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.BadRequest, "The artisan account does not exists.");
 
-            var order = ServiceOrder.Create(request.Name, request.PropertyAddress, request.Issue);
-            order.SetDateTime(request.InspectionDate, request.InspectionTime);
-            order.Customer = customer;
-            order.Artisan = artisan;
+            var order = await _repository.FindbyIdAsync(request.OrderId);
 
-            var dbOperation = await _repository.AddAsync(order);
+            if (order == null)
+                return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.BadRequest, "Service order does not exists.");
+
+            if (order.IsApproved)
+                return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.BadRequest, "Cannot update Order. Service order has been approved.");
+
+            order.SetDateTime(request.InspectionDate, request.InspectionTime);
+            order.Artisan = artisan;
+            order.Name = request.Name;
+            order.PropertyAddress = request.PropertyAddress;
+            order.Issue = request.Issue;
+
+            var dbOperation = await _repository.UpdateAsync(order);
             if (dbOperation.IsFalse()) return ResultStatus<CreateServiceOrderDto>.Fail(HttpStatusCode.InternalServerError, ErrorCode.FaultWhileSavingToDatabase.Message);
 
             var dto = new CreateServiceOrderDto()

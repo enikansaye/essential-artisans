@@ -12,12 +12,17 @@
             _env = env;
             _serviceRepository = serviceRepository;
         }
-        [AllowArtisan]
-        [HttpGet("profile")]
-        public async Task<IActionResult> GetArtisanProfileAsync(int id)
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetArtisanProfileAsync()
         {
+            var idString = User.FindFirstValue(ClaimTypes.PrimarySid);
+
+            var vaild = int.TryParse(idString, out var userId);
+
+            if (vaild.IsFalse()) return Unauthorized();
             var handler = new GetArtisanProfileQueryHandler(_repository);
-            return await ExecuteRequestAsync(new GetArtisanProfileQuery(id), handler);
+            return await ExecuteRequestAsync(new GetArtisanProfileQuery(userId), handler);
         }
         [AllowAnonymous]
         [HttpGet("all")]
@@ -26,14 +31,21 @@
             var handler = new GetAllArtisansQueryHandler(_repository);
             return await ExecuteRequestAsync(new GetAllArtisansQuery(), handler);
         }
-        [AllowArtisan]
+        [AllowAnonymous]
+        [HttpGet("{location}")]
+        public async Task<IActionResult> GetArtisansByLocationAsync(string location)
+        {
+            var handler = new GetArtisanByLocationQueryHandler(_repository);
+            return await ExecuteAsync(location, handler);
+        }
+
         [HttpPut("update")]
         public async Task<IActionResult> UpdateArtisanProfileAsync(UpdateArtisanCommand request)
         {
             var handler = new UpdateArtisanCommandHandler(_repository, _serviceRepository);
             return await ExecuteRequestAsync(request, handler);
         }
-        [AllowArtisan]
+
         [HttpPost("upload-profile-image")]
         public async Task<IActionResult> UploadProfileImageAsync(IFormFile file)
         {

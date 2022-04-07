@@ -26,7 +26,6 @@
         public string Name { get; set; }
         public string PropertyAddress { get; set; }
         public string Issue { get; set; }
-        public string Category { get; set; }
         public bool IsApproved { get; set; }
         public DateTime Date { get; protected set; }
         public DateTime InspectionDate { get; set; }
