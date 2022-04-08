@@ -45,12 +45,12 @@ import { EmailComponent } from './components/email/email.component';
 import { MyorderComponent } from './components/myorder/myorder.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { ArtisanprofileComponent } from './components/artisanprofile/artisanprofile.component';
-<<<<<<< HEAD
-=======
+
 import { AdminpageComponent } from './components/adminpage/adminpage.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
->>>>>>> master
+import { AllartisanComponent } from './components/allartisan/allartisan.component';
+
 
 
 @NgModule({
@@ -80,15 +80,13 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
      EmailComponent,
      MyorderComponent,
      UserprofileComponent,
-<<<<<<< HEAD
-     ArtisanprofileComponent
-=======
      ArtisanprofileComponent,
      AdminpageComponent,
      PagenotfoundComponent,
      ForbiddenComponent,
+     AllartisanComponent,
 
->>>>>>> master
+
   ],
   imports: [
     BrowserModule,
@@ -107,7 +105,7 @@ MatSidenavModule,
 MatToolbarModule,
 
     RouterModule.forRoot([
-      {path: "", redirectTo: 'signin', pathMatch: 'full'},
+      {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
       {path: "signin" , component: LoginComponent },
       {path: "signup" , component: SignupComponent },
       {path: "dashboard" , component: DashboardComponent },
@@ -129,6 +127,7 @@ MatToolbarModule,
       {path: "pagenotfound" , component: PagenotfoundComponent },
       {path: "admin" , component: AdminpageComponent },
       {path: "forbidden" , component: ForbiddenComponent },
+      {path: "available artisan" , component: AllartisanComponent },
       // {path: "artisanprofile" , component: PartnerregisterComponent },
       // {path: "acrepair/fan" , component: AcrepairComponent },
 

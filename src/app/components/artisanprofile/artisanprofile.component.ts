@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-=======
+
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
->>>>>>> master
+
 
 @Component({
   selector: 'app-artisanprofile',
@@ -12,13 +10,6 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./artisanprofile.component.css']
 })
 export class ArtisanprofileComponent implements OnInit {
-<<<<<<< HEAD
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-=======
   @ViewChild(MatSidenav) sidenav !: MatSidenav;
 
   expression = 'match1';
@@ -41,6 +32,4 @@ ngAfterViewInit(){
     }
   })
 }
->>>>>>> master
-
 }

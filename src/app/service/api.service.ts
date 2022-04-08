@@ -20,4 +20,7 @@ export class ApiService {
   forgetpassword(){
     
   }
+  getAllEmployee(){
+    
+  }
 }

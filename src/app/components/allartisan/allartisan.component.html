@@ -1,0 +1,105 @@
+
+<div>
+   <div class="container-fluid col mt-5 bg-success">
+     <div class="m-4  d-md-none" >
+       <input type="text" placeholder="Sort Location" class="col"><i class="bi bi-arrow-down"></i>
+     </div>
+    <div class="d-flex h-100">
+      <div class="col-3 d-none sorttext d-lg-block d-flex flex-column p-4 me-3">
+        <h4>Ajah</h4>
+        <h4>Lekki</h4>
+        <h4>Gbagada</h4>
+        <h4>Obalende</h4>
+        <h4>Ikoyi</h4>
+        <h4>Obalende</h4>
+        <h4>Ikoyi</h4>
+        <h4>Obalende</h4>
+        <h4>Ikoyi</h4>
+        <h4>Obalende</h4>
+        <h4>Ikoyi</h4>
+        <h4>Obalende</h4>
+        <h4>Ikoyi</h4>
+        <h4>Obalende</h4>
+        <h4>Ikoyi</h4>
+      </div>
+       <div class="d-flex pt-5 ">
+        
+  
+        <div class="card mb-2" >
+          <div class="row g-0  sorttext  m-2">
+            <div class="col-2 ">
+              <img src="/assets/images/may.jpg" class="img-fluid justify-center  rounded-start" >
+            </div>
+            <div class="col-10">
+              <div class="card-body h-100">
+                <div class="card-title d-flex request align-top " >
+                  <div class="h4">Electrician</div>
+                  <div type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Send Request</div>
+                </div>
+                <p class="card-text align-middle">Ajah</p>
+                <p class="card-text good"><small class="text-muted">Paul Chika</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+    </div>
+
+   </div>
+</div>
+
+<!-- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  hello
+</div> -->
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabel">Send Your Request</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+          <!-- modal form -->
+          <form [formGroup]="formValue">
+            <div class="mb-1">
+              <label for="exampleInputEmail1" class="form-label">Full Name</label>
+              <input formControlName="firstname" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              
+            </div>
+            <div class="mb-1">
+              <label for="exampleInputPassword1" class="form-label">Address</label>
+              <input formControlName="lastname" type="text" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-1">
+              <label for="exampleInputPassword1" class="form-label">Email ID</label>
+              <input formControlName="email" type="email" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-1">
+              <label for="exampleInputPassword1" class="form-label">Mobile Number</label>
+              <input formControlName="mobilenumber" type="number" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-1">
+              <label for="exampleInputPassword1" class="form-label ">Photo of issue</label>
+              <input formControlName="Photo" type="file" class="form-control file" id="exampleInputPassword1">
+            </div>
+            <div class="mb-1">
+              <label for="exampleInputPassword1" class="form-label">Description</label>
+              <input formControlName="handle" type="textarea" class="form-control" id="exampleInputPassword1">
+            </div>
+            
+          </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id ="cancel" class="btn btn-info" data-bs-dismiss="modal">Send</button>
+        <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
+        <!-- <button *ngIf="showUpdate" type="button" (click)="updateEmployeeDetails()" class="btn btn-primary">Update</button> -->
+      </div>
+    </div>
+  </div>
+</div>

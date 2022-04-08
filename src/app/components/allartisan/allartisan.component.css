@@ -1,0 +1,30 @@
+.request{
+    width: 100%;
+    display: flex;
+    float: right;
+    justify-content: space-between;
+    /* float: inline-end; */
+}
+.sortby{
+    /* height: 100%;
+    width: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 40px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+}
+.bg{
+    background-color: rgb(238 242 244 / 50%);
+}
+.sorttext{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background-color: white;
+}
+.form-control{
+    border: none;
+    border-bottom: 1px solid skyblue;
+}
+.file{
+    border: 1px solid skyblue;
+}
