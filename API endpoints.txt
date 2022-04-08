@@ -1,0 +1,11 @@
++--------------------------------------+-----------------+----------------------------------+
+| Domain 		  		         |	Method         | 	URI					  |
++--------------------------------------+-----------------+----------------------------------+
+| https://localhost:7130	         |	POST		   |	/api/auth/login		        |
+|			                     |	POST		   |	/api/auth/register              |
+|			                     |	POST		   |	/api/auth/refresh-token         |	
+|			                     |	GET|QueryS     |	/api/auth/verify-email          |	
+|			                     |	GET|HEAD	   |	/api/auth/forget-password       |	
+|			                     |	POST		   |	/api/auth/reset-password        |	
+|			                     |	GET|HEAD       |	/api/auth/logout                |		
++--------------------------------------+-----------------+----------------------------------+

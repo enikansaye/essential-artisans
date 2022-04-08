@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Lytical.Artisan.Domain.Enums;
 
-namespace Lytical.Artisan.Application.Commands.Login
+namespace Lytical.Artisan.Application.Commands
 {
     public class LoginDto
     {
@@ -8,8 +9,8 @@ namespace Lytical.Artisan.Application.Commands.Login
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string Role { get; set; }
-        public string Token { get; set; }
+        public AccountType UserType { get; set; }
+        public string AccessToken { get; set; }
 
         [JsonIgnore] // refresh token is returned in http only cookie
         public string RefreshToken { get; set; }

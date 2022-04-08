@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
@@ -14,6 +13,11 @@
     <ProjectReference Include="..\Lytical.Artisan.Application\Lytical.Artisan.Application.csproj" />
     <ProjectReference Include="..\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj" />
     <ProjectReference Include="..\Lytical.Artisan.Infrastructure\Lytical.Artisan.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FileSystem\Imgs\" />
+    <Folder Include="FileSystem\Docs\" />
   </ItemGroup>
 
 </Project>

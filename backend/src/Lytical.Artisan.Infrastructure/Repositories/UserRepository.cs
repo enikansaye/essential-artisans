@@ -1,59 +1,70 @@
 ﻿namespace Lytical.Artisan.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(IDbContext context)
+        public UserRepository(ArtisanDbContext context) => _context = context;
+        public async Task<User> FindByRefreshTokenAsync(string token)
         {
-            _context = context;
+            return await _context.Users.Where(x => x.RefreshToken == token).FirstOrDefaultAsync();
         }
-        public async ValueTask<bool> AddAsync(User entity)
+        public async Task<User> FindByEmailVerificationToken(string token)
         {
-            await _context.Users.AddAsync(entity);
-            return await _context.CommitAsync();
-        }
-
-        public ValueTask<bool> VerifyEmailAsync(string token)
-        {
-            throw new NotImplementedException();
+            return await _context.Users.Where(x => x.EmailVerificationToken == token).FirstOrDefaultAsync();
         }
 
-        public ValueTask<bool> ExistsAsync(string email)
+        public async ValueTask<bool> ExistsAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _context.Users.AnyAsync(x => x.Email.ToUpper() == email.ToUpper());
         }
 
-        public async Task<List<User>> FindAllAsync()
+        public override async Task<List<User>> FindAllAsync()
         {
             return await _context.Users.ToListAsync();
         }
 
         public async Task<User> FindbyEmailAsync(string email)
         {
-            return await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+            return await _context.Users.Where(x => x.Email.ToUpper() == email.ToUpper()).FirstOrDefaultAsync();
         }
 
-        public async Task<User> FindbyIdAsync(int id)
+        public override async Task<User> FindbyIdAsync(int id)
         {
-            return await _context.Users.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            return await _context.Users.FindAsync(id);
         }
-
-        public async Task<User> FindbyIdAsync(Guid id)
+        public override async ValueTask<bool> RemoveAsync(int id)
         {
-            return await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async ValueTask<bool> RemoveAsync(User entity)
-        {
-            _context.Users.Remove(entity);
+            _context.Users.Remove(User.New(id));
             return await _context.CommitAsync();
         }
 
-        public async ValueTask<bool> UpdateAsync(User entity)
+        public async ValueTask<bool> UpdateArtisanAsync(Artificer artificer)
         {
-            _context.Users.Update(entity);
+            _context.Artisans.Update(artificer);
             return await _context.CommitAsync();
         }
 
-        private readonly IDbContext _context;
+        public async Task<Artificer> FindArtisanByIdAsync(int id)
+        {
+            return await _context.Artisans.FindAsync(id);
+        }
+        public async Task<List<Artificer>> FindAllArtisanAsync()
+        {
+            return await _context.Artisans.ToListAsync();
+        }
+
+        public async Task<List<User>> FindAllCustomerAsync()
+        {
+            return await _context.Users.Where(x => x.AccountType == AccountType.CUSTOMER).ToListAsync();
+        }
+
+        public async Task<User> FindByPasswordResetTokenAsync(string token)
+        {
+            return await _context.Users.Where(x => x.PasswordResetToken == token).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Artificer>> FindArtisansByLocationAsync(string location)
+        {
+            return await _context.Artisans.Where(x => x.Location.ToLower() == location.ToLower()).ToListAsync();
+        }
     }
 }

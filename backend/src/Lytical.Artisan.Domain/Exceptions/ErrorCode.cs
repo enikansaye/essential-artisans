@@ -23,10 +23,11 @@ namespace Lytical.Artisan.Domain.Exceptions
 
         public static ErrorCode InvalidUserCredentials => new(nameof(InvalidUserCredentials),
             "Invalid email or password", HttpStatusCode.UnprocessableEntity);
+        public static ErrorCode FaultWhileSavingToDatabase => new(nameof(FaultWhileSavingToDatabase), "Error while saving to database");
+        public static ErrorCode FileSizeLimit => new(nameof(FileSizeLimit), HttpStatusCode.BadRequest);
+        public static ErrorCode UnspportedFileType => new(nameof(UnspportedFileType), HttpStatusCode.UnsupportedMediaType);
 
         public static ErrorCode Unauthorized => new(nameof(Unauthorized), HttpStatusCode.Unauthorized);
-
-        public static ErrorCode InvalidRefreshToken => new(nameof(InvalidRefreshToken));
 
         public static ErrorCode EmailExistInDatabase =>
             new(nameof(EmailExistInDatabase), "Email already exist in our database.");
@@ -42,7 +43,7 @@ namespace Lytical.Artisan.Domain.Exceptions
 
         public static ErrorCode AccessDenied => new(nameof(AccessDenied), HttpStatusCode.Forbidden);
 
-        public static ErrorCode EmptyImageFile => new(nameof(EmptyImageFile));
+        public static ErrorCode EmptyFile => new(nameof(EmptyFile), HttpStatusCode.BadRequest);
 
         public static ErrorCode InvalidId => new(nameof(InvalidId));
 
@@ -52,7 +53,7 @@ namespace Lytical.Artisan.Domain.Exceptions
             new(nameof(InvalidChangePasswordToken), "Provided token is invalid.");
         public static ErrorCode OrderNotFound => new(nameof(OrderNotFound), HttpStatusCode.NotFound);
         public static ErrorCode ServiceNotFound => new(nameof(ServiceNotFound), HttpStatusCode.NotFound);
-        public static ErrorCode ErroWhileSavingToDatabase => new(nameof(ErroWhileSavingToDatabase), HttpStatusCode.InternalServerError);
+        public static ErrorCode ErrorWhileSavingToDatabase => new(nameof(ErrorWhileSavingToDatabase), HttpStatusCode.InternalServerError);
         public static ErrorCode PaymentDoesNotExists => new(nameof(PaymentDoesNotExists));
 
         public static ErrorCode InvalidPaymentType => new(nameof(InvalidPaymentType));

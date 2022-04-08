@@ -1,24 +1,18 @@
-﻿using Lytical.Artisan.Infrastructure.Middlewares;
+using Lytical.Artisan.Infrastructure.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Lytical.Artisan.Infrastructure.Extensions;
 public static class AuthService
 {
     public static void AddAuthService(this WebApplicationBuilder builder)
     {
-        builder.Services.AddAuthentication(auth =>
-        {
-            auth.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            auth.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        }).AddCookie(options =>
-        {
-            options.LoginPath = "/api/auth/login";
-            options.LogoutPath = "/api/auth/logout";
-            options.Cookie.MaxAge = TimeSpan.FromMinutes(15);
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-            options.Cookie.HttpOnly = true;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.None;
-            options.Cookie.SameSite = SameSiteMode.Lax;
-        })
+        builder.Services.AddSingleton<IPasswordManager, PasswordManager>()
+            .AddAuthentication(auth =>
+            {
+                auth.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
           {
               ValidateIssuer = true,
@@ -29,7 +23,7 @@ public static class AuthService
               ClockSkew = TimeSpan.Zero,
               ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
               ValidAudience = builder.Configuration["JwtSettings:Audience"],
-              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])),
           });
     }
 

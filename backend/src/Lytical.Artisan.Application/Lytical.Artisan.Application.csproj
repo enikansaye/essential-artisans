@@ -6,12 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Logout\" />
-    <Folder Include="Queries\" />
+    <None Remove="EmailTemplates\EmailVerification.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="10.0.1" />
+    <EmbeddedResource Include="EmailTemplates\EmailVerification.html" />
   </ItemGroup>
 
   <ItemGroup>

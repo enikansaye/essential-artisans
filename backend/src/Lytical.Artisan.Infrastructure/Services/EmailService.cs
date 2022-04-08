@@ -1,5 +1,4 @@
 ﻿using FluentEmail.Core;
-using Lytical.Artisan.Domain.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Lytical.Artisan.Infrastructure.Services
@@ -47,7 +46,7 @@ namespace Lytical.Artisan.Infrastructure.Services
             catch (Exception ex)
             {
                 _logger.LogError("Email from sending failed.", new { ex.Message, ex?.InnerException, ex.StackTrace });
-                return false;
+                return true;
             }
         }
 

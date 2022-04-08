@@ -1,19 +1,16 @@
 ﻿namespace Lytical.Artisan.Infrastructure.Services
 {
-    public class JwtService : ITokenService
+    public class JwtService : IAuthTokenManger
     {
         public JwtService(JwtSettings settings) => _settings = settings;
-        public string GenerateToken(User user)
+        public string GenerateAccessToken(User user)
         {
             List<Claim> claims = new()
             {
                 new Claim(ClaimTypes.PrimarySid, user.Id.ToString()),
-                new Claim(ClaimTypes.SerialNumber, user.UserId.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.UserType.ToString()),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
-                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
+                new Claim(ClaimTypes.SerialNumber, user.UniqueId.ToString()),
+                new Claim(ClaimTypes.Role, user.AccountType.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
             return CreateToken(_settings.SecretKey, _settings.Expiration, claims);
@@ -55,9 +52,9 @@
         private string CreateToken(string secretKey, double expirationMinutes, IEnumerable<Claim> claims = null)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-            var encryptkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.EncryptingKey));
+            //var encryptkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.EncryptingKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var encryption = new EncryptingCredentials(encryptkey, SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256);
+            //var encryption = new EncryptingCredentials(encryptkey, SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateJwtSecurityToken(new SecurityTokenDescriptor
@@ -68,7 +65,7 @@
                 Expires = DateTime.UtcNow.AddMinutes(expirationMinutes),
                 Subject = new ClaimsIdentity(claims),
                 SigningCredentials = creds,
-                EncryptingCredentials = encryption
+               // EncryptingCredentials = encryption
             });
             return tokenHandler.WriteToken(token);
         }

@@ -7,9 +7,12 @@
         public const string EDIT = nameof(EDIT);
         public const string DELETE = nameof(DELETE);
     }
-    public sealed class Role
+    public sealed class ConstantValue
     {
-        public const string USER = nameof(USER);
-        public const string AMIN = nameof(AMIN);
+        public const string LOGIN = "/login";
+        public const string LOGOUT = "/logout";
+        public const string FORBIDDEN = "/forbidden";
+        public const string COOKIE_NAME = "ac_in";
+        public const string COOKIE_PATH = "/api/auth/refresh-token";
     }
 }
