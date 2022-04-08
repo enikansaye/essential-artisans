@@ -1,0 +1,65 @@
+<div class="container contain">
+    <ul class="nav nav-pills">
+        <li [class.active]="viewMode =='map'" ><a (click)="viewMode ='map'"  >FAQ</a> </li>
+     
+        <li [class.active]="viewMode=='list'"  ><a (click)="viewMode = 'list'" >TERM OF USE</a></li>
+        <li [class.active]="viewMode==''"  ><a (click)="viewMode= ''" >REFUNDS & REWARDS</a></li>
+     <!-- changeViewMode('map') -->
+     
+     </ul>
+     <div [ngSwitch]="viewMode">
+         <div *ngSwitchCase="'map'">
+             <app-zippy title="Construction Services"> 
+            <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+        </app-zippy> 
+        <app-zippy title="Construction Services"> 
+            <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+        </app-zippy> 
+        <app-zippy title="Construction Services"> 
+            <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+        </app-zippy> 
+        <app-zippy title="Construction Services"> 
+            <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+        </app-zippy> 
+    </div>
+         <div *ngSwitchCase="'list'">
+             <P>Welcome to Housejoy. You may use our services through our website www.housejoy.in (“Website”) or our mobile application (“HJ App”). Our Website and HJ Apphave been created to provide information about our company and services to the visitors and user of services, whether accessible to you via web, mobile App or other platform (our services, together with the Site, are the "Services")</P>
+             <P>For the purpose of these Terms of Use, the term 'Housejoy' or 'Us' or 'We' refers to Sarvaloka Services On Call Pvt Ltd. The term 'You' refers to the user or viewer of our Website and/or HJ App.</P>
+             <P>When You use any of the Services provided by Us, including but not limited to, Electrical, Plumbing, Computer Repair, Laundry, Carpentry etc, you will be subject to the rules, guidelines, policies, terms, and conditions applicable to such service, and they shall be deemed to be incorporated into this Terms of Use and shall be considered as part and parcel of these Terms of Use. As long as you comply with these Terms of Use, We grant you a personal, non-exclusive, non-transferable, limited privilege to enter and use our platforms. In the event of a conflict or inconsistency between any provision of the terms and conditions mentioned herein with those of the particular service, the provisions of the terms and conditions applicable to such specific Services shall prevail.</P>
+         <div>
+            <app-zippy title="Construction Services"> 
+                <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+            </app-zippy> 
+            <app-zippy title="Construction Services"> 
+                <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+            </app-zippy> 
+            <app-zippy title="Construction Services"> 
+                <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+            </app-zippy> 
+            <app-zippy title="Construction Services"> 
+                <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+            </app-zippy>   
+         </div>
+         
+            </div>
+         
+         <div *ngSwitchDefault>
+             <p>Please read the following policy to understand the rework and refund policy of Sarvaloka Services on Call Private Limited ("Housejoy"). Acceptance of this Policy is mandatory prior to booking any service from Housejoy.</p>
+             <div>
+                <app-zippy title="Construction Services"> 
+                    <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+                </app-zippy> 
+                <app-zippy title="Construction Services"> 
+                    <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+                </app-zippy> 
+                <app-zippy title="Construction Services"> 
+                    <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+                </app-zippy> 
+                <app-zippy title="Construction Services"> 
+                    <p>Your dream home needs excellent craftsmanship, and who better to give it life than our Top-Class home construction team! On-Time Project Delivery and a Hassle-Free Experience from Plan Approval to Handover Guaranteed.</p>
+                </app-zippy>   
+             </div>
+         </div>
+     </div>
+        
+</div>

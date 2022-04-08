@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="EmailTemplates\EmailVerification.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="EmailTemplates\EmailVerification.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lytical.Artisan.Domain\Lytical.Artisan.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
