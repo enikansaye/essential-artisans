@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/service/api.service';
 export class AllartisanComponent implements OnInit {
 
   formValue !: FormGroup;
+   min :any = ""
 
   constructor(private formBuilder: FormBuilder, private api: ApiService) { }
 
@@ -23,7 +24,13 @@ export class AllartisanComponent implements OnInit {
       salary: [''],
       handle: [''],
     });
-    // this.getAllEmployee();
+
+   this.pastDateTime();
+   
+  }
+
+  pastDateTime(){
+var tday:any = new Date();
   }
 
 }
