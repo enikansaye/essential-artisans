@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Joyhouse
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.1.
@@ -30,3 +31,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 # artisan-app
 Artisan Web App (Angular &amp; .NET)
 >>>>>>> upstream/main
+||||||| empty tree
+=======
+# artisan-app-fe
+Frontend implementation of the artisan marketplace application
+>>>>>>> d449d5955d71dd1d4544ff1492cb017ec3721442
