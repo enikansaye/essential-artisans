@@ -1,4 +1,0 @@
-﻿{userEmail}
-{emailVerificationLink}
-{contactEmail}
-{contactLink}
