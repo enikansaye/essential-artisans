@@ -11,6 +11,7 @@ export class AllartisanComponent implements OnInit {
 
   formValue !: FormGroup;
    min :any = ""
+  value: any;
 
   constructor(private formBuilder: FormBuilder, private api: ApiService) { }
 
@@ -30,7 +31,28 @@ export class AllartisanComponent implements OnInit {
   }
 
   pastDateTime(){
-var tday:any = new Date();
-  }
+var tdate:any = new Date();
+var date:any = tdate.getDate();
+if(date < 10){
+  date = "0 + date"
+}
+var month :any = tdate.getMonth();
+if(month < 10){
+  date = "0 + month"
+}
 
+var year :any = tdate.getFullYear();
+
+var hours :any = tdate.getHours();
+
+  }
+onChange(value:any){
+var today:any = new Date();
+var selectDate = new Date(value);
+if(today > selectDate){
+  alert("you can't select past date")
+  this.value ="" 
+}
+
+}
 }

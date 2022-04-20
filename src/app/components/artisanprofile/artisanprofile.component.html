@@ -32,8 +32,9 @@
             >
             <!-- <span class="pb-3" ><i class="bi bi-grid-3x3-gap" ></i> DASHBOARD</span> -->
             <!-- <span class="pb-3"><i class="bi bi-person"> </i> INFORMATION</span> -->
-            <span class="pb-3" [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="bi bi-gear"> </i> MY ORDERS</span>
+            <span class="pb-3 " [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="bi bi-gear"> </i> MY ORDERS</span>
             <span class="pb-3" [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="bi bi-gear"> </i> SERVICES</span>
+            <span class="pb-3" [class.active]="expression == 'match4'" (click)="expression = 'match4'" ><i class="bi bi-gear"> </i>ORDER REVIEWS</span>
             <!-- <span class="pb-3"><i class="bi bi-arrow-down"></i> MY REVIEWS</span> -->
             <!-- <span class="pb-3"><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span> -->
           
@@ -104,7 +105,7 @@
             >
            
             
-              <div class="h5 text-success">EDIT INFORMATION</div>
+              <div class="h5 text-primary">EDIT INFORMATION</div>
   
               <div class="col align-items-end d-flex">
                 <div class="col-4 col-md-2 rounded-circle me-3 ">
@@ -113,7 +114,7 @@
                
   
                 <div class="align-text-bottom ">
-                  <label for="file-btn" class="btn btn-success"
+                  <label for="file-btn" class="btn btn-info"
                     >Choose a file</label
                   >
                   <input type="file" class="pt-5 d-none" id="file-btn" hidden />
@@ -233,7 +234,7 @@
                     </div>
                   </div>
                 </div>
-                <button class="btn btn-success mt-3">Update Changes</button>
+                <button class="btn btn-info mt-3">Update Changes</button>
               </div>
             </section>
             </div>
@@ -261,9 +262,9 @@
               </div>
             </section>
             <section>
-              <mat-toolbar class="text-success w-100 justify-content-between m-3">
+              <mat-toolbar class=" w-100 justify-content-between m-3">
                 <div>Billing History</div>
-                <button class="btn btn-success d-flex  ">Add Order</button>
+                <button class="btn btn-info d-flex  ">Add Order</button>
               </mat-toolbar>
               <table class="table">
                 <thead>
@@ -516,6 +517,126 @@
                   </div>
              
             </section>
+            </div>
+
+            <div *ngSwitchCase="'match4'" class="p-3">
+             
+              <section>
+                <div class="section1">
+                  <div class="section1a">
+                    <div><h4>US Foods</h4></div>
+                    <button class="btn btn-info">Edit</button>
+                  </div>
+                  <div class="section1b">
+                    <div class="sectionbar">
+                      <div class="bar">
+                        <p>Recieve Date</p>
+                        <p><strong>03/23/2022</strong></p>
+                      </div>
+                      <div class="bar">
+                        <p>Recieve Date</p>
+                        <p><strong>03/23/2022</strong></p>
+                      </div>
+                    </div>
+                    <div class="sectionbar">
+                      <div class="bar">
+                        <p>Recieve Date</p>
+                        <p><strong>03/23/2022</strong></p>
+                      </div>
+                      <div class="bar">
+                        <p>Recieve Date</p>
+                        <p><strong>03/23/2022</strong></p>
+                      </div>
+                    </div>
+                    <div class="sectionbar">
+                      <div class="bar">
+                        <p>Recieve Date</p>
+                        <p><strong>03/23/2022</strong></p>
+                      </div>
+                      <div class="bar">
+                        <p>Recieve Date</p>
+                        <p><strong>03/23/2022</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="section2">
+                  <table class="table caption-top mt-2">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">SKU</th>
+                        <th scope="col">ITEMS</th>
+                        <th scope="col">QUANTITY</th>
+                        <th scope="col">PRICE</th>
+                        <th scope="col">AMOUNT</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>01</td>
+                        <td>-</td>
+                        <td><span>electrical repair</span> sdfghjkl;</td>
+                        <td>sdfghjkl;</td>
+                        <td>5000</td>
+                        <td>qwertyui</td>
+      
+                        <td>
+                          <button class="btn btn-danger me-2"><i class="bi bi-trash"></i></button>
+                          <button
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            class="btn btn-success "
+                          >
+                          <i class="bi bi-pencil-square"></i>
+                          </button>
+      
+                  
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>01</td>
+                        <td>-</td>
+                        <td><span>electrical repair</span> sdfghjkl;</td>
+                        <td>sdfghjkl;</td>
+                        <td>5000</td>
+                        <td>qwertyui</td>
+      
+                        <td>
+                          <button class="btn btn-danger me-2"><i class="bi bi-trash"></i></button>
+                          <button
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            class="btn btn-success "
+                          >
+                          <i class="bi bi-pencil-square"></i>
+                          </button>
+      
+                  
+                        </td>
+                      </tr>
+                    </tbody>
+               
+                  </table>
+                  <div class="section3">
+                    <button class="btn btn-outline-primary">Add Items </button>
+                    <button class="btn btn-outline-success">Add Non Inventory Item </button>
+                    <button class="btn btn-outline-danger">Add Charge</button>
+                    <button class="btn btn-outline-primary">Add Credit Card</button>
+                    <div>
+                      <p>Sub-Total <span> 65000</span></p>
+                      <p>Sub-Total <span> 65000</span></p>
+                    </div>
+                   </div>
+           <div class="section4">
+            <button class="btn btn-outline-danger">Delete Invoice</button>
+            <button class="btn btn-outline-success">Approve Invoice</button>
+            <button class="btn btn-outline-primary">Approve Invoice & Next</button>
+           </div>
+                </div>
+              </section>
             </div>
             
           
