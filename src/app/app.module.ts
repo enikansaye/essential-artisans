@@ -16,6 +16,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { ChartModule } from 'angular-highcharts';
+
 
 
 
@@ -105,11 +107,12 @@ MatButtonModule,
 MatSidenavModule,
 MatToolbarModule,
 HighchartsChartModule,
+ChartModule,
 
     RouterModule.forRoot([
       {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
       {path: "signin" , component: LoginComponent },
-      {path: "signup" , component: SignupComponent },
+      // {path: "signup" , component: SignupComponent },
       {path: "dashboard" , component: DashboardComponent },
       {path: "aboutus" , component: AboutusComponent },
       {path: "contactus" , component: ContactusComponent },

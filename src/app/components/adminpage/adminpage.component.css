@@ -82,4 +82,8 @@ mat-sidenav {
   .collapse{
   
   }
+  .avatar{
+    height: 30px;
+    width: 30px;
+  }
   
