@@ -1,7 +1,10 @@
-
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -15,12 +18,82 @@ export class ArtisanprofileComponent implements OnInit {
   expression = 'match1';
 
   service = 'completed';
+  usersForm !: FormGroup;
 
-  constructor(private observer : BreakpointObserver) { }
+  constructor(private observer : BreakpointObserver, private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
 
-  ngOnInit(): void {
+
+  ngOnInit() :void {
+    this.usersForm = this.fb.group({
+      users: this.fb.array([
+        this.fb.group({
+          gHService: [''],
+          quantity: [''],
+          startTime: [''],
+          endTime: [''],
+          remarks: ['']         
+        })
+      ])
+    })
   }
+
+  get userFormGroups () {
+    return this.usersForm.get('users') as FormArray
+  }
+
+  removeFormControl(i: number) {
+    let usersArray = this.usersForm.get('users') as FormArray;
+    usersArray.removeAt(i);
+  }
+
+  addFormControl() {
+    let usersArray = this.usersForm.get('users') as FormArray;
+    let arraylen = usersArray.length;
+
+    let newUsergroup: FormGroup = this.fb.group({
+          gHService: [''],
+          quantity: [''],
+          startTime: [''],
+          endTime: [''],
+          remarks: [''] 
+    })
+
+    usersArray.insert(arraylen, newUsergroup);
+  }
+  onSubmit(){
+    console.log(this.usersForm.value);
+  }
+
+
+  // ngOnInit(): void {
+  //   this.addMore = this.fb.group({
+  //     itemRows: this.fb.array([this.initialRow()])
+  //   })
+  //   }
+
+//     initialRow(){
+//       return this.fb.group({
+//         task1: [''],
+
+//       })
+//   }
+//   addMoreRows(){
+//     this.formArr.push(this.initialRow())
+//   }
+//   deleteRow(index:number){
+//     this.formArr.removeAt(index)
+//   }
+
+//   get formArr(){
+    
+// return this.addMore.get('itemRows') as FormArray;
+//   }
+
+//   get f(){
+//     return this.addMore.controls;
+//   }
+
 ngAfterViewInit(){
   this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
     if(res.matches){

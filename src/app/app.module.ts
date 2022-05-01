@@ -17,6 +17,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ChartModule } from 'angular-highcharts';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -53,6 +54,8 @@ import { AdminpageComponent } from './components/adminpage/adminpage.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { AllartisanComponent } from './components/allartisan/allartisan.component';
+import { AlltransactionsComponent } from './components/alltransactions/alltransactions.component';
+import { ArtisanbyuserComponent } from './components/artisanbyuser/artisanbyuser.component';
 
 
 
@@ -88,6 +91,8 @@ import { AllartisanComponent } from './components/allartisan/allartisan.componen
      PagenotfoundComponent,
      ForbiddenComponent,
      AllartisanComponent,
+     AlltransactionsComponent,
+     ArtisanbyuserComponent,
 
 
   ],
@@ -108,7 +113,7 @@ MatSidenavModule,
 MatToolbarModule,
 HighchartsChartModule,
 ChartModule,
-
+MatPaginatorModule,
     RouterModule.forRoot([
       {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
       {path: "signin" , component: LoginComponent },
@@ -133,6 +138,7 @@ ChartModule,
       {path: "admin" , component: AdminpageComponent },
       {path: "forbidden" , component: ForbiddenComponent },
       {path: "available artisan" , component: AllartisanComponent },
+      {path: "alltransactions" , component: AlltransactionsComponent },
       // {path: "artisanprofile" , component: PartnerregisterComponent },
       // {path: "acrepair/fan" , component: AcrepairComponent },
 

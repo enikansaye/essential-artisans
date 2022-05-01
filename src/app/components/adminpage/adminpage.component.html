@@ -54,6 +54,16 @@
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> User
             </a>
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link collapsed"
+              [class.active]="expression == 'page4'"
+              toggle
+              (click)="expression = 'page4'"
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> 0rders
+            </a>
+          </li>
 
           <li class="nav-item">
             <a
@@ -101,7 +111,7 @@
                 
           
               </button>
-          <nav class="navbar-default navbar w-100 navbar-expand-lg float-right">
+          <nav class="navbar-default navbar w-100 navbar-expand float-right">
             <a id="nav-toggle" href="#">
               <i class="bi bi-menu"></i>
             </a>
@@ -1382,128 +1392,221 @@
         </div>
       </div>
 
-      <div class="pt-5" *ngSwitchCase="'page2'">
+     <!--Artisan section  -->
+      <div class="pt-5" *ngSwitchCase="'page2'" id="no-tables" >
         <div>
             <button class="btn btn-info float-end mb-3" routerLink="/register">Create new Artisan</button>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Order ID</th>
-                <th scope="col">Date</th>
-                <th scope="col">Location</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">20499p</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>completed</td>
-                <td>
-                    <i class="bi bi-stop-circle-fill me-3 text-success "></i>
-                    <i class="bi bi-trash-fill text-danger"></i> 
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">20499p</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>pending</td>
-                <td>
-                    <i class="bi bi-stop-circle-fill me-3 text-success "></i>
-                    <i class="bi bi-trash-fill text-danger"></i>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">30499p</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>declined</td>
-                <td>
-                    <i class="bi bi-stop-circle-fill me-3 text-success "></i>
-                    <i class="bi bi-trash-fill text-danger"></i>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">40499p</th>
-                <td>Larry the Bird</td>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>pending</td>
-                <td><i class="bi bi-stop-circle-fill me-3 text-success "></i>
-                    <i class="bi bi-trash-fill text-danger"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">40499p</th>
-                <td>Larry the Bird</td>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>completed</td>
-                <td><i class="bi bi-stop-circle-fill me-3 text-success "></i>
-                    <i class="bi bi-trash-fill text-danger"></i></td>
-              </tr>
-            </tbody>
-          </table>
-        
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Email Adress</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Number</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-center justify-content-center">
+                  <td data-title="Email Adress" scope="row">enikansaye13</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <td data-title="Status">Suspended</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Ajetomiwa</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <td data-title="Status">Active</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Opemipo</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <td data-title="Status">Suspended</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <td data-title="Status">Active</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <td data-title="Status">Suspended</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Amount">08149512729</td>
+                  <td data-title="Status">Active</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+            <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
+
         </div>
       </div>
-      <div class="pt-5" *ngSwitchCase="'page3'">
+
+      <!-- user section -->
+      <div class="pt-5" *ngSwitchCase="'page3'" id="no-tables" >
         <div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Order ID</th>
-                <th scope="col">Date</th>
-                <th scope="col">Location</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">20499p</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>completed</td>
-              </tr>
-              <tr>
-                <th scope="row">20499p</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>pending</td>
-              </tr>
-              <tr>
-                <th scope="row">30499p</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>declined</td>
-              </tr>
-              <tr>
-                <th scope="row">40499p</th>
-                <td>Larry the Bird</td>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>pending</td>
-              </tr>
-              <tr>
-                <th scope="row">40499p</th>
-                <td>Larry the Bird</td>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>completed</td>
-              </tr>
-            </tbody>
-          </table>
+           <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Email Adress</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Number</th>
+                  <!-- <th scope="col">Status</th> -->
+                  <!-- <th scope="col">Action</th> -->
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-center justify-content-center">
+                  <td data-title="Email Adress" scope="row">enikansaye13</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <!-- <td data-title="Status">Suspended</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Ajetomiwa</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <!-- <td data-title="Status">Active</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Opemipo</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <!-- <td data-title="Status">Suspended</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <!-- <td data-title="Status">Active</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Number">08149512729</td>
+                  <!-- <td data-title="Status">Suspended</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+                <tr>
+                  <td data-title="Email Adress" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Name">Mark</td>
+                  <td data-title="Location">22 sikiru alade</td>
+                  <td data-title="Amount">08149512729</td>
+                  <!-- <td data-title="Status">Active</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+              
+              </tbody>
+            </table>
         </div>
+      </div>
+
+      <!-- others main section -->
+      <div *ngSwitchCase="'page4'" class="p-3">
+        
+    <app-alltransactions></app-alltransactions>
       </div>
     </div>
   </mat-sidenav-content>
