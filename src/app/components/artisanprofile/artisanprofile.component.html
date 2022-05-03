@@ -484,36 +484,47 @@
                         >
                           <td data-title="DESCRIPTION">
                             
-                            <input type="text" formControlName="gHService" />
+                            <input type="text" formControlName="gHService"/>
                           </td>
                           <td data-title="QTY">
                             
-                            <input type="text" formControlName="quantity" />
+                            <input type="text" formControlName="quantity" [(ngModel)]="num1" />
                           </td>
                           <td data-title="PRICE">
                          
-                            <input type="text" formControlName="startTime" />
+                            <input type="text" formControlName="startTime" [(ngModel)]="num2" />
                           </td>
-                          <td data-title="TOTAL">
-                         
-                            <input type="text" formControlName="endTime" />
+                          <td data-title="TOTAL" class="h5">
+                         <!-- <div type="input" formControlName="total">{{result}}</div> -->
+                         <input type="text" formControlName="total" [(ngModel)]="result">
+                          
+                          </td>
+                          <td>
+                            
+                            <button class="btn btn-primary d-none " (click)="celltotal()">submit</button>
+                            <button class="btn btn-primary " (keyup.enter)="onEnter()"></button>
+                          
                           </td>
                           <td >
+                            <!-- <button class="btn btn-primary  " (click)="grandtotal()">sum</button> -->
                             <i (click)="removeFormControl(i)" class="text-danger bi bi-trash-fill me-3 h4 d-none d-lg-block">
                              
                              </i>
                             <button (click)="removeFormControl(i)" class="text-danger btn btn-outline-danger me-3 d-lg-none">
                              Remove Row
                             </button>
+                            <!-- <button class="btn btn-primary d-none " (click)="celltotal(i)">submit</button> -->
                             </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </form>
-
+                
                 
                <div>
+
+                <button class="btn btn-primary  " (click)="grandtotal()">sum</button>
                 <button class="btn btn-success me-3" (click)="addFormControl()">
                   Add new 
                 </button>
@@ -521,23 +532,17 @@
                 <button  class="btn btn-info" >
                   Submit Quote
                 </button>
+                <div class="row py-4 text-center float-end me-3">
+                  <div class="col-4" >
+                    <div class="h5">TOTAL</div>
+                    <div class="h4">{{alltotal}}</div>
+                  </div>
+                  </div>
                </div>
+              
               </div>
-              <div class="row py-4 text-center">
-                <div class="col-4">
-                  <div>SUBTOTAL</div>
-                  <div>40,000</div>
-                </div>
-                <div class="col-4">
-                  <div>SERVICE CHARGE</div>
-                  <div>2,500</div>
-                </div>
-                <div class="col-4">
-                  <div>TOTAL</div>
-                  <div>42500</div>
-                </div>
-                
-              </div>
+             
+              
               <div class="py-4">
                 <div>BANK DETAILS</div>
                 <div class="pt-2">Bank Name: <span>Zenith</span></div>

@@ -20,6 +20,12 @@ export class ArtisanprofileComponent implements OnInit {
   service = 'completed';
   usersForm !: FormGroup;
 
+
+  num1: any;
+  num2: any;
+  result : any;
+  alltotal : any
+
   constructor(private observer : BreakpointObserver, private fb: FormBuilder, private http: HttpClient, private router: Router) { }
 
 
@@ -31,12 +37,27 @@ export class ArtisanprofileComponent implements OnInit {
           gHService: [''],
           quantity: [''],
           startTime: [''],
-          endTime: [''],
-          remarks: ['']         
+          total: [''],
+              
         })
       ])
     })
   }
+
+  
+
+  grandtotal(){
+this.alltotal = parseInt(this.result) + parseInt(this.result)
+  }
+  celltotal(){
+this.result = parseInt(this.num1) * parseInt(this.num2)
+  }
+onEnter(){
+  this.result = parseInt(this.num1) * parseInt(this.num2)
+  this.alltotal = (this.result ) + parseInt(this.result)
+}
+
+
 
   get userFormGroups () {
     return this.usersForm.get('users') as FormArray
@@ -55,8 +76,8 @@ export class ArtisanprofileComponent implements OnInit {
           gHService: [''],
           quantity: [''],
           startTime: [''],
-          endTime: [''],
-          remarks: [''] 
+         total: [''],
+          
     })
 
     usersArray.insert(arraylen, newUsergroup);

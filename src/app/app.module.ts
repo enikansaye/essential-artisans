@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -55,7 +55,7 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { AllartisanComponent } from './components/allartisan/allartisan.component';
 import { AlltransactionsComponent } from './components/alltransactions/alltransactions.component';
-import { ArtisanbyuserComponent } from './components/artisanbyuser/artisanbyuser.component';
+import { ArtisansdetailsComponent } from './components/artisansdetails/artisansdetails.component';
 
 
 
@@ -92,7 +92,7 @@ import { ArtisanbyuserComponent } from './components/artisanbyuser/artisanbyuser
      ForbiddenComponent,
      AllartisanComponent,
      AlltransactionsComponent,
-     ArtisanbyuserComponent,
+     ArtisansdetailsComponent,
 
 
   ],
@@ -114,6 +114,7 @@ MatToolbarModule,
 HighchartsChartModule,
 ChartModule,
 MatPaginatorModule,
+
     RouterModule.forRoot([
       {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
       {path: "signin" , component: LoginComponent },

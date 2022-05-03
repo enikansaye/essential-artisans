@@ -27,7 +27,7 @@
               <div class="table">
                 <h4 class="card-caption">Paul Chika</h4>
                 <h6 class="category h5 text-muted">Carpenter</h6>
-                <p class="card-description">bed design but the back is...</p>
+                <p class="card-description text-center">15 years working experience.</p>
                
                <div class="d-flex justify-content-between">
                  <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ajah</div>
@@ -67,7 +67,7 @@
               <div class="table">
                 <h4 class="card-caption">Mary Adeoti</h4>
                 <h6 class="category h5 text-muted">Electrician</h6>
-                <p class="card-description">bed design but the back is...</p>
+                <p class="card-description">20 years working experience..</p>
                
                <div class="d-flex justify-content-between">
                  <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Lekki</div>
@@ -107,7 +107,7 @@
               <div class="table">
                 <h4 class="card-caption">John Hope</h4>
                 <h6 class="category h5 text-muted">Electrician</h6>
-                <p class="card-description">bed design but the back is...</p>
+                <p class="card-description">10 years working experience.</p>
                
                <div class="d-flex justify-content-between">
                  <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ajah</div>
@@ -147,7 +147,7 @@
               <div class="table">
                 <h4 class="card-caption">John Paul</h4>
                 <h6 class="category h5 text-muted">Plumber</h6>
-                <p class="card-description">bed design but the back is...</p>
+                <p class="card-description">13 years working experience.</p>
                
                <div class="d-flex justify-content-between">
                  <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ajah</div>
@@ -187,7 +187,7 @@
               <div class="table">
                 <h4 class="card-caption">Iluyemi Opemipo</h4>
                 <h6 class="category h5 text-muted">Ac Repairs</h6>
-                <p class="card-description">bed design but the back is...</p>
+                <p class="card-description">17 years working experience.</p>
                
                <div class="d-flex justify-content-between">
                  <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ikoyi</div>
@@ -295,6 +295,7 @@
               aria-describedby="emailHelp"
             />
           </div>
+
           <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Address</label
@@ -306,6 +307,17 @@
               id="exampleInputPassword1"
             />
           </div>
+       <div class="mb-1" >
+        <label for="exampleInputPassword1" class="form-label"
+        >Select Location</label
+      >
+        <select class="form-select" aria-label="Default select example" >
+          <option selected> select location</option>
+          <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
+        
+        </select>
+       </div>
+
           <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Email ID</label

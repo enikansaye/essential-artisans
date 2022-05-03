@@ -23,4 +23,16 @@ export class ApiService {
   getAllEmployee(){
     
   }
+
+  // location selection api
+  getAllStateData() {
+    return this.http.get<any>('http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 }
+
+// location api
+// http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas

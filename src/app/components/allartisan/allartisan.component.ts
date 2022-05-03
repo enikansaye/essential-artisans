@@ -8,6 +8,10 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./allartisan.component.css']
 })
 export class AllartisanComponent implements OnInit {
+statelga : any;
+selectedStatelga: any = {
+  id: 0, name:''
+}
 
   formValue !: FormGroup;
    min :any = ""
@@ -16,6 +20,8 @@ export class AllartisanComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private api: ApiService) { }
 
   ngOnInit(): void {
+
+this.showAll();
 
     this.formValue = this.formBuilder.group({
       firstname: [''],
@@ -55,4 +61,14 @@ if(today > selectDate){
 }
 
 }
+
+// selecting location section
+showAll() {
+  this.api.getAllStateData().subscribe(
+    (data: any) => {
+    this.statelga = data;
+    console.log(this.statelga)
+  });
+}
+
 }
