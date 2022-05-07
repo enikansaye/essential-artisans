@@ -6,7 +6,7 @@ mat-sidenav {
   
     border-radius: 10px;
     padding: 10px;
-    text-align: center;
+    /* text-align: center; */
     justify-content: flex-start;
   
     margin-right: 30px;
@@ -16,6 +16,9 @@ mat-sidenav {
     font-size: 18px;
     font-weight: 400;
     padding: 10px;
+    color: aqua;
+    height: 50px;
+    
   }
   mat-sidenav-container {
     height: calc(100vh - 65px);
@@ -23,6 +26,12 @@ mat-sidenav {
   mat-sidenav-content {
     margin: 10px;
     border-radius: 10px;
+  }
+  a{
+    color: black;
+  }
+ a:hover{
+    color: blue;
   }
   .content {
     display: flex;
@@ -32,7 +41,7 @@ mat-sidenav {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: flex-start;
   }
   mat-divider {
@@ -57,16 +66,17 @@ mat-sidenav {
     border-left: 3px solid #0dcaf0;
   }
   .active {
+    /* height: 50px;
+    width: 200px; */
     height: 50px;
-    width: 200px;
     border-radius: 5px;
     background-color: #0dcaf0;
     color: white;
     display: flex;
   
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
+    /* align-items: center;
+    justify-content: center; */
+    /* margin: 10px; */
   }
   .mat {
     height: 50px;
@@ -75,8 +85,8 @@ mat-sidenav {
   
     display: flex;
   
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
     margin: 10px;
   }
 

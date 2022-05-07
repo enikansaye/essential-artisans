@@ -2,7 +2,7 @@
   <div class=" signup mt-5 mt-sm-3">
     <div>SIGN UP</div>
     <!-- <p routerLink="/partnerregister">signup as Artisan</p> -->
-    <form [formGroup]="signupForm">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>FULL NAME</mat-label>
         <input matInput formControlName="username" placeholder="Ex. john paul" />
@@ -69,9 +69,9 @@
           Email is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
+      <!-- <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'"  formControlName="password" >
+        <input matInput type="password" id="mypassword" formControlName="password" name="password" >
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
        
@@ -85,7 +85,10 @@
         <mat-error *ngIf="signupForm.hasError('required')">
          password is <strong>required</strong>
         </mat-error>
-      </mat-form-field>  
+      </mat-form-field>   -->
+      <div>
+        <input type="password" id="mypassword" formControlName="password" name="password" >
+      </div>
       <div>
   <p>      <a routerLink="/signin">Already User? <strong>signin</strong></a>
   </p>     
@@ -94,7 +97,7 @@
       <button
         class="btn btn-primary"
         [disabled]="signupForm.invalid"
-        (click)="signup()"
+     
       >
         SIGN UP
       </button>

@@ -18,6 +18,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ChartModule } from 'angular-highcharts';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 
@@ -114,6 +115,9 @@ MatToolbarModule,
 HighchartsChartModule,
 ChartModule,
 MatPaginatorModule,
+NgxEchartsModule.forRoot({
+  echarts: () => import('echarts')
+}),
 
     RouterModule.forRoot([
       {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
