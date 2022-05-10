@@ -1,7 +1,7 @@
 <div class="login ">
   <div class="form">
     <div>SIGN IN</div>
-    <form [formGroup]="signinForm">
+    <form [formGroup]="signinForm" >
   
   
     
@@ -42,7 +42,8 @@
       mat-raised-button
         class="primary"
         [disabled]="signinForm.invalid"
-        (click)="signin()" color="accent"
+         color="accent"
+         (click)="signin()"
       >
       SIGN IN
       </button>

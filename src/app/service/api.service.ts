@@ -6,8 +6,15 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiService {
-  public authUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
+  public userSignupUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer'; 
+
+    public userSigninUrl: string = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/login'; 
+    public emailUrl: string = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/verify-email'; 
+  
+  
+    // ​/api​/Auth​/verify-email
+    
   constructor(private http: HttpClient) {}
 
   getProduct() {
@@ -18,12 +25,25 @@ export class ApiService {
     );
   }
 
-  forgetpassword() {}
-  getAllEmployee() {}
+ 
 
-  // customer signup
+  // user signup
   signupUser(data: any) {
-   return this.http.post<any>(this.authUrl, data);
+    console.log(data)
+   return this.http.post<any>(this.userSignupUrl, data);
+   
+  
+  }
+  // user signin
+  signinUser(data: any) {
+    console.log(data)
+   return this.http.post<any>(this.userSigninUrl, data);
+  
+  }
+
+  confirmEmail(data:any) {
+    return this.http.get(this.emailUrl, data)
+ 
   }
 
   // location selection api
@@ -36,7 +56,37 @@ export class ApiService {
         })
       );
   }
+
+  postUser(data: any) {
+    return this.http.post<any>('http://localhost:3000/posts', data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getUser() {
+    return this.http.get<any>('http://localhost:3000/posts').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+  deleteUser(id:number) {
+    return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  updateUser(data:any, id:number) {
+    return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
 }
 
-// location api
-// http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas

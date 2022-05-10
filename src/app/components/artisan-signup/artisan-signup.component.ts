@@ -7,17 +7,23 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'ngx-alerts';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-artisan-signup',
+  templateUrl: './artisan-signup.component.html',
+  styleUrls: ['./artisan-signup.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class ArtisanSignupComponent implements OnInit {
+
+  
+
+
+
+
+
   signupForm!: FormGroup;
-  password?: string;
+  password?:string;
   hide = true;
   // form :any
 
@@ -32,21 +38,20 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private api: ApiService,
-    private alertService: AlertService
+    private api: ApiService
   ) {}
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.required, ],
       phone: [
         '',
         Validators.required,
         Validators.minLength(11),
         Validators.maxLength(11),
       ],
-      password: ['', Validators.required],
+      password: ['', Validators.required, ],
       location: ['', Validators.required],
       address: ['', Validators.required],
     });
@@ -57,7 +62,7 @@ export class RegisterComponent implements OnInit {
       alert(res.status);
       console.log(res);
       this.signupForm.reset();
-      this.router.navigate(['/signin']);
+      this.router.navigate(['/confirmemail']);
     });
   }
 
@@ -71,24 +76,4 @@ export class RegisterComponent implements OnInit {
   //     this.router.navigate(['/signin']);
   //   });
   // }
-
-  onSubmit() {
-    this.alertService.info('Working on creating new account');
-
-    const registerObserver = {
-      next: (res: any) => {
-        console.log('User created');
-        // this.alertService.success('Account Created');
-          alert(res.status);
-      
-      this.router.navigate(['/signin']);
-      },
-      error: (err: any) => {
-        console.log(err);
-        this.alertService.danger(err.error.errors[0].description);
-      },
-    };
-
-    this.api.signupUser(this.signupForm.value).subscribe(registerObserver);
-  }
 }

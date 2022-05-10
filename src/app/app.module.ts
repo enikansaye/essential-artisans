@@ -19,6 +19,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { ChartModule } from 'angular-highcharts';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { AlertModule } from 'ngx-alerts';
 
 
 
@@ -57,6 +58,8 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { AllartisanComponent } from './components/allartisan/allartisan.component';
 import { AlltransactionsComponent } from './components/alltransactions/alltransactions.component';
 import { ArtisansdetailsComponent } from './components/artisansdetails/artisansdetails.component';
+import { ArtisanSignupComponent } from './components/artisan-signup/artisan-signup.component';
+import { ArtisanSigninComponent } from './components/artisan-signin/artisan-signin.component';
 
 
 
@@ -94,6 +97,8 @@ import { ArtisansdetailsComponent } from './components/artisansdetails/artisansd
      AllartisanComponent,
      AlltransactionsComponent,
      ArtisansdetailsComponent,
+     ArtisanSignupComponent,
+     ArtisanSigninComponent,
 
 
   ],
@@ -118,6 +123,7 @@ MatPaginatorModule,
 NgxEchartsModule.forRoot({
   echarts: () => import('echarts')
 }),
+AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
 
     RouterModule.forRoot([
       {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
@@ -144,6 +150,7 @@ NgxEchartsModule.forRoot({
       {path: "forbidden" , component: ForbiddenComponent },
       {path: "available artisan" , component: AllartisanComponent },
       {path: "alltransactions" , component: AlltransactionsComponent },
+      {path: "confirmemail" , component: EmailComponent },
       // {path: "artisanprofile" , component: PartnerregisterComponent },
       // {path: "acrepair/fan" , component: AcrepairComponent },
 
