@@ -1,0 +1,417 @@
+<div class="container-fluid pt-5 mx-5">
+    <section class="row mt-5 ">
+        <div class="row d-flex  justify-content-around">
+          <div class="row">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Total Transactions</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-shopping-bag fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">10</h2>
+                  <span class="text-success fw-semi-bold"
+                    ><i class="bi bi-trending-up me-1"></i>+2</span
+                  >
+                  <span class="ms-1 fw-medium">Orders</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Pending</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-book-open fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">6</h2>
+                  <span class="text-danger fw-semi-bold">2+</span>
+                  <span class="ms-1 fw-medium">Number of pending</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Completed</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-users fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">100</h2>
+                  <span class="text-success fw-semi-bold"
+                    ><i class="bi bi-trending-up me-1"></i>+12</span
+                  >
+                  <span class="ms-1 fw-medium"> Order Completed</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Canceled</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-user-check fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">4</h2>
+                  <span class="text-success fw-semi-bold"
+                    ><i class="bi bi-trending-up me-1"></i>+2</span
+                  >
+                  <span class="ms-1 fw-medium">Canceled Order</span>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+      </section>
+    
+      <nav class="navbar navbar-light bg-light ">
+        <div class="container-fluid ">
+          <div class="navbar-brand w-100" href="#">
+            <div class="w-100 d-flex w-100 justify-content-between ">
+              <div [class.active]="service == 'completed'" class="mat d-none d-lg-block p-2" (click)="service = 'completed'">All Transactions(10)</div>
+              <div [class.active]="service == 'completed1'"  class="mat d-none d-lg-block p-2 " (click)="service = 'completed1'">Pending Orders(8)</div>
+              <div [class.active]="service == 'completed2'" class="mat d-none d-lg-block p-2" (click)="service = 'completed2'">Completed Orders(12)</div>
+              <div [class.active]="service == 'completed3'" class="mat d-none d-lg-block p-2 " (click)="service = 'completed3'">Cancel Orders(5)</div>
+    
+            </div>
+          </div>
+          <div class="navbar-toggler d-lg-none " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" ardiva-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+          
+          </div> <h4 class="d-lg-none">SERVICES</h4>
+          <div class="offcanvas offcanvas-end pt-5" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SERVICES</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                
+                  <li [class.active]="service == 'completed'" class="mat  " (click)="service = 'completed'">All Transactions(10)</li>
+                  <li [class.active]="service == 'completed1'"  class="mat   " (click)="service = 'completed1'">Pending Orders(8)</li>
+                  <li [class.active]="service == 'completed2'" class="mat   " (click)="service = 'completed2'">Completed Orders(12)</li>
+                  <li [class.active]="service == 'completed3'" class="mat   " (click)="service = 'completed3'">Cancel Orders(5)</li>
+    
+              </ul>
+             
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <section> 
+        <div [ngSwitch]="service">
+          <!-- all transaction -->
+          <div *ngSwitchCase="'completed'" id="no-tables" >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Artisan's Name</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-title="Order ID" >@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">ope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">jide</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">faith</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">peter</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">grace</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+              
+              </tbody>
+            </table>
+            </div>
+            <!-- completed transaction -->
+          <div *ngSwitchCase="'completed1'" id="no-tables"  >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Artisan's Name</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">pending</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">pending</td>
+                  <td data-title="Artisan's Name">grace</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">pending</td>
+                  <td data-title="Artisan's Name">grace</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">pending</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">pending</td>
+                  <td data-title="Artisan's Name">precious</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">pending</td>
+                  <td data-title="Artisan's Name">favor</td>
+                </tr>
+              
+              </tbody>
+            </table>
+            </div>
+            <!-- completed Transactions -->
+          <div *ngSwitchCase="'completed2'" id="no-tables" id="no-tables"  >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Artisan's Name</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+              
+              </tbody>
+            </table>
+            </div>
+  
+            <!-- cancel orders -->
+          <div *ngSwitchCase="'completed3'" id="no-tables" id="no-tables"  >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Artisan's Name</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+                <tr>
+                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
+                  <td data-title="Date">Mark</td>
+                  <td data-title="Location">Otto</td>
+                  <td data-title="Amount">@mdo</td>
+                  <td data-title="Status">completed</td>
+                  <td data-title="Artisan's Name">hope</td>
+                </tr>
+              
+              </tbody>
+            </table>
+            </div>
+            </div>
+       
+      </section>
+</div>
