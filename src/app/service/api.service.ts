@@ -1,24 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UserModel } from '../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  public userSignupUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer'; 
+  public authUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
 
-    public userSigninUrl: string = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/login'; 
-    public emailUrl: string = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/verify-email'; 
-    public passwordresetUrl: string ='https://lyticalartisanapi.azurewebsites.net/api/Auth/reset-password'
-    public forgetpasswordUrl: string ='https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password'
-  
-  
-    // POST
-    // ​/api​/Auth​/forgot-password
-    // Parameters
-    
+  public userUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Customer​/{id}';
+
+  // ​/api​/Customer​/{id}
+
+  public userSignupUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
+
+  public userSigninUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/login';
+  public emailUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/verify-email';
+  public passwordresetUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/reset-password';
+  public forgetpasswordUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
+
+  userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
+    id: 0,
+    firstName: '',
+    lastName:'',
+    email: '',
+    phone: '',
+    password: '',
+  });
+  // items!: User[],
+
   constructor(private http: HttpClient) {}
 
   getProduct() {
@@ -29,33 +48,40 @@ export class ApiService {
     );
   }
 
- 
-
   // user signup
   signupUser(data: any) {
-    console.log(data)
-   return this.http.post<any>(this.userSignupUrl, data);
-   
-  
+    console.log(data);
+    return this.http.post<any>(this.userSignupUrl, data);
   }
   // user signin
   signinUser(data: any) {
-    console.log(data)
-   return this.http.post<any>(this.userSigninUrl, data);
-  
+    console.log(data);
+    return this.http.post<any>(
+      this.userSigninUrl,
+      data
+      //this added
+    );
   }
 
-  confirmEmail(data:any) {
-    return this.http.get(this.emailUrl, data)
- 
+  profile() {
+    return this.http.get<UserModel>(this.userUrl, {
+      // withCredentials:true
+    });
   }
-  resetPassword(data:any) {
-    return this.http.post(this.passwordresetUrl, data)
- 
+
+  saveUserToLocalStorage(data: UserModel) {
+    this.userProfile.next(data);
+    localStorage.setItem('login', JSON.stringify(data));
   }
-  forgetPassword(data:any) {
-    return this.http.post(this.forgetpasswordUrl, data)
- 
+
+  confirmEmail(data: any) {
+    return this.http.get(this.emailUrl, data);
+  }
+  resetPassword(data: any) {
+    return this.http.post(this.passwordresetUrl, data);
+  }
+  forgetPassword(data: any) {
+    return this.http.post(this.forgetpasswordUrl, data);
   }
 
   // location selection api
@@ -69,36 +95,59 @@ export class ApiService {
       );
   }
 
-  postUser(data: any) {
-    return this.http.post<any>('http://localhost:3000/posts', data).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
+  // postUser(data: any) {
+  //   return this.http.post<any>('http://localhost:3000/posts', data).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
+  // getUser(id: number) {
+  //   return this.http.get(this.authUrl).pipe(
+  //     map((res: any) => {
+  //             return res;
+  //         })
+  //   )
+  // }
+  // getUser() {
+  //   return this.http.get<any>('http://localhost:3000/posts').pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
+  getUser(id: number) {
+    return this.http
+      .get<any>(
+        'https://lyticalartisanapi.azurewebsites.net/api/Customer/​' + id
+      )
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
   }
 
-  getUser() {
-    return this.http.get<any>('http://localhost:3000/posts').pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
-  deleteUser(id:number) {
-    return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
+  // getUser(id:number) {
+  //   return this.http.get<any>(this.userUrl).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
+  // deleteUser(id:number) {
+  //   return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
 
-  updateUser(data:any, id:number) {
-    return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
-
+  // updateUser(data:any, id:number) {
+  //   return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
 }
-

@@ -59,3 +59,35 @@ export class HeaderComponent implements OnInit {
 
   
 }
+  // let authflow = this.api.login(this.signinForm)
+  // .pipe(
+  //   switchMap(() => this.api.profile())
+  // )
+  // authflow.subscribe({
+  //   next: (user: UserModel) =>{
+  //     this.api.saveUserToLocalStorage(user)
+  //   },
+  //   error: (err) =>{
+  //     alert('login failed')
+  //   }
+  // })
+
+
+  //  userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
+    //     id: 0,
+    //     userName: '',
+    //     email: '',
+    //     phone: '',
+    //     password: ''
+    //   });
+    
+    //   profile() {
+    //     return this.http.get<UserModel>(this.authUrl, {
+    //       withCredentials: true,
+    //     });
+    //   }
+    
+    //   saveUserToLocalStorage(user: UserModel){
+    // this.userProfile.next(user)
+    // localStorage.setItem('user-profile', JSON.stringify(user))
+    //   };
