@@ -15,7 +15,7 @@ import { UserModel } from 'src/app/shared/models/user.model';
 export class LoginComponent implements OnInit {
   signinForm!: FormGroup;
   hide = true;
-  data!: any
+  data: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,30 +30,70 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required, ],
       password: ['', Validators.required],
     });
-  }
 
+    // this.display()
+  }
+// onSubmit(){
+//   const token = this.api.signinUser(this.signinForm.value)
+//   if(token){
+//     localStorage.setItem('token', token.email)
+//   }
+// }
  
+// onSubmit(){
+//   this.data =this.api.signinUser(this.signinForm.value)
+ 
+//     .subscribe(
+//     {
+//       next: (data: UserModel) =>{
+//         alert('logged in')
+//         localStorage.setItem('token', this.data);
+//         console.log('login succefssul')
+//             //  this.router.navigate(['/dashboard']);
+//       },
+//       error: (err)=>{
+//         alert('login failed')
+//       }
+//     })
+//   }
 
-  signin() {
-    // console.log(this.signupForm.value);
-    this.api.signinUser(this.signinForm.value).subscribe((res) => {
-      alert(res.status);
-      console.log(res);
-      this.signinForm.reset();
-      // this.router.navigate(['/dashboard']);
-    });
-  }
+//   // localStorage.setItem('token', JSON.stringify(this.data));
+//   // console.log('login succefssul')
+// //  this.router.navigate(['/dashboard']);
+// }
 
-  onSubmi(){
-    let authFlow = this.api.signinUser(this.signinForm)
-  .pipe(
-    switchMap(() => this.api.profile())
-  )
+// display(){
+//  return localStorage.getItem(this.data)
+// }
+//   // onSubmit(){
+//   //   this.api.signinUser(this.signinForm.value)
+    
+//   //   .subscribe(
+//   //   {
+//   //     next: (data: UserModel) =>{
+//   //       alert('logged in')
+//   //       localStorage.setItem('token', JSON.stringify(data));
+//   //       console.log('login succefssul')
+//   //            this.router.navigate(['/dashboard']);
+//   //     },
+//   //     error: (err)=>{
+//   //       alert('login failed')
+//   //     }
+//   //   }
+//   //   )
+//   // }
+
+  onSubmit(){
+    let authFlow = this.api.signinUser(this.signinForm.value)
+  // .pipe(
+  //   switchMap((data) => this.profile())
+  // )
   authFlow.subscribe({
     next: (data: UserModel) =>{
       this.api.saveUserToLocalStorage(data)
-      alert('login succefful')
+      alert('login succefssul')
            this.router.navigate(['/dashboard']);
+           
     },
     error: (err) =>{
       alert('login failed')
@@ -62,25 +102,30 @@ export class LoginComponent implements OnInit {
   }
 
  
-  onSubmit() {
-    this.alertService.info('Working on creating new account');
+  // onSubmit() {
+  //   this.alertService.info('Working on creating new account');
+  
 
-    const loginObserver = {
-      next: (res:any) => {
-        alert()
-        console.log('sucessful login');
-        // this.alertService.success('Account Created');
-        alert(res.message);
+  //   const loginObserver = {
+  //     next: (data : UserModel) => {
+  //       this.api.saveUserToLocalStorage(data)
+  //       alert()
+  //       console.log('sucessful login');
+  //       // this.alertService.success('Account Created');
+  //       alert("sdfghjkl;");
 
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err: any) => {
-        console.log(err);
-        this.alertService.danger(err.error.errors[0].description);
-      },
-    };
+  //       this.router.navigate(['/dashboard']);
+  //     },
+  //     error: (err: any) => {
+  //       console.log(err);
+  //       this.alertService.danger(err.error.errors[0].description);
+  //     },
+  //   };
+    
 
-    this.api.signinUser(this.signinForm.value).subscribe(loginObserver);
-    localStorage.setItem('data', JSON.stringify(this.data))
-  }
+  //   this.api.signinUser(this.signinForm.value).pipe(
+  //     switchMap(() => this.api.profile())
+  //   ).subscribe(loginObserver)
+    
+  // }
 }

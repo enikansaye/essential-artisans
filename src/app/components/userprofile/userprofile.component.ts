@@ -13,15 +13,23 @@ export class UserprofileComponent implements OnInit {
 
   expression = 'match1'
   
-  userData: any;
-  data: any;
+  userData : any 
+  loggedinUser: any;
+ 
 
   constructor(private observer : BreakpointObserver, private api:ApiService, ) { }
 
 
   ngOnInit(): void {
-    // this.getAllEmployee()
-    // this.getUserDetails()
+  
+    // this.api.profileData(data).subscribe({
+    //   next: (data )=>{
+    //     this.userData = data
+    //   }
+    // })
+  this.getUserserInfo()
+  // this.getFromLocalStrorage()
+  // this.loggedin()
   }
 ngAfterViewInit(){
   this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
@@ -34,7 +42,33 @@ ngAfterViewInit(){
     }
   })
 }
+getUserserInfo(){
 
+  // localStorage.setItem("datas", JSON.stringify('token'));
+
+let data = JSON.parse(localStorage.getItem('token') || '{}');
+
+console.log(data);
+  
+  // console.log(this.loggedinUser)
+  //  this.loggedinUser =localStorage.getItem('token')
+   
+  //  this.loggedinUser = JSON.parse(localStorage.getItem('token') || '{}');
+
+  //  return this.loggedinUser
+
+}
+
+// getUserserInfo() {
+//  return localStorage.getItem('data')
+ 
+// }
+
+public getFromLocalStrorage() {
+  localStorage.setItem('token', JSON.stringify(data));
+  const  check =  JSON.parse(localStorage.getItem('token') || '{}');
+  return check;
+}
 // getUserDetails(id:any) {
   
 //   this.api.getUser(id).subscribe((res: any) => {
@@ -60,3 +94,7 @@ ngAfterViewInit(){
 // }
 
 }
+function data(data: any) {
+  throw new Error('Function not implemented.');
+}
+

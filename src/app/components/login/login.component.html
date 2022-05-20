@@ -38,19 +38,22 @@
       </div>
     
       <button
-      type="button"
+      type="submit"
       mat-raised-button
         class="primary"
         [disabled]="signinForm.invalid"
          color="accent"
-         (click)="signin()"
+        
       >
       SIGN IN
       </button>
     
     
     </form> 
-    
+  <!-- <div *ngFor="let data of data">
+    <li>  {{data.email}}</li>
+  </div> -->
+  <!-- <li>  {{data.email}}</li> -->
     
   </div>
 </div>

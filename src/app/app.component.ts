@@ -11,12 +11,24 @@ export class AppComponent implements OnInit{
   title = 'artisan finder'
 
   constructor( private api : ApiService){}
-
-  userInfo?: UserModel;
+loggedinUser: any
+user: any
+  // userInfo!: UserModel;
   ngOnInit(): void {
-   this.api.userProfile.subscribe((data)=>{
-     this.userInfo = data;
-   })
+  //  this.api.userProfile.subscribe((data)=>{
+  //    this.userInfo = this.loggedinUser;
+  //  })
+  this.loggedin()
+  }
+  loggedin(){
+    // console.log(this.loggedinUser)
+   this.loggedinUser =localStorage.getItem('token')
+this.user = localStorage.getItem('token');
+  
+   return this.loggedinUser
+  }
+  logout(){
+    return localStorage.removeItem('token')
   }
 
 }

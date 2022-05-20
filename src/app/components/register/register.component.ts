@@ -53,15 +53,6 @@ export class RegisterComponent implements OnInit {
       address: ['', Validators.required],
     });
   }
-  signup() {
-    // console.log(this.signupForm.value);
-    this.api.signupUser(this.signupForm.value).subscribe((res) => {
-      alert(res.status);
-      console.log(res);
-      this.signupForm.reset();
-      this.router.navigate(['/signin']);
-    });
-  }
 
   showAll() {
     this.api.getAllStateData().subscribe(

@@ -1,29 +1,34 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import {PageEvent} from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { ThemeOption } from 'ngx-echarts';
 import { CoolTheme } from './cool-theme';
 import { EChartsOption } from 'echarts';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
-  styleUrls: ['./adminpage.component.css']
+  styleUrls: ['./adminpage.component.css'],
 })
 export class AdminpageComponent implements OnInit {
-  @ViewChild(MatSidenav) sidenav !: MatSidenav;
-
-  constructor(private observer : BreakpointObserver) { }
-
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  userData: any;
+  
   // ngx-chart
   options: any;
   chartOption: any;
-  
-expression = 'page1';
-service = 'completed';
+
+  expression = 'page1';
+  service = 'completed';
+
+  constructor(private observer: BreakpointObserver, private api: ApiService) {}
+
 
   ngOnInit(): void {
+
+    this.getAllUser()
     // ngx chart
     const xAxisData = [];
     const data1 = [];
@@ -69,18 +74,27 @@ service = 'completed';
 
     this.options = {
       title: {
-        text: 'Nightingale\'s Rose Diagram',
+        text: "Nightingale's Rose Diagram",
         subtext: 'Mocking Data',
-        x: 'center'
+        x: 'center',
       },
       tooltip: {
         trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)'
+        formatter: '{a} <br/>{b} : {c} ({d}%)',
       },
       legend: {
         x: 'center',
         y: 'bottom',
-        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+        data: [
+          'rose1',
+          'rose2',
+          'rose3',
+          'rose4',
+          'rose5',
+          'rose6',
+          'rose7',
+          'rose8',
+        ],
       },
       calculable: true,
       series: [
@@ -97,22 +111,15 @@ service = 'completed';
             { value: 20, name: 'rose5' },
             { value: 35, name: 'rose6' },
             { value: 30, name: 'rose7' },
-            { value: 40, name: 'rose8' }
-          ]
-        }
-      ]
+            { value: 40, name: 'rose8' },
+          ],
+        },
+      ],
     };
-  
   }
 
-  theme !: string | ThemeOption;
+  theme!: string | ThemeOption;
   coolTheme = CoolTheme;
-
-
-
-
-
- 
 
   length = 500;
   pageSize = 10;
@@ -126,16 +133,29 @@ service = 'completed';
     this.pageIndex = event.pageIndex;
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-      if(res.matches){
+      if (res.matches) {
         this.sidenav.mode = 'over';
         this.sidenav.close();
-      }else{
+      } else {
         this.sidenav.mode = 'side';
         this.sidenav.open();
       }
-    })
+    });
   }
+// consuming api section
+getAllUser() {
+  this.api.getUser().subscribe((res: any) => {
+    this.userData = res;
+    console.log(this.userData)
+    console.log(res)
+  });
+}
+getAllArtisan() {
+  this.api.getArtisan().subscribe((res: any) => {
+    this.userData = res;
+  });
+}
 
 }

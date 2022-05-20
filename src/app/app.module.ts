@@ -65,6 +65,7 @@ import { ArtisanSignupComponent } from './components/artisan-signup/artisan-sign
 import { ArtisanSigninComponent } from './components/artisan-signin/artisan-signin.component';
 import { SignuprouteComponent } from './components/signuproute/signuproute.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { AuthGuard } from './service/auth-guard';
 
 
 
@@ -135,16 +136,20 @@ AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
 
     RouterModule.forRoot([
       {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
-      {path: "signin" , component: LoginComponent },
+      {path: "signin" , component: LoginComponent, data:{
+        userType:'non-logged-in'
+      } },
       // {path: "signup" , component: SignupComponent },
-      {path: "dashboard" , component: DashboardComponent },
+      {path: "dashboard" , component: DashboardComponent, data:{
+        userType:'guest'
+      } },
       {path: "aboutus" , component: AboutusComponent },
       {path: "contactus" , component: ContactusComponent },
       {path: "ourpolicy" , component: PolicyComponent },
       {path: "addtocart" , component: AddtocartComponent },
       {path: "electrician" , component: ElectricianComponent },
       {path: "plumbing" , component: PlumbingComponent },
-      {path: "carpentary" , component: CapentaryComponent },
+      {path: "carpentry" , component: CapentaryComponent },
       {path: "acrepair" , component: AcrepairComponent },
       {path: "register" , component: RegisterComponent },
       {path: "home" , component: HomeComponent },
@@ -156,7 +161,9 @@ AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
       {path: "pagenotfound" , component: PagenotfoundComponent },
       {path: "admin" , component: AdminpageComponent },
       {path: "forbidden" , component: ForbiddenComponent },
-      {path: "available artisan" , component: AllartisanComponent },
+      {path: "available artisan" , component: AllartisanComponent , data:{
+        userType:'logged-in'
+      }},
       {path: "alltransactions" , component: AlltransactionsComponent },
       {path: "confirmemail" , component: EmailComponent },
       {path: "checkemail" , component: SignuprouteComponent },
@@ -165,7 +172,7 @@ AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
       // {path: "artisanprofile" , component: PartnerregisterComponent },
       // {path: "acrepair/fan" , component: AcrepairComponent },
 
-    ]),
+    ], {scrollPositionRestoration:'enabled'}),
       // ServiceWorkerModule.register('ngsw-worker.js', {
       //   enabled: environment.production,
       //   // Register the ServiceWorker as soon as the app is stable

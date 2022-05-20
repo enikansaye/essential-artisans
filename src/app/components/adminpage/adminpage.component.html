@@ -1,4 +1,4 @@
-<mat-sidenav-container class="mt-5">
+<mat-sidenav-container class="">
     <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3  ">
         <mat-toolbar class="w-100 d-flex justify-content-end">
           <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
@@ -1142,10 +1142,10 @@
                 
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 <tr class="align-center justify-content-center">
                   <td data-title="Email Adress" scope="row">enikansaye13</td>
-                  <td data-title="Name">Mark</td>
+                  <td data-title="Name"></td>
                   <td data-title="Location">22 sikiru alade</td>
                   <td data-title="Number">08149512729</td>
                   <td data-title="Status">Suspended</td>
@@ -1252,9 +1252,9 @@
                 
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngFor="let row of userData">
                 <tr class="align-center justify-content-center">
-                  <td data-title="Email Adress" scope="row">enikansaye13</td>
+                  <td data-title="Email Adress" scope="row">{{row.email}}</td>
                   <td data-title="Name">Mark</td>
                   <td data-title="Location">22 sikiru alade</td>
                   <td data-title="Number">08149512729</td>

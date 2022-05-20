@@ -1,6 +1,6 @@
 
 <div>
-  <div *ngFor="let data of data">
+  <div >
     
     <mat-sidenav-container >
       
@@ -14,8 +14,12 @@
         </mat-toolbar>
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
         <h4 class="mt-2 mt-md-4">sdfghjkl</h4>
-        <h4>Software Developer</h4>
-        <h4>{{data.name}}</h4>
+        <div >
+          <h4 class="mt-2 mt-md-4">sdfghjkl</h4>
+          <li></li>
+          <li>{{loggedinUser}}</li>
+        </div>
+        <h4></h4>
        <hr class="divider">
         <div class="icons py-2 py-md-5">
           <span class="pb-3" [class.active]="expression == 'match1'" (click)="expression = 'match1'"
