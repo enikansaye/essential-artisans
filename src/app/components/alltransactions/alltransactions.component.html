@@ -233,7 +233,8 @@
                   <td data-title="Status">pending</td>
                   <td data-title="Artisan's Name">hope</td>
                   <td data-title="Action">
-                    <button class=" btn btn-success me-4">Accept</button>
+                    <button class=" btn btn-success me-4" (ngClass)="clickEvent()" >Accept</button>
+                    <button class=" btn btn-success me-4" *ngIf="clickEvent()">gi</button>
                     <button class=" btn btn-danger">Decline</button>
                   </td>
                 </tr>

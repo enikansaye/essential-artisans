@@ -3,11 +3,21 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserModel } from '../shared/models/user.model';
+function getLocalStorage(): Storage {
+  return localStorage;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService implements OnInit {
+  loggedinUser: any;
+
+  get localStorage(): Storage {
+    return getLocalStorage();
+  }
+
+  
   public authUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
 
@@ -87,9 +97,15 @@ export class ApiService implements OnInit {
   saveUserToLocalStorage(data: UserModel) {
     this.userProfile.next(data);
     localStorage.setItem('token', JSON.stringify(data));
+    // this.loggedinUser =JSON.parse(JSON.stringify(localStorage.getItem('token'))).data.email
+ 
    
   }
- 
+//   setInfo(data: UserModel) {
+//     const jsonData = JSON.stringify(data)
+//     this._localStorage.setItem('myData', jsonData)
+//     this._myData$.next(data)
+//  }
 
   loadUserFromLocalStorage(): UserModel{
     if(this.userProfile.value.id ==0){

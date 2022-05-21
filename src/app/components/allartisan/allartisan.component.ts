@@ -62,6 +62,7 @@ if(today > selectDate){
 
 }
 
+
 // selecting location section
 showAll() {
   this.api.getAllStateData().subscribe(
@@ -69,6 +70,10 @@ showAll() {
     this.statelga = data;
     console.log(this.statelga)
   });
+}
+sendDetails(){
+alert("Request sent, Artisan will contact as soon as posible")
+console.log('mess')
 }
 
 }

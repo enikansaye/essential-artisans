@@ -7,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlltransactionsComponent implements OnInit {
 
+  accept: boolean = false;
+
+  process: boolean = false
+
   service = 'completed';  
   constructor() { }
 
   ngOnInit(): void {
   }
-
+clickEvent(){
+  this.accept = !this.accept
+}
 }

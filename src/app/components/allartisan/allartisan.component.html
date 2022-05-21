@@ -1,5 +1,5 @@
 <div class="d-flex">
-  <div class="container-fluid d-flex align-center justify-content-center mt-5 ">
+  <div class="container-fluid d-flex align-center justify-content-center  ">
     
     <!-- PROFILE CARDS 1 -->
 
@@ -274,7 +274,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Send Your Request</h3>
+        <h3 class="modal-title" id="exampleModalLabel" >Send Your Request</h3>
         <button
           type="button"
           class="btn-close"
@@ -284,7 +284,7 @@
       </div>
       <div class="modal-body">
         <!-- modal form -->
-        <form [formGroup]="formValue">
+        <form [formGroup]="formValue" (ngSubmit)="sendDetails()">
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
@@ -382,16 +382,13 @@
               type="datetime-local"
               [(ngModel)]="value"
               #input (change)="onChange(input.value)"
-              min="{{}min}"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
+        />
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button
-          type="button"
+          type="submit"
           id="cancel"
           class="btn btn-info"
           data-bs-dismiss="modal"
