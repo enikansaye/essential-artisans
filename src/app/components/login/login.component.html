@@ -1,6 +1,6 @@
 <div class="login ">
   <div class="form">
-    <div>SIGN IN</div>
+    <div>USSIGN IN</div>
     <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" >
   
   
@@ -32,9 +32,10 @@
           Please enter a valid email address
         </mat-error>
       </mat-form-field>  
-      <div class="forgetpassword">
-        <a routerLink="/register">New User? <strong>Register</strong></a>
-        <h4 routerLink="/forgetpassword">Forget Password</h4>
+      <div class="forgetpassword d-flex justify-content-between text-primary">
+        <p routerLink="/register">New User? <strong>Register</strong></p>
+        <p routerLink="/forgetpassword">Forget Password</p>
+        <p routerLink="/forgetpassword">Artisan Signin</p>
       </div>
     
       <button

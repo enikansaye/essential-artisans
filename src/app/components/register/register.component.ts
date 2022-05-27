@@ -41,7 +41,8 @@ export class RegisterComponent implements OnInit {
     this.showAll();
 
     this.signupForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', Validators.required],
       phone: [
         '',
@@ -53,7 +54,7 @@ export class RegisterComponent implements OnInit {
       address: ['', Validators.required],
     });
   }
-
+// show all location within lagos
   showAll() {
     this.api.getAllStateData().subscribe(
       (data: any) => {
@@ -75,10 +76,12 @@ export class RegisterComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
-        this.alertService.danger(err.error.errors[0].description);
+        this.alertService.danger('signup failed');
       },
     };
 
-    this.api.signupUser(this.signupForm.value).subscribe(registerObserver);
+    this.api.register(this.signupForm.value).subscribe(registerObserver);
   }
+
+  
 }

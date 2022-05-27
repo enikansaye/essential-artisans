@@ -5,4 +5,5 @@ export interface UserModel {
     email: string
     phone: string 
     password: string
+    profileImageUrl?: string;
 }

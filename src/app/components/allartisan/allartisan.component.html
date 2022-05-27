@@ -14,12 +14,12 @@
         <div class="location text-center me-2 p-1">Lekki</div>
         <div class="location text-center me-2 p-1" data-bs-toggle="modal" data-bs-target="#location">View All</div>
       </div>
-        <div class="row ">
+        <div class="row " >
           
-          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="createnewService(value)">
             <div class="card card-profile">
               <div class="card-avatar">
-                <a href="#">
+                <a >
                   <img class="img" src="assets/images/may.jpg" />
                 </a>
                   </div>
@@ -60,7 +60,7 @@
           <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <div class="card card-profile" >
               <div class="card-avatar">
-                <a href="#">
+                <a routerLink="#">
                   <img class="img" src="assets/images/mayor.jpg" />
                 </a>
               </div>
@@ -100,7 +100,7 @@
           <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <div class="card card-profile">
               <div class="card-avatar">
-                <a href="#">
+                <a routerLink="">
                   <img class="img" src="assets/images/mayor.jpg" />
                 </a>
               </div>
@@ -140,7 +140,7 @@
           <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <div class="card card-profile">
               <div class="card-avatar">
-                <a href="#">
+                <a routerLink="">
                   <img class="img" src="assets/images/mayor.jpg" />
                 </a>
               </div>
@@ -180,7 +180,7 @@
           <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <div class="card card-profile">
               <div class="card-avatar">
-                <a href="#">
+                <a routerLink="">
                   <img class="img" src="assets/images/may.jpg" />
                 </a>
               </div>
@@ -284,7 +284,7 @@
       </div>
       <div class="modal-body">
         <!-- modal form -->
-        <form [formGroup]="formValue" (ngSubmit)="sendDetails()">
+        <form [formGroup]="formValue" (ngSubmit)="onSubmit()">
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
@@ -384,12 +384,20 @@
               #input (change)="onChange(input.value)"
         />
           </div>
+          <button
+          type="submit"
+         
+          class="btn btn-info"
+          data-bs-dismiss="modal"
+        >
+          Send
+        </button>
         </form>
       </div>
       <div class="modal-footer">
         <button
           type="submit"
-          id="cancel"
+         
           class="btn btn-info"
           data-bs-dismiss="modal"
         >

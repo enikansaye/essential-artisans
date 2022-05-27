@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
-import { switchMap } from 'rxjs';
+import { map } from "rxjs/operators";
 import { ApiService } from 'src/app/service/api.service';
 import { UserModel } from 'src/app/shared/models/user.model';
+import * as alertify from 'alertifyjs'
 
 @Component({
   selector: 'app-login',
@@ -83,16 +84,15 @@ export class LoginComponent implements OnInit {
 //   //   )
 //   // }
 
-  onSubmit(){
+  onSubmi(){
     let authFlow = this.api.signinUser(this.signinForm.value)
-  // .pipe(
-  //   switchMap((data) => this.profile())
-  // )
+ 
   authFlow.subscribe({
     next: (data: UserModel) =>{
       this.api.saveUserToLocalStorage(data)
       alert('login succefssul')
-           this.router.navigate(['/dashboard']);
+      // alertify.success('login successful');
+           this.router.navigate(['/']);
            
     },
     error: (err) =>{
@@ -101,31 +101,31 @@ export class LoginComponent implements OnInit {
   })
   }
 
- 
-  // onSubmit() {
-  //   this.alertService.info('Working on creating new account');
+  onSubmit() {
+    this.alertService.info('Checking User Info');
   
+    const loginObserver = {
+      next:()=> {
+     
+        console.log('User logged in');
+        this.router.navigate(['/']);
+        this.alertService.success('Logged In');
+     
+      },
+      error: (err: any) => {
+        // this.progressBar.setError();
+        console.log(err);
+        this.alertService.danger('Unable to Login');
+     
+      }
+    };
+    this.api.login(this.signinForm.value).subscribe(loginObserver);
 
-  //   const loginObserver = {
-  //     next: (data : UserModel) => {
-  //       this.api.saveUserToLocalStorage(data)
-  //       alert()
-  //       console.log('sucessful login');
-  //       // this.alertService.success('Account Created');
-  //       alert("sdfghjkl;");
+  }
 
-  //       this.router.navigate(['/dashboard']);
-  //     },
-  //     error: (err: any) => {
-  //       console.log(err);
-  //       this.alertService.danger(err.error.errors[0].description);
-  //     },
-  //   };
+ 
+ 
     
 
-  //   this.api.signinUser(this.signinForm.value).pipe(
-  //     switchMap(() => this.api.profile())
-  //   ).subscribe(loginObserver)
-    
-  // }
+
 }

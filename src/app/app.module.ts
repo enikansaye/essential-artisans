@@ -65,7 +65,7 @@ import { ArtisanSignupComponent } from './components/artisan-signup/artisan-sign
 import { ArtisanSigninComponent } from './components/artisan-signin/artisan-signin.component';
 import { SignuprouteComponent } from './components/signuproute/signuproute.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
-import { AuthGuard } from './service/auth-guard';
+// import { AuthGuard } from './service/auth-guard';
 
 
 
@@ -135,14 +135,13 @@ NgxEchartsModule.forRoot({
 AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
 
     RouterModule.forRoot([
-      {path: "", redirectTo: 'dashboard', pathMatch: 'full'},
-      {path: "signin" , component: LoginComponent, data:{
+      {path: "", redirectTo: 'dashboard', pathMatch: 'full', },
+      {path: "signin" , component: LoginComponent,  data:{
         userType:'non-logged-in'
       } },
-      // {path: "signup" , component: SignupComponent },
-      {path: "dashboard" , component: DashboardComponent, data:{
-        userType:'guest'
-      } },
+    
+      {path: "" , component: DashboardComponent,    },
+      {path: "signup" , component: SignupComponent },
       {path: "aboutus" , component: AboutusComponent },
       {path: "contactus" , component: ContactusComponent },
       {path: "ourpolicy" , component: PolicyComponent },
@@ -157,7 +156,7 @@ AlertModule.forRoot({maxMessages: 5, timeout: 5000, positionX: 'right'}),
       {path: "userprofile" , component: UserprofileComponent },
       {path: "artisanprofile" , component: ArtisanprofileComponent },
       {path: "forgetpassword" , component: ForgetpasswordComponent },
-      {path: "partnerregister" , component: PartnerregisterComponent },
+      {path: "artisan" , component: PartnerregisterComponent },
       {path: "pagenotfound" , component: PagenotfoundComponent },
       {path: "admin" , component: AdminpageComponent },
       {path: "forbidden" , component: ForbiddenComponent },

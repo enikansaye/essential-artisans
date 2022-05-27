@@ -1,34 +1,31 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,  } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserModel } from '../shared/models/user.model';
-function getLocalStorage(): Storage {
-  return localStorage;
-}
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { AllurlService } from './allurl.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService implements OnInit {
-  loggedinUser: any;
+  userInfo: any;
+  jwtHelper = new JwtHelperService();
+  decodedToken: any;
+  currentUser!: UserModel;
 
-  get localStorage(): Storage {
-    return getLocalStorage();
-  }
-
-  
   public authUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
 
   public userUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/​/api​/Admin​/customers';
 
-    // GET
-    // ​/api​/Admin​/customers
-    
-    // GET
-    // ​/api​/Admin​/orders
+  // GET
+  // ​/api​/Admin​/customers
+
+  // GET
+  // ​/api​/Admin​/orders
 
   public userSignupUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
@@ -45,16 +42,18 @@ export class ApiService implements OnInit {
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
     firstName: '',
-    lastName:'',
+    lastName: '',
     email: '',
     phone: '',
     password: '',
   });
+  loggedinUser: any
+  userResponse: any
   // items!: User[],
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private url: AllurlService) {}
   ngOnInit(): void {
-  
+    // this.loggedIn()
   }
 
   getProduct() {
@@ -67,56 +66,112 @@ export class ApiService implements OnInit {
 
   // user signup
   signupUser(data: any) {
-    
     return this.http.post<any>(this.userSignupUrl, data);
   }
+  register(model: any) {
+ 
+    return this.http.post(this.userSignupUrl,model);
+  }
+
+
+
   // user signin
   signinUser(data: any) {
+    return this.http.post<any>(this.userSigninUrl, data);
+  }
+
+  // login(model: any) {
+  //   return this.http.post(this.userSigninUrl, model).pipe(
+  //     map((response: any) => {
+  //       const user = response;
+      
+  //       this.saveUserToLocalStorage(user)
+  //       // this.decodedToken = this.jwtHelper.decodeToken(user);
+  //    console.log(user.data.email)
+  //    this.decodedToken = user.data
+  //    console.log(this.decodedToken.email)
+     
+  //     })
+  //   );
+  // }
   
-    return this.http.post<any>(
-      this.userSigninUrl,
-      data
-   
+  login(model: any) {
+    return this.http.post(this.userSigninUrl, model).pipe(
+      map((response: any) => {
+        const user = response;
+        console.log(user)
+    
+        // localStorage.setItem("token", user);
+        //   localStorage.setItem("user", JSON.stringify(user.data));
+
+        if (user) {
+          localStorage.setItem("token", user);
+          localStorage.setItem("user", JSON.stringify(user.data));
+          this.decodedToken =user.data;
+          this.currentUser = user.data;
+        
+        }
+      })
     );
- 
   }
 
-  // profile() {
-  //   return localStorage.getItem('token')
-  // }
-  profile() {
-    return this.http.get<UserModel>(this.userSigninUrl);
-  }
-  // profileData() {
-  //   return this.http.get<string>(this.userUrl, {
-  //     withCredentials:true
-  //   });
-  // }
-  
-
+//artisan loginin
+signupArtisan(data:any){
+return this.http.post<any>(this.url.signinRegister, data)
+}
   saveUserToLocalStorage(data: UserModel) {
     this.userProfile.next(data);
     localStorage.setItem('token', JSON.stringify(data));
-    // this.loggedinUser =JSON.parse(JSON.stringify(localStorage.getItem('token'))).data.email
- 
-   
-  }
-//   setInfo(data: UserModel) {
-//     const jsonData = JSON.stringify(data)
-//     this._localStorage.setItem('myData', jsonData)
-//     this._myData$.next(data)
-//  }
 
-  loadUserFromLocalStorage(): UserModel{
-    if(this.userProfile.value.id ==0){
-      let fromLocalStorage = localStorage.getItem('token')
-      if(fromLocalStorage){
-        let userInfo= JSON.parse(fromLocalStorage)
-        this.userProfile.next(userInfo)
-      }
-    }
-    return this.userProfile.value
   }
+
+  userImage(data:any,) {
+    return this.http.put<any>(this.url.updateUser , data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+// update user
+updateUser(model: any) {
+  const formData = new FormData();
+  formData.append("profileimage", model.file, );
+  return this.http
+    .put(
+      this.url.updateUser,
+      formData,
+    
+    )
+    .pipe(
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          this.currentUser = user.userType;
+        }
+      })
+    );
+}
+loggedIn() {
+
+ this.loggedinUser = localStorage.getItem('user')
+ return  this.loggedinUser = JSON.parse(this.loggedinUser)
+
+
+
+}
+
+
+
+  // loadUserFromLocalStorage(): UserModel {
+  //   if (this.userProfile.model.id == 0) {
+  //     let fromLocalStorage = localStorage.getItem('token');
+  //     if (fromLocalStorage) {
+  //       let userInfo = JSON.parse(fromLocalStorage);
+  //       this.userProfile.next(data);
+  //     }
+  //   }
+  //   return this.userProfile.value;
+  // }
 
   confirmEmail(data: any) {
     return this.http.get(this.emailUrl, data);
@@ -156,7 +211,7 @@ export class ApiService implements OnInit {
   //
 
   getUser() {
-    return this.http.get<any>(this.userUrl ).pipe(
+    return this.http.get<any>(this.userUrl).pipe(
       map((res: any) => {
         return res;
       })
@@ -192,4 +247,21 @@ export class ApiService implements OnInit {
   //     })
   //   );
   // }
+  //  create service
+   createService(id:number) {
+      return this.http.post<any>(this.url.createService, + id).pipe(
+      
+      );
+    }
+    uploadService(data:any){
+return this.http.post<any>(this.url.uploadService, data)
+    }
+// delete service order
+    deleteUser() {
+    return this.http.delete<any>(this.url.deleteService).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 }

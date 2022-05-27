@@ -13,11 +13,11 @@
           </button>
         </mat-toolbar>
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
-        <h4 class="mt-2 mt-md-4">sdfghjkl</h4>
-        <div >
-          <h4 class="mt-2 mt-md-4">sdfghjkl</h4>
+        <!-- <h4 class="mt-2 mt-md-4">{{useData.email}}</h4> -->
+        <div  >
+          <h4 class="mt-2 mt-md-4">{{api.loggedinUser.email}} </h4>
           <li></li>
-          <li>{{loggedinUser}}</li>
+      
         </div>
         <h4></h4>
        <hr class="divider">
@@ -118,6 +118,7 @@
     </mat-toolbar>
     <div [ngSwitch]="expression">
       <div *ngSwitchCase="'match1'" >
+        <form [formGroup]="formValue" (ngSubmit)="onSubmit()">
           <section
             class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
           >
@@ -127,7 +128,7 @@
 
             <div class="col align-items-end d-flex">
               <div class="col-4 col-md-2 rounded-circle me-3 ">
-                <img src="assets/images/mayor.jpg" class=" img-fluid bg-success rounded" />
+                <img [src]="  profileimageUrl" class=" img-fluid bg-success rounded" />
               </div>
              
 
@@ -135,7 +136,11 @@
                 <label for="file-btn" class="btn btn-success"
                   >Choose a file</label
                 >
-                <input type="file" class="pt-5 d-none" id="file-btn" hidden />
+                <input type="file"
+                formControlName="profileImage"
+                id="profileImage"
+                placeholder="Change Profile Image"
+                (change)="onFileChange($event)">
 
                 <h4 class="d-none d-lg-block pt-2">
                   Acceptable format, jpg, png only<br /><span>
@@ -150,7 +155,7 @@
           <section class="w-100 p-2 ps-md-5">
             <div>
               <div class="h5">ACCOUNT INFORMATION</div>
-              <div>
+             <div>
                 <div class="mb-3 row">
                   <label for="inputtext" class="col-sm-2 col-form-label"
                     >First Name</label
@@ -160,6 +165,7 @@
                       type="text"
                       class="form-control"
                       id="inputFirstName"
+                      formControlName="firstName" 
                     />
                   </div>
                 </div>
@@ -169,9 +175,10 @@
                   >
                   <div class="col-sm-4">
                     <input
-                      type="password"
+                      type="text"
                       class="form-control"
-                      id="inputPassword"
+                      id="inputlastName"
+                      formControlName="lastName" 
                     />
                   </div>
                 </div>
@@ -182,9 +189,21 @@
                   >
                   <div class="col-sm-4">
                     <input
-                      type="password"
+                     formControlName="email" type="text" class="form-control"
                       class="form-control"
-                      id="inputPassword"
+                      id="inputEmail"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"
+                    >mobile number</label
+                  >
+                  <div class="col-sm-4">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="input"
                     />
                   </div>
                 </div>
@@ -192,6 +211,8 @@
               </div>
             </div>
           </section>
+          <button *ngIf="showUpdate" type="submit"  class="btn btn-inline-primary">Update</button>
+          </form>
 
           <section class="p-2 mb-5 ps-md-5 butt">
             <div class="d-flex">
@@ -207,7 +228,9 @@
               <!-- <button class="btn btn-outline-primary mx-1 btn-sm">
                 Change password
               </button> -->
-              <button class="btn btn-outline-success mx-1">edit profile</button>
+              <button class="btn btn-outline-success mx-1" *ngIf="!showAddEmployee" (click)="onEdit()">edit profile</button>
+              <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
+              <button *ngIf="showUpdate" type="submit"  class="btn btn-inline-primary">Update</button>
               <button class="btn btn-outline-danger mx-1">
                 Delete Account
               </button>

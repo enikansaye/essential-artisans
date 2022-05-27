@@ -4,13 +4,26 @@
     <!-- <p routerLink="/partnerregister">signup as Artisan</p> -->
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>FULL NAME</mat-label>
-        <input matInput formControlName="username" placeholder="Ex. john paul" />
+        <mat-label>FIRST NAME</mat-label>
+        <input matInput formControlName="firstName" placeholder="Ex. john " />
         <mat-error
           style="color: red"
           *ngIf="
-            signupForm.controls['username'].dirty &&
-            signupForm.hasError('required', 'username')
+            signupForm.controls['firstName'].dirty &&
+            signupForm.hasError('required', 'firstName')
+          "
+        >
+         Full name is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>LAST NAME</mat-label>
+        <input matInput formControlName="lastName" placeholder="Ex.  paul" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['lastName'].dirty &&
+            signupForm.hasError('required', 'lastName')
           "
         >
          Full name is required</mat-error

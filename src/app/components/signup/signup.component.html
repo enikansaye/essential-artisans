@@ -1,109 +1,127 @@
-<div class="contain p-5">
+<div class="register  mt-sm-2">
+  <div class=" signup  mt-sm-3">
+    <div>ARTISAN SIGN UP</div>
+    <!-- <p routerLink="/partnerregister">signup as Artisan</p> -->
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>FIRST NAME</mat-label>
+        <input matInput formControlName="firstName" placeholder="Ex. john " />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['firstName'].dirty &&
+            signupForm.hasError('required', 'firstName')
+          "
+        >
+         Full name is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>LAST NAME</mat-label>
+        <input matInput formControlName="lastName" placeholder="Ex.  paul" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['lastName'].dirty &&
+            signupForm.hasError('required', 'lastName')
+          "
+        >
+         Full name is required</mat-error
+        >
+      </mat-form-field>
   
-  <div class="wrapper">
-    <div class="textsection">
-      <h1>Want a bigger audience for your service business?</h1>
-      <p>
-        Be a part of a community of service experts that have trusted and seen
-        their business amplify with Housejoy’s service platform.
-      </p>
-      <div class="comment">
-        <div class="card mb-3 comment-card">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <!-- <img src="..." class="img-fluid rounded-start" alt="..."> -->
-              <div class=" rounded-start"></div>
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+     
+      
 
-    <div class="formsection">
-      <form [formGroup]="signupForm" (ngSubmit)="signup()">
-        <h1 class="signup">SIGN UP</h1>
-        <div class="form-group mb-3">
-          <label for="exampleFormControlInput1" class="form-label">User Name</label>
-          <input
-            required
-            formControlName="username"
-            type="text"
-            class="form-control form"
-          />
-          <span
-            class="alert alert-danger"
-            *ngIf="
-              signupForm.controls['username'].dirty &&
-              signupForm.hasError('required', 'username')
-            "
-            >this password required</span
-          >
-        </div>
-        <div class="form-group mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Email</label>
-          <input
-            required
-            formControlName="email"
-            type="text"
-            class="form-control form"
-          />
-          <span
-            class="alert alert-danger"
-            *ngIf="
-              signupForm.controls['email'].dirty &&
-              signupForm.hasError('required', 'email')
-            "
-            >this password required</span
-          >
-        </div>
-        <div class="form-group mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
-          <input
-            required
-            formControlName="phonenumber"
-            type="number"
-            class="form-control form"
-          />
-          <span
-            class="alert alert-danger"
-            *ngIf="
-              signupForm.controls['phonenumber'].dirty &&
-              signupForm.hasError('required', 'phonenumber')
-            "
-            >this password required</span
-          >
-        </div>
-        <div class="form-group mb-3">
-          <label for="exampleFormControlInput1" class="form-label"
-            >Password</label
-          >
-          <input
-            formControlName="password"
-            type="password"
-            class="form-control"
-          />
-          <span
-            class="text-danger"
-            *ngIf="
-              signupForm.controls['password'].dirty &&
-              signupForm.hasError('required', 'password')
-            "
-          >
-            this password required</span
-          >
-        </div>
-
-        <button [disabled]="signupForm.invalid" type="submit" class="btn">
-          Sign In
+      <div class="mb-3" >
+        
+        <label for="exampleInputPassword1" class="form-label"
+        >Select Location</label
+      >
+        <select class="form-select" aria-label="Default select example" formControlName="location" >
+          <option selected> select location</option>
+          <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
+        
+        </select>
+       </div>
+      <mat-form-field class="example-full-width" appearance="fill" >
+        <mat-label>ADDRESS</mat-label>
+        <input matInput formControlName="address" placeholder="Ex. 22 kabiru" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['address'].dirty &&
+            signupForm.hasError('required', 'address')
+          "
+        >
+        Your Address is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>PHONE NUMBER</mat-label>
+        <input matInput formControlName="phone" placeholder="Ex. 22 kabiru" />
+        <mat-error
+          style="color: red"
+          *ngIf="
+            signupForm.controls['phone'].dirty &&
+            signupForm.hasError('required', 'phone')
+          "
+        >
+          Phone number is required</mat-error
+        >
+      </mat-form-field>
+    
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" >
+        <mat-error   *ngIf="
+        signupForm.controls['email'].dirty &&
+        signupForm.hasError('required', 'email')
+      ">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="signupForm.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" type="password" id="mypassword" formControlName="password" name="password" >
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+       
         </button>
-      </form>
-    </div>
+        <mat-error   *ngIf="
+        signupForm.controls['password'].dirty &&
+        signupForm.hasError('required', 'minLength')
+      ">
+        password cann't be less than four
+        </mat-error>
+        <mat-error *ngIf="signupForm.hasError('required')">
+         password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>  
+      <!-- <div>
+        <input type="password" id="mypassword" formControlName="password" name="password" >
+      </div> -->
+      <div class="d-flex justify-content-between">
+  <p>      <a routerLink="/signin">Already User? <strong>signin</strong></a>
+  <p>      <a routerLink="/register">Sign up as ? <strong>User</strong></a>
+  <p>      <a routerLink="/register">Sign up as ? <strong>User</strong></a>
+  </p>     
+      </div>
+    
+      <button
+        class="btn btn-primary"
+        [disabled]="signupForm.invalid"
+     
+      >
+        SIGN UP
+      </button>
+    
+    </form> 
+
+    
+    
   </div>
 </div>

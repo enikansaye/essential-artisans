@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -17,7 +18,7 @@ selectedStatelga: any = {
    min :any = ""
   value: any;
 
-  constructor(private formBuilder: FormBuilder, private api: ApiService) { }
+  constructor(private formBuilder: FormBuilder, private api: ApiService, private router : Router) { }
 
   ngOnInit(): void {
 
@@ -28,8 +29,7 @@ this.showAll();
       lastname: [''],
       email: [''],
       mobilenumber: [''],
-      salary: [''],
-      handle: [''],
+  
     });
 
    this.pastDateTime();
@@ -71,9 +71,51 @@ showAll() {
     console.log(this.statelga)
   });
 }
-sendDetails(){
-alert("Request sent, Artisan will contact as soon as posible")
-console.log('mess')
-}
+
+createnewService(value: any) {
+    this.api.createService(value.id).subscribe((res) => {
+      alert('fill request form');
+      // this.getAllUser(); //this is to automatically refresh the page
+    });
+  }
+
+ onSubmi(){
+  // this.alertService.info('Checking User Info');
+  
+    const loginObserver = {
+      next:()=> {
+     
+        console.log('order Sent');
+        this.router.navigate(['/']);
+        // this.alertService.success('Logged In');
+     
+      },
+      error: (err: any) => {
+        // this.progressBar.setError();
+        console.log(err);
+        // this.alertService.danger('Unable to Login');
+     
+      }
+    };
+    this.api. uploadService(this.formValue.value).subscribe(loginObserver);
+  }
+
+  onSubmit(){
+    this.api.uploadService(this.formValue.value)
+    
+    .subscribe(
+    {
+      next: (data: any) =>{
+        alert('logged in')
+        // localStorage.setItem('token', JSON.stringify(data));
+        console.log('login succefssul')
+             this.router.navigate(['/dashboard']);
+      },
+      error: (err)=>{
+        alert('login failed')
+      }
+    }
+    )
+  }
 
 }

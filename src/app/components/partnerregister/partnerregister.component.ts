@@ -21,7 +21,7 @@ export class PartnerregisterComponent implements OnInit {
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required,],
       phone: ['', Validators.required,],
       password: ['', Validators.required],
       profession: ['', Validators.required],
