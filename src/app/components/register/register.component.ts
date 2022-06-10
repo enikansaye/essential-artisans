@@ -22,12 +22,7 @@ export class RegisterComponent implements OnInit {
   statelga: any;
   // form :any
 
-  // emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  // usernameFormControl = new FormControl('', [Validators.required, ]);
-  // addressFormControl = new FormControl('', [Validators.required, ]);
-  // locationFormControl = new FormControl('', [Validators.required,]);
-  // numberFormControl = new FormControl('', [Validators.required,]);
-  // passwordFormControl = new FormControl('', [Validators.required,]);
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,9 +63,7 @@ export class RegisterComponent implements OnInit {
 
     const registerObserver = {
       next: (res: any) => {
-        console.log('User created');
-        // this.alertService.success('Account Created');
-          // alert(res.status);
+    
       
       this.router.navigate(['/checkemail']);
       },
@@ -80,7 +73,7 @@ export class RegisterComponent implements OnInit {
       },
     };
 
-    this.api.register(this.signupForm.value).subscribe(registerObserver);
+    this.api.registerUser(this.signupForm.value).subscribe(registerObserver);
   }
 
   

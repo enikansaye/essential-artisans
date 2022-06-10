@@ -1,36 +1,72 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ApiService } from 'src/app/service/api.service';
 
-
-
+declare let alertify: any;
 @Component({
   selector: 'app-artisanprofile',
   templateUrl: './artisanprofile.component.html',
-  styleUrls: ['./artisanprofile.component.css']
+  styleUrls: ['./artisanprofile.component.css'],
 })
 export class ArtisanprofileComponent implements OnInit {
-  @ViewChild(MatSidenav) sidenav !: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
+
+  showIcon: boolean = false;
+  icon: boolean = false;
+  shortLink: string = '';
+  uploadingPhoto: boolean = false;
+  change: boolean = false;
+  imageURL: any;
+  // file: File = null;
+
+  errors = {};
+  // user: UserModel;
+  userPhoto: any;
+  isEditMode: boolean = false;
+  // address: AddressModel;
+  updateForm!: FormGroup;
+  formSubmitted: boolean | undefined;
+  formControls: any;
+  loadingInfo: boolean | undefined;
+  loadingError: boolean | undefined;
 
   expression = 'match1';
 
   service = 'completed';
-  usersForm !: FormGroup;
+  usersForm!: FormGroup;
 
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  fileInfos?: Observable<any>;
 
   num1: any;
   num2: any;
-  result : any;
-  alltotal : any
+  result: any;
+  alltotal: any;
 
-  constructor(private observer : BreakpointObserver, private fb: FormBuilder, private http: HttpClient, private router: Router) { }
+  // shortLink: string = "";
+  loading: boolean = false; // Flag variable
+  file?: File;
+  hello: any;
+  heeo: any;
+  statelga: any;
 
+  constructor(
+    private observer: BreakpointObserver,
+    public api: ApiService,
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
-
-  ngOnInit() :void {
+  ngOnInit(): void {
     this.usersForm = this.fb.group({
       users: this.fb.array([
         this.fb.group({
@@ -38,29 +74,58 @@ export class ArtisanprofileComponent implements OnInit {
           quantity: [''],
           startTime: [''],
           total: [''],
-              
-        })
-      ])
-    })
+        }),
+      ]),
+    });
+
+    this.updateForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      location: [''],
+      service: [''],
+      phoneNumber: [''],
+      address: [''],
+    });
+    this.updateForm.disable();
+    this.formControls = this.updateForm.controls;
+  }
+  // sellection of location
+  showAll() {
+    this.api.getAllStateData().subscribe((data: any) => {
+      this.statelga = data;
+      console.log(this.statelga);
+    });
   }
 
-  
-
-  grandtotal(){
-this.alltotal = parseInt(this.result) + parseInt(this.result)
+  toggleEditMode(): void {
+    this.isEditMode = !this.isEditMode;
+    if (this.isEditMode) {
+      this.formControls['firstName'].enable();
+      this.formControls['lastName'].enable();
+      this.formControls['phoneNumber'].enable();
+      this.formControls['address'].enable();
+      this.formControls['service'].enable();
+      this.formControls['location'].enable();
+      this.formControls['email'].enable();
+    } else {
+      this.updateForm.disable();
+    }
   }
-  celltotal(){
-this.result = parseInt(this.num1) * parseInt(this.num2)
+
+  grandtotal() {
+    this.alltotal = parseInt(this.result) + parseInt(this.result);
   }
-onEnter(){
-  this.result = parseInt(this.num1) * parseInt(this.num2)
-  this.alltotal = (this.result ) + parseInt(this.result)
-}
+  celltotal() {
+    this.result = parseInt(this.num1) * parseInt(this.num2);
+  }
+  onEnter() {
+    this.result = parseInt(this.num1) * parseInt(this.num2);
+    this.alltotal = this.result + parseInt(this.result);
+  }
 
-
-
-  get userFormGroups () {
-    return this.usersForm.get('users') as FormArray
+  get userFormGroups() {
+    return this.usersForm.get('users') as FormArray;
   }
 
   removeFormControl(i: number) {
@@ -73,57 +138,105 @@ onEnter(){
     let arraylen = usersArray.length;
 
     let newUsergroup: FormGroup = this.fb.group({
-          gHService: [''],
-          quantity: [''],
-          startTime: [''],
-         total: [''],
-          
-    })
+      gHService: [''],
+      quantity: [''],
+      startTime: [''],
+      total: [''],
+    });
 
     usersArray.insert(arraylen, newUsergroup);
   }
-  onSubmit(){
+  onSubmit() {
     console.log(this.usersForm.value);
   }
 
+  ngAfterViewInit() {
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
+      }
+    });
+  }
 
-  // ngOnInit(): void {
-  //   this.addMore = this.fb.group({
-  //     itemRows: this.fb.array([this.initialRow()])
-  //   })
-  //   }
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
 
-//     initialRow(){
-//       return this.fb.group({
-//         task1: [''],
+  upload(): void {
+    this.progress = 0;
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
 
-//       })
-//   }
-//   addMoreRows(){
-//     this.formArr.push(this.initialRow())
-//   }
-//   deleteRow(index:number){
-//     this.formArr.removeAt(index)
-//   }
+      if (file) {
+        this.currentFile = file;
 
-//   get formArr(){
-    
-// return this.addMore.get('itemRows') as FormArray;
-//   }
+        const uploadObserver = {
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+            }
+          },
+          error: (err: any) => {
+            this.progress = 0;
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+            this.currentFile = undefined;
+          },
+        };
 
-//   get f(){
-//     return this.addMore.controls;
-//   }
-
-ngAfterViewInit(){
-  this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-    if(res.matches){
-      this.sidenav.mode = 'over';
-      this.sidenav.close();
-    }else{
-      this.sidenav.mode = 'side';
-      this.sidenav.open();
+        this.api.upload(this.currentFile).subscribe(uploadObserver);
+      }
+      this.selectedFiles = undefined;
     }
-  })
-}
+  }
+
+  updateUserInformation() {
+    this.formSubmitted = true;
+    if (this.updateForm.valid) {
+      // const file ={
+      //   next:(data: any)=>{
+      //     alertify.success('Profile successsfully updated.');
+      //     alert('Profile successsfully updated.');
+      //     this.updateForm.disable();
+      //     this.isEditMode = false;
+      //     console.log(data);
+      //     this.isEditMode = !this.isEditMode;
+      //   },
+      //   error: (error: any) => {
+      //     alert('Profile update failed');
+      //     console.log(error);
+
+      //     alertify.error('Profile update failed');
+      //   }
+      // };
+      // this.api.updateUser(this.updateForm.value).pipe(file)
+
+      
+      this.api.updateUser(this.updateForm.value).subscribe(
+        (data) => {
+          alertify.success('Profile successsfully updated.');
+          alert('Profile successsfully updated.');
+          this.updateForm.disable();
+          this.isEditMode = false;
+          console.log(data);
+          this.isEditMode = !this.isEditMode;
+        },
+        (error: any) => {
+          alert('Profile update failed');
+          console.log(error);
+
+          alertify.error('Profile update failed');
+        }
+      );
+    }
+  }
 }

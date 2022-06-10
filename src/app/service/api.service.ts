@@ -1,11 +1,21 @@
-import { HttpClient,  } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHeaders,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserModel } from '../shared/models/user.model';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { AllurlService } from './allurl.service';
+import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
+import { StorageService } from './storage.service';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 @Injectable({
   providedIn: 'root',
 })
@@ -15,20 +25,19 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
+  public refreshTokenUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Auth/refresh-token';
+
   public authUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
 
   public userUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/​/api​/Admin​/customers';
 
-  // GET
-  // ​/api​/Admin​/customers
-
-  // GET
-  // ​/api​/Admin​/orders
-
   public userSignupUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
+  public imageUrl: string =
+    'https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image';
 
   public userSigninUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/login';
@@ -38,6 +47,7 @@ export class ApiService implements OnInit {
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/reset-password';
   public forgetpasswordUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
+    public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -47,131 +57,175 @@ export class ApiService implements OnInit {
     phone: '',
     password: '',
   });
-  loggedinUser: any
-  userResponse: any
+  loggedinUser: any;
+  userResponse: any;
+  tokenres: any;
+  tokenresp: any;
+  loggedinUser1: any;
+  currentuserType: any;
+  finaldata: any;
+
+
+  selectedFiles?: FileList;
+  her: any;
   // items!: User[],
 
-  constructor(private http: HttpClient, private url: AllurlService) {}
+  constructor(
+    private http: HttpClient,
+    private url: AllurlService,
+    private tokenStorage: StorageService
+  ) {}
   ngOnInit(): void {
     // this.loggedIn()
-  }
-
-  getProduct() {
-    return this.http.get<any>('http://fakestoreapi.com/products').pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
+    this.getUserToken();
   }
 
   // user signup
-  signupUser(data: any) {
-    return this.http.post<any>(this.userSignupUrl, data);
+  registerUser(model: any) {
+    return this.http.post(this.userSignupUrl, model, httpOptions);
   }
-  register(model: any) {
+
+  //artisan loginin
+  signupArtisan(data: any) {
+    return this.http.post<any>(this.url.signupArtisan, data, httpOptions);
+  }
+// refresh token
+  refreshToken(token: string) {
+    return this.http.post(
+      this.refreshTokenUrl ,
+      {
+        refreshToken: token,
+      },
+      httpOptions
+    );
+  }
  
-    return this.http.post(this.userSignupUrl,model);
+  // login user
+  loginUser(usercard: any) {
+    return this.http.post(this.userSigninUrl, usercard,
+      // {withCredentials:true}
+      );
+  }
+  isUserLoggedIn() {
+    return localStorage.getItem('token') != null;
   }
 
 
-
-  // user signin
-  signinUser(data: any) {
-    return this.http.post<any>(this.userSigninUrl, data);
+  getUserToken() {
+      return localStorage.getItem('accesstoken');
   }
-
-  // login(model: any) {
-  //   return this.http.post(this.userSigninUrl, model).pipe(
-  //     map((response: any) => {
-  //       const user = response;
-      
-  //       this.saveUserToLocalStorage(user)
-  //       // this.decodedToken = this.jwtHelper.decodeToken(user);
-  //    console.log(user.data.email)
-  //    this.decodedToken = user.data
-  //    console.log(this.decodedToken.email)
-     
-  //     })
-  //   );
+  getRefresToken() {
+    console.log('hello');
+    return localStorage.getItem('accessToken') || '';
+  }
+  // saveToken(token: any) {
+  //   localStorage.setItem('accesstoken', token.accessToken);
+  //   localStorage.setItem('token', token.accessToken);
+  //   console.log('hello');
   // }
+
+  haveaccess(token: any) {
+    const loggedinUser = localStorage.getItem('accesstoken') || '';
+    const extracted = loggedinUser.split('.')[1];
+    const _atobdata = atob(extracted);
+    this.finaldata = JSON.parse(_atobdata);
+    console.log(this.finaldata);
+    return this.finaldata.role;
+  }
+
+  getToken() {
+    console.log('hello');
+    return localStorage.getItem('accessToken');
+  }
+
+  // saveUserToLocalStorage(data: UserModel) {
+  //   this.userProfile.next(data);
+  //   localStorage.setItem('token', JSON.stringify(data));
+  // }
+
+  userUpdate(userInfo: any) {
+    return this.http.put(this.url.updateUser, userInfo);
+  }
+  artisanUpdate(ArtisanInfo: any) {
   
-  login(model: any) {
-    return this.http.post(this.userSigninUrl, model).pipe(
-      map((response: any) => {
-        const user = response;
-        console.log(user)
+      return this.http.put(this.url.updateArtisan, ArtisanInfo,httpOptions);
+  }
+ 
+
+
+  // update user
+  updateUser1(model: any) {
+    const formData = new FormData();
+    formData.append('profileimage', model.file);
+    return (
+      this.http.put(this.url.updateArtisan, model).pipe(
+        map((response: any) => {
+          const user = response;
+          if (user) {
+            this.currentUser = user.userType;
+          }
+        })
+      ),
+      httpOptions
+    );
+  }
+
+  // checking if user is logged in
+  loggedIn() {
+    this.loggedinUser = localStorage.getItem('token');
+    return (this.loggedinUser = JSON.parse(this.loggedinUser));
+  }
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files[0];
+    console.log(event);
     
-        // localStorage.setItem("token", user);
-        //   localStorage.setItem("user", JSON.stringify(user.data));
+  }  
+  // public uploadImage(image: File): Observable<any> {
+  //   const formData = new FormData();
 
-        if (user) {
-          localStorage.setItem("token", user);
-          localStorage.setItem("user", JSON.stringify(user.data));
-          this.decodedToken =user.data;
-          this.currentUser = user.data;
-        
-        }
-      })
-    );
-  }
+  //   formData.append('image', image);
 
-//artisan loginin
-signupArtisan(data:any){
-return this.http.post<any>(this.url.signinRegister, data)
-}
-  saveUserToLocalStorage(data: UserModel) {
-    this.userProfile.next(data);
-    localStorage.setItem('token', JSON.stringify(data));
-
-  }
-
-  userImage(data:any,) {
-    return this.http.put<any>(this.url.updateUser , data).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
-// update user
-updateUser(model: any) {
-  const formData = new FormData();
-  formData.append("profileimage", model.file, );
-  return this.http
-    .put(
-      this.url.updateUser,
-      formData,
-    
-    )
-    .pipe(
-      map((response: any) => {
-        const user = response;
-        if (user) {
-          this.currentUser = user.userType;
-        }
-      })
-    );
-}
-loggedIn() {
-
- this.loggedinUser = localStorage.getItem('user')
- return  this.loggedinUser = JSON.parse(this.loggedinUser)
-
-
-
-}
-
-
-
-  // loadUserFromLocalStorage(): UserModel {
-  //   if (this.userProfile.model.id == 0) {
-  //     let fromLocalStorage = localStorage.getItem('token');
-  //     if (fromLocalStorage) {
-  //       let userInfo = JSON.parse(fromLocalStorage);
-  //       this.userProfile.next(data);
-  //     }
-  //   }
-  //   return this.userProfile.value;
+  //   return this.http.post(this.imageUrl, formData);
   // }
+
+  // upload2(userId: string, file: File): Observable<any>{
+  //   const formData = new FormData();
+  //   formData.append("Photo", file, file.name);
+  //   return this.http.post(this.imageUrl, formData);
+  // }
+
+  // picture upload
+  upload(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+ formData.append('file', file);
+ 
+    const req = new HttpRequest('POST', this.imageUrl, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+  
+    
+    return this.http.request(req);
+
+  
+  }
+  updateUser(userInfo: any, ){
+    return this.http.put(this.updateArtisan , userInfo,  httpOptions);
+    // public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
+}
+  check(data:string): Observable<HttpEvent<any>> {
+//     const formData: FormData = new FormData();
+//  formData.append('file', file);
+ 
+    const req = new HttpRequest('PUT', this.url.updateArtisan, data );
+  
+    
+    return this.http.request(req);
+
+  
+  }
+
+
 
   confirmEmail(data: any) {
     return this.http.get(this.emailUrl, data);
@@ -194,22 +248,6 @@ loggedIn() {
       );
   }
 
-  // postUser(data: any) {
-  //   return this.http.post<any>('http://localhost:3000/posts', data).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
-  // getUser(id: number) {
-  //   return this.http.get(this.authUrl).pipe(
-  //     map((res: any) => {
-  //             return res;
-  //         })
-  //   )
-  // }
-  //
-
   getUser() {
     return this.http.get<any>(this.userUrl).pipe(
       map((res: any) => {
@@ -217,6 +255,7 @@ loggedIn() {
       })
     );
   }
+
   getArtisan() {
     return this.http.get<any>('http://localhost:3000/posts').pipe(
       map((res: any) => {
@@ -225,43 +264,37 @@ loggedIn() {
     );
   }
 
-  // getUser(id:number) {
-  //   return this.http.get<any>(this.userUrl).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
-  // deleteUser(id:number) {
-  //   return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
 
-  // updateUser(data:any, id:number) {
-  //   return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
+
   //  create service
-   createService(id:number) {
-      return this.http.post<any>(this.url.createService, + id).pipe(
-      
-      );
-    }
-    uploadService(data:any){
-return this.http.post<any>(this.url.uploadService, data)
-    }
-// delete service order
-    deleteUser() {
-    return this.http.delete<any>(this.url.deleteService).pipe(
+  createService(id: number) {
+    return this.http.post<any>(this.url.createService, + id).pipe();
+  }
+  //  create invoice by artisans
+  createInvoice(data:any) {
+    return this.http.post(this.url.createInvoice,data).pipe();
+  }
+ 
+  uploadService(data: any) {
+    return this.http.post<any>(this.url.uploadService, data);
+  }
+  // delete service order
+  deleteUser() {
+    return this.http.delete<any>(this.url.deleteService ).pipe(
       map((res: any) => {
         return res;
       })
     );
   }
+  // deleteUser(id:number) {
+  //   return this.http.delete<any>(this.url.deleteService +id).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
+  updateService(userInfo: any, userId: string){
+    return this.http.put(this.url.updateService +userId, userInfo);
+}
+
 }

@@ -14,7 +14,7 @@
           >
         </button>
       </mat-toolbar>
-      <img src="assets/images/mayor.jpg" class="image image-fluid" />
+      <img src="data:image/png;base64,{{api.loggedinUser.profileImage}}" class="image image-fluid" />
       <h4 class="mt-2 mt-md-4">ENIKANSAYE MAYOWA</h4>
       <h4>Software Developer</h4>
 
@@ -121,31 +121,74 @@
               <div class="col align-items-end d-flex">
                 <div class="col-4 col-md-2 rounded-circle me-3">
                   <img
-                    src="assets/images/mayor.jpg"
+                    src="data:image/png;base64,{{api.loggedinUser.profileImage}}"
                     class="img-fluid bg-success rounded"
                   />
                 </div>
 
                 <div class="align-text-bottom">
-                  <label for="file-btn" class="btn btn-primary"
-                    >Choose a file</label
+                  <label class="btn btn-default p-0">
+                    <input type="file" (change)="selectFile($event)" />
+                  </label>
+  
+                 <button  (click)="upload()" class="btn btn-success">upload picture</button>
+                 <!-- <div class="info-wrapper">
+                  <div class="info-img m-auto">  
+                      <img [src]="userPhoto? userPhoto : '../../../../assets/images/avartar.png'" class="img-fluid" alt="personal photo">
+                      <label  class="imgB1" (click)="acivateClick(photoField)" (click)="toggleIcon()">    
+                        <span   class="iconify"  data-icon="ant-design:camera-filled" style="color: #34a853;; "data-width="20" ></span>         
+                    </label> 
+                    <div class="text-center">
+                      <input class="form-control" type="file" 
+                              (input)="onChange($event)" hidden #photoField>
+                              <label class="myDIV" class="imgB11" (click)="toggleIcon()" *ngIf="userPhoto"  >
+                                <span id="hover-div" class="iconify" data-icon="fluent:delete-dismiss-28-filled" style="color: #f82929;"></span>
+                                
+                              </label>
+                  </div>
+                  </div>
+                  </div> -->
+                 
+  
+                 <div *ngIf="currentFile" class="progress my-3">
+                  <div
+                    class="progress-bar progress-bar-info progress-bar-striped"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ progress }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: progress + '%' }"
                   >
-                  <input type="file" class="pt-5 d-none" id="file-btn" hidden />
+                    {{ progress }}%
+                  </div>
+                </div>
 
-                  <h4 class="d-none d-lg-block pt-2">
+
+                <div class="container text-center jumbotron"
+    *ngIf="shortLink">
+    <h2> Visit Here</h2>
+    <a href="{{shortLink}}">{{shortLink}}</a>
+</div>
+  
+<!--Flag variable is used here-->
+<div class="container" *ngIf="loading">
+    <h3>Loading ...</h3>
+</div>
+                  <!-- <h4 class="d-none d-lg-block pt-2">
                     Acceptable format, jpg, png only<br /><span>
                       Max file size is 100kb and min size 70kb</span
                     >
                   </h4>
+              <div>    {{api.loggedinUser.email}}</div> -->
                 </div>
               </div>
             </section>
             <!-- <mat-divider></mat-divider> -->
 
-            <section class="w-100 p-2 ps-md-5">
+            <section class="w-100  ps-md-5">
               <div>
                 <div class="h5">ACCOUNT INFORMATION</div>
-                <div>
+                <form [formGroup]="updateForm" (ngSubmit)=" updateUserInformation()">
                   <div class="mb-3 row">
                     <label for="inputtext" class="col-sm-2 col-form-label "
                       >First Name</label
@@ -156,43 +199,126 @@
                         class="form-control"
                         id="inputFirstName"
                         placeholder="mayowa"
+                        formControlName="firstName"
                       />
                     </div>
                   </div>
                   <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                    <label for="inputtext" class="col-sm-2 col-form-label"
                       >Last Name</label
                     >
                     <div class="col-sm-4">
                       <input
-                        type="password"
+                        type="text"
                         class="form-control"
-                        id="inputPassword"
+                        id="inputtext"
                         placeholder="enikansaye"
+                        formControlName="lastName"
                       />
                     </div>
                   </div>
 
                   <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label"
+                    <label for="inputemail" class="col-sm-2 col-form-label"
                       >E-mail</label
                     >
                     <div class="col-sm-4">
                       <input
-                        type="password"
+                        type="email"
                         class="form-control"
-                        id="inputPassword"
+                        id="inputemail"
                         placeholder="enikansaye13@gmail.com"
+                        formControlName="email"
                       />
                     </div>
                   </div>
-                  <!-- <button class="btn btn-success">submit</button> -->
-                </div>
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >PHONE NUMBER</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="textr"
+                        class="form-control"
+                        id="inputnumber"
+                     
+                        formControlName="phoneNumber"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >ADRESS</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputtext"
+                   
+                        formControlName="address"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >SERVICE</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputtext"
+                     
+                        formControlName="service"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3" >
+        
+                    <label for="exampleInputPassword1" class="form-label"
+                    >Location</label
+                  >
+                    <select class="form-select" aria-label="" formControlName="location" >
+                      <option selected> select location</option>
+                      <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
+                    
+                    </select>
+                   </div>
+                   <div class="d-flex">
+<!--                      
+                    <button
+                      href="#collapseExample"
+                      class="btn btn-outline-success mx-1"
+                      data-bs-toggle="collapse"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      Change password
+                    </button> -->
+                    <!-- <button class="btn btn-outline-primary mx-1 btn-sm">
+                      Change password
+                    </button> -->
+                    <button class="btn btn-outline-success mx-1" (click)="toggleEditMode()" *ngIf="!isEditMode">
+                      edit profile
+                    </button>
+                    <!-- <button class="btn btn-outline-success mx-1"  type="submit"   *ngIf="isEditMode">
+                     update profile
+                    </button> -->
+                    <button class="btn btnPrimary" type="submit" *ngIf="isEditMode">Save Profile</button>
+                    <!-- <button class="btn btnPrimary" type="submit" *ngIf="isEditMode">Save Profile</button> -->
+                    <button class="btn btn-danger "(click)="toggleEditMode()" *ngIf="isEditMode">Cancel</button>
+                    <!-- <button class="btn btn-outline-danger mx-1">
+                      Delete Account
+                    </button> -->
+                  </div>
+              
+                </form>
               </div>
             </section>
 
             <section class="p-2 mb-5 ps-md-5 butt">
-              <div class="d-flex">
+              <!-- <div class="d-flex">
                 <button
                   href="#collapseExample"
                   class="btn btn-outline-success mx-1"
@@ -202,16 +328,17 @@
                 >
                   Change password
                 </button>
-                <!-- <button class="btn btn-outline-primary mx-1 btn-sm">
-                  Change password
-                </button> -->
-                <button class="btn btn-outline-success mx-1">
+              
+                <button class="btn btn-outline-success mx-1" (click) = toggleEditMode() *ngIf="!isEditMode">
                   edit profile
+                </button>
+                <button class="btn btn-outline-success mx-1"  *ngIf="isEditMode">
+                 update profile
                 </button>
                 <button class="btn btn-outline-danger mx-1">
                   Delete Account
                 </button>
-              </div>
+              </div> -->
               <div class="collapse pt-4" id="collapseExample">
                 <div class="card card-body">
                   <h2>ChANGE PASSWORD</h2>

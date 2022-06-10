@@ -288,10 +288,10 @@
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
-              formControlName="firstname"
+              formControlName="name"
               type="text"
               class="form-control"
-              id="exampleInputEmail1"
+              id="exampleInputText"
               aria-describedby="emailHelp"
             />
           </div>
@@ -301,7 +301,7 @@
               >Address</label
             >
             <input
-              formControlName="lastname"
+              formControlName="propertyAdress"
               type="text"
               class="form-control"
               id="exampleInputPassword1"
@@ -318,7 +318,7 @@
         </select>
        </div>
 
-          <div class="mb-1">
+          <!-- <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Email ID</label
             >
@@ -328,7 +328,7 @@
               class="form-control"
               id="exampleInputPassword1"
             />
-          </div>
+          </div> -->
           <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Whatsapp Number</label
@@ -337,7 +337,7 @@
               formControlName="mobilenumber"
               type="number"
               class="form-control"
-              id="exampleInputPassword1"
+              
             />
           </div>
           <div class="mb-1">
@@ -348,7 +348,7 @@
               formControlName="mobilenumber"
               type="number"
               class="form-control"
-              id="exampleInputPassword1"
+            
             />
           </div>
           <div class="mb-1">
@@ -359,7 +359,7 @@
               formControlName="Photo"
               type="file"
               class="form-control file"
-              id="exampleInputPassword1"
+             
             />
           </div>
           <div class="mb-1">
@@ -367,7 +367,7 @@
               >Description</label
             >
             <input
-              formControlName="handle"
+              formControlName="issue"
               type="textarea"
               class="form-control"
               id="exampleInputPassword1"
@@ -378,7 +378,7 @@
               >Inspection Date and Time</label
             >
             <input
-              formControlName="handle"
+              formControlName="inspectionDate"
               type="datetime-local"
               [(ngModel)]="value"
               #input (change)="onChange(input.value)"

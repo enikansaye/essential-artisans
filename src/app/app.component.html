@@ -41,15 +41,20 @@
        
         </ul>
         <span class="navbar-text">
+          
           <div class="dropdown" *ngIf="api.loggedIn();">
-            <a class="btn btn-secondary dropdown-toggle" routerLink="/userprofile" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             
+            <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          
               welcome <span class="text-primary" >   {{api.loggedinUser.email}} </span>
+           
         
             </a>
           
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item" routerLink="/userprofile">My Profile</a></li>
+            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
+              <li><a class="dropdown-item" *ngIf="this.displayUser" routerLink="/userprofile">My Profile</a></li>
+              <li><a class="dropdown-item" *ngIf="this.displayArtisan" routerLink="/artisanprofile">My Profile</a></li>
+              <li><a class="dropdown-item" *ngIf="this.displayAdmin" routerLink="/admin">My Profile</a></li>
               <li><a class="dropdown-item" routerLink="">Edit</a></li>
               <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
             </ul>

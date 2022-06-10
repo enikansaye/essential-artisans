@@ -25,10 +25,13 @@ selectedStatelga: any = {
 this.showAll();
 
     this.formValue = this.formBuilder.group({
-      firstname: [''],
-      lastname: [''],
-      email: [''],
+      name: [''],
+      propertyAddress: [''],
+      inspectionDate: [''],
+      inspectionTime: [''],
       mobilenumber: [''],
+      AltNumber: [''],
+      issue: [''],
   
     });
 
@@ -74,6 +77,8 @@ showAll() {
 
 createnewService(value: any) {
     this.api.createService(value.id).subscribe((res) => {
+      console.log(res);
+      
       alert('fill request form');
       // this.getAllUser(); //this is to automatically refresh the page
     });
@@ -101,21 +106,27 @@ createnewService(value: any) {
   }
 
   onSubmit(){
-    this.api.uploadService(this.formValue.value)
+    this.api.createService(this.formValue.value)
     
     .subscribe(
     {
       next: (data: any) =>{
-        alert('logged in')
+        alert('data sent')
         // localStorage.setItem('token', JSON.stringify(data));
         console.log('login succefssul')
              this.router.navigate(['/dashboard']);
       },
       error: (err)=>{
         alert('login failed')
+        console.log(err);
+        
       }
     }
     )
   }
-
+  // getAllEmployee() {
+  //     // this.api.getEmployee().subscribe((res: any) => {
+  //     //   this.employeeData = res;
+  //     // });
+  //   }
 }

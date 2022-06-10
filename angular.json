@@ -112,7 +112,10 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/alertifyjs/build/css/alertify.js"
+              "./node_modules/alertifyjs/build/css/alertify.js",
+
+              "../node_modules/pdfmake/build/pdfmake.js",
+    "../node_modules/pdfmake/build/vfs_fonts.js"
             ]
           }
         }

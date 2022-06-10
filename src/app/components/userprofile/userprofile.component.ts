@@ -1,8 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from './userprofile.model';
 
@@ -14,37 +16,104 @@ import { userProfileModel } from './userprofile.model';
 export class UserprofileComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  fileInfos?: Observable<any>;
+
   expression = 'match1';
+  userProfileModelObj: userProfileModel = new userProfileModel();
 
   userData: any;
   loggedinUser: any;
   userResponse: any;
-  formValue !: FormGroup;
+  formValue!: FormGroup;
 
-  showAddEmployee !: boolean;
+  showAddEmployee!: boolean;
 
-  showUpdate !: boolean
+  showUpdate!: boolean;
   model: any = {};
-  profileimageUrl ="assets/images/mayor.jpg"
+  isComplete: boolean = false;
+  profileimageUrl = 'assets/images/mayor.jpg';
 
-  userprofileModelObj: userProfileModel = new userProfileModel()
+  selectedFile: null = null;
+  userprofileModelObj: userProfileModel = new userProfileModel();
 
-  constructor(private observer: BreakpointObserver, public api: ApiService,private formBuilder: FormBuilder, private router: Router) {}
+  statelga: any;
+  selectedStatelga: any = {
+    id: 0,
+    name: '',
+  };
+
+  updateOrder!: FormGroup;
+  min: any = '';
+  value: any;
+  formSubmitted: boolean = false;
+
+  constructor(
+    private observer: BreakpointObserver,
+    public api: ApiService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
-   
     this.formValue = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
       email: [''],
       mobilenumber: [''],
-      
-   
     });
 
-    this.getUserserInfo();
-    
+    this.showAll();
+
+    this.updateOrder = this.formBuilder.group({
+      name: [''],
+      propertyAddress: [''],
+      inspectionDate: [''],
+      inspectionTime: [''],
+      mobilenumber: [''],
+      AltNumber: [''],
+      issue: [''],
+    });
+    this.pastDateTime();
+    // this.getUserserInfo();
   }
+  //  date and time selection
+  pastDateTime() {
+    var tdate: any = new Date();
+    var date: any = tdate.getDate();
+    if (date < 10) {
+      date = '0 + date';
+    }
+    var month: any = tdate.getMonth();
+    if (month < 10) {
+      date = '0 + month';
+    }
+
+    var year: any = tdate.getFullYear();
+
+    var hours: any = tdate.getHours();
+  }
+  onChange(value: any) {
+    var today: any = new Date();
+    var selectDate = new Date(value);
+    if (today > selectDate) {
+      alert("you can't select past date");
+      this.value = '';
+    }
+  }
+
+  // selecting location section
+  showAll() {
+    this.api.getAllStateData().subscribe((data: any) => {
+      this.statelga = data;
+      console.log(this.statelga);
+    });
+  }
+
   ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches) {
@@ -56,91 +125,139 @@ export class UserprofileComponent implements OnInit {
       }
     });
   }
-  
-  getUserserInfo(){
-    this.userResponse = localStorage.getItem('token')
-    this.userData = JSON.parse(this.userResponse).data
-   
-  
-  
-   return this.userData
+  onEditOrder(row: any) {
+    this.showAddEmployee = false;
+    this.showUpdate = true;
+
+    this.userProfileModelObj.id = row.id;
+
+    this.formValue.controls['name'].setValue(row.name);
+    this.formValue.controls['propertyAddress'].setValue(row.propertyAddress);
+    this.formValue.controls['email'].setValue(row.email);
+    this.formValue.controls['mobilenumber'].setValue(row.mobilenumber);
+    this.formValue.controls['AltNumber'].setValue(row.AltNumber);
+    this.formValue.controls['inspectionDate'].setValue(row.inspectionDate);
+    this.formValue.controls['issue'].setValue(row.issue);
+
+ 
   }
 
-// on click to update userprofile
-  onEdit() {
- 
+  // getUserserInfo() {
+  //   this.userResponse = localStorage.getItem('token');
+  //   this.userData = JSON.parse(this.userResponse).data;
 
-    this.formValue.controls['firstName'].setValue(this.api.loggedinUser.userName);
-    this.formValue.controls['lastName'].setValue(this.api.loggedinUser.lastName);
+  //   return this.userData;
+  // }
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(): void {
+    this.progress = 0;
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+      if (file) {
+        this.currentFile = file;
+        this.api.upload(this.currentFile).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+            this.currentFile = undefined;
+          },
+        });
+      }
+      this.selectedFiles = undefined;
+    }
+  }
+
+  // on click to update userprofile
+  onEdit() {
+    this.formValue.controls['firstName'].setValue(
+      this.api.loggedinUser.userName
+    );
+    this.formValue.controls['lastName'].setValue(
+      this.api.loggedinUser.lastName
+    );
     this.formValue.controls['email'].setValue(this.api.loggedinUser.email);
     // this.formValue.controls['email'].setValue(data.email);
-    this.formValue.controls['mobilenumber'].setValue(this.api.loggedinUser.mobilenumber);
+    this.formValue.controls['mobilenumber'].setValue(
+      this.api.loggedinUser.mobilenumber
+    );
 
     this.showAddEmployee = false;
-this.showUpdate = true;
-  
+    this.showUpdate = true;
   }
 
   updateEmployeeDetails() {
-    this.userprofileModelObj.firstname = this.formValue.value.firstname;
-    this.userprofileModelObj.lastname = this.formValue.value.lastname;
+    this.userprofileModelObj.firstName = this.formValue.value.firstName;
+    this.userprofileModelObj.lastName = this.formValue.value.lastName;
     this.userprofileModelObj.email = this.formValue.value.email;
     this.userprofileModelObj.mobilenumber = this.formValue.value.mobilenumber;
- 
 
-    this.api
-      .userImage(this.userprofileModelObj,)
-      .subscribe((res: any) => {
-        console.log(res);
-        alert('employee updated sucessfully');
+    this.api.userUpdate(this.userprofileModelObj).subscribe((res: any) => {
+      console.log(res);
+      //   alert('employee updated sucessfully');
 
-        // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
-        // ref?.click();
+      //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
+      //   // ref?.click();
 
-
-        // this.getUserserInfo() //this is to refresh and get the resent data
-      });
+      //   // this.getUserserInfo() //this is to refresh and get the resent data
+    });
   }
 
-  clickEdit(){
+  clickEdit() {
     // this.formValue.reset();
     this.showAddEmployee = false;
     this.showUpdate = false;
-      }
-      onFileChange(e: any) {
-        // this.model.file = e.target.files[0];
-        if(e.target.files){
-          var reader = new FileReader();
-          reader.readAsDataURL(e.target.files[0]);
-          reader.onload = (data:any) =>{
-            this.profileimageUrl =data.target.result
-            localStorage.setItem("url", data);
-          }
-        }
-      }
-    
-      onSubmit() {
-        // this.alertService.info("Updating Account");
-        // this.progressBar.startLoading();
-        const updateEmployerObserver = {
-          next: (x : any)=> {
-            // this.progressBar.setSuccess();
-            console.log("Account Updated");
-            this.router.navigate(['/'])
-            // this.alertService.success("Account Updated");
-            // this.progressBar.completeLoading();
-          },
-          error: (err:any) => {
-            // this.progressBar.setError();
-            console.log(err);
-            // this.alertService.danger("Unable to Update Account");
-            // this.progressBar.completeLoading();
-          }
-        };
-        this.api
-          .updateUser(this.model)
-          .subscribe(updateEmployerObserver);
-      }
+  }
+  onFileChange(e: any) {
+    // this.model.file = e.target.files[0];
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (data: any) => {
+        this.profileimageUrl = data.target.result;
+        localStorage.setItem('url', data);
+      };
+    }
+  }
+  onFileSelected(e: any) {
+    this.selectedFile = e.target.files[0];
+    // this.selectedFile = File.item(0);
+  }
+
+  onSubmit() {
+    // this.alertService.info("Updating Account");
+    // this.progressBar.startLoading();
+    const updateEmployerObserver = {
+      next: (x: any) => {
+        // this.progressBar.setSuccess();
+        console.log('Account Updated');
+        this.router.navigate(['/']);
+        // this.alertService.success("Account Updated");
+        // this.progressBar.completeLoading();
+      },
+      error: (err: any) => {
+        // this.progressBar.setError();
+        console.log(err);
+        // this.alertService.danger("Unable to Update Account");
+        // this.progressBar.completeLoading();
+      },
+    };
+    this.api.userUpdate(this.formValue).subscribe(updateEmployerObserver);
+  }
   // getUserDetails(id:any) {
 
   //   this.api.getUser(id).subscribe((res: any) => {
@@ -158,10 +275,36 @@ this.showUpdate = true;
   //     this.userData = res;
   //   });
   // }
-  // deleteEmployeeData(row: any) {
-  //   this.api.deleteEmployee(row.id).subscribe((res) => {
-  //     alert('employee deleted');
-  //     this.getAllEmployee(); //this is to automatically refresh the page
-  //   });
-  // }
+  deleteOrder() {
+    this.api.deleteUser().subscribe((res) => {
+      alert('employee deleted');
+      console.log('deleted');
+      console.log(res);
+
+      // this.getAllEmployee(); //this is to automatically refresh the page
+    });
+  }
+  toggleEditMode(): void {
+    this.isComplete = !this.isComplete;
+  }
+
+  updateServiceOrder(){
+    this.formSubmitted = true;
+    if(!this.updateOrder .valid){
+      return;
+    }
+    this.api.updateService(this.updateOrder.value, this.updateOrder.value.id).subscribe({
+      next: (data: any) => {
+   
+          // alertify.success('Profile successsfully updated.'); 
+          this.updateOrder.disable();
+          this.isComplete = false;
+        },
+     error:  ( error:any )=> {
+          // alertify.error('Profile update failed'); 
+          console.log(error);
+          
+        }
+      })
+  }
 }

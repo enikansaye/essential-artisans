@@ -14,8 +14,9 @@
         </mat-toolbar>
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
         <!-- <h4 class="mt-2 mt-md-4">{{useData.email}}</h4> -->
-        <div  >
+        <div *ngIf="api.loggedIn();" >
           <h4 class="mt-2 mt-md-4">{{api.loggedinUser.email}} </h4>
+        
           <li></li>
       
         </div>
@@ -118,7 +119,7 @@
     </mat-toolbar>
     <div [ngSwitch]="expression">
       <div *ngSwitchCase="'match1'" >
-        <form [formGroup]="formValue" (ngSubmit)="onSubmit()">
+        <form [formGroup]="formValue" (ngSubmit)="updateEmployeeDetails()">
           <section
             class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
           >
@@ -133,14 +134,25 @@
              
 
               <div class="align-text-bottom ">
-                <label for="file-btn" class="btn btn-success"
-                  >Choose a file</label
+             
+                <label class="btn btn-default p-0">
+                  <input type="file" (change)="selectFile($event)" />
+                </label>
+
+               <button  (click)="upload()" class="btn btn-success">upload picture</button>
+
+               <div *ngIf="currentFile" class="progress my-3">
+                <div
+                  class="progress-bar progress-bar-info progress-bar-striped"
+                  role="progressbar"
+                  attr.aria-valuenow="{{ progress }}"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [ngStyle]="{ width: progress + '%' }"
                 >
-                <input type="file"
-                formControlName="profileImage"
-                id="profileImage"
-                placeholder="Change Profile Image"
-                (change)="onFileChange($event)">
+                  {{ progress }}%
+                </div>
+              </div>
 
                 <h4 class="d-none d-lg-block pt-2">
                   Acceptable format, jpg, png only<br /><span>
@@ -315,6 +327,7 @@
                   <th scope="col">Location</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Status</th>
+                  <th scope="col"></th>
                 
                 </tr>
               </thead>
@@ -325,6 +338,12 @@
                   <td>Otto</td>
                   <td>@mdo</td>
                   <td>@mdo</td>
+                  <td>
+                    <button class="btn btn-success me-2" (click)="toggleEditMode()" *ngIf="!isComplete">Processing</button>
+                    <button class="btn btn-success me-2" *ngIf="isComplete">Completed</button>
+                    <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)=" onEditOrder(row)" >Update</button> -->
+                    <button class="btn btn-danger">Delete</button>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">30499p</th>
@@ -332,6 +351,13 @@
                   <td>Thornton</td>
                   <td>@fat</td>
                   <td>@fat</td>
+                  <td>
+                    <button class="btn btn-success me-2" (click)="toggleEditMode()" *ngIf="!isComplete">Processing</button>
+                    <button class="btn btn-success me-2" *ngIf="isComplete">Completed</button>
+                    <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)=" onEditOrder(row)">Update</button> -->
+                    <!-- <button class="btn btn-danger" (click)="deleteOrder(row)">Delete</button> -->
+                    <button class="btn btn-danger" (click)="deleteOrder()">Delete</button>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">40499p</th>
@@ -347,5 +373,150 @@
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel" >Send Your Request</h3>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- modal form -->
+        <form [formGroup]="updateOrder" (ngSubmit)="updateServiceOrder()">
+          <div class="mb-1">
+            <label for="exampleInputEmail1" class="form-label">Full Name</label>
+            <input
+              formControlName="name"
+              type="text"
+              class="form-control"
+              id="exampleInputText"
+              aria-describedby="emailHelp"
+            />
+          </div>
+
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Address</label
+            >
+            <input
+              formControlName="propertyAdress"
+              type="text"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+       <div class="mb-1" >
+        <label for="exampleInputPassword1" class="form-label"
+        >Select Location</label
+      >
+        <select class="form-select" aria-label="Default select example" >
+          <option selected> select location</option>
+          <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
+        
+        </select>
+       </div>
+
+          <!-- <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Email ID</label
+            >
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div> -->
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Whatsapp Number</label
+            >
+            <input
+              formControlName="mobilenumber"
+              type="number"
+              class="form-control"
+              
+            />
+          </div>
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Alternative Number</label
+            >
+            <input
+              formControlName="mobilenumber"
+              type="number"
+              class="form-control"
+            
+            />
+          </div>
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Photo of issue</label
+            >
+            <input
+              formControlName="Photo"
+              type="file"
+              class="form-control file"
+             
+            />
+          </div>
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Description</label
+            >
+            <input
+              formControlName="issue"
+              type="textarea"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Inspection Date and Time</label
+            >
+            <input
+              formControlName="inspectionDate"
+              type="datetime-local"
+              [(ngModel)]="value"
+              #input (change)="onChange(input.value)"
+        />
+          </div>
+          <button
+          type="submit"
+         
+          class="btn btn-info"
+          data-bs-dismiss="modal"
+        >
+          Send
+        </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+         
+          class="btn btn-info"
+          data-bs-dismiss="modal"
+        >
+          Send
+        </button>
+        <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
+        <!-- <button *ngIf="showUpdate" type="button" (click)="updateEmployeeDetails()" class="btn btn-primary">Update</button> -->
+      </div>
+    </div>
   </div>
 </div>

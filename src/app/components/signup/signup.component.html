@@ -1,6 +1,6 @@
-<div class="register  mt-sm-2">
-  <div class=" signup  mt-sm-3">
-    <div>ARTISAN SIGN UP</div>
+<div class="register mt-5 mt-sm-2">
+  <div class="signup mt-5 mt-sm-3">
+    <div>SIGN UP</div>
     <!-- <p routerLink="/partnerregister">signup as Artisan</p> -->
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="example-full-width" appearance="fill">
@@ -13,7 +13,7 @@
             signupForm.hasError('required', 'firstName')
           "
         >
-         Full name is required</mat-error
+          Full name is required</mat-error
         >
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
@@ -26,25 +26,24 @@
             signupForm.hasError('required', 'lastName')
           "
         >
-         Full name is required</mat-error
+          Full name is required</mat-error
         >
       </mat-form-field>
-  
-     
-      
 
-      <div class="mb-3" >
-        
+      <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label"
-        >Select Location</label
-      >
-        <select class="form-select" aria-label="Default select example" formControlName="location" >
-          <option selected> select location</option>
-          <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
-        
+          >Select Location</label
+        >
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          formControlName="location"
+        >
+          <option selected>select location</option>
+          <option *ngFor="let statelga of statelga">{{ statelga }}</option>
         </select>
-       </div>
-      <mat-form-field class="example-full-width" appearance="fill" >
+      </div>
+      <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>ADDRESS</mat-label>
         <input matInput formControlName="address" placeholder="Ex. 22 kabiru" />
         <mat-error
@@ -54,7 +53,7 @@
             signupForm.hasError('required', 'address')
           "
         >
-        Your Address is required</mat-error
+          Your Address is required</mat-error
         >
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
@@ -70,14 +69,21 @@
           Phone number is required</mat-error
         >
       </mat-form-field>
-    
+
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" >
-        <mat-error   *ngIf="
-        signupForm.controls['email'].dirty &&
-        signupForm.hasError('required', 'email')
-      ">
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="Ex. pat@example.com"
+        />
+        <mat-error
+          *ngIf="
+            signupForm.controls['email'].dirty &&
+            signupForm.hasError('required', 'email')
+          "
+        >
           Please enter a valid email address
         </mat-error>
         <mat-error *ngIf="signupForm.hasError('required')">
@@ -86,42 +92,51 @@
       </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" type="password" id="mypassword" formControlName="password" name="password" >
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-       
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          type="password"
+          id="mypassword"
+          formControlName="password"
+          name="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
-        <mat-error   *ngIf="
-        signupForm.controls['password'].dirty &&
-        signupForm.hasError('required', 'minLength')
-      ">
-        password cann't be less than four
+        <mat-error
+          *ngIf="
+            signupForm.controls['password'].dirty &&
+            signupForm.hasError('required', 'minLength')
+          "
+        >
+          password cann't be less than four
         </mat-error>
         <mat-error *ngIf="signupForm.hasError('required')">
-         password is <strong>required</strong>
+          password is <strong>required</strong>
         </mat-error>
-      </mat-form-field>  
+      </mat-form-field>
       <!-- <div>
         <input type="password" id="mypassword" formControlName="password" name="password" >
       </div> -->
-      <div class="d-flex justify-content-between">
-  <p>      <a routerLink="/signin">Already User? <strong>signin</strong></a>
-  <p>      <a routerLink="/register">Sign up as ? <strong>User</strong></a>
-  <p>      <a routerLink="/register">Sign up as ? <strong>User</strong></a>
-  </p>     
+      <div class="d-flex justify-content-center">
+        <p>
+          <a routerLink="/signin">Already User? <strong>signin</strong></a>
+        </p>
+        <p>
+          <a routerLink="/signin">signup as <strong>user</strong></a>
+        </p>
+        
       </div>
-    
-      <button
-        class="btn btn-primary"
-        [disabled]="signupForm.invalid"
-     
-      >
+
+      <button class="btn btn-primary" [disabled]="signupForm.invalid">
         SIGN UP
       </button>
-    
-    </form> 
-
-    
-    
+    </form>
   </div>
 </div>

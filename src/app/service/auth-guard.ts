@@ -22,20 +22,32 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-  let userInfo = this.api.loadUserFromLocalStorage();
+  let userInfo = this.api.loggedIn();
   if(route.data['userType'] === 'guest'){
       return true;
-  }else if(route.data['userType'] === 'logged-in'){
+  }else if(route.data['userType'] === 'CUSTOMER'){
       if(userInfo.id > 0){
           return true
       }
       this.router.navigate(['/dashboard'])
-  }else if(route.data['userType'] === 'non-logged-in'){
+  }else if(route.data['userType'] === 'ARTISAN'){
+    if(userInfo.id > 0){
+        return true
+    }
+    this.router.navigate(['/dashboard'])
+}
+  else if(route.data['userType'] === 'ARTISAN'){
     if(userInfo.id === 0){
         return true
     }
     this.router.navigate(['/siginin'])
     return false;
+}else if(route.data['userType'] === 'CUSTOMER'){
+  if(userInfo.id === 0){
+      return true
+  }
+  this.router.navigate(['/siginin'])
+  return false;
 }
  this.router.navigate(['/pagenotfound'])
  return false;
