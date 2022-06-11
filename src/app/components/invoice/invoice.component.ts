@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-// import pdfMake from "pdfmake/build/pdfmake";
-// import pdfFonts from "pdfmake/build/vfs_fonts";
-// import * as pdfMake from 'pdfmake';
-// pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { Component, OnInit, ElementRef, ViewChild  } from '@angular/core';
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+const htmlToPdfmake = require("html-to-pdfmake");
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 class Product{
   name!: string;
@@ -29,6 +30,9 @@ class Invoice{
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
+
+  @ViewChild('pdfTable')
+  pdfTable!: ElementRef;
 
   constructor() { }
 
@@ -131,6 +135,7 @@ export class InvoiceComponent implements OnInit {
       }
     };
 
+    
     if(action==='download'){
       // pdfMake.createPdf(docDefinition).download();
     }else if(action === 'print'){
@@ -140,7 +145,13 @@ export class InvoiceComponent implements OnInit {
     }
 
   }
-
+  public downloadAsPDF() {
+    const pdfTable = this.pdfTable.nativeElement;
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    const documentDefinition = { content: html ,};
+    pdfMake.createPdf(documentDefinition).download(); 
+     
+  }
   addProduct(){
     this.invoice.products.push(new Product());
   }

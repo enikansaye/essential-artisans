@@ -202,27 +202,8 @@ export class ArtisanprofileComponent implements OnInit {
   updateUserInformation() {
     this.formSubmitted = true;
     if (this.updateForm.valid) {
-      // const file ={
-      //   next:(data: any)=>{
-      //     alertify.success('Profile successsfully updated.');
-      //     alert('Profile successsfully updated.');
-      //     this.updateForm.disable();
-      //     this.isEditMode = false;
-      //     console.log(data);
-      //     this.isEditMode = !this.isEditMode;
-      //   },
-      //   error: (error: any) => {
-      //     alert('Profile update failed');
-      //     console.log(error);
-
-      //     alertify.error('Profile update failed');
-      //   }
-      // };
-      // this.api.updateUser(this.updateForm.value).pipe(file)
-
-      
-      this.api.updateUser(this.updateForm.value).subscribe(
-        (data) => {
+      this.api.updateUser(this.updateForm.value).subscribe({
+     next:   (data) => {
           alertify.success('Profile successsfully updated.');
           alert('Profile successsfully updated.');
           this.updateForm.disable();
@@ -230,13 +211,13 @@ export class ArtisanprofileComponent implements OnInit {
           console.log(data);
           this.isEditMode = !this.isEditMode;
         },
-        (error: any) => {
+     error:   (error: any) => {
           alert('Profile update failed');
           console.log(error);
 
           alertify.error('Profile update failed');
         }
-      );
+    });
     }
   }
 }
