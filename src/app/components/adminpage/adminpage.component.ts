@@ -6,6 +6,7 @@ import { ThemeOption } from 'ngx-echarts';
 import { CoolTheme } from './cool-theme';
 import { EChartsOption } from 'echarts';
 import { ApiService } from 'src/app/service/api.service';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-adminpage',
@@ -22,11 +23,19 @@ export class AdminpageComponent implements OnInit {
 
   expression = 'page1';
   service = 'completed';
+  totalRecord: any;
+  page:number=1
+  artisanData: any;
+  othersData: any;
+  
 
-  constructor(private observer: BreakpointObserver, private api: ApiService) {}
+  constructor(private observer: BreakpointObserver, private api: ApiService,  private adminApi: AdminService) {}
 
 
   ngOnInit(): void {
+    this.getAllUser();
+    this.getAllArtisan();
+ 
 
     this.getAllUser()
     // ngx chart
@@ -145,17 +154,50 @@ export class AdminpageComponent implements OnInit {
     });
   }
 // consuming api section
+// getAllUser() {
+//   this.api.getUser().subscribe((res: any) => {
+//     this.userData = res;
+//     console.log(this.userData)
+//     console.log(res)
+//   });
+// }
+// getAllArtisan() {
+//   this.api.getArtisan().subscribe((res: any) => {
+//     this.userData = res;
+//   });
+// }
+
 getAllUser() {
-  this.api.getUser().subscribe((res: any) => {
+  this.adminApi.getUser().subscribe((res: any) => {
     this.userData = res;
+
     console.log(this.userData)
-    console.log(res)
+    this.totalRecord=res.length;
+    console.log(this.totalRecord);
+    
+  
   });
 }
 getAllArtisan() {
-  this.api.getArtisan().subscribe((res: any) => {
-    this.userData = res;
+  this.adminApi.getArtisan().subscribe((res: any) => {
+    this.artisanData = res.results;
+    console.log(this.artisanData)
+    this.totalRecord=res.length;
+    console.log(this.totalRecord);
   });
+}
+getAllOthers() {
+  this.adminApi.getOthers().subscribe((res: any) => {
+    this.othersData = res;
+    console.log(this.othersData)
+  });
+}
+
+deleteArtisan(id:number){
+  this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
+    alert('artisan deleted')
+   this.getAllArtisan();
+  })
 }
 
 }

@@ -157,54 +157,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td data-title="Order ID" >@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
+                <tr *ngFor="let data of othersData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                  <td data-title="Order ID" >{{data.id}}</td>
+                  <td data-title="Date">{{data.title}}</td>
+                  <td data-title="Location">{{data.title}}</td>
+                  <td data-title="Amount">{{data.title}}</td>
                   <td data-title="Status">completed</td>
                   <td data-title="Artisan's Name">ope</td>
                 </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">jide</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">faith</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">peter</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">grace</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
+              
               
               </tbody>
             </table>

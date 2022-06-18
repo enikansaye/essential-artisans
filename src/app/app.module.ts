@@ -20,6 +20,8 @@ import { ChartModule } from 'angular-highcharts';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { AlertModule } from 'ngx-alerts';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -68,6 +70,7 @@ import { AuthInterceptor, } from 'src/_helpers/auth.interceptor';
 import { AuthGuard } from './shared/auth.guard';
 import { RoleGuard } from './shared/role.guard';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+
 
 
 @NgModule({
@@ -126,6 +129,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
     HighchartsChartModule,
     ChartModule,
     MatPaginatorModule,
+    NgxPaginationModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
@@ -161,7 +165,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
         { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
         { path: 'pagenotfound', component: PagenotfoundComponent },
-        { path: 'admin', component: AdminpageComponent, canActivate:[RoleGuard]  },
+        { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard]  },
         { path: 'forbidden', component: ForbiddenComponent },
         {
           path: 'available artisan',
