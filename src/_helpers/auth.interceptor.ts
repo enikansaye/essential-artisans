@@ -26,6 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
   );
   static accessToken: '';
   refresh = false;
+ checkerr!:string;
 
   constructor(
     private token: StorageService,
@@ -40,13 +41,50 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let api = this.inject.get(ApiService);
-    let accesstoken = request.clone({
-      setHeaders: {
-        Authorization: `bearer ${this.api.getUserToken()}`,
-      },
-    });
-    console.log(accesstoken);
-    return next.handle(accesstoken);
+    let authreq = request;
+    authreq = this.AddTokenheader(request, api.getUserToken());
+    return next.handle(authreq).pipe(
+      catchError(errordata => {
+        if (errordata.status === 401) {
+          // need to implement logout
+          // api.Logout();
+          // refresh token logic
+         return this.handleRefrehToken(request, next);
+        }
+        // const err = new Error('test'); 
+        // console.log(err);
+        // this.checkerr = errordata
+        return throwError(() => errordata);
+        // return throwError(errordata);
+      })
+    );
+
+    
+
+
+    // let accesstoken = request.clone({
+    //   setHeaders: {
+        // Authorization: `bearer ${this.api.getUserToken()}`,
+    //   },
+    // });
+    // console.log(accesstoken);
+    // return next.handle(accesstoken);
+  }
+
+  handleRefrehToken(request: HttpRequest<any>, next: HttpHandler) {
+    let api = this.inject.get(ApiService);
+    return api.GenerateRefreshToken().pipe(
+      switchMap((data: any) => {
+        api.SaveTokens(data);
+        return next.handle(this.AddTokenheader(request,data.jwtToken))
+      }),
+      catchError(errodata=>{
+        api.Logout();
+        // return throwError(errodata)
+        const err = new Error('test'); 
+        return throwError(() => err);
+      })
+    );
   }
 
 //   intercept(req: HttpRequest<any>, next: HttpHandler){
@@ -55,5 +93,9 @@ export class AuthInterceptor implements HttpInterceptor {
 //         headers: req.headers.set("Authorization", "Bearer " + authToken)
 //     })
 //     return next.handle(authRequest)
-// }   
+// }
+AddTokenheader(request: HttpRequest<any>, token: any) {
+  return request.clone({ headers: request.headers.set('Authorization', 'bearer ' + token) });
+}   
 }
+

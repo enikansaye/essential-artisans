@@ -6,6 +6,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
+import { userProfileModel } from '../userprofile/userprofile.model';
 
 declare let alertify: any;
 @Component({
@@ -15,6 +16,7 @@ declare let alertify: any;
 })
 export class ArtisanprofileComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  userProfileModelObj: userProfileModel = new userProfileModel();
 
   showIcon: boolean = false;
   icon: boolean = false;
@@ -108,6 +110,20 @@ export class ArtisanprofileComponent implements OnInit {
       this.formControls['service'].enable();
       this.formControls['location'].enable();
       this.formControls['email'].enable();
+
+      this.updateForm.controls['firstName'].setValue(
+        this.api.loggedinUser.userName
+      );
+      this.updateForm.controls['lastName'].setValue(
+        this.api.loggedinUser.lastName
+      );
+      this.updateForm.controls['email'].setValue(this.api.loggedinUser.email);
+      // this.updateForm.controls['email'].setValue(data.email);
+      this.updateForm.controls['mobilenumber'].setValue(
+        this.api.loggedinUser.mobilenumber
+      );
+  
+  
     } else {
       this.updateForm.disable();
     }
@@ -219,5 +235,26 @@ export class ArtisanprofileComponent implements OnInit {
         }
     });
     }
+  }
+
+  updateArtisanDetails() {
+    this.userProfileModelObj.firstName = this.updateForm.value.firstName;
+    this.userProfileModelObj.lastName = this.updateForm.value.lastName;
+    this.userProfileModelObj.email = this.updateForm.value.email;
+    this.userProfileModelObj.mobilenumber = this.updateForm.value.mobilenumber;
+
+    this.api.updateArisan2(this.userProfileModelObj).subscribe((res: any) => {
+      console.log(res);
+        alert('employee updated sucessfully');
+        
+        
+
+      //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
+      //   // ref?.click();
+
+      //   // this.getUserserInfo() //this is to refresh and get the resent data
+    });
+    console.log("failes");
+    
   }
 }

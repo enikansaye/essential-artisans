@@ -188,7 +188,7 @@
             <section class="w-100  ps-md-5">
               <div>
                 <div class="h5">ACCOUNT INFORMATION</div>
-                <form [formGroup]="updateForm" (ngSubmit)=" updateUserInformation()">
+                <form [formGroup]="updateForm" (ngSubmit)=" updateArtisanDetails()">
                   <div class="mb-3 row">
                     <label for="inputtext" class="col-sm-2 col-form-label "
                       >First Name</label
@@ -198,7 +198,7 @@
                         type="text"
                         class="form-control"
                         id="inputFirstName"
-                        placeholder="mayowa"
+                        
                         formControlName="firstName"
                       />
                     </div>
@@ -212,7 +212,7 @@
                         type="text"
                         class="form-control"
                         id="inputtext"
-                        placeholder="enikansaye"
+                     
                         formControlName="lastName"
                       />
                     </div>
@@ -227,7 +227,7 @@
                         type="email"
                         class="form-control"
                         id="inputemail"
-                        placeholder="enikansaye13@gmail.com"
+                       
                         formControlName="email"
                       />
                     </div>

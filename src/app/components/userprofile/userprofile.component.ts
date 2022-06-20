@@ -124,6 +124,7 @@ export class UserprofileComponent implements OnInit {
         this.sidenav.open();
       }
     });
+    
   }
   onEditOrder(row: any) {
     this.showAddEmployee = false;

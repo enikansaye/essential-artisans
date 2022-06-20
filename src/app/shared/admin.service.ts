@@ -38,4 +38,11 @@ export class AdminService {
       })
     );
   }
+  getOthersById(id:number) {
+    return this.http.get<any>('https://jsonplaceholder.typicode.com/posts'+id).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 }

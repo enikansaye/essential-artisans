@@ -67,6 +67,16 @@
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> 0rders
             </a>
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link collapsed"
+              [class.active]="expression == 'page5'"
+              toggle
+              (click)="expression = 'page5'"
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> Service
+            </a>
+          </li>
 
           <li class="nav-item">
             <a
@@ -921,6 +931,10 @@
       <div *ngSwitchCase="'page4'" class="pt-5">
         
     <app-alltransactions></app-alltransactions>
+      </div>
+      <div *ngSwitchCase="'page5'" class="pt-5">
+        
+    <app-servicecategory></app-servicecategory>
       </div>
     </div>
   </mat-sidenav-content>

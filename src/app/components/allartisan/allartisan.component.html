@@ -1,229 +1,98 @@
 <div class="d-flex">
-  <div class="container-fluid d-flex align-center justify-content-center  ">
-    
+  <div class="container-fluid d-flex align-center justify-content-center">
     <!-- PROFILE CARDS 1 -->
 
     <div class="cards-6 section-gray">
-      
-      <div class="container-fluid">
-      <div class="h4 ">Availabe Artisans within your location</div>
-      <div class="d-flex mb-5 ">
-        <div class="location text-center me-2 p-1">Ajah</div>
-        <div class="location text-center me-2 p-1">Ikoyi</div>
-        <div class="location text-center me-2 p-1">Jakande</div>
-        <div class="location text-center me-2 p-1">Lekki</div>
-        <div class="location text-center me-2 p-1" data-bs-toggle="modal" data-bs-target="#location">View All</div>
-      </div>
-        <div class="row " >
-          
-          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="createnewService(value)">
+      <div class="container-fluid w-100">
+        <div class="h4">Availabe Artisans within your location</div>
+        <div class="d-flex mb-5">
+          <div class="location text-center me-2 p-1">Ajah</div>
+          <div class="location text-center me-2 p-1">Ikoyi</div>
+          <div class="location text-center me-2 p-1">Jakande</div>
+          <div class="location text-center me-2 p-1">Lekki</div>
+          <div
+            class="location text-center me-2 p-1"
+            data-bs-toggle="modal"
+            data-bs-target="#location"
+          >
+            View All
+          </div>
+          <div>
+            <form class="d-flex flex-end" role="search">
+              <input class="form-control me-2" [(ngModel)]="location" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit" (click)="onLocationFilter()">Search</button>
+            </form>
+           
+          </div>
+        </div>
+       
+        <div class="row">
+          <div
+            class="col-md-4"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            *ngFor="
+              let data of artisanData
+                | paginate
+                  : {
+                      id: 'listing_pagination',
+                      itemsPerPage: 6,
+                      currentPage: page,
+                      totalItems: totalRecord
+                    }
+                | filter: '':'gender'|sort:['email','asc']
+            "
+          >
             <div class="card card-profile">
               <div class="card-avatar">
-                <a >
-                  <img class="img" src="assets/images/may.jpg" />
+                <a>
+                  <img class="img" src="{{ data.picture.thumbnail }}" />
                 </a>
+              </div>
+
+              <div class="table">
+                <h4 class="card-caption">
+                  {{ data.name.first }} {{ data.name.last }}
+                </h4>
+                <p class="category text-muted h6 pt-3">Carpenter</p>
+                <p class="card-description text-center">
+                  15 years working experience.
+                </p>
+
+                <div class="d-flex justify-content-between">
+                  <div class="list-inline-item mt-2 small">
+                    <i class="bi bi-geo-alt-fill"></i>{{ data.location.city }}
                   </div>
-              
-              <div class="table">
-                <h4 class="card-caption">Paul Chika</h4>
-                <h6 class="category h5 text-muted">Carpenter</h6>
-                <p class="card-description text-center">15 years working experience.</p>
-               
-               <div class="d-flex justify-content-between">
-                 <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ajah</div>
-                 <div>
-                  <ul class="">
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="far fa-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
-                      4.0/5.0
-                    </li>
-                  </ul>
-                 </div>
-               </div>
+                  <div>
+                    <ul class="">
+                      <li class="list-inline-item me-0 small">
+                        <i class="bi bi-star-fill text-warning"></i>
+                      </li>
+                      <li class="list-inline-item me-0 small">
+                        <i class="bi bi-star-fill text-warning"></i>
+                      </li>
+                      <li class="list-inline-item me-0 small">
+                        <i class="bi bi-star-fill text-warning"></i>
+                      </li>
+                      <li class="list-inline-item me-0 small">
+                        <i class="bi bi-star-fill text-warning"></i>
+                      </li>
+                      <li class="list-inline-item me-0 small">
+                        <i class="far fa-star-fill text-warning"></i>
+                      </li>
+                      <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                        4.0/5.0
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <div class="card card-profile" >
-              <div class="card-avatar">
-                <a routerLink="#">
-                  <img class="img" src="assets/images/mayor.jpg" />
-                </a>
-              </div>
-              <div class="table">
-                <h4 class="card-caption">Mary Adeoti</h4>
-                <h6 class="category h5 text-muted">Electrician</h6>
-                <p class="card-description">20 years working experience..</p>
-               
-               <div class="d-flex justify-content-between">
-                 <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Lekki</div>
-                 <div>
-                  <ul class="">
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="far fa-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
-                      4.0/5.0
-                    </li>
-                  </ul>
-                 </div>
-               </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <div class="card card-profile">
-              <div class="card-avatar">
-                <a routerLink="">
-                  <img class="img" src="assets/images/mayor.jpg" />
-                </a>
-              </div>
-              <div class="table">
-                <h4 class="card-caption">John Hope</h4>
-                <h6 class="category h5 text-muted">Electrician</h6>
-                <p class="card-description">10 years working experience.</p>
-               
-               <div class="d-flex justify-content-between">
-                 <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ajah</div>
-                 <div>
-                  <ul class="">
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="far fa-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
-                      4.0/5.0
-                    </li>
-                  </ul>
-                 </div>
-               </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <div class="card card-profile">
-              <div class="card-avatar">
-                <a routerLink="">
-                  <img class="img" src="assets/images/mayor.jpg" />
-                </a>
-              </div>
-              <div class="table">
-                <h4 class="card-caption">John Paul</h4>
-                <h6 class="category h5 text-muted">Plumber</h6>
-                <p class="card-description">13 years working experience.</p>
-               
-               <div class="d-flex justify-content-between">
-                 <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ajah</div>
-                 <div>
-                  <ul class="">
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="far fa-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
-                      4.0/5.0
-                    </li>
-                  </ul>
-                 </div>
-               </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <div class="card card-profile">
-              <div class="card-avatar">
-                <a routerLink="">
-                  <img class="img" src="assets/images/may.jpg" />
-                </a>
-              </div>
-              <div class="table">
-                <h4 class="card-caption">Iluyemi Opemipo</h4>
-                <h6 class="category h5 text-muted">Ac Repairs</h6>
-                <p class="card-description">17 years working experience.</p>
-               
-               <div class="d-flex justify-content-between">
-                 <div class="list-inline-item mt-2 small"><i class=" bi bi-geo-alt-fill"></i>Ikoyi</div>
-                 <div>
-                  <ul class="">
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="bi bi-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item me-0 small">
-                      <i class="far fa-star-fill text-warning"></i>
-                    </li>
-                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
-                      4.0/5.0
-                    </li>
-                  </ul>
-                 </div>
-               </div>
-              </div>
-            </div>
-          </div>
-      
         </div>
       </div>
     </div>
-   
   </div>
-
 </div>
 
 <!-- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -248,21 +117,18 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class=" modal-body">
-      <ul class="list">
-        <li class="mb-2"> <i class="bi bi-geo-alt-fill"></i> Ajah</li>
-        <li class="mb-2"> <i class="bi bi-geo-alt-fill"></i> Ikoyi</li>
-        <li class="mb-2" > <i class="bi bi-geo-alt-fill"></i> Ibeju Lekki</li>
-        <li class="mb-2" > <i class="bi bi-geo-alt-fill"></i> Jakande</li>
-        <li class="mb-2" > <i class="bi bi-geo-alt-fill"></i> Lekki</li>
-      </ul>
-       
+      <div class="modal-body">
+        <ul class="list">
+          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Ajah</li>
+          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Ikoyi</li>
+          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Ibeju Lekki</li>
+          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Jakande</li>
+          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Lekki</li>
+        </ul>
       </div>
-     
     </div>
   </div>
 </div>
-
 
 <div
   class="modal fade"
@@ -274,7 +140,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel" >Send Your Request</h3>
+        <h3 class="modal-title" id="exampleModalLabel">Send Your Request</h3>
         <button
           type="button"
           class="btn-close"
@@ -284,7 +150,10 @@
       </div>
       <div class="modal-body">
         <!-- modal form -->
-        <form [formGroup]="formValue" (ngSubmit)="onSubmit()">
+        <form
+          [formGroup]="formValue"
+          (ngSubmit)="createnewService(this.formValue.value)"
+        >
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
@@ -307,16 +176,15 @@
               id="exampleInputPassword1"
             />
           </div>
-       <div class="mb-1" >
-        <label for="exampleInputPassword1" class="form-label"
-        >Select Location</label
-      >
-        <select class="form-select" aria-label="Default select example" >
-          <option selected> select location</option>
-          <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
-        
-        </select>
-       </div>
+          <div class="mb-1">
+            <label for="exampleInputPassword1" class="form-label"
+              >Select Location</label
+            >
+            <select class="form-select" aria-label="Default select example">
+              <option selected>select location</option>
+              <option *ngFor="let statelga of statelga">{{ statelga }}</option>
+            </select>
+          </div>
 
           <!-- <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
@@ -337,7 +205,6 @@
               formControlName="mobilenumber"
               type="number"
               class="form-control"
-              
             />
           </div>
           <div class="mb-1">
@@ -348,7 +215,6 @@
               formControlName="mobilenumber"
               type="number"
               class="form-control"
-            
             />
           </div>
           <div class="mb-1">
@@ -359,7 +225,6 @@
               formControlName="Photo"
               type="file"
               class="form-control file"
-             
             />
           </div>
           <div class="mb-1">
@@ -381,26 +246,17 @@
               formControlName="inspectionDate"
               type="datetime-local"
               [(ngModel)]="value"
-              #input (change)="onChange(input.value)"
-        />
+              #input
+              (change)="onChange(input.value)"
+            />
           </div>
-          <button
-          type="submit"
-         
-          class="btn btn-info"
-          data-bs-dismiss="modal"
-        >
-          Send
-        </button>
+          <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
+            Send
+          </button>
         </form>
       </div>
       <div class="modal-footer">
-        <button
-          type="submit"
-         
-          class="btn btn-info"
-          data-bs-dismiss="modal"
-        >
+        <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
           Send
         </button>
         <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->

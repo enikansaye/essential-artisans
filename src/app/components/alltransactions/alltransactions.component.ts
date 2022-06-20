@@ -19,6 +19,7 @@ export class AlltransactionsComponent implements OnInit {
   constructor(private adminApi :AdminService ) { }
 
   ngOnInit(): void {
+    this.getAllOthers()
   }
 clickEvent(){
   this.accept = !this.accept

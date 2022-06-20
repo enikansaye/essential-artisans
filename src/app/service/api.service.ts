@@ -12,6 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AllurlService } from './allurl.service';
 import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
 import { StorageService } from './storage.service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -73,7 +74,8 @@ export class ApiService implements OnInit {
   constructor(
     private http: HttpClient,
     private url: AllurlService,
-    private tokenStorage: StorageService
+    private tokenStorage: StorageService,
+    private router: Router,
   ) {}
   ngOnInit(): void {
     // this.loggedIn()
@@ -118,11 +120,23 @@ export class ApiService implements OnInit {
     console.log('hello');
     return localStorage.getItem('accessToken') || '';
   }
+
+  GenerateRefreshToken() {
+    let input = {
+    
+      "refreshToken": this.getRefresToken()
+    } 
+    return this.http.post(this.url.refreshToken, input);
+  }
   // saveToken(token: any) {
   //   localStorage.setItem('accesstoken', token.accessToken);
   //   localStorage.setItem('token', token.accessToken);
   //   console.log('hello');
   // }
+  SaveTokens(tokendata: any) {
+    localStorage.setItem('token', tokendata.jwtToken);
+    localStorage.setItem('refreshtoken', tokendata.refreshToken);
+  }
 
   haveaccess(token: any) {
     const loggedinUser = localStorage.getItem('accesstoken') || '';
@@ -149,6 +163,11 @@ export class ApiService implements OnInit {
   artisanUpdate(ArtisanInfo: any) {
   
       return this.http.put(this.url.updateArtisan, ArtisanInfo,httpOptions);
+  }
+
+  // fakeapi
+  updateArisan2(data:any){
+    return this.http.put('https://randomuser.me/api/?results=5000',data)
   }
  
 
@@ -270,6 +289,15 @@ export class ApiService implements OnInit {
   createService(id: number) {
     return this.http.post<any>(this.url.createService, + id).pipe();
   }
+  // fake api
+  createService2(data:any, id:number) {
+    return this.http.put<any>(this.url.createService + id , data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
   //  create invoice by artisans
   createInvoice(data:any) {
     return this.http.post(this.url.createInvoice,data).pipe();
@@ -297,4 +325,10 @@ export class ApiService implements OnInit {
     return this.http.put(this.url.updateService +userId, userInfo);
 }
 
+// checking with refresh token
+Logout() {
+  alert('Your session expired, kindly login')
+  localStorage.clear();
+  this.router.navigateByUrl('signin');
+}
 }

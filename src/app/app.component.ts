@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './service/api.service';
 import { EventBusService } from './service/event-bus.service';
+import { LoaderService } from './service/loader.service';
 import { StorageService } from './service/storage.service';
 
 import { UserModel } from './shared/models/user.model';
@@ -24,8 +25,12 @@ export class AppComponent implements OnInit {
   constructor(
     public api: ApiService,
     private router: Router,
+    public loader: LoaderService
     
   ) {}
+
+  loading$ = this.loader.loading$;
+  
   loggedinUser: any;
   userResponse: any;
   displayUser: any;
@@ -34,11 +39,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.roleDisplay();
+    this.api.loggedIn()
     
     // this.api.getToken()
     // this.api.getUserToken();
 
   }
+  
  
 
   roleDisplay() {
@@ -56,6 +63,7 @@ export class AppComponent implements OnInit {
       this.displayAdmin = this.currentRole === 'ADMIN';
       console.log(this.displayAdmin);
     }
+  this.api.loggedIn()
   }
 
   logout() {
@@ -63,4 +71,9 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('accesstoken')
     return localStorage.removeItem('token');
   }
+
+  menuVisible = false;
+toggleMenu() {
+  this.menuVisible = !this.menuVisible;
+}
 }

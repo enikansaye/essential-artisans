@@ -6,11 +6,12 @@
       
       <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3">
         <mat-toolbar class="w-100 d-flex justify-content-end">
-          <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+          <div *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
                    
-            <mat-icon *ngIf="sidenav.opened" class="d-flex justify-content-end">close</mat-icon>
+            <!-- <mat-icon *ngIf="sidenav.opened" class="d-flex justify-content-end">close</mat-icon> -->
+            <i class="bi bi-arrow-left-circle" *ngIf="sidenav.opened" ></i>
       
-          </button>
+          </div>
         </mat-toolbar>
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
         <!-- <h4 class="mt-2 mt-md-4">{{useData.email}}</h4> -->
@@ -41,82 +42,21 @@
       <hr class="divided">
      
 
-      <div class="dropdown ">
-        <a
-          href="#"
-          class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-          id="dropdownUser2"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://github.com/mdo.png"
-            alt=""
-            width="32"
-            height="32"
-            class="rounded-circle me-2"
-          />
-          <strong>mayowa</strong>
-        </a>
-        <ul
-          class="dropdown-menu text-small shadow"
-          aria-labelledby="dropdownUser2"
-        >
-         
-          <!-- <li><hr class="dropdown-divider" /></li> -->
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
-      </div>
+    
       <!-- <mat-divider></mat-divider> -->
       </mat-sidenav>
       <mat-sidenav-content opened>
         
         
         <div class="content mat-elevation-z4 flex-column ms-3; ms-lg-4">
-             <mat-toolbar>
-      <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-        <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-     
-        
-  
-      </button>
+          <div *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+            <!-- <mat-icon *ngIf="!sidenav.opened">menu</mat-icon> -->
+            <i class="bi bi-arrow-right-circle" *ngIf="!sidenav.opened"></i>
+         
+            
       
-      
-      <div class="d-flex justify-content-end w-100 ">
-        <i class="bi bi-heart me-3 "></i>
-        <i class="bi bi-cart me-3 "></i>
-        <div>
-          <div class="dropdown">
-            <a
-              href="#"
-              class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-              id="dropdownUser2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              
-              <strong>mayowa</strong>
-           <div class="bg-success rounded-circle" >
-            <img 
-            src=""
-            alt=""
-            width="32"
-           height="32"
-            class="img-fluid"
-          />
-           </div>
-            </a>
-            <ul
-              class="dropdown-menu text-small shadow"
-              aria-labelledby="dropdownUser2"
-            >
-             
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
           </div>
-        </div>
-       </div>
-    </mat-toolbar>
+    
     <div [ngSwitch]="expression">
       <div *ngSwitchCase="'match1'" >
         <form [formGroup]="formValue" (ngSubmit)="updateEmployeeDetails()">
@@ -135,11 +75,11 @@
 
               <div class="align-text-bottom ">
              
-                <label class="btn btn-default p-0">
+                <label class="btn btn-default mt-2 p-0">
                   <input type="file" (change)="selectFile($event)" />
                 </label>
 
-               <button  (click)="upload()" class="btn btn-success">upload picture</button>
+               <button  (click)="upload()" class="btn btn-success mt-2">upload picture</button>
 
                <div *ngIf="currentFile" class="progress my-3">
                 <div

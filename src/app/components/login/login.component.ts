@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private api: ApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +54,8 @@ export class LoginComponent implements OnInit {
 
           return this.responsedata;
         } else {
+          // console.log(this.error.checkerr);
+          
           alert('login failed');
         }
       });

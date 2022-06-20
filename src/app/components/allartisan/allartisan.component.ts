@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-allartisan',
@@ -17,11 +18,18 @@ selectedStatelga: any = {
   formValue !: FormGroup;
    min :any = ""
   value: any;
+  artisanData: any;
 
-  constructor(private formBuilder: FormBuilder, private api: ApiService, private router : Router) { }
+  totalRecord: any;
+  page:number=1
+
+  location='';
+  searchLocation='';
+
+  constructor(private formBuilder: FormBuilder, private api: ApiService, private router : Router,  private adminApi: AdminService) { }
 
   ngOnInit(): void {
-
+    this.getAllArtisan()
 this.showAll();
 
     this.formValue = this.formBuilder.group({
@@ -75,8 +83,8 @@ showAll() {
   });
 }
 
-createnewService(value: any) {
-    this.api.createService(value.id).subscribe((res) => {
+createnewService(row:any) {
+    this.api.createService2(this.formValue.value, row.id).subscribe((res) => {
       console.log(res);
       
       alert('fill request form');
@@ -124,9 +132,19 @@ createnewService(value: any) {
     }
     )
   }
-  // getAllEmployee() {
-  //     // this.api.getEmployee().subscribe((res: any) => {
-  //     //   this.employeeData = res;
-  //     // });
-  //   }
+  getAllArtisan() {
+      this.adminApi.getArtisan().subscribe((res: any) => {
+        this.artisanData = res.results;
+        console.log(res);
+        this.totalRecord=res.length;
+        console.log(this.totalRecord);
+        console.log(this.artisanData);
+        
+      });
+    }
+
+    onLocationFilter(){
+      this.searchLocation = this.location
+    }
 }
+

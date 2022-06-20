@@ -21,6 +21,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { AlertModule } from 'ngx-alerts';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { NetworkInterceptor } from './loader/network.interceptor';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 
 import { AppComponent } from './app.component';
@@ -70,6 +74,11 @@ import { AuthInterceptor, } from 'src/_helpers/auth.interceptor';
 import { AuthGuard } from './shared/auth.guard';
 import { RoleGuard } from './shared/role.guard';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { SortPipe } from './pipes/sort.pipe';
+import { ArtisanbyidComponent } from './components/artisanbyid/artisanbyid.component';
+import { ServicecategoryComponent } from './components/servicecategory/servicecategory.component';
+
 
 
 
@@ -101,6 +110,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
     UserprofileComponent,
     ArtisanprofileComponent,
     AdminpageComponent,
+  
     PagenotfoundComponent,
     ForbiddenComponent,
     AllartisanComponent,
@@ -109,6 +119,10 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
     SignuprouteComponent,
     ResetpasswordComponent,
     InvoiceComponent,
+    FilterPipe,
+    SortPipe,
+    ArtisanbyidComponent,
+    ServicecategoryComponent,
   
   ],
   imports: [
@@ -129,10 +143,13 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
     HighchartsChartModule,
     ChartModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
     NgxPaginationModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    
     AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
 
     RouterModule.forRoot(
@@ -153,7 +170,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
         { path: 'aboutus', component: AboutusComponent },
         { path: 'contactus', component: ContactusComponent },
         { path: 'ourpolicy', component: PolicyComponent },
-        // {path: "addtocart" , component: AddtocartComponent },
+        {path: "service" , component: ServicecategoryComponent },
         { path: 'electrician', component: ElectricianComponent },
         { path: 'plumbing', component: PlumbingComponent },
         { path: 'carpentry', component: CapentaryComponent },
@@ -178,8 +195,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
         { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'invoice', component: InvoiceComponent },
 
-        // {path: "artisanprofile" , component: PartnerregisterComponent },
-        // {path: "acrepair/fan" , component: AcrepairComponent },
+       
       ],
       { scrollPositionRestoration: 'enabled' }
     ),
@@ -192,6 +208,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,  useClass: AuthInterceptor, multi:true },
+    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
     // authInterceptorProviders
     // , useClass: ShowOnDirtyErrorStateMatcher
   ],
