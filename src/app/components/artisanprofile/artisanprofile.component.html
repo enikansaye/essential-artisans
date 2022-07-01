@@ -217,8 +217,36 @@
                       />
                     </div>
                   </div>
-
                   <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >state</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputtext"
+                     
+                        formControlName="state"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >city</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputtext"
+                     
+                        formControlName="city"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- <div class="mb-3 row">
                     <label for="inputemail" class="col-sm-2 col-form-label"
                       >E-mail</label
                     >
@@ -231,7 +259,7 @@
                         formControlName="email"
                       />
                     </div>
-                  </div>
+                  </div> -->
                   <div class="mb-3 row">
                     <label for="inputtext" class="col-sm-2 col-form-label"
                       >PHONE NUMBER</label
@@ -242,7 +270,7 @@
                         class="form-control"
                         id="inputnumber"
                      
-                        formControlName="phoneNumber"
+                        formControlName="PhoneNumber"
                       />
                     </div>
                   </div>
@@ -445,7 +473,7 @@
             </section>
           </div>
           <div *ngSwitchCase="'match3'" class="p-3">
-            <app-alltransactions></app-alltransactions>
+            <!-- <app-alltransactions></app-alltransactions> -->
           </div>
 
           <div *ngSwitchCase="'match4'" class="p-3">

@@ -86,8 +86,16 @@ export class ArtisanprofileComponent implements OnInit {
       email: [''],
       location: [''],
       service: [''],
-      phoneNumber: [''],
+      PhoneNumber: [''],
       address: [''],
+
+      // "userId": 0,
+     
+
+  
+      state: [''],
+      city: [''],
+      
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
@@ -105,11 +113,12 @@ export class ArtisanprofileComponent implements OnInit {
     if (this.isEditMode) {
       this.formControls['firstName'].enable();
       this.formControls['lastName'].enable();
-      this.formControls['phoneNumber'].enable();
+      this.formControls['PhoneNumber'].enable();
       this.formControls['address'].enable();
       this.formControls['service'].enable();
       this.formControls['location'].enable();
-      this.formControls['email'].enable();
+      this.formControls['state'].enable();
+      this.formControls['city'].enable();
 
       this.updateForm.controls['firstName'].setValue(
         this.api.loggedinUser.userName
@@ -119,8 +128,8 @@ export class ArtisanprofileComponent implements OnInit {
       );
       this.updateForm.controls['email'].setValue(this.api.loggedinUser.email);
       // this.updateForm.controls['email'].setValue(data.email);
-      this.updateForm.controls['mobilenumber'].setValue(
-        this.api.loggedinUser.mobilenumber
+      this.updateForm.controls['PhoneNumber'].setValue(
+        this.api.loggedinUser.PhoneNumber
       );
   
   
@@ -240,10 +249,17 @@ export class ArtisanprofileComponent implements OnInit {
   updateArtisanDetails() {
     this.userProfileModelObj.firstName = this.updateForm.value.firstName;
     this.userProfileModelObj.lastName = this.updateForm.value.lastName;
-    this.userProfileModelObj.email = this.updateForm.value.email;
-    this.userProfileModelObj.mobilenumber = this.updateForm.value.mobilenumber;
+    // this.userProfileModelObj.email = this.updateForm.value.email;
+    this.userProfileModelObj.PhoneNumber = this.updateForm.value.PhoneNumber;
+    this.userProfileModelObj.address = this.updateForm.value.address;
+    this.userProfileModelObj.state = this.updateForm.value.state;
+    this.userProfileModelObj.city = this.updateForm.value.city;
+    this.userProfileModelObj.service = this.updateForm.value.service;
 
-    this.api.updateArisan2(this.userProfileModelObj).subscribe((res: any) => {
+   
+    
+
+    this.api.artisanUpdate(this.userProfileModelObj).subscribe((res: any) => {
       console.log(res);
         alert('employee updated sucessfully');
         

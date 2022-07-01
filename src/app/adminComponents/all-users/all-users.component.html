@@ -1,0 +1,28 @@
+<div class="h2 text-primary">SUMMARY OF USERS</div>
+<div id="no-tables" >
+    <div>
+       <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Email Adress</th>
+              <th scope="col">Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Number</th>
+            
+            
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of userData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+            <tr class="align-center justify-content-center">
+              <td data-title="Email Adress" scope="row">{{data.email}}</td>
+              <td data-title="Name">{{data.title}}</td>
+              <td data-title="Location">{{data.title}}</td>
+              <td data-title="Number">{{data.title}}</td>
+           
+            </tr>
+         
+          
+          </tbody>
+        </table>
+    </div>
+  </div>

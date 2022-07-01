@@ -59,11 +59,11 @@ import { UserprofileComponent } from './components/userprofile/userprofile.compo
 import { environment } from '../environments/environment';
 import { ArtisanprofileComponent } from './components/artisanprofile/artisanprofile.component';
 
-import { AdminpageComponent } from './components/adminpage/adminpage.component';
+import { AdminpageComponent } from './adminComponents/adminpage/adminpage.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
-import { AllartisanComponent } from './components/allartisan/allartisan.component';
-import { AlltransactionsComponent } from './components/alltransactions/alltransactions.component';
+// import { AllartisanComponent } from './adminComponents/allartisan/allartisan.component';
+// import { AlltransactionsComponent } from './adminComponents/alltransactions/alltransactions.component';
 import { ArtisansdetailsComponent } from './components/artisansdetails/artisansdetails.component';
 import { SignuprouteComponent } from './components/signuproute/signuproute.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
@@ -76,8 +76,26 @@ import { RoleGuard } from './shared/role.guard';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
-import { ArtisanbyidComponent } from './components/artisanbyid/artisanbyid.component';
-import { ServicecategoryComponent } from './components/servicecategory/servicecategory.component';
+import { ArtisanbyidComponent } from './adminComponents/artisanbyid/artisanbyid.component';
+import { ServicecategoryComponent } from './adminComponents/servicecategory/servicecategory.component';
+import { NavbarComponent } from './adminComponents/navbar/navbar.component';
+import { MainComponent } from './adminComponents/main/main.component';
+import { BodyComponent } from './adminComponents/body/body.component';
+import { AdminaddartisanComponent } from './adminComponents/adminaddartisan/adminaddartisan.component';
+import { AlltransactionsComponent } from './adminComponents/alltransactions/alltransactions.component';
+import { AllartisanComponent } from './components/allartisan/allartisan.component';
+import { AllUsersComponent } from './adminComponents/all-users/all-users.component';
+import { AdminAllArtisansComponent } from './adminComponents/admin-all-artisans/admin-all-artisans.component';
+import { AdminloginComponent } from './components/adminlogin/adminlogin.component';
+
+import { MatNativeDateModule } from '@angular/material/core';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+
+ 
+// import { MainRoutingModule } from './adminComponents/main-routing.module';
+
 
 
 
@@ -114,7 +132,7 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
     PagenotfoundComponent,
     ForbiddenComponent,
     AllartisanComponent,
-    AlltransactionsComponent,
+    // AlltransactionsComponent,
     ArtisansdetailsComponent,
     SignuprouteComponent,
     ResetpasswordComponent,
@@ -123,6 +141,13 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
     SortPipe,
     ArtisanbyidComponent,
     ServicecategoryComponent,
+    NavbarComponent,
+    MainComponent,
+    BodyComponent,
+    AdminaddartisanComponent,
+    AllUsersComponent,
+    AdminAllArtisansComponent,
+    AdminloginComponent,
   
   ],
   imports: [
@@ -131,7 +156,7 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    CarouselModule,
+    // CarouselModule,
     NgbModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -146,6 +171,16 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
     MatProgressSpinnerModule,
     MatMenuModule,
     NgxPaginationModule,
+  
+    // MainRoutingModule,
+  
+    
+    MatDatepickerModule,
+    MatNativeDateModule,
+    
+  
+  
+   
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
@@ -182,18 +217,33 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
         { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
         { path: 'pagenotfound', component: PagenotfoundComponent },
-        { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard]  },
+        { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard],  },
         { path: 'forbidden', component: ForbiddenComponent },
+        { path: 'main', component: MainComponent,
+          children: [
+            { path: 'main', component: AdminpageComponent, },
+            { path: '', component: AdminpageComponent, },
+          { path: 'adminAllArtisans', component: AdminAllArtisansComponent,  },
+          { path: 'adminAllUsers', component: AllUsersComponent ,},
+          { path: 'servicecategory', component: ServicecategoryComponent ,},
+          { path: 'allUsers', component: AllUsersComponent ,},
+          { path: 'allUsers', component: AllUsersComponent ,},
+          { path: 'alltransactions', component: AlltransactionsComponent },
+          { path: 'artisanbyid', component: ArtisanbyidComponent },
+      ] },
         {
           path: 'available artisan',
           component: AllartisanComponent,
           canActivate:[AuthGuard],
         },
-        { path: 'alltransactions', component: AlltransactionsComponent },
+       
         { path: 'confirmemail', component: EmailComponent },
         { path: 'checkemail', component: SignuprouteComponent },
         { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'invoice', component: InvoiceComponent },
+        { path: 'adminlogin', component: AdminloginComponent },
+        
+        // { path: 'adminAllArtisans', component: AdminAllArtisansComponent,  },
 
        
       ],

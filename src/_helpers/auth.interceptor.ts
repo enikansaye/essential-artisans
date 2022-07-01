@@ -43,6 +43,10 @@ export class AuthInterceptor implements HttpInterceptor {
     let api = this.inject.get(ApiService);
     let authreq = request;
     authreq = this.AddTokenheader(request, api.getUserToken());
+
+
+
+
     return next.handle(authreq).pipe(
       catchError(errordata => {
         if (errordata.status === 401) {
@@ -76,12 +80,14 @@ export class AuthInterceptor implements HttpInterceptor {
     return api.GenerateRefreshToken().pipe(
       switchMap((data: any) => {
         api.SaveTokens(data);
+        console.log(data);
+        
         return next.handle(this.AddTokenheader(request,data.jwtToken))
       }),
-      catchError(errodata=>{
+      catchError(errordata=>{
         api.Logout();
         // return throwError(errodata)
-        const err = new Error('test'); 
+        const err = new Error(errordata); 
         return throwError(() => err);
       })
     );

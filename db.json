@@ -1,9 +1,16 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "adez",
+      "id": 4
+    },
+    {
+      "name": "adez",
+      "id": 5
+    },
+    {
+      "name": "hair dressing",
+      "id": 6
     }
   ],
   "signupUser": [

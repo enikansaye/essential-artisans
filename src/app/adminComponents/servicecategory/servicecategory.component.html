@@ -1,0 +1,161 @@
+<div>
+  <div class="w-100  mt-3">
+   
+    <button class="btn btn-lg btn-outline-primary" (click)="clickAddService()" (click)="open(content)">Add New Service</button>
+  </div>
+
+  
+  <table class="table table-striped caption-top mt-2">
+    <caption class="text h2 mb-3">
+      Service Categories
+    </caption>
+  
+    <thead>
+  
+    </thead>
+    <tbody *ngFor="let row of serviceData">
+      <tr>
+        <td></td>
+       
+        <td>{{ row.name }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <!-- <td>{{row.id}}</td> -->
+        <td>
+          <button
+            (click)="onEdit(row)"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            class="btn btn-success me-2"
+          >
+            Update
+          </button>
+  
+          <button (click)="deleteServiceData(row)" class="btn btn-danger">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+    
+ 
+  
+</div>
+<!-- modal form section -->
+<div
+class="modal fade"
+data-backdrop="false"
+id="exampleModal"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="false"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">service Details</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+  
+ <!-- modal form -->
+      <form [formGroup]="formValue">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >First Name</label
+          >
+          <input
+            formControlName="name"
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        id="cancel"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+      >
+        Close
+      </button>
+      <button
+        *ngIf="showAddService"
+        type="button"
+        (click)="postService()"
+        class="btn btn-primary"
+      >
+        Add service
+      </button>
+      <button
+        *ngIf="showUpdate"
+        type="button"
+        (click)="updateServiceDetails()"
+        class="btn btn-primary"
+      >
+        Update
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formValue">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label"
+          >First Name</label
+        >
+        <input
+          formControlName="name"
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">close</button>
+      <button
+        *ngIf="showAddService"
+        type="button"
+        (click)="postService()"
+        class="btn btn-primary"
+        id="#cancel"
+      >
+        Add service
+      </button>
+      <button
+        *ngIf="showUpdate"
+        type="button"
+        (click)="updateServiceDetails()"
+        class="btn btn-primary"
+        
+      >
+        Update
+      </button>
+   
+  </div>
+</ng-template>

@@ -1,12 +1,13 @@
 import {
   HttpClient,
+  HttpErrorResponse,
   HttpEvent,
   HttpHeaders,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { UserModel } from '../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AllurlService } from './allurl.service';
@@ -49,6 +50,8 @@ export class ApiService implements OnInit {
   public forgetpasswordUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
     public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
+    public locationUrl : string = 'https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location';
+    public allLocationUrl : string = 'https://lyticalartisanapi.azurewebsites.net/api/App/locations';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -92,15 +95,16 @@ export class ApiService implements OnInit {
     return this.http.post<any>(this.url.signupArtisan, data, httpOptions);
   }
 // refresh token
-  refreshToken(token: string) {
-    return this.http.post(
-      this.refreshTokenUrl ,
-      {
-        refreshToken: token,
-      },
-      httpOptions
-    );
-  }
+  // refreshToken(token: string) {
+  //   return this.http.post(
+  //     this.refreshTokenUrl ,
+  //     {
+  //       refreshToken: token,
+  //       // refreshToken: token,
+  //     },
+  //     httpOptions
+  //   );
+  // }
  
   // login user
   loginUser(usercard: any) {
@@ -117,7 +121,7 @@ export class ApiService implements OnInit {
       return localStorage.getItem('accesstoken');
   }
   getRefresToken() {
-    console.log('hello');
+    console.log('hello hope');
     return localStorage.getItem('accessToken') || '';
   }
 
@@ -158,6 +162,8 @@ export class ApiService implements OnInit {
   // }
 
   userUpdate(userInfo: any) {
+    console.log(userInfo);
+    
     return this.http.put(this.url.updateUser, userInfo);
   }
   artisanUpdate(ArtisanInfo: any) {
@@ -228,6 +234,21 @@ export class ApiService implements OnInit {
 
   
   }
+
+  uploadOrderIssue(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+ formData.append('file', file);
+ 
+    const req = new HttpRequest('POST', this.url.uploadService, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+  
+    
+    return this.http.request(req);
+
+  
+  }
   updateUser(userInfo: any, ){
     return this.http.put(this.updateArtisan , userInfo,  httpOptions);
     // public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
@@ -255,20 +276,27 @@ export class ApiService implements OnInit {
   forgetPassword(data: any) {
     return this.http.post(this.forgetpasswordUrl, data);
   }
-
+ 
   // location selection api
+
+
+
   getAllStateData() {
-    return this.http
-      .get<any>('http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas')
-      .pipe(
-        map((res: any) => {
-          return res;
-        })
-      );
+    return this.http.get(this.allLocationUrl);
+    // return this.http
+    //   .get<any>(this.allLocationUrl)
+
+    //   .pipe(
+    //     map((res: any) => {
+    //       console.log(res);
+          
+    //       return res;
+    //     })
+    //   );
   }
 
   getUser() {
-    return this.http.get<any>(this.userUrl).pipe(
+    return this.http.get<any>(this.url.allUsers).pipe(
       map((res: any) => {
         return res;
       })
@@ -276,7 +304,7 @@ export class ApiService implements OnInit {
   }
 
   getArtisan() {
-    return this.http.get<any>('http://localhost:3000/posts').pipe(
+    return this.http.get<any>(this.url.allArtisans).pipe(
       map((res: any) => {
         return res;
       })
@@ -286,8 +314,8 @@ export class ApiService implements OnInit {
 
 
   //  create service
-  createService(id: number) {
-    return this.http.post<any>(this.url.createService, + id).pipe();
+  createService(data: any, id:number) {
+    return this.http.post<any>(this.url.createService +id, data).pipe();
   }
   // fake api
   createService2(data:any, id:number) {
@@ -321,14 +349,83 @@ export class ApiService implements OnInit {
   //     })
   //   );
   // }
-  updateService(userInfo: any, userId: string){
-    return this.http.put(this.url.updateService +userId, userInfo);
-}
+//   updateService(userInfo: any, userId: string){
+//     return this.http.put(this.url.updateService +userId, userInfo);
+// }
 
 // checking with refresh token
 Logout() {
   alert('Your session expired, kindly login')
   localStorage.clear();
   this.router.navigateByUrl('signin');
+}
+
+
+
+
+// fake api for service categories
+// postService(data: any) {
+//   return this.http.post<any>('http://localhost:3000/posts', data).pipe(
+//     map((res: any) => {
+//       return res;
+//     })
+//   );
+// }
+
+// getService() {
+//   return this.http.get<any>('http://localhost:3000/posts').pipe(
+//     map((res: any) => {
+//       return res;
+//     })
+//   );
+// }
+// deleteService(id:number) {
+//   return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
+//     map((res: any) => {
+//       return res;
+//     })
+//   );
+// }
+
+updateService(data:any, id:number) {
+  return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+}
+
+
+
+
+getCountries() {
+  return this.http.get(this.allLocationUrl).pipe(
+    catchError(this.handleError)
+  );
+}
+
+getStates(countryId: number) {
+  return this.http.get(this.allLocationUrl +name).pipe(
+    catchError(this.handleError)
+  );
+}
+
+getCities() {
+  return this.http.get(this.allLocationUrl).pipe(
+    catchError(this.handleError)
+  );
+}
+
+private handleError(error: HttpErrorResponse) {
+  if (error.error instanceof ErrorEvent) {
+    // A client-side or network error occurred. Handle it accordingly.
+    console.error('An error occurred:', error.error.message);
+  } else {
+    // The backend returned an unsuccessful response code.
+    // The response body may contain clues as to what went wrong,
+    console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+  }
+  // return an observable with a user-facing error message
+  return throwError('Something bad happened. Please try again later.');
 }
 }

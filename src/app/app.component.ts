@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public api: ApiService,
-    private router: Router,
+    public router: Router,
     public loader: LoaderService
     
   ) {}

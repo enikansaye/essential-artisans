@@ -19,10 +19,20 @@ export class RegisterComponent implements OnInit {
   signupForm!: FormGroup;
   password?: string;
   hide = true;
-  statelga: any;
+
+  locationData: any;
   // form :any
 
+  countries: any=[];
+  selectedCountry:any={
+    id:0,
+    name:''
+  }
+  // states: any;
+  cities:any=[];
 
+  state:any=[];
+  city:any=[]
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,29 +43,54 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+   
+      
     this.showAll();
+    this.onSelect(this.selectedCountry.id)
 
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
-      phone: [
-        '',
-        Validators.required,
-      
-      ],
+      phone: ['', Validators.required],
       password: ['', Validators.required],
-      location: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
       address: ['', Validators.required],
     });
+
+    this.api.getCountries().subscribe((data) => (this.countries = data));
   }
-// show all location within lagos
-  showAll() {
-    this.api.getAllStateData().subscribe(
-      (data: any) => {
-      this.statelga = data;
-      console.log(this.statelga)
+
+ 
+
+  showAll(){
+     this.api.getAllStateData().subscribe((res: any) => {
+      console.log(res);
+      this.countries =res.name
+      console.log(this.countries);
+      
+     
     });
+   
+  }
+
+  onSelect(country_id:any){
+
+    this.api.getAllStateData().subscribe((res: any) => {
+      // console.log(res[('')].name);
+    //  this.cities = res
+      this.cities =res['cities'].filter(
+        (res:any)=>res.country_id ==country_id.value
+      )
+      console.log(this.cities);
+      
+     
+    });
+
+    
+  
+
   }
 
   onSubmit() {
@@ -63,9 +98,7 @@ export class RegisterComponent implements OnInit {
 
     const registerObserver = {
       next: (res: any) => {
-    
-      
-      this.router.navigate(['/checkemail']);
+        this.router.navigate(['/checkemail']);
       },
       error: (err: any) => {
         console.log(err);
@@ -75,6 +108,4 @@ export class RegisterComponent implements OnInit {
 
     this.api.registerUser(this.signupForm.value).subscribe(registerObserver);
   }
-
-  
 }

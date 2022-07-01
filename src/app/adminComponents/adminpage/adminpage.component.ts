@@ -33,11 +33,11 @@ export class AdminpageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllUser();
-    this.getAllArtisan();
+    // this.getAllUser();
+    // this.getAllArtisan();
  
 
-    this.getAllUser()
+    // this.getAllUser()
     // ngx chart
     const xAxisData = [];
     const data1 = [];
@@ -167,25 +167,25 @@ export class AdminpageComponent implements OnInit {
 //   });
 // }
 
-getAllUser() {
-  this.adminApi.getUser().subscribe((res: any) => {
-    this.userData = res;
+// getAllUser() {
+//   this.adminApi.getUser().subscribe((res: any) => {
+//     this.userData = res;
 
-    console.log(this.userData)
-    this.totalRecord=res.length;
-    console.log(this.totalRecord);
+//     console.log(this.userData)
+//     this.totalRecord=res.length;
+//     console.log(this.totalRecord);
     
   
-  });
-}
-getAllArtisan() {
-  this.adminApi.getArtisan().subscribe((res: any) => {
-    this.artisanData = res.results;
-    console.log(this.artisanData)
-    this.totalRecord=res.length;
-    console.log(this.totalRecord);
-  });
-}
+//   });
+// }
+// getAllArtisan() {
+//   this.adminApi.getArtisan().subscribe((res: any) => {
+//     this.artisanData = res.results;
+//     console.log(this.artisanData)
+//     this.totalRecord=res.length;
+//     console.log(this.totalRecord);
+//   });
+// }
 getAllOthers() {
   this.adminApi.getOthers().subscribe((res: any) => {
     this.othersData = res;
@@ -193,11 +193,11 @@ getAllOthers() {
   });
 }
 
-deleteArtisan(id:number){
-  this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
-    alert('artisan deleted')
-   this.getAllArtisan();
-  })
-}
+// deleteArtisan(id:number){
+//   this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
+//     alert('artisan deleted')
+//    this.getAllArtisan();
+//   })
+// }
 
 }

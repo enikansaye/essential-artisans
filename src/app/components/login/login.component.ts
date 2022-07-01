@@ -42,8 +42,9 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.signinForm.valid) {
       this.api.loginUser(this.signinForm.value).subscribe((result) => {
-        if (result != null) {
-          this.responsedata = result;
+        this.responsedata = result;
+        if (this.responsedata != null) {
+          // this.responsedata = result;
           localStorage.setItem(
             'accesstoken',
             this.responsedata.data.accessToken

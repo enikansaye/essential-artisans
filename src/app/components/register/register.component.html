@@ -38,9 +38,20 @@
         <label for="exampleInputPassword1" class="form-label"
         >Select Location</label
       >
-        <select class="form-select" aria-label="Default select example" formControlName="location" >
-          <option selected> select location</option>
-          <option  *ngFor="let statelga of statelga" >{{statelga}}</option>
+        <select class="form-select" aria-label="Default select example" formControlName="state" [(ngModel)]="selectedCountry.id" (change)="onSelect($event.target)" >
+          <option value="0"> select location</option>
+          <option  *ngFor="let country of countries" [value]="country.id" >{{country.name}}</option>
+        
+        </select>
+       </div>
+       <div class="mb-3" >
+        
+        <label for="exampleInputPassword1" class="form-label"
+        >Select Location</label
+      >
+        <select class="form-select" aria-label="Default select example" formControlName="city" >
+          <option value="0"> select location</option>
+          <option  *ngFor="let city of cities" [value]="city.id" >{{city.cities}}</option>
         
         </select>
        </div>
@@ -101,6 +112,11 @@
          password is <strong>required</strong>
         </mat-error>
       </mat-form-field>  
+      
+
+
+
+      
       <!-- <div>
         <input type="password" id="mypassword" formControlName="password" name="password" >
       </div> -->

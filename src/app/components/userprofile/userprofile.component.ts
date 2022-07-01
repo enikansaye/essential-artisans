@@ -64,7 +64,14 @@ export class UserprofileComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       email: [''],
-      mobilenumber: [''],
+      PhoneNumber: [''],
+     address: [''],
+     state: [''],
+     city: [''],
+    
+     
+  
+     
     });
 
     this.showAll();
@@ -74,7 +81,7 @@ export class UserprofileComponent implements OnInit {
       propertyAddress: [''],
       inspectionDate: [''],
       inspectionTime: [''],
-      mobilenumber: [''],
+  PhoneNumber: [''],
       AltNumber: [''],
       issue: [''],
     });
@@ -135,10 +142,12 @@ export class UserprofileComponent implements OnInit {
     this.formValue.controls['name'].setValue(row.name);
     this.formValue.controls['propertyAddress'].setValue(row.propertyAddress);
     this.formValue.controls['email'].setValue(row.email);
-    this.formValue.controls['mobilenumber'].setValue(row.mobilenumber);
+    this.formValue.controls['phoneNumber'].setValue(row.phoneNumber);
     this.formValue.controls['AltNumber'].setValue(row.AltNumber);
     this.formValue.controls['inspectionDate'].setValue(row.inspectionDate);
     this.formValue.controls['issue'].setValue(row.issue);
+    this.formValue.controls['address'].setValue(row.issue);
+    this.formValue.controls['city'].setValue(row.issue);
 
  
   }
@@ -193,8 +202,8 @@ export class UserprofileComponent implements OnInit {
     );
     this.formValue.controls['email'].setValue(this.api.loggedinUser.email);
     // this.formValue.controls['email'].setValue(data.email);
-    this.formValue.controls['mobilenumber'].setValue(
-      this.api.loggedinUser.mobilenumber
+    this.formValue.controls['PhoneNumber'].setValue(
+      this.api.loggedinUser.phoneNumber
     );
 
     this.showAddEmployee = false;
@@ -205,7 +214,10 @@ export class UserprofileComponent implements OnInit {
     this.userprofileModelObj.firstName = this.formValue.value.firstName;
     this.userprofileModelObj.lastName = this.formValue.value.lastName;
     this.userprofileModelObj.email = this.formValue.value.email;
-    this.userprofileModelObj.mobilenumber = this.formValue.value.mobilenumber;
+    this.userprofileModelObj.PhoneNumber = this.formValue.value.PhoneNumber;
+    this.userprofileModelObj.address = this.formValue.value.address;
+    this.userprofileModelObj.city = this.formValue.value.city;
+    this.userprofileModelObj.state = this.formValue.value.state;
 
     this.api.userUpdate(this.userprofileModelObj).subscribe((res: any) => {
       console.log(res);
