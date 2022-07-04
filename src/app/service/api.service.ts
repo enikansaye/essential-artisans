@@ -49,7 +49,7 @@ export class ApiService implements OnInit {
   public forgetpasswordUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
     public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
-    public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan'
+    public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/'
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -110,7 +110,7 @@ export class ApiService implements OnInit {
       );
   }
 getUserinfo(id:string){
-  return this.http.get(this.artisaninfo +id)
+  // return this.http.get(this.artisaninfo +id)
 
 }
 getArtisaninfo(id:string){

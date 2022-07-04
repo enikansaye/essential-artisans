@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
   }
   onClick(row:any){
     
+console.log(row);
 
     this.userProfileModelObj.id = row.id;
     console.log(this.userProfileModelObj.id);
