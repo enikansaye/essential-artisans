@@ -2,8 +2,7 @@
   "posts": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "carpentry"
     }
   ],
   "signupUser": [

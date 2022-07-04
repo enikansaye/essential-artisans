@@ -2,31 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
-  selector: 'app-artisanbyid',
-  templateUrl: './artisanbyid.component.html',
-  styleUrls: ['./artisanbyid.component.css']
+  selector: 'app-adminartisanbyid',
+  templateUrl: './adminartisanbyid.component.html',
+  styleUrls: ['./adminartisanbyid.component.css']
 })
-export class ArtisanbyidComponent implements OnInit {
-
+export class AdminartisanbyidComponent implements OnInit {
   accept: boolean = false;
-
-  process: boolean = false
-
-  service = 'completed';  
   othersData: any;
   totalRecord: any;
+  service = 'completed';  
   page:number=1
   artisanData: any;
-  constructor(private adminApi :AdminService) { }
+
+  constructor(private adminApi :AdminService ) { }
 
   ngOnInit(): void {
+
     // this.getArtisanById()
   }
   clickEvent(){
     this.accept = !this.accept
   }
-  getAllOthers(id:any) {
-    this.adminApi.getOthersById(id).subscribe((res: any) => {
+  getAllOthers() {
+    this.adminApi.getOthers().subscribe((res: any) => {
       this.othersData = res;
       console.log(this.othersData)
       this.totalRecord=res.length;
@@ -39,5 +37,4 @@ export class ArtisanbyidComponent implements OnInit {
       this.artisanData = res;
     })
   }
-
 }

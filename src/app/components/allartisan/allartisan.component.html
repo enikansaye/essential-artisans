@@ -46,15 +46,16 @@
             <div class="card card-profile">
               <div class="card-avatar">
                 <a>
-                  <img class="img" src="{{ data.picture.thumbnail }}" />
+                  <img class="img" src="data:image/png;base64,{{ data.profileImage}}" />
                 </a>
               </div>
 
               <div class="table">
                 <h4 class="card-caption">
-                  {{ data.name.first }} {{ data.name.last }}
+                  {{ data.name }} 
+                 
                 </h4>
-                <p class="category text-muted h6 pt-3">Carpenter</p>
+                <p class="category text-muted h6 pt-3">{{ data.email }}</p>
                 <p class="card-description text-center">
                   15 years working experience.
                 </p>

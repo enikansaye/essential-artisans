@@ -134,7 +134,7 @@ createnewService(row:any) {
   }
   getAllArtisan() {
       this.adminApi.getArtisan().subscribe((res: any) => {
-        this.artisanData = res.results;
+        this.artisanData = res;
         console.log(res);
         this.totalRecord=res.length;
         console.log(this.totalRecord);

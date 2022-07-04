@@ -78,6 +78,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { ArtisanbyidComponent } from './components/artisanbyid/artisanbyid.component';
 import { ServicecategoryComponent } from './components/servicecategory/servicecategory.component';
+import { AdminartisanbyidComponent } from './components/adminartisanbyid/adminartisanbyid.component';
 
 
 
@@ -123,6 +124,7 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
     SortPipe,
     ArtisanbyidComponent,
     ServicecategoryComponent,
+    AdminartisanbyidComponent,
   
   ],
   imports: [
@@ -194,6 +196,7 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
         { path: 'checkemail', component: SignuprouteComponent },
         { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'invoice', component: InvoiceComponent },
+        { path: 'artisanbyid', component: AdminartisanbyidComponent },
 
        
       ],

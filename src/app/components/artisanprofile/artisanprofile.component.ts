@@ -59,6 +59,7 @@ export class ArtisanprofileComponent implements OnInit {
   hello: any;
   heeo: any;
   statelga: any;
+  artisanData: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -91,7 +92,19 @@ export class ArtisanprofileComponent implements OnInit {
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
+
+    this.getArtisan()
   }
+
+  getArtisan(){
+      this.api.getArtisaninfo( this.userProfileModelObj.id).subscribe((res: any) => {
+        console.log(res);
+        
+        this.artisanData = res;
+      });
+    }
+
+
   // sellection of location
   showAll() {
     this.api.getAllStateData().subscribe((data: any) => {

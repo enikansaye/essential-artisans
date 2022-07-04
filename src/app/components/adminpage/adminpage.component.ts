@@ -180,7 +180,7 @@ getAllUser() {
 }
 getAllArtisan() {
   this.adminApi.getArtisan().subscribe((res: any) => {
-    this.artisanData = res.results;
+    this.artisanData = res;
     console.log(this.artisanData)
     this.totalRecord=res.length;
     console.log(this.totalRecord);
@@ -197,6 +197,12 @@ deleteArtisan(id:number){
   this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
     alert('artisan deleted')
    this.getAllArtisan();
+  })
+}
+
+getArtisanById(id:string){
+  this.adminApi.getArtisanbyid(id).subscribe((res:any)=>{
+    this.artisanData = res;
   })
 }
 

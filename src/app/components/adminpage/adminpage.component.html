@@ -695,15 +695,15 @@
                           >
                             <img
                             
-                              src="{{data.picture.thumbnail}}"
+                              src="{{data.ProfileImage}}"
                               class="rounded-circle img-fluid  "
                             />
                           </div>
                           <div class="d-flex justify-content-between w-100">
                             <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
                           <div>
-                           <h4> {{data.name.first}} {{data.name.last}}</h4>
-                           <span>{{data.phone}}</span>
+                           <h4> {{data.email}}</h4>
+                           <span>{{data.email}}</span>
 
                           </div>
                           <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location.city}}</div>
@@ -746,15 +746,15 @@
                           >
                             <img
                             
-                              src="{{data.picture.thumbnail}}"
+                              src="{{data.ProfileImage}}"
                               class="rounded-circle img-fluid  "
                             />
                           </div>
                           <div class="d-flex justify-content-between w-100">
                             <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
                           <div>
-                           <h4> {{data.name.first}} {{data.name.last}}</h4>
-                           <span>{{data.phone}}</span>
+                           <h4> {{data.email}}</h4>
+                           <span>{{data.email}}</span>
 
                           </div>
                           <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location.city}}</div>
@@ -860,10 +860,10 @@
                 
                 </tr>
               </thead>
-              <tbody *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
-                <tr class="align-center justify-content-center">
-                  <td data-title="Email Adress" scope="row">{{data.email}}</td>
-                  <td data-title="Name">{{data.name.title}}  {{data.name.last }}  {{data.name.first}}<td>
+              <tbody *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}" onclick="getArtisanById()">
+                <tr class="align-center justify-content-center" routerLink="/artisanbyid">
+                  <td data-title="Email Address" scope="row">{{data.email}}</td>
+                  <td data-title="Name">{{data.email}}  <td>
                   <!-- <td data-title="Location">{{data.location.state}}, {{data.location.country}}</td> -->
                   <!-- <td data-title="Number">{{data.phone}}</td> -->
                   <td data-title="Status">Suspended</td>
@@ -908,7 +908,7 @@
               </thead>
               <tbody *ngFor="let data of userData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
                 <tr class="align-center justify-content-center">
-                  <td data-title="Email Adress" scope="row">{{data.title}}</td>
+                  <td data-title="Email Adress" scope="row">{{data.email}}</td>
                   <td data-title="Name">{{data.title}}</td>
                   <td data-title="Location">{{data.title}}</td>
                   <td data-title="Number">{{data.title}}</td>

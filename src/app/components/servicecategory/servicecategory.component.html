@@ -1,4 +1,9 @@
-<table class="table table-striped">
+
+  <div class="m-3">
+    <button  type="button" (click)=" clickAddServiceCategory()" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Add service category</button>
+</div>
+
+<table class="table ">
     <thead>
       <tr>
         <!-- <th scope="col">#</th> -->
@@ -7,18 +12,17 @@
         <th scope="col-4">Handle</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngFor="let row of serviceData">
     
       
       <tr class="d-flex justify-content-between">
         <!-- <th scope="row">3</th> -->
-        <td colspan="2">Larry the Birdasdfghjkl;aertyuiopertyuiop</td>
-     
-            <td>
-                <button class="btn btn-info me-3" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Service </button>
-                <button class="btn btn-success me-3">Update Service </button>
-                <button class="btn btn-danger me-3">Delete Service </button>
-            </td>
+        <td colspan="2">{{row.name}}</td>
+        <td>
+          <button (click)="onEdit(row)" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success me-2">Update</button>
+
+  <button (click)="deleteServiceCategory(row)" class="btn btn-danger"> Delete</button>
+      </td>
         
       </tr>
     </tbody>
@@ -26,19 +30,32 @@
 <!-- Button trigger modal -->
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <!-- Modal -->
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">service category Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+
+            <!-- modal form -->
+            <form [formGroup]="formValue">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Service category Name</label>
+                  <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  
+                </div>
+        
+              </form>
+
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" id ="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button *ngIf="showAddService" type="button" (click)="postServiceCategory()" class="btn btn-primary">Add Category</button>
+          <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button>
         </div>
       </div>
     </div>

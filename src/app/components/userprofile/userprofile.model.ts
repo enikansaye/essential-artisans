@@ -1,5 +1,5 @@
 export class userProfileModel{
-    id: number = 0;
+    id: string = "";
     firstName: string ="";
     lastName: string ="";
     email: string ="";
