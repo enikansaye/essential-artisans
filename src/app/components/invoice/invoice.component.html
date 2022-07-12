@@ -74,9 +74,12 @@
                                                 [ngClass]="{'is-invalid': invoiceForm.submitted && ProductQty.invalid}"
                                                 [(ngModel)]="product.qty" #ProductQty="ngModel" required>
                                         </td>
-                                        <td>
+                                      <td>
+                                        <input type="nummber" name="total" [(ngModel)]="product.total" #ProductTotal="ngModel" value=" {{product.price * product.qty || ''}}">
+                                      </td>
+                                        <!-- <td>
                                             {{product.price * product.qty || ''}}
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -105,6 +108,8 @@
                     Invoice</button>
                     <button type="submit" class="btn btn-secondary btn-lg btn-block"
                     (click)="invoiceForm.valid ? downloadAsPDF() : ''" >upload</button>
+                    <button type="submit" class="btn btn-secondary btn-lg btn-block"
+                    (click)="invoiceForm.valid ? onSubmitData() : ''" >submit</button>
                     <button class="btn btn-primary" (click)="downloadAsPDF();">Export To PDF</button>
                 
             </div>

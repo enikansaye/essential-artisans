@@ -55,15 +55,23 @@ mat-sidenav {
   }
   .col1 {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border-left: 3px solid red;
+    /* border-left: 3px solid red; */
+    background-color: #48849a;
   }
   .col2 {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border-left: 3px solid yellow;
+    /* border-left: 3px solid yellow; */
+    background-color: #705ef1;
   }
   .col3 {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border-left: 3px solid #0dcaf0;
+    /* border-left: 3px solid #0dcaf0; */
+    background-color: #3e75a5;
+  }
+  .col4 {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    /* border-left: 3px solid #0dcaf0; */
+    background-color: #ee7c55;
   }
   .active {
     /* height: 50px;

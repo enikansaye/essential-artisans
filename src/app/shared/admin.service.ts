@@ -57,7 +57,7 @@ export class AdminService {
 
 
   postServiceCategory(data: any) {
-    return this.http.post<any>('http://localhost:3000/posts', data).pipe(
+    return this.http.post<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/create', data).pipe(
       map((res: any) => {
         return res;
       })
@@ -65,22 +65,39 @@ export class AdminService {
   }
 
   getServiceCategory() {
-    return this.http.get<any>('http://localhost:3000/posts').pipe(
+    return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/ServiceCategory/all').pipe(
       map((res: any) => {
         return res;
       })
     );
+  
   }
-  deleteServiceCategory(id:number) {
-    return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
+  deleteServiceCategory(name:string) {
+    return this.http.delete<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/delete/' + name).pipe(
       map((res: any) => {
         return res;
       })
     );
   }
 
-  updateServiceCategory(data:any, id:number) {
-    return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
+  updateServiceCategory(data:any, newName:string ) {
+    return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/update' +newName, data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getOrder(){
+    return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/orders').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  aproveOrderUrl(data:any,  ){
+    return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceOrder/approve', data).pipe(
       map((res: any) => {
         return res;
       })

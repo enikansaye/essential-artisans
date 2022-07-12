@@ -79,8 +79,8 @@ import { SortPipe } from './pipes/sort.pipe';
 import { ArtisanbyidComponent } from './components/artisanbyid/artisanbyid.component';
 import { ServicecategoryComponent } from './components/servicecategory/servicecategory.component';
 import { AdminartisanbyidComponent } from './components/adminartisanbyid/adminartisanbyid.component';
-
-
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -148,6 +148,14 @@ import { AdminartisanbyidComponent } from './components/adminartisanbyid/adminar
     MatProgressSpinnerModule,
     MatMenuModule,
     NgxPaginationModule,
+    NgxStarRatingModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 10000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+      }
+    ),
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),

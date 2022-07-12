@@ -8,6 +8,8 @@ import { ApiService } from 'src/app/service/api.service';
 import { UserModel } from 'src/app/shared/models/user.model';
 import * as alertify from 'alertifyjs';
 import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private alertService: AlertService,
+    private toastr: ToastrService
     
   ) {}
 
@@ -51,12 +54,14 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', JSON.stringify(this.responsedata.data));
           this.router.navigate(['/']);
           console.log(this.responsedata);
-
+          // this.toastr.success('Hello world!');
+          this.toastr.success('Welcome you are logged in')
           return this.responsedata;
+          
         } else {
           // console.log(this.error.checkerr);
           
-          alert('login failed');
+          this.toastr.error('something went wrong!', 'Toastr !');
         }
       });
     }

@@ -1,4 +1,6 @@
 export class servicecategoryModel{
-    id: number = 0;
+    id: string='';
     name: string ="";
+    oldName: string ="";
+    newName: string ="";
 }

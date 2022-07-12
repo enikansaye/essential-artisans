@@ -15,7 +15,9 @@ export class AllurlService {
  public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
  public deleteService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer​/ServiceOrder/delete';
  public uploadService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload';
- public createService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/create';
+ public createService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/create/';
  public updateService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/update';
+ 
  public createInvoice : string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/invoice/create';
+ 
 }

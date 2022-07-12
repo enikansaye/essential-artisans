@@ -41,13 +41,26 @@
         <div class="modal-body">
 
             <!-- modal form -->
-            <form [formGroup]="formValue">
-                <div class="mb-3">
+            <form [formGroup]="formValue"  (ngSubmit)="updateServiceCategory()">
+                <div class="mb-3" *ngIf="showAddService">
                   <label for="exampleInputEmail1" class="form-label">Service category Name</label>
-                  <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                  <!-- <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
                   
                 </div>
-        
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Service category Name</label>
+                  <input formControlName="oldName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                  <!-- <input formControloldName="oldName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                  
+                </div>
+                <div class="mb-3" *ngIf="showUpdate">
+                  <label for="exampleInputEmail1" class="form-label">Service category Name</label>
+                  <input formControlName="newName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                  <!-- <input formControlnewName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                  
+                </div>
+                <button *ngIf="showUpdate"    type="submit"  class="btn btn-primary">Update</button>
               </form>
 
 
@@ -55,8 +68,11 @@
         <div class="modal-footer">
           <button type="button" id ="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button *ngIf="showAddService" type="button" (click)="postServiceCategory()" class="btn btn-primary">Add Category</button>
-          <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button>
+          <button *ngIf="showUpdate"    type="submit"  class="btn btn-primary">Update</button>
+          <!-- <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button> -->
         </div>
       </div>
     </div>
   </div>
+
+  

@@ -500,11 +500,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12 justify-content-center">
               <!-- Card -->
               <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body col1  justify-content-center">
                   <div
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
@@ -512,6 +512,9 @@
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >Total Orders</span
                       >
+                      <i class="fa-solid fa-eye"></i>
+                      <i class="fa-duotone fa-eye"></i>
+
                     </div>
                     <div>
                       <span class="bi bi-shopping-bag fs-3 text-primary"></span>
@@ -535,11 +538,12 @@
               <!-- Card -->
               <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body col2" >
                   <div
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
                     <div>
+                      <i class="fa-solid fa-face-smile"></i>
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >Total Sales</span
                       >
@@ -560,11 +564,12 @@
               <!-- Card -->
               <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body col3">
                   <div
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
                     <div>
+                      <i class="fa-solid fa-heart"></i>
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >CLIENT/USERS</span
                       >
@@ -581,28 +586,29 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12 ">
               <!-- Card -->
-              <div class="card mb-4">
+              <div class="card mb-4 w-100">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body col4 rounded ">
                   <div
-                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                    class="d-flex flex-column align-items-center justify-content-center mb-3 lh-1"
                   >
-                    <div>
+                 
+                      <i class="fa-solid fa-users-viewfinder"></i>
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >Artisans</span
                       >
+                     
+                 
+                    <h2 class="fw-bold mb-1">1000</h2>
+                    <span class="text-success fw-semi-bold"
+                      ><i class="bi bi-trending-up me-1"></i>10% <i class="fa-solid fa-chart-line-up"></i></span
+                    ><i class="fa-solid fa-chart-line-up"></i>
+                    <span class="ms-1 fw-medium">Artisan</span>
+                    <i class="bi bi-graph-up-arrow"></i>
                     </div>
-                    <div>
-                      <span class="bi bi-user-check fs-3 text-primary"></span>
-                    </div>
-                  </div>
-                  <h2 class="fw-bold mb-1">1000</h2>
-                  <span class="text-success fw-semi-bold"
-                    ><i class="bi bi-trending-up me-1"></i>+10</span
-                  >
-                  <span class="ms-1 fw-medium">Artisan</span>
+                   
                 </div>
               </div>
             </div>
@@ -670,7 +676,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4 col3">
               <!-- Card -->
               <div class="card h-100">
                 <!-- Card header -->
@@ -684,7 +690,7 @@
                   
                 </div>
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body ">
                   <!-- List group -->
                   <ul class="list-group list-group-flush" *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 5, currentPage: page, totalItems: totalRecord}">
                     <li class="list-group-item px-0 pt-0">

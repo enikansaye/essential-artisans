@@ -49,13 +49,14 @@
             <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
           
               welcome <span class="text-primary" >   {{api.loggedinUser.email}} </span>
+              <!-- welcome <span class="text-primary" (click)="onEdit(api.loggedinUser)">   {{api.loggedinUser.id}} </span> -->
            
         
             </a>
           
             <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
-              <li><a class="dropdown-item" *ngIf="this.displayUser" routerLink="/userprofile" >My Profile</a></li>
-              <li><a class="dropdown-item" *ngIf="this.displayArtisan" routerLink="/artisanprofile" (click)="onClick(api.loggedinUser)">My Profile</a></li>
+              <li><a class="dropdown-item" *ngIf="this.displayUser" routerLink="/userprofile" (click)="onClick(api.loggedinUser.id)">My Profile</a></li>
+              <li><a class="dropdown-item" *ngIf="this.displayArtisan" routerLink="/artisanprofile" (click)="onClick(api.loggedinUser.id)">My Profile</a></li>
               <li><a class="dropdown-item" *ngIf="this.displayAdmin" routerLink="/admin">My Profile</a></li>
               <li><a class="dropdown-item" routerLink="">Edit</a></li>
               <li><a class="dropdown-item" (click)="logout()">Logout</a></li>

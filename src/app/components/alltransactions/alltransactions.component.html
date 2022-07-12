@@ -144,7 +144,7 @@
         <div [ngSwitch]="service">
           <!-- all transaction -->
           <div *ngSwitchCase="'completed'" id="no-tables" >
-            <table class="table">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">Order ID</th>
@@ -157,13 +157,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let data of othersData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr *ngFor="let data of AllOrderData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
                   <td data-title="Order ID" >{{data.id}}</td>
-                  <td data-title="Date">{{data.title}}</td>
-                  <td data-title="Location">{{data.title}}</td>
+                  <td data-title="Date">{{data.artisanEmail}}</td>
+                  <td data-title="Location">{{data.issue}}</td>
                   <td data-title="Amount">{{data.title}}</td>
                   <td data-title="Status">completed</td>
                   <td data-title="Artisan's Name">ope</td>
+                  <td data-title="Artisan's Name">
+                    <button class="btn btn-info"  (click)="aproveOrder(data)">Aprove</button>
+                  </td>
                 </tr>
               
               

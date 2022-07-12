@@ -27,6 +27,7 @@ export class AdminpageComponent implements OnInit {
   page:number=1
   artisanData: any;
   othersData: any;
+  AllOrderData: any;
   
 
   constructor(private observer: BreakpointObserver, private api: ApiService,  private adminApi: AdminService) {}
@@ -205,5 +206,8 @@ getArtisanById(id:string){
     this.artisanData = res;
   })
 }
+
+
+
 
 }

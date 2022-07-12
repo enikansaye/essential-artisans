@@ -20,6 +20,7 @@ export class ServicecategoryComponent implements OnInit {
 
     this.formValue = this.formBuilder.group({
       name: [''],
+    
     })  
 
     this.getAllServiceCategory();
@@ -71,10 +72,14 @@ export class ServicecategoryComponent implements OnInit {
   }
 
   deleteServiceCategory(row: any) {
-    this.adminApi.deleteServiceCategory(row.id).subscribe((res) => {
+    this.adminApi.deleteServiceCategory(row.name).subscribe((res) => {
+      console.log(res);
+      
       alert('service category deleted');
       this.getAllServiceCategory(); //this is to automatically refresh the page
     });
+    console.log(row);
+    
   }
 
   // to alto fill the form button after clicking on the edit button
@@ -82,21 +87,36 @@ export class ServicecategoryComponent implements OnInit {
     this.showAddService = false;
     this.showUpdate = true;
 
-    this.servicecategoryModelObj.id = row.id;
+    this.servicecategoryModelObj.name = row.name;
 
-    console.log(this.servicecategoryModelObj.id );
+    console.log(this.servicecategoryModelObj.name );
     
 
     this.formValue.controls['name'].setValue(row.name);
     
   }
+  
+  updateData(value: any) {
+    let body = {
+      name: value.name,
+      // age: value.age
+    }
+
+    this.adminApi
+    .updateServiceCategory(body,  this.servicecategoryModelObj.name)
+      .subscribe(response => {
+        console.log(response)
+      })
+  }
+
 
   updateServiceCategory() {
     this.servicecategoryModelObj.name = this.formValue.value.name;
-
+    
+console.log();
 
     this.adminApi
-      .updateServiceCategory(this.servicecategoryModelObj, this.servicecategoryModelObj.id)
+      .updateServiceCategory(this.servicecategoryModelObj, this.servicecategoryModelObj.name)
       .subscribe((res: any) => {
         console.log(res);
         alert('ServiceCategory updated sucessfully');
@@ -108,6 +128,7 @@ export class ServicecategoryComponent implements OnInit {
         this.getAllServiceCategory() //this is to refresh and get the resent data
       });
   }
+  
 
   clickAddServiceCategory(){
 this.formValue.reset();

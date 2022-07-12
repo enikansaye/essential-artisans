@@ -16,7 +16,7 @@
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
         <!-- <h4 class="mt-2 mt-md-4">{{useData.email}}</h4> -->
         <div *ngIf="api.loggedIn();" >
-          <h4 class="mt-2 mt-md-4">{{api.loggedinUser.email}} </h4>
+          <h4 class="mt-2 mt-md-4">{{userData.email}} </h4>
         
           <li></li>
       
@@ -165,6 +165,7 @@
           </section>
           <button *ngIf="showUpdate" type="submit"  class="btn btn-inline-primary">Update</button>
           </form>
+          
 
           <section class="p-2 mb-5 ps-md-5 butt">
             <div class="d-flex">
@@ -188,7 +189,7 @@
               </button>
             </div>
             <div class="collapse pt-4" id="collapseExample">
-              <div class="card card-body">
+              <!-- <div class="card card-body">
                 <h2>ChANGE PASSWORD</h2>
                 <div class="mb-3 row">
                   <label for="inputPassword" class="col-sm-2 col-form-label"
@@ -227,7 +228,29 @@
                   </div>
                 </div>
               </div>
-              <button class="btn btn-success mt-3">Update Changes</button>
+              <button class="btn btn-success mt-3">Update Changes</button> -->
+              <form [formGroup]="form" (ngSubmit)="submitRating()">
+               <div>
+                <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+                <div>Rating: {{form.value.rating}}</div>
+               </div>
+                <!-- <p>form is valid: {{ form.valid ? 'true' : 'false' }}</p> -->
+
+                <div class="mb-3 row">
+                  <label for="inputPassword" class=" col-form-label"
+                    >Comment</label
+                  >
+                  <div class="">
+                    <input
+                      type="textarea"
+                      class="form-control"
+                      id="inputText"
+                      formControlName="comment"
+                    />
+                  </div>
+                </div>
+                <button class="btn btn-danger" type="submit">submit</button>
+            </form>
             </div>
           </section>
           </div>
@@ -315,6 +338,10 @@
     </mat-sidenav-container>
   </div>
 </div>
+
+
+
+
 <div
   class="modal fade"
   id="exampleModal"

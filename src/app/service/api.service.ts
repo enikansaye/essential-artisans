@@ -50,6 +50,11 @@ export class ApiService implements OnInit {
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
     public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
     public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/'
+    public userinfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/'
+    public issueImage:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload'
+    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
+    public locationSearch: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location'
+    public rating: string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/Review/create/'
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -110,7 +115,7 @@ export class ApiService implements OnInit {
       );
   }
 getUserinfo(id:string){
-  // return this.http.get(this.artisaninfo +id)
+  return this.http.get(this.userinfo +id)
 
 }
 getArtisaninfo(id:string){
@@ -171,7 +176,7 @@ getArtisaninfo(id:string){
   }
   artisanUpdate(ArtisanInfo: any) {
   
-      return this.http.put(this.url.updateArtisan, ArtisanInfo,httpOptions);
+      return this.http.put(this.url.updateArtisan, ArtisanInfo);
   }
 
   // fakeapi
@@ -237,6 +242,23 @@ getArtisaninfo(id:string){
 
   
   }
+
+  uploadIssue(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+ formData.append('file', file);
+ 
+    const req = new HttpRequest('POST', this.issueImage, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+  
+  
+    
+    return this.http.request(req);
+
+  
+  }
+
   updateUser(userInfo: any, ){
     return this.http.put(this.updateArtisan , userInfo,  httpOptions);
     // public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
@@ -295,8 +317,8 @@ getArtisaninfo(id:string){
 
 
   //  create service
-  createService(id: number) {
-    return this.http.post<any>(this.url.createService, + id).pipe();
+  createService(data:any, ) {
+    return this.http.post<any>(this.url.createService , data).pipe();
   }
   // fake api
   createService2(data:any, id:number) {
@@ -339,5 +361,17 @@ Logout() {
   alert('Your session expired, kindly login')
   localStorage.clear();
   this.router.navigateByUrl('signin');
+}
+
+// location2
+getAll():any{
+  return this.http.get<any>(this.location2)
+}
+
+sortArtisanLocation():any{
+  return this.http.get<any>(this.locationSearch)
+}
+postRating(data:any, ) {
+  return this.http.post(this.rating ,data).pipe();
 }
 }
