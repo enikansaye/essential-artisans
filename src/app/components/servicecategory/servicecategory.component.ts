@@ -16,10 +16,19 @@ export class ServicecategoryComponent implements OnInit {
 
   constructor( private adminApi:AdminService, private formBuilder: FormBuilder) { }
   formValue !: FormGroup;
+  updateFormValue !: FormGroup;
   ngOnInit(): void {
 
     this.formValue = this.formBuilder.group({
       name: [''],
+      
+    
+    })  
+    
+    this.updateFormValue = this.formBuilder.group({
+     
+      oldName:[''],
+      newName:['']
     
     })  
 
@@ -47,22 +56,6 @@ export class ServicecategoryComponent implements OnInit {
     );
      }
     
-    
-  //   this.adminApi.postServiceCategory(this.servicecategoryModelObj).subscribe(
-  //   next:  (res: any) => {
-  //       console.log(res);
-  //       alert('ServiceCategory added sucessfully');
-
-  //       let ref = document.getElementById('cancel'); //this is to close the modal form automatically
-  //       ref?.click();
-
-  //       this.formValue.reset(); //this is to reset the form after logging in
-  //       this.getAllServiceCategory();
-  //     },
-  //  err   (err: any) => {
-  //       alert('something went wrong');
-  //     }
-  //   );
   }
 
   getAllServiceCategory() {
@@ -88,11 +81,13 @@ export class ServicecategoryComponent implements OnInit {
     this.showUpdate = true;
 
     this.servicecategoryModelObj.name = row.name;
+    this.servicecategoryModelObj.oldName = row.name;
+    this.servicecategoryModelObj.newName = row.newName;
 
     console.log(this.servicecategoryModelObj.name );
     
 
-    this.formValue.controls['name'].setValue(row.name);
+    // this.formValue.controls['oldName'].setValue(row.name);
     
   }
   
@@ -103,20 +98,23 @@ export class ServicecategoryComponent implements OnInit {
     }
 
     this.adminApi
-    .updateServiceCategory(body,  this.servicecategoryModelObj.name)
+    .updateServiceCategory(body)
       .subscribe(response => {
         console.log(response)
       })
   }
 
 
-  updateServiceCategory() {
-    this.servicecategoryModelObj.name = this.formValue.value.name;
+  updateServiceCategory(data:any) {
+    console.log(data);
     
-console.log();
+    this.servicecategoryModelObj.oldName = this.updateFormValue.value.oldName;
+    this.servicecategoryModelObj.newName =this.updateFormValue.value.newName;
+    
+// console.log(data);
 
     this.adminApi
-      .updateServiceCategory(this.servicecategoryModelObj, this.servicecategoryModelObj.name)
+      .updateServiceCategory(this.updateFormValue.value)
       .subscribe((res: any) => {
         console.log(res);
         alert('ServiceCategory updated sucessfully');
@@ -128,6 +126,22 @@ console.log();
         this.getAllServiceCategory() //this is to refresh and get the resent data
       });
   }
+
+  aproveOrder() {
+    console.log( this.updateFormValue.value);
+   
+
+    this.adminApi
+      .updateServiceCategory( this.updateFormValue.value)
+      .subscribe((res: any) => {
+        // this.isAprove = !this.isAprove;
+        console.log(res);
+        // this.getAllOrder()
+      });
+
+    // console.log(row);
+  }
+
   
 
   clickAddServiceCategory(){

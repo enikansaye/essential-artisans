@@ -10,6 +10,7 @@ export class orderModel{
     AltNumber:string ='';
     artisanEmail:string ='';
     file!: File;
+    
 isApproved:boolean= false;
     fileSource: string='';
     orderId:number= 0;

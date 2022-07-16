@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
@@ -16,7 +17,7 @@ declare let alertify: any;
 })
 export class ArtisanprofileComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  userProfileModelObj: userProfileModel = new userProfileModel();
+  artisanProfileModelObj: userProfileModel = new userProfileModel();
 
   showIcon: boolean = false;
   icon: boolean = false;
@@ -66,7 +67,8 @@ export class ArtisanprofileComponent implements OnInit {
     public api: ApiService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -84,34 +86,28 @@ export class ArtisanprofileComponent implements OnInit {
     this.updateForm = this.fb.group({
       firstName: [''],
       lastName: [''],
-      email: [''],
+      // email: [''],
+      Address: [''],
+      city: [''],
       state: [''],
-     city: [''],
-      service : [''],
       phoneNumber: [''],
-      address: [''],
-
-  
+      userId: [0],
+      service: [''],
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
 
-    this.getArtisan()
+    this.getArtisan();
   }
 
-  getArtisan(){
-      this.api.getArtisaninfo( this.api.loggedinUser.id).subscribe(
-        
-        
-        (res: any) => {
-        console.log(res);
-        
-        this.artisanData = res;
-        console.log(this.artisanData);
-        
-      });
-    }
+  getArtisan() {
+    this.api.getArtisaninfo(this.api.loggedinUser.id).subscribe((res: any) => {
+      console.log(res);
 
+      this.artisanData = res;
+      console.log(this.artisanData);
+    });
+  }
 
   // sellection of location
   showAll() {
@@ -123,15 +119,16 @@ export class ArtisanprofileComponent implements OnInit {
 
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
+
     if (this.isEditMode) {
       this.formControls['firstName'].enable();
       this.formControls['lastName'].enable();
       this.formControls['phoneNumber'].enable();
-      this.formControls['address'].enable();
+      this.formControls['Address'].enable();
       this.formControls['service'].enable();
       this.formControls['state'].enable();
       this.formControls['city'].enable();
-      // this.formControls['email'].enable();
+      this.formControls['userId'].enable();
 
       this.updateForm.controls['firstName'].setValue(
         this.api.loggedinUser.userName
@@ -139,15 +136,15 @@ export class ArtisanprofileComponent implements OnInit {
       this.updateForm.controls['lastName'].setValue(
         this.api.loggedinUser.lastName
       );
-      this.updateForm.controls['email'].setValue(this.api.loggedinUser.email);
-      // this.updateForm.controls['email'].setValue(data.email);
-      this.updateForm.controls['mobilenumber'].setValue(
-        this.api.loggedinUser.mobilenumber
+    
+      this.updateForm.controls['phoneNumber'].setValue(
+        this.api.loggedinUser.phoneNumber
       );
-  
-  
+      this.updateForm.controls['userId'].setValue(this.api.loggedinUser.id);
+      console.log(this.api.loggedinUser.id);
+      
     } else {
-      this.updateForm.disable();
+      // this.updateForm.disable();
     }
   }
 
@@ -237,51 +234,78 @@ export class ArtisanprofileComponent implements OnInit {
     }
   }
 
-  updateUserInformation() {
-    this.formSubmitted = true;
-    if (this.updateForm.valid) {
-      this.api.updateUser(this.updateForm.value).subscribe({
-     next:   (data) => {
-          alertify.success('Profile successsfully updated.');
-          alert('Profile successsfully updated.');
-          this.updateForm.disable();
-          this.isEditMode = false;
-          console.log(data);
-          this.isEditMode = !this.isEditMode;
-        },
-     error:   (error: any) => {
-          alert('Profile update failed');
-          console.log(error);
+  // updateUserInformation() {
+  //   this.formSubmitted = true;
+  //   if (this.updateForm.valid) {
+  //     this.api.updateUser(this.updateForm.value).subscribe({
+  //    next:   (data) => {
+  //         alertify.success('Profile successsfully updated.');
+  //         alert('Profile successsfully updated.');
+  //         this.updateForm.disable();
+  //         this.isEditMode = false;
+  //         console.log(data);
+  //         this.isEditMode = !this.isEditMode;
+  //       },
+  //    error:   (error: any) => {
+  //         alert('Profile update failed');
+  //         console.log(error);
 
-          alertify.error('Profile update failed');
-        }
-    });
-    }
-  }
+  //         alertify.error('Profile update failed');
+  //       }
+  //   });
+  //   }
+  // }
 
-  updateArtisanDetails() {
-    this.userProfileModelObj.firstName = this.updateForm.value.firstName;
-    this.userProfileModelObj.lastName = this.updateForm.value.lastName;
-    this.userProfileModelObj.service = this.updateForm.value.service;
-    this.userProfileModelObj.state = this.updateForm.value.state;
-    this.userProfileModelObj.city = this.updateForm.value.city;
-    this.userProfileModelObj.phoneNumber = this.updateForm.value.phoneNumber;
-    this.userProfileModelObj.address = this.updateForm.value.address;
-    // this.userProfileModelObj.email = this.updateForm.value.email;
-    this.userProfileModelObj.mobilenumber = this.updateForm.value.mobilenumber;
+  updateUserDetails(row: any) {
+    console.log(row);
+    console.log(row.id);
 
-    this.api.artisanUpdate(this.userProfileModelObj).subscribe((res: any) => {
+    this.artisanProfileModelObj.userId = this.updateForm.value.userId;
+    this.artisanProfileModelObj.firstName = this.updateForm.value.firstName;
+    this.artisanProfileModelObj.lastName = this.updateForm.value.lastName;
+    this.artisanProfileModelObj.Address = this.updateForm.value.Address;
+    this.artisanProfileModelObj.city = this.updateForm.value.city;
+    this.artisanProfileModelObj.state = this.updateForm.value.state;
+    this.artisanProfileModelObj.phoneNumber = this.updateForm.value.PhoneNumber;
+    this.artisanProfileModelObj.service = this.updateForm.value.service;
+
+    this.api.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
       console.log(res);
-        alert('employee updated sucessfully');
-        
-        
+      this.toastr.success('Profile updated');
+      //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
       //   // ref?.click();
 
-      //   // this.getUserserInfo() //this is to refresh and get the resent data
+      // this.getUserserInfo() //this is to refresh and get the resent data
     });
-    console.log("failes");
-    
   }
+
+  // onEdit() {
+  //   this.updateForm.controls['userId'].setValue(
+  //     this.api.loggedinUser.id
+  //   );
+  //   this.updateForm.controls['firstName'].setValue(
+  //     this.api.loggedinUser.firstName
+  //   );
+  //   this.updateForm.controls['lastName'].setValue(
+  //     this.api.loggedinUser.lastName
+  //   );
+  //   this.updateForm.controls['Address'].setValue(
+  //     this.api.loggedinUser.Address
+  //   );
+  //   this.updateForm.controls['city'].setValue(
+  //     this.api.loggedinUser.city
+  //   );
+  //   this.updateForm.controls['state'].setValue(
+  //     this.api.loggedinUser.state
+  //   );
+
+  //   this.updateForm.controls['phoneNumber'].setValue(
+  //     this.api.loggedinUser.phoneNumber
+  //   );
+
+  //   this.showAddEmployee = false;
+  //   this.showUpdate = true;
+  // }
 }

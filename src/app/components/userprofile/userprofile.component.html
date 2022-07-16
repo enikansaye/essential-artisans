@@ -59,7 +59,7 @@
     
     <div [ngSwitch]="expression">
       <div *ngSwitchCase="'match1'" >
-        <form [formGroup]="formValue" (ngSubmit)="updateEmployeeDetails()">
+        <form [formGroup]="formValue" (ngSubmit)="updateUserDetails(this.formValue.value)">
           <section
             class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
           >
@@ -134,8 +134,46 @@
                     />
                   </div>
                 </div>
-
                 <div class="mb-3 row">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"
+                    >state</label
+                  >
+                  <div class="col-sm-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputlastName"
+                      formControlName="state" 
+                    />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"
+                    >city</label
+                  >
+                  <div class="col-sm-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputlastName"
+                      formControlName="city" 
+                    />
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="inputPassword" class="col-sm-2 col-form-label"
+                    >Address</label
+                  >
+                  <div class="col-sm-4">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputlastName"
+                      formControlName="Address" 
+                    />
+                  </div>
+                </div>
+                <!-- <div class="mb-3 row">
                   <label for="inputPassword" class="col-sm-2 col-form-label"
                     >E-mail</label
                   >
@@ -146,16 +184,17 @@
                       id="inputEmail"
                     />
                   </div>
-                </div>
+                </div> -->
                 <div class="mb-3 row">
                   <label for="inputPassword" class="col-sm-2 col-form-label"
                     >mobile number</label
                   >
                   <div class="col-sm-4">
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       id="input"
+                      formControlName="phoneNumber"
                     />
                   </div>
                 </div>

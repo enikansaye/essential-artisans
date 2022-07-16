@@ -52,7 +52,8 @@ export class ApiService implements OnInit {
     public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/'
     public userinfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/'
     public issueImage:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload'
-    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
+    public location: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
+    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations/'
     public locationSearch: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location'
     public rating: string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/Review/create/'
 
@@ -172,11 +173,11 @@ getArtisaninfo(id:string){
   // }
 
   userUpdate(userInfo: any) {
-    return this.http.put(this.url.updateUser, userInfo);
+    return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Customer/update', userInfo);
   }
   artisanUpdate(ArtisanInfo: any) {
   
-      return this.http.put(this.url.updateArtisan, ArtisanInfo);
+      return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Artisan/update', ArtisanInfo);
   }
 
   // fakeapi
@@ -213,19 +214,7 @@ getArtisaninfo(id:string){
     console.log(event);
     
   }  
-  // public uploadImage(image: File): Observable<any> {
-  //   const formData = new FormData();
 
-  //   formData.append('image', image);
-
-  //   return this.http.post(this.imageUrl, formData);
-  // }
-
-  // upload2(userId: string, file: File): Observable<any>{
-  //   const formData = new FormData();
-  //   formData.append("Photo", file, file.name);
-  //   return this.http.post(this.imageUrl, formData);
-  // }
 
   // picture upload
   upload(file: File): Observable<HttpEvent<any>> {
@@ -363,9 +352,15 @@ Logout() {
   this.router.navigateByUrl('signin');
 }
 
-// location2
+// this is is to get a default artisans
 getAll():any{
-  return this.http.get<any>(this.location2)
+  return this.http.get<any>(this.location)
+}
+getLocation():any{
+  return this.http.get<any>(this.location)
+}
+getLocation2(state:string):any{
+  return this.http.get<any>(this.location2 +state)
 }
 
 sortArtisanLocation():any{
@@ -374,4 +369,5 @@ sortArtisanLocation():any{
 postRating(data:any, ) {
   return this.http.post(this.rating ,data).pipe();
 }
+
 }

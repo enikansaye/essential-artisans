@@ -165,14 +165,29 @@
                   <td data-title="Status">completed</td>
                   <td data-title="Artisan's Name">ope</td>
                   <td data-title="Artisan's Name">
-                    <button class="btn btn-info"  (click)="aproveOrder(data)">Aprove</button>
+                    <button class="btn btn-info"  (click)="aproveOrder(data)" *ngIf="!data.isApproved">Waiting Approval</button>
+                    <button class="btn btn-success"  *ngIf="data.isApproved">Approved</button>
                   </td>
+                  
                 </tr>
               
               
               </tbody>
+              
+              <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
             </table>
+            <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
             </div>
+
+            
             <!-- pending transaction -->
           <div *ngSwitchCase="'completed1'" id="no-tables"  >
             <table class="table">

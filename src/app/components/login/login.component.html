@@ -1,4 +1,4 @@
-<div class="login ">
+<!-- <div class="login ">
   <div class="form">
     <div>USSIGN IN</div>
     <form [formGroup]="signinForm" (ngSubmit)="login()" >
@@ -37,7 +37,7 @@
         <p routerLink="/forgetpassword">Forget Password</p>
         <p routerLink="/forgetpassword">Artisan Signin</p>
       </div>
-  <!-- <div>  {{errordata}}</div> -->
+
       <button
       type="submit"
       mat-raised-button
@@ -51,12 +51,118 @@
     
     
     </form> 
-  <!-- <div *ngFor="let data of data">
-    <li>  {{data.email}}</li>
-  </div> -->
-  <!-- <li>  {{data.email}}</li> -->
+
     
   </div>
 </div>
 
+ -->
+<section class="w-100" style="background-color: #f4f4f8">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                alt="login form"
+                class="img-fluid"
+                style="border-radius: 1rem 0 0 1rem"
+              />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form [formGroup]="signinForm" (ngSubmit)="login()">
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <i
+                      class="fas fa-cubes fa-2x me-3"
+                      style="color: #3111c0"
+                    ></i>
+                    <span class="h1 fw-bold mb-0">Essential</span>
+                  </div>
 
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
+                    Sign into your account
+                  </h5>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="email"
+                      id=""
+                      formControlName="email"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                      class="text-danger"
+                      *ngIf="(signinFormControl['email'].touched || submitted) && signinFormControl['email'].errors?.['required']"
+                    >
+                      Email is required
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="signinFormControl['email'].touched && signinFormControl['email'].errors?.['email']"
+                    >
+                      Enter a valid email address
+                    </span>
+
+                    <label class="form-label" for="form2Example27">Password</label>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      formControlName="password"
+                      type="password"
+                      [type]="hide ? 'password' : 'text'"
+                      class="form-control form-control-lg mb-1"
+                    />
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide"
+                    >
+                      <mat-icon>{{
+                        hide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                    </button>
+                    <span
+                      class="text-danger"
+                      *ngIf="(signinFormControl['password'].touched || submitted) && signinFormControl['password'].errors?.['required']"
+                    >
+                      Password is required
+                    </span><br>
+
+                    <label class="form-label mt-1" for="form2Example27"
+                      >Password</label
+                    >
+                  </div>
+
+                  <div class="form-group pt-1 mb-4">
+                    <button
+                      class="btn btn-dark btn-lg btn-block"
+                      type="submit"
+                      [disabled]="signinForm.invalid"
+                    >
+                      Login
+                    </button>
+                  </div>
+
+                  <a class="small text-muted" href="/forgetpassword">Forgot password?</a>
+                  <p class="mb-5 pb-lg-2" style="color: #3111c0">
+                    Don't have an account?
+                    <a href="/register" style="color: #3111c0">Register here</a>
+                  </p>
+                  <!-- <a href="#!" class="small text-muted">Terms of use.</a> -->
+                  <a href="ourpolicy" class="small text-muted">Privacy policy</a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

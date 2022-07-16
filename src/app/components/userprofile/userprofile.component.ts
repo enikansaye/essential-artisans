@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from './userprofile.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-userprofile',
@@ -58,15 +59,20 @@ export class UserprofileComponent implements OnInit {
     public api: ApiService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
-      email: [''],
-      mobilenumber: [''],
+      // email: [''],
+      Address:[''],
+      city:[''],
+      state:[''],
+      phoneNumber: [""],
+      userId:[0]
     });
     this.getUser()
     this.showAll();
@@ -221,36 +227,59 @@ export class UserprofileComponent implements OnInit {
 
   // on click to update userprofile
   onEdit() {
+    this.formValue.controls['userId'].setValue(
+      this.api.loggedinUser.id
+    );
     this.formValue.controls['firstName'].setValue(
-      this.api.loggedinUser.userName
+      this.api.loggedinUser.firstName
     );
     this.formValue.controls['lastName'].setValue(
       this.api.loggedinUser.lastName
     );
-    this.formValue.controls['email'].setValue(this.api.loggedinUser.email);
-    // this.formValue.controls['email'].setValue(data.email);
-    this.formValue.controls['mobilenumber'].setValue(
-      this.api.loggedinUser.mobilenumber
+    this.formValue.controls['Address'].setValue(
+      this.api.loggedinUser.Address
     );
+    this.formValue.controls['city'].setValue(
+      this.api.loggedinUser.city
+    );
+    this.formValue.controls['state'].setValue(
+      this.api.loggedinUser.state
+    );
+   
+    this.formValue.controls['phoneNumber'].setValue(
+      this.api.loggedinUser.phoneNumber
+    );
+   
 
     this.showAddEmployee = false;
     this.showUpdate = true;
   }
 
-  updateEmployeeDetails() {
+  updateUserDetails(row:any) {
+    console.log(row);
+    console.log(row.id);
+    
+    this.userprofileModelObj.userId = this.formValue.value.userId;
     this.userprofileModelObj.firstName = this.formValue.value.firstName;
     this.userprofileModelObj.lastName = this.formValue.value.lastName;
-    this.userprofileModelObj.email = this.formValue.value.email;
-    this.userprofileModelObj.mobilenumber = this.formValue.value.mobilenumber;
+    this.userprofileModelObj.Address = this.formValue.value.Address;
+    this.userprofileModelObj.city = this.formValue.value.city;
+    this.userprofileModelObj.state = this.formValue.value.state;
+    this.userprofileModelObj.phoneNumber = this.formValue.value.PhoneNumber;
 
-    this.api.userUpdate(this.userprofileModelObj).subscribe((res: any) => {
+
+
+
+
+    this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
       console.log(res);
+      this.toastr.success('Profile updated')
       //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
       //   // ref?.click();
 
-      //   // this.getUserserInfo() //this is to refresh and get the resent data
+        // this.getUserserInfo() //this is to refresh and get the resent data
     });
   }
 

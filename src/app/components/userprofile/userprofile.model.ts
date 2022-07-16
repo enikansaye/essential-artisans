@@ -9,11 +9,12 @@ export class userProfileModel{
     propertyAddress: string =""
     inspectionDate: string =""
     issue: string =""
-  phoneNumber: string='';
-  address: string='';
+    phoneNumber: string='';
+  Address: string='';
   state: string='';
   city: string='';
   service: string='';  
   artisanId: number=0
+  userId: number=0
     
 }

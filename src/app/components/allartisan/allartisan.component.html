@@ -19,7 +19,7 @@
           </div>
           <div>
             <form class="d-flex flex-end" role="search">
-              <input class="form-control me-2" [(ngModel)]="location" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control me-2"  type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit" (click)="onLocationFilter()">Search</button>
             </form>
            
@@ -219,6 +219,12 @@
               type="number"
               class="form-control"
             />
+          </div>
+          <div>
+            <input type="file" name="profile" (change)="onFileSelect($event)" />
+          </div>
+          <div>
+            <button (click)="onSubmit()">Upload</button>
           </div>
           <!-- <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"

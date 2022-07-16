@@ -32,17 +32,21 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService
     
   ) {}
-
+  submitted = false;
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required,Validators.email]],
       password: ['', Validators.required],
     });
 
     // this.display()
   }
+  get signinFormControl() {
+    return this.signinForm.controls;
+  }
 
   login() {
+    this.submitted = true;
     if (this.signinForm.valid) {
       this.api.loginUser(this.signinForm.value).subscribe((result) => {
         if (result != null) {

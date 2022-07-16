@@ -66,8 +66,9 @@ export class AllartisanComponent implements OnInit {
       mobilenumber: [''],
       AltNumber: [''],
       issue: [''],
-      issueImage:File,
+      profile: [''],
       file: [''],
+      issueImage: [''],
       artisanEmail: [],
 
       fileSource: [''],
@@ -248,5 +249,22 @@ export class AllartisanComponent implements OnInit {
           this.successResponse = 'Image not uploaded due to some error!';
         }
       });
+  }
+
+  onFileSelect(event:any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.formValue.controls['profile'].setValue(file);
+      // this.formValue.get('profile').setValue(file);
+    }
+  }
+  onSubmit(){
+    const formData = new FormData();
+    formData.append('file', this.formValue.controls['profile'].value);
+
+    this.http.post<any>('https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload', formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 }
