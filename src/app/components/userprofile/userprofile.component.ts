@@ -53,6 +53,7 @@ export class UserprofileComponent implements OnInit {
   formSubmitted: boolean = false;
   public form!: FormGroup;
   rating3: number =0;
+  orderData: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -76,6 +77,7 @@ export class UserprofileComponent implements OnInit {
     });
     this.getUser()
     this.showAll();
+    this.getOrder() 
 
     this.updateOrder = this.formBuilder.group({
       name: [''],
@@ -152,6 +154,12 @@ export class UserprofileComponent implements OnInit {
   showAll() {
     this.api.getAllStateData().subscribe((data: any) => {
       this.statelga = data;
+      console.log(this.statelga);
+    });
+  }
+  getOrder() {
+    this.api.getUserOrder().subscribe((data: any) => {
+      this.orderData = data
       console.log(this.statelga);
     });
   }

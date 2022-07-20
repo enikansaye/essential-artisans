@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
     userName: '',
     id: 0,
   };
-
+  menu_icon_variable: boolean = false;
+  menuVariable: boolean = false;
   userProfileModelObj: userProfileModel = new userProfileModel();
   loggedinUser1: any;
   displayAdmin: any;
@@ -79,6 +80,10 @@ console.log(row);
     }
   this.api.loggedIn()
   }
+  openMenu() {
+    this.menuVariable =! this.menuVariable;
+    this.menu_icon_variable =! this.menu_icon_variable;
+  }
 
   logout() {
     this.router.navigate(['/']);
@@ -90,4 +95,6 @@ console.log(row);
 toggleMenu() {
   this.menuVisible = !this.menuVisible;
 }
+
+
 }

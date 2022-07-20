@@ -14,9 +14,9 @@
           </div>
         </mat-toolbar>
         <img src="assets/images/mayor.jpg" class="image image-fluid ">
-        <!-- <h4 class="mt-2 mt-md-4">{{useData.email}}</h4> -->
+        <h4 class="mt-2 mt-md-4">{{userData.email}}</h4>
         <div *ngIf="api.loggedIn();" >
-          <h4 class="mt-2 mt-md-4">{{userData.email}} </h4>
+          <h4 class="mt-2 mt-md-4">{{userData.firstName}} {{userData.lastName}}</h4>
         
           <li></li>
       
@@ -46,6 +46,18 @@
       <!-- <mat-divider></mat-divider> -->
       </mat-sidenav>
       <mat-sidenav-content opened>
+
+        <!-- <ngx-avatar facebookId="userFacebookID" skypeId="userSkypeID"
+ googleId="google" name="Haithem Mosbahi" <ngx-avatar facebookId="userFacebookID" skypeId="userSkypeID"
+ googleId="google" name="Haithem Mosbahi" src="assets/avatar.jpg"
+ value="28%"  twitterId="twitter"
+ gravatarId="adde9b2b981a8083cf084c63ad86f753" 
+ size="100" [round]="true">
+</ngx-avatar>
+ value="28%"  twitterId="twitter"
+ gravatarId="adde9b2b981a8083cf084c63ad86f753" 
+ size="100" [round]="true">
+</ngx-avatar> -->
         
         
         <div class="content mat-elevation-z4 flex-column ms-3; ms-lg-4">
@@ -320,53 +332,41 @@
             <mat-toolbar class="text-success w-100 justify-content-between m-3">
               <div>Billing History</div>
               <button class="btn btn-success d-flex  ">Add Order</button>
+           
             </mat-toolbar>
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col">Order ID</th>
-                  <th scope="col">Date</th>
+                  <th scope="col">User's Name</th>
                   <th scope="col">Location</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Issue</th>
+                  <th scope="col">Artisan's Name</th>
                   <th scope="col"></th>
                 
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngFor="let data of orderData  ">
                 <tr>
                   <th scope="row">20499p</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
+                  <td>{{data.name}}</td>
+                 
+                  <td>{{data.propertyAddress}}</td>
+                  <td>{{data.issue}}</td>
+                  <td>{{data.artisanName}}</td>
                   <td>
+                    <button type="button" class="btn btn-info me-2" *ngIf="!data.isApproved" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      Edit
+                    </button>
+                    
                     <button class="btn btn-success me-2" (click)="toggleEditMode()" *ngIf="!isComplete">Processing</button>
                     <button class="btn btn-success me-2" *ngIf="isComplete">Completed</button>
                     <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)=" onEditOrder(row)" >Update</button> -->
+                 
                     <button class="btn btn-danger">Delete</button>
                   </td>
                 </tr>
-                <tr>
-                  <th scope="row">30499p</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                  <td>@fat</td>
-                  <td>
-                    <button class="btn btn-success me-2" (click)="toggleEditMode()" *ngIf="!isComplete">Processing</button>
-                    <button class="btn btn-success me-2" *ngIf="isComplete">Completed</button>
-                    <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)=" onEditOrder(row)">Update</button> -->
-                    <!-- <button class="btn btn-danger" (click)="deleteOrder(row)">Delete</button> -->
-                    <button class="btn btn-danger" (click)="deleteOrder()">Delete</button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">40499p</th>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
-                  <td>@twitter</td>
-                </tr>
+              
               </tbody>
             </table>
           </section>
@@ -379,25 +379,13 @@
 </div>
 
 
-
-
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<!-- modal to update form -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel" >Send Your Request</h3>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- modal form -->
@@ -512,16 +500,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button
-          type="submit"
-         
-          class="btn btn-info"
-          data-bs-dismiss="modal"
-        >
-          Send
-        </button>
-        <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
-        <!-- <button *ngIf="showUpdate" type="button" (click)="updateEmployeeDetails()" class="btn btn-primary">Update</button> -->
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Update</button>
       </div>
     </div>
   </div>

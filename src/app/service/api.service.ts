@@ -26,6 +26,9 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
+
+  public baseUrl:string = "https://lyticalartisanapi.azurewebsites.net"
+
   public refreshTokenUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/refresh-token';
 
@@ -33,7 +36,7 @@ export class ApiService implements OnInit {
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
 
   public userUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/​/api​/Admin​/customers';
+    'https://lyticalartisanapi.azurewebsites.net/​api​/Admin​/customers';
 
   public userSignupUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
@@ -116,12 +119,13 @@ export class ApiService implements OnInit {
       );
   }
 getUserinfo(id:string){
-  return this.http.get(this.userinfo +id)
+  return this.http.get(this.userinfo )
 
 }
-getArtisaninfo(id:string){
-  return this.http.get(this.artisaninfo +id)
+getArtisaninfo(){
+  return this.http.get(this.artisaninfo )
 }
+
 
   isUserLoggedIn() {
     return localStorage.getItem('token') != null;
@@ -295,6 +299,28 @@ getArtisaninfo(id:string){
     );
   }
 
+  getArtisanOrder(){
+    return this.http.get(this.baseUrl + "/api/Artisan/orders").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
+  getUserOrder(){
+    return this.http.get(this.baseUrl + "/api/Customer/orders").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
+  // updateUserOrder(){
+  //   return this.http.get(this.baseUrl + "/api/Customer/ServiceOrder/update").pipe(
+  //     map((res:any)=>{
+  //       return res;
+  //     })
+  //   )
+  // }
+
   getArtisan() {
     return this.http.get<any>('http://localhost:3000/posts').pipe(
       map((res: any) => {
@@ -342,7 +368,7 @@ getArtisaninfo(id:string){
   //   );
   // }
   updateService(userInfo: any, userId: string){
-    return this.http.put(this.url.updateService +userId, userInfo);
+    return this.http.put(this.baseUrl + "/api/Customer/ServiceOrder/update", userInfo);
 }
 
 // checking with refresh token

@@ -81,6 +81,9 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
 import { AdminartisanbyidComponent } from './components/adminartisanbyid/adminartisanbyid.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ToastrModule } from 'ngx-toastr';
+import { AvatarModule } from 'ngx-avatar';
+import { EmptycartComponent } from './components/emptycart/emptycart.component';
+import { HelpComponent } from './components/help/help.component';
 
 
 @NgModule({
@@ -125,6 +128,8 @@ import { ToastrModule } from 'ngx-toastr';
     ArtisanbyidComponent,
     ServicecategoryComponent,
     AdminartisanbyidComponent,
+    EmptycartComponent,
+    HelpComponent,
   
   ],
   imports: [
@@ -149,6 +154,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatMenuModule,
     NgxPaginationModule,
     NgxStarRatingModule,
+    AvatarModule,
     ToastrModule.forRoot(
       {
         timeOut: 10000,
@@ -186,6 +192,8 @@ import { ToastrModule } from 'ngx-toastr';
         { path: 'carpentry', component: CapentaryComponent },
         { path: 'acrepair', component: AcrepairComponent },
         { path: 'register', component: RegisterComponent },
+        { path: 'empty', component: EmptycartComponent },
+        { path: 'helpcenter', component: HelpComponent },
 
         { path: 'myorder', component: MyorderComponent },
         { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },

@@ -61,6 +61,7 @@ export class ArtisanprofileComponent implements OnInit {
   heeo: any;
   statelga: any;
   artisanData: any;
+  orderData: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -98,10 +99,11 @@ export class ArtisanprofileComponent implements OnInit {
     this.formControls = this.updateForm.controls;
 
     this.getArtisan();
+    this.getOrder()
   }
 
   getArtisan() {
-    this.api.getArtisaninfo(this.api.loggedinUser.id).subscribe((res: any) => {
+    this.api.getArtisaninfo().subscribe((res: any) => {
       console.log(res);
 
       this.artisanData = res;
@@ -308,4 +310,11 @@ export class ArtisanprofileComponent implements OnInit {
   //   this.showAddEmployee = false;
   //   this.showUpdate = true;
   // }
+
+  getOrder() {
+    this.api.getArtisanOrder().subscribe((data: any) => {
+      this.orderData = data
+      console.log(this.statelga);
+    });
+  }
 }
