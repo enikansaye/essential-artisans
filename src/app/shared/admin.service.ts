@@ -19,6 +19,17 @@ export class AdminService {
 
   getArtisan() {
     return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/App/artisans').pipe(
+<<<<<<< HEAD
+=======
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+  // get artisan by id
+  getArtisanbyid(id:string) {
+    return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/Artisan'+id).pipe(
+>>>>>>> dev
       map((res: any) => {
         return res;
       })
@@ -46,31 +57,72 @@ export class AdminService {
     );
   }
 
+<<<<<<< HEAD
   postService(data: any) {
     return this.http.post<any>("https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/create", data).pipe(
+=======
+
+
+  postServiceCategory(data: any) {
+    return this.http.post<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/create', data).pipe(
+>>>>>>> dev
       map((res: any) => {
         return res;
       })
     );
   }
+<<<<<<< HEAD
   
   getService() {
+=======
+
+  getServiceCategory() {
+>>>>>>> dev
     return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/ServiceCategory/all').pipe(
       map((res: any) => {
         return res;
       })
     );
+<<<<<<< HEAD
   }
   deleteService(name:string) {
     return this.http.delete<any>("https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/delete" + name).pipe(
+=======
+  
+  }
+  deleteServiceCategory(name:string) {
+    return this.http.delete<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/delete/' + name).pipe(
+>>>>>>> dev
       map((res: any) => {
         return res;
       })
     );
   }
+<<<<<<< HEAD
   
   updateService(data:any, name:string) {
     return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/update' +name , data).pipe(
+=======
+
+  updateServiceCategory(data:any, newName:string ) {
+    return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/update' +newName, data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getOrder(){
+    return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/orders').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  aproveOrderUrl(data:any,  ){
+    return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceOrder/approve', data).pipe(
+>>>>>>> dev
       map((res: any) => {
         return res;
       })

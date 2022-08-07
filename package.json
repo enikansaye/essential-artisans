@@ -45,6 +45,8 @@
     "ngx-owl-carousel": "^2.0.7",
     "ngx-owl-carousel-o": "^6.0.2",
     "ngx-pagination": "^6.0.1",
+    "ngx-star-rating": "^2.1.0",
+    "ngx-toastr": "^14.3.0",
     "owl-carousel": "^1.0.0",
     "pdfmake": "^0.2.5",
     "rxjs": "~7.4.0",

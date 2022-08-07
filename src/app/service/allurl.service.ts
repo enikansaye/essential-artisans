@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class AllurlService {
 
   constructor(private http : HttpClient) { }
+  baseUrl ="https://lyticalartisanapi.azurewebsites.net/api"
   public upload : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image'
  public refreshToken : string =  'https://lyticalartisanapi.azurewebsites.net/api/Auth/refresh-token';
  public signupArtisan : string =  'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/partner';
@@ -15,10 +16,11 @@ export class AllurlService {
  public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
  public deleteService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer​/ServiceOrder/delete';
  public uploadService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload';
- public createService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/create';
+ public createService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/create/';
  public updateService : string = 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/update';
+ 
  public createInvoice : string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/invoice/create';
- public allUsers : string ='https://lyticalartisanapi.azurewebsites.net/api/Admin/customers';
- public allArtisans: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans';
+
+
  
 }

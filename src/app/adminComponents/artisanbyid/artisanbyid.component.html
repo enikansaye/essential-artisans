@@ -1,7 +1,9 @@
-<div class="container-fluid ">
+<div class="container-fluid " *ngFor="let data of artisanData">
+  <div>{{data.id}}</div>
     <section class="row pt-2 ">
         <div class="row d-flex  justify-content-around">
           <div class="row">
+
             <div class="col-xl-3 col-lg-6 col-md-12 col-12">
               <!-- Card -->
               <div class="card mb-4">
@@ -157,7 +159,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let data of othersData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr *ngFor="let data of othersData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}" >
                   <td data-title="Order ID" >{{data.id}}</td>
                   <td data-title="Date">{{data.title}}</td>
                   <td data-title="Location">{{data.title}}</td>

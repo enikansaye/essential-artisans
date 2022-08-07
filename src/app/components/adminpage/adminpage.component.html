@@ -1,0 +1,947 @@
+<mat-sidenav-container class="">
+    <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3  ">
+        <mat-toolbar class="w-100 d-flex justify-content-end">
+          <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+                   
+            <mat-icon *ngIf="sidenav.opened" class="d-flex justify-content-end">close</mat-icon>
+      
+          </button>
+        </mat-toolbar>
+        <div class="w-100 d-flex flex-column text-center">
+          <img src="assets/images/mayor.jpg" class="image image-fluid mx-auto ">
+        <h4 class="mt-2 mt-md-4">ENIKANSAYE MAYOWA</h4>
+        <h4>Software Developer</h4>
+        </div>
+    
+        <!-- Navbar nav -->
+        <ul class="navbar-nav flex-column mx-5 px-3 ">
+          <li class="nav-item  ">
+            <a
+              class="nav-link text-dark "
+              [class.active]="expression == 'page1'"
+              toggle
+              (click)="expression = 'page1'"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> Dashboard
+            </a>
+          </li>
+          <li
+            class="nav-item "
+            [class.active]="expression == 'page2'"
+            toggle
+            (click)="expression = 'page2'"
+          >
+            <a
+              class="nav-link collapsed text-dark"
+              data-bs-toggle="collapse"
+              data-bs-target="#navCourses"
+              aria-expanded="false"
+              aria-controls="navCourses"
+            >
+              <i class="nav-icon bi bi-book me-2"></i> Artisans
+            </a>
+          </li>
+          <!-- Nav item -->
+          <li class="nav-item">
+            <a
+              class="nav-link collapsed text-dark"
+              [class.active]="expression == 'page3'"
+              toggle
+              (click)="expression = 'page3'"
+              
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> User
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link collapsed"
+              [class.active]="expression == 'page4'"
+              toggle
+              (click)="expression = 'page4'"
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> 0rders
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link collapsed"
+              [class.active]="expression == 'page5'"
+              toggle
+              (click)="expression = 'page5'"
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> Service
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link collapsed text-dark"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#navAuthentication"
+              aria-expanded="false"
+              aria-controls="navAuthentication"
+            >
+              <i class="nav-icon bi bi-lock me-2"></i> Authentication
+            </a>
+            <div
+              id="navAuthentication"
+              class="collapse"
+              data-bs-parent="#sideNavbar"
+            >
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/signin">Sign In</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/signup">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../../pages/forget-password.html">
+                    Forget Password
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+  
+  </mat-sidenav>
+  <mat-sidenav-content opened>
+   
+
+    <div class="ms-3" [ngSwitch]="expression">
+      <div>
+        <mat-toolbar>
+            <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+                <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+             
+                
+          
+              </button>
+          <nav class="navbar-default navbar w-100 navbar-expand float-right">
+            <a id="nav-toggle" href="#">
+              <i class="bi bi-menu"></i>
+            </a>
+            <div class="ms-lg-3 d-none d-md-none d-lg-block float-right">
+              <!-- Form -->
+              <form class="d-flex align-items-center">
+                <!-- <span class="position-absolute ps-5 search-icon">
+                  <i class="bi bi-search"></i>
+                </span> -->
+                <input
+                  type="search"
+                  class="form-control form-control-sm ps-6"
+                  placeholder="Search Entire Dashboard"
+                />
+              </form>
+            </div>
+            <!--Navbar nav -->
+            <ul
+              class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap"
+            >
+              <li class="dropdown stopevent">
+                <a
+                  class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted"
+                  href="#"
+                  role="button"
+                  id="dropdownNotification"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-bell"></i>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-end dropdown-menu-lg"
+                  aria-labelledby="dropdownNotification"
+                >
+                  <div class=" ">
+                    <div
+                      class="border-bottom px-3 pb-3 d-flex justify-content-between align-items-center"
+                    >
+                      <span class="h4 mb-0">Notifications</span>
+                      <a href="# " class="text-muted">
+                        <span class="align-middle">
+                          <i class="bi bi-settings me-1"></i>
+                        </span>
+                      </a>
+                    </div>
+                    <!-- List group -->
+                    <ul
+                      class="list-group list-group-flush notification-list-scroll"
+                    >
+                      <li class="list-group-item bg-light">
+                        <div class="row">
+                          <div class="col">
+                            <a class="text-body" href="#">
+                              <div class="d-flex">
+                                <img
+                                  src="assets/images/mayor.jpg"
+                                  alt="assets/images/mayor.jpg"
+                                  class=" rounded-circle"
+                                />
+                                <div class="ms-3">
+                                  <h5 class="fw-bold mb-1">Kristin Watson:</h5>
+                                  <p class="mb-3">
+                                    Krisitn Watsan like your comment on course
+                                   
+                                  </p>
+                                  <span class="fs-6 text-muted">
+                                    <span
+                                      ><span
+                                        class="bi bi-thumbs-up text-success me-1"
+                                      ></span
+                                      >2 hours ago,</span
+                                    >
+                                    <span class="ms-1">2:19 PM</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-auto text-center me-2">
+                            <a
+                              href="#"
+                              class="badge-dot bg-info"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Mark as read"
+                            >
+                            </a>
+                            <div>
+                              <a
+                                href="#"
+                                class="bg-transparent"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Remove"
+                              >
+                                <i class="bi bi-x text-muted"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col">
+                            <a class="text-body" href="#">
+                              <div class="d-flex">
+                                <img
+                                  src="assets/images/mayor.jpg"
+                                  alt=""
+                                  class="avatar-md rounded-circle"
+                                />
+                                <div class="ms-3">
+                                  <h5 class="fw-bold mb-1">Brooklyn Simmons</h5>
+                                  <p class="mb-3">
+                                    Just launched a new Courses React for
+                                    Beginner.
+                                  </p>
+                                  <span class="fs-6 text-muted">
+                                    <span
+                                      ><span
+                                        class="bi bi-thumbs-up text-success me-1"
+                                      ></span
+                                      >Oct 9,</span
+                                    >
+                                    <span class="ms-1">1:20 PM</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-auto text-center me-2">
+                            <a
+                              href="#"
+                              class="badge-dot bg-secondary"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Mark as unread"
+                            >
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col">
+                            <a class="text-body" href="#">
+                              <div class="d-flex">
+                                <img
+                                  src="assets/images/mayor.jpg"
+                                  alt=""
+                                  class="avatar-md rounded-circle"
+                                />
+                                <div class="ms-3">
+                                  <h5 class="fw-bold mb-1">Jenny Wilson</h5>
+                                  <p class="mb-3">
+                                    Krisitn Watsan like your comment on course
+                                    Javascript Introduction!
+                                  </p>
+                                  <span class="fs-6 text-muted">
+                                    <span
+                                      ><span
+                                        class="bi bi-thumbs-up text-info me-1"
+                                      ></span
+                                      >Oct 9,</span
+                                    >
+                                    <span class="ms-1">1:56 PM</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-auto text-center me-2">
+                            <a
+                              href="#"
+                              class="badge-dot bg-secondary"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Mark as unread"
+                            >
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col">
+                            <a class="text-body" href="#">
+                              <div class="d-flex">
+                                <img
+                                  src="assets/images/mayor.jpg"
+                                  alt=""
+                                  class="avatar-md rounded-circle"
+                                />
+                                <div class="ms-3">
+                                  <h5 class="fw-bold mb-1">Sina Ray</h5>
+                                  <p class="mb-3">
+                                    You earn new certificate for complete the
+                                    Javascript Beginner course.
+                                  </p>
+                                  <span class="fs-6 text-muted">
+                                    <span
+                                      ><span
+                                        class="bi bi-award text-warning me-1"
+                                      ></span
+                                      >Oct 9,</span
+                                    >
+                                    <span class="ms-1">1:56 PM</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-auto text-center me-2">
+                            <a
+                              href="#"
+                              class="badge-dot bg-secondary"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Mark as unread"
+                            >
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="border-top px-3 pt-3 pb-0">
+                      <a
+                        href="../../pages/notification-history.html"
+                        class="text-link fw-semi-bold"
+                      >
+                        See all Notifications
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- List -->
+              <li class="dropdown ms-2">
+                <a
+                  class="rounded-circle"
+                  href="#"
+                  role="button"
+                  id="dropdownUser"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <div class="avatar avatar-md avatar-indicators avatar-online h-25">
+                    <img
+                      alt="avatar"
+                      src="assets/images/mayor.jpg"
+                      class="rounded-circle img-fluid"
+                    />
+                  </div>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="dropdownUser"
+                >
+                  <div class="dropdown-item">
+                    <div class="d-flex">
+                      <div
+                        class="avatar avatar-md avatar-indicators avatar-online"
+                      >
+                        <img
+                          alt="avatar"
+                          src="assets/images/mayor.jpg"
+                          class="rounded-circle img-fluid"
+                        />
+                      </div>
+                      <div class="ms-3 lh-1">
+                        <h5 class="mb-1">Enikansaye Mayowa</h5>
+                        <p class="mb-0 text-muted">mayowa.e@lyticaltechnology.com</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <ul class="list-unstyled">
+                    <li class="dropdown-submenu dropstart-lg">
+                      <a
+                        class="dropdown-item dropdown-list-group-item dropdown-toggle"
+                        href="#"
+                      >
+                        <i class="bi bi-circle me-2"></i> Status
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <span class="badge-dot bg-success me-2"></span>
+                            Online
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <span class="badge-dot bg-secondary me-2"></span>
+                            Offline
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <span class="badge-dot bg-warning me-2"></span> Away
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <span class="badge-dot bg-danger me-2"></span> Busy
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="../../pages/profile-edit.html"
+                      >
+                        <i class="bi bi-user me-2"></i> Profile
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="../../pages/student-subscriptions.html"
+                      >
+                        <i class="bi bi-star me-2"></i> Subscription
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="bi bi-settings me-2"></i> Settings
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="dropdown-divider"></div>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="dropdown-item" href="../../index.html">
+                        <i class="bi bi-power me-2"></i> Sign Out
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </mat-toolbar>
+
+        <div class="container-fluid p-4" *ngSwitchCase="'page1'">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+              <div
+                class="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center"
+              >
+                <div class="mb-3 mb-lg-0">
+                  <h1 class="mb-0 h2 fw-bold">Dashboard</h1>
+                </div>
+                <div class="d-flex">
+                  <div class="input-group me-3">
+                    <input
+                      class="form-control flatpickr"
+                      type="text"
+                      placeholder="Select Date"
+                      aria-describedby="basic-addon2"
+                    />
+
+                    <span class="input-group-text text-muted" id="basic-addon2"
+                      ><i class="bi bi-calendar"></i
+                    ></span>
+                  </div>
+                  <a href="#" class="btn btn-info">Setting</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12 justify-content-center">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body col1  justify-content-center">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Total Orders</span
+                      >
+                      <i class="fa-solid fa-eye"></i>
+                      <i class="fa-duotone fa-eye"></i>
+
+                    </div>
+                    <div>
+                      <span class="bi bi-shopping-bag fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">1560</h2>
+
+
+                  <span class="text-danger fw-semi-bold">120+</span>
+                  <span class="ms-1 fw-medium">Number of pending</span>
+
+                 
+                </div>
+              
+              </div>
+
+             
+
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body col2" >
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <i class="fa-solid fa-face-smile"></i>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Total Sales</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-book-open fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1"> &#8358; 1,110,800</h2>
+                  <span class="text-success fw-semi-bold"
+                  ><i class="bi bi-trending-up me-1"></i>+20000 &#8358;</span
+                >
+                <span class="ms-1 fw-medium">Total Sales</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body col3">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <i class="fa-solid fa-heart"></i>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >CLIENT/USERS</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-users fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">500</h2>
+                  <span class="text-success fw-semi-bold"
+                    ><i class="bi bi-trending-up me-1"></i>+5</span
+                  >
+                  <span class="ms-1 fw-medium">Total Orders</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-12 col-12 ">
+              <!-- Card -->
+              <div class="card mb-4 w-100">
+                <!-- Card body -->
+                <div class="card-body col4 rounded ">
+                  <div
+                    class="d-flex flex-column align-items-center justify-content-center mb-3 lh-1"
+                  >
+                 
+                      <i class="fa-solid fa-users-viewfinder"></i>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Artisans</span
+                      >
+                     
+                 
+                    <h2 class="fw-bold mb-1">1000</h2>
+                    <span class="text-success fw-semi-bold"
+                      ><i class="bi bi-trending-up me-1"></i>10% <i class="fa-solid fa-chart-line-up"></i></span
+                    ><i class="fa-solid fa-chart-line-up"></i>
+                    <span class="ms-1 fw-medium">Artisan</span>
+                    <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                   
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-8 col-lg-12 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card header -->
+                <div
+                  class="card-header align-items-center card-header-height d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <h4 class="mb-0">Earnings</h4>
+                  </div>
+                  <div>
+                    <div class="dropdown dropstart">
+                      <a
+                        class="text-muted text-decoration-none"
+                        href="#"
+                        role="button"
+                        id="courseDropdown1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="bi bi-more-vertical"></i>
+                      </a>
+                     
+                    </div>
+                  </div>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                  <!-- Earning chart -->
+                  <div echarts [options]="chartOption"  class="demo-chart" id="chart1"></div>
+                 
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card header -->
+                <div
+                  class="card-header align-items-center card-header-height d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <h4 class="mb-0">Traffic</h4>
+                  </div>
+                
+                </div>
+                <!-- Card body -->
+                
+                <div class="card-body">
+                  <!-- <div echarts [options]="options" class="demo-chart"></div> -->
+                  <!-- <div class="button-groups">
+                    <button (click)="theme" nz-button nzType="default">default</button>
+                    <button (click)="theme='dark'" nz-button nzType="default">dark</button>
+                    <button (click)="theme='macarons'" nz-button nzType="default">macarons(theme file)</button>
+                    <button (click)="theme=coolTheme" nz-button nzType="default">cool(theme object)</button>
+                  </div> -->
+                  <div echarts [options]="options"  [theme]="theme" class="demo-chart" id="chart2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4 col3">
+              <!-- Card -->
+              <div class="card h-100">
+                <!-- Card header -->
+                <div
+                  class="card-header d-flex align-items-center justify-content-between card-header-height"
+                >
+                  <h4 class="mb-0">All Artisans</h4>
+                  <div routerLink="'page2'" [class.active]="expression == 'page2'"
+                  toggle
+                  (click)="expression = 'page2'" class="btn btn-outline-white btn-sm" >View all</div>
+                  
+                </div>
+                <!-- Card body -->
+                <div class="card-body ">
+                  <!-- List group -->
+                  <ul class="list-group list-group-flush" *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 5, currentPage: page, totalItems: totalRecord}">
+                    <li class="list-group-item px-0 pt-0">
+                      <div class="row ">
+                        <div class="col-auto d-flex text-center w-100">
+                          <div
+                            class="avatar avatar-md avatar-indicators avatar-offline me-2 "
+                          >
+                            <img
+                            
+                              src="{{data.ProfileImage}}"
+                              class="rounded-circle img-fluid  "
+                            />
+                          </div>
+                          <div class="d-flex justify-content-between w-100">
+                            <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
+                          <div>
+                           <h4> {{data.email}}</h4>
+                           <span>{{data.email}}</span>
+
+                          </div>
+                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location.city}}</div>
+                          </div>
+                        
+                        </div>
+                      
+                       
+                      </div>
+                      <hr>
+                   
+                    </li>
+                  
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+              <!-- Card -->
+              <div class="card h-100">
+                <!-- Card header -->
+                <div
+                  class="card-header d-flex align-items-center justify-content-between card-header-height"
+                >
+                  <h4 class="mb-0">Recent User</h4>
+                  <a [class.active]="expression == 'page3'"
+                  toggle
+                  (click)="expression = 'page3'"class="btn btn-outline-white btn-sm">View all</a>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                  <!-- List group flush -->
+                  <ul class="list-group list-group-flush" *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 5, currentPage: page, totalItems: totalRecord}">
+                    <li class="list-group-item px-0 pt-0">
+                      <div class="row ">
+                        <div class="col-auto d-flex text-center w-100">
+                          <div
+                            class="avatar avatar-md avatar-indicators avatar-offline me-2 "
+                          >
+                            <img
+                            
+                              src="{{data.ProfileImage}}"
+                              class="rounded-circle img-fluid  "
+                            />
+                          </div>
+                          <div class="d-flex justify-content-between w-100">
+                            <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
+                          <div>
+                           <h4> {{data.email}}</h4>
+                           <span>{{data.email}}</span>
+
+                          </div>
+                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location.city}}</div>
+                          </div>
+                        
+                        </div>
+                      
+                       
+                      </div>
+                      <hr>
+                   
+                    </li>
+                  
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-12 mb-4">
+              <!-- Card -->
+              <div class="card h-100">
+                <!-- Card header -->
+                <div
+                  class="card-header card-header-height d-flex align-items-center"
+                >
+                  <h4 class="mb-0">Activity</h4>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                  <!-- List group -->
+                  <ul
+                    class="list-group list-group-flush list-timeline-activity"
+                  >
+                  <li>
+                    <div class="d-flex justify-content-between w-100">
+                  
+                      <div>
+                       <h4> Mrs sanwo'lu</h4>
+                       <span class="fs-6 text-muted">1 hour ago</span>
+    
+                      </div>
+                      <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> lekki</div>
+                      </div>
+                  </li>
+                
+                    <!-- List group -->
+                    <li>
+                      <div class="d-flex justify-content-between w-100">
+                  
+                        <div>
+                         <h4> Mrs sanwo'lu</h4>
+                         <span class="fs-6 text-muted">1 hour ago</span>
+      
+                        </div>
+                        <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> lekki</div>
+                        </div>
+                    </li>
+                    <!-- List group -->
+                    <li>
+                      <div class="d-flex justify-content-between w-100">
+                  
+                        <div>
+                         <h4> Mrs sanwo'lu</h4>
+                         <span class="fs-6 text-muted">1 hour ago</span>
+      
+                        </div>
+                        <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> lekki</div>
+                        </div>
+                    </li>
+                    <!-- List group -->
+                    <li>
+                      <div class="d-flex justify-content-between w-100">
+                  
+                        <div>
+                         <h4> Mrs sanwo'lu</h4>
+                         <span class="fs-6 text-muted">1 hour ago</span>
+      
+                        </div>
+                        <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> lekki</div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     <!--Artisan section  -->
+      <div class="pt-5" *ngSwitchCase="'page2'" id="no-tables" >
+        <div>
+            <button class="btn btn-info float-end mb-3" routerLink="/register">Create new Artisan</button>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Email Adress</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Number</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}" onclick="getArtisanById()">
+                <tr class="align-center justify-content-center" routerLink="/artisanbyid">
+                  <td data-title="Email Address" scope="row">{{data.email}}</td>
+                  <td data-title="Name">{{data.email}}  <td>
+                  <!-- <td data-title="Location">{{data.location.state}}, {{data.location.country}}</td> -->
+                  <!-- <td data-title="Number">{{data.phone}}</td> -->
+                  <td data-title="Status">Suspended</td>
+                  <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5" (click)="deleteArtisan(data)"></i>
+                  </td>
+                </tr>
+            
+              
+              </tbody>
+            </table>
+            <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            aria-label="Select page">
+        </mat-paginator>
+
+        </div>
+      </div>
+
+      <!-- user section -->
+      <div class="pt-5" *ngSwitchCase="'page3'" id="no-tables" >
+        <div>
+           <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Email Adress</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Number</th>
+                  <!-- <th scope="col">Status</th> -->
+                  <!-- <th scope="col">Action</th> -->
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of userData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr class="align-center justify-content-center">
+                  <td data-title="Email Adress" scope="row">{{data.email}}</td>
+                  <td data-title="Name">{{data.title}}</td>
+                  <td data-title="Location">{{data.title}}</td>
+                  <td data-title="Number">{{data.title}}</td>
+                  <!-- <td data-title="Status">Suspended</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+             
+              
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+      <!-- others main section -->
+      <div *ngSwitchCase="'page4'" class="pt-5">
+        
+    <app-alltransactions></app-alltransactions>
+      </div>
+      <div *ngSwitchCase="'page5'" class="pt-5">
+        
+    <app-servicecategory></app-servicecategory>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

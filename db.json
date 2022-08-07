@@ -1,6 +1,7 @@
 {
   "posts": [
     {
+<<<<<<< HEAD
       "name": "adez",
       "id": 4
     },
@@ -11,6 +12,10 @@
     {
       "name": "hair dressing",
       "id": 6
+=======
+      "id": 1,
+      "name": "carpentry"
+>>>>>>> dev
     }
   ],
   "signupUser": [

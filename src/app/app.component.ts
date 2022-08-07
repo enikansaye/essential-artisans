@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { userProfileModel } from './components/userprofile/userprofile.model';
 import { ApiService } from './service/api.service';
 import { EventBusService } from './service/event-bus.service';
 import { LoaderService } from './service/loader.service';
@@ -19,6 +20,8 @@ export class AppComponent implements OnInit {
     userName: '',
     id: 0,
   };
+
+  userProfileModelObj: userProfileModel = new userProfileModel();
   loggedinUser1: any;
   displayAdmin: any;
 
@@ -40,12 +43,23 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.roleDisplay();
     this.api.loggedIn()
+    this.onClick(this.userProfileModelObj.id)
     
     // this.api.getToken()
     // this.api.getUserToken();
 
   }
-  
+  onClick(row:any){
+    
+console.log(row);
+
+    this.userProfileModelObj.id = row.id;
+    console.log(this.userProfileModelObj.id);
+    
+
+    // this.formValue.controls['name'].setValue(row.name);
+  }
+
  
 
   roleDisplay() {

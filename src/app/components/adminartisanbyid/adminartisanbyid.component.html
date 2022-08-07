@@ -1,4 +1,4 @@
-<div class="container-fluid ">
+<div class="container-fluid " *ngFor="let data of artisanData">
     <section class="row pt-2 ">
         <div class="row d-flex  justify-content-around">
           <div class="row">
@@ -36,9 +36,10 @@
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
                     <div>
-                      <span class="fs-6 text-uppercase fw-semi-bold"
+                      <!-- <span class="fs-6 text-uppercase fw-semi-bold"
                         >Pending</span
-                      >
+                      > -->
+                      <td data-title="Order ID" >{{data.id}}</td>
                     </div>
                     <div>
                       <span class="bi bi-book-open fs-3 text-primary"></span>
@@ -141,10 +142,10 @@
       </nav>
 
       <section> 
-        <div>
+        <div [ngSwitch]="service">
           <!-- all transaction -->
           <div *ngSwitchCase="'completed'" id="no-tables" >
-            <table class="table table-striped">
+            <table class="table">
               <thead>
                 <tr>
                   <th scope="col">Order ID</th>
@@ -157,16 +158,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let data of AllOrderData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr *ngFor="let data of othersData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
                   <td data-title="Order ID" >{{data.id}}</td>
-                  <td data-title="Date">{{data.artisanEmail}}</td>
-                  <td data-title="Location">{{data.issue}}</td>
+                  <td data-title="Date">{{data.title}}</td>
+                  <td data-title="Location">{{data.title}}</td>
                   <td data-title="Amount">{{data.title}}</td>
                   <td data-title="Status">completed</td>
                   <td data-title="Artisan's Name">ope</td>
-                  <td data-title="Artisan's Name">
-                    <button class="btn btn-info"  (click)="aproveOrder(data)">Aprove</button>
-                  </td>
                 </tr>
               
               

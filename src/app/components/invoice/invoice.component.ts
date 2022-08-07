@@ -9,6 +9,7 @@ class Product{
   name!: string;
   price!: number;
   qty!: number;
+  total!:number
 }
 class Invoice{
   customerName!: string;
@@ -39,6 +40,11 @@ export class InvoiceComponent implements OnInit {
   ngOnInit(): void {
   }
   invoice = new Invoice(); 
+
+  removeFormControl(i: number) {
+    // let usersArray = this.invoice.get('users') as FormArray;
+    // usersArray.removeAt(i);
+  }
   
   generatePDF(action = 'open') {
     let docDefinition = {
@@ -94,7 +100,7 @@ export class InvoiceComponent implements OnInit {
             widths: ['*', 'auto', 'auto', 'auto'],
             body: [
               ['Product', 'Price', 'Quantity', 'Amount'],
-              ...this.invoice.products.map(p => ([p.name, p.price, p.qty, (p.price*p.qty).toFixed(2)])),
+              ...this.invoice.products.map(p => ([p.name, p.price, p.qty, p.total,(p.price*p.qty).toFixed(2)])),
               [{text: 'Total Amount', colSpan: 3}, {}, {}, this.invoice.products.reduce((sum, p)=> sum + (p.qty * p.price), 0).toFixed(2)]
             ]
           }
@@ -152,8 +158,25 @@ export class InvoiceComponent implements OnInit {
     pdfMake.createPdf(documentDefinition).download(); 
      
   }
+
+  public onSubmitData() {
+    const pdfTable = this.pdfTable.nativeElement;
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    const documentDefinition = { content: html ,};
+    // pdfMake.createPdf(documentDefinition).download(); 
+     console.log(documentDefinition);
+     console.log(this.invoice);
+     
+     
+  }
+
   addProduct(){
     this.invoice.products.push(new Product());
+  }
+
+  onSubmit(){
+    console.log();
+    
   }
   
 }

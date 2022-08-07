@@ -59,6 +59,7 @@ export class ArtisanprofileComponent implements OnInit {
   hello: any;
   heeo: any;
   statelga: any;
+  artisanData: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -84,29 +85,43 @@ export class ArtisanprofileComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       email: [''],
-      location: [''],
-      service: [''],
-      PhoneNumber: [''],
+
+      state: [''],
+     city: [''],
+      service : [''],
+      phoneNumber: [''],
       address: [''],
 
-      // "userId": 0,
-     
-
   
-      state: [''],
-      city: [''],
-      
+
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
+
+    this.getArtisan()
   }
+
+  getArtisan(){
+      this.api.getArtisaninfo( this.api.loggedinUser.id).subscribe(
+        
+        
+        (res: any) => {
+        console.log(res);
+        
+        this.artisanData = res;
+        console.log(this.artisanData);
+        
+      });
+    }
+
+
   // sellection of location
-  showAll() {
-    this.api.getAllStateData().subscribe((data: any) => {
-      this.statelga = data;
-      console.log(this.statelga);
-    });
-  }
+  // showAll() {
+  //   this.api.getAllStateData().subscribe((data: any) => {
+  //     this.statelga = data;
+  //     console.log(this.statelga);
+  //   });
+  // }
 
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
@@ -116,9 +131,11 @@ export class ArtisanprofileComponent implements OnInit {
       this.formControls['PhoneNumber'].enable();
       this.formControls['address'].enable();
       this.formControls['service'].enable();
-      this.formControls['location'].enable();
+
       this.formControls['state'].enable();
       this.formControls['city'].enable();
+      // this.formControls['email'].enable();
+
 
       this.updateForm.controls['firstName'].setValue(
         this.api.loggedinUser.userName
@@ -249,15 +266,15 @@ export class ArtisanprofileComponent implements OnInit {
   updateArtisanDetails() {
     this.userProfileModelObj.firstName = this.updateForm.value.firstName;
     this.userProfileModelObj.lastName = this.updateForm.value.lastName;
-    // this.userProfileModelObj.email = this.updateForm.value.email;
-    this.userProfileModelObj.PhoneNumber = this.updateForm.value.PhoneNumber;
-    this.userProfileModelObj.address = this.updateForm.value.address;
+
+    this.userProfileModelObj.service = this.updateForm.value.service;
     this.userProfileModelObj.state = this.updateForm.value.state;
     this.userProfileModelObj.city = this.updateForm.value.city;
-    this.userProfileModelObj.service = this.updateForm.value.service;
+    this.userProfileModelObj.phoneNumber = this.updateForm.value.phoneNumber;
+    this.userProfileModelObj.address = this.updateForm.value.address;
+    // this.userProfileModelObj.email = this.updateForm.value.email;
+    this.userProfileModelObj.mobilenumber = this.updateForm.value.mobilenumber;
 
-   
-    
 
     this.api.artisanUpdate(this.userProfileModelObj).subscribe((res: any) => {
       console.log(res);

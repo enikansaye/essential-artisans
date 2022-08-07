@@ -1,10 +1,21 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+
+import {
+  HttpClient,
+  HttpEventType,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { orderModel } from './allartisanmodel';
+
+// import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-allartisan',
@@ -33,32 +44,52 @@ export class AllartisanComponent implements OnInit {
   message: any;
   progress!: number;
 
+  orderModelObj: orderModel = new orderModel();
+  countries: any;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
     private router: Router,
-    private adminApi: AdminService
+
+    private adminApi: AdminService,
+    private http: HttpClient,
+    private toastr: ToastrService
+
   ) {}
 
   ngOnInit(): void {
     this.getAllArtisan();
-    this.showAll();
+    
+
+    this.sortArtisan();
 
     this.formValue = this.formBuilder.group({
+      id: this.api.loggedinUser.id,
+      name: ['asdfghj'],
       artisanId: 0,
-      name: [''],
+
       propertyAddress: [''],
       inspectionDate: ['2022-06-30T10:58:37.452Z'],
       inspectionTime: ['2022-06-30T10:58:37.452Z'],
       mobilenumber: [''],
       AltNumber: [''],
       issue: [''],
+
+      issueImage:File,
+      file: [''],
+      artisanEmail: [],
+
+      fileSource: [''],
+
     });
 
     this.pastDateTime();
   }
 
-  orderModelObj: orderModel = new orderModel();
+
+
   // date and time selection
   pastDateTime() {
     var tdate: any = new Date();
@@ -85,30 +116,33 @@ export class AllartisanComponent implements OnInit {
   }
 
   // selecting location section
-  showAll() {
-    this.api.getAllStateData().subscribe((data: any) => {
-      this.statelga = data;
-      console.log(this.statelga);
-    });
-  }
+  
 
-  createnewService(row: any) {
-    this.orderModelObj.name = this.formValue.value.name;
 
-    console.log(row);
-    this.api
-      .createService(this.orderModelObj, this.orderModelObj.id)
-      .subscribe((res) => {
-        this.orderModelObj.id = row.id;
-        console.log(this.orderModelObj.id);
-        console.log(res);
-
-        alert('fill request form');
-        // this.getAllUser(); //this is to automatically refresh the page
-      });
-
+  onEdit(row: any) {
+    this.orderModelObj.id = row.id;
     console.log(this.orderModelObj.id);
+    console.log(row);
+   
+    this.formValue.controls['artisanId'].setValue(row.id);
+ 
   }
+
+  createnewService(data:string) {
+    this.api.createService(data).subscribe((res) => {
+      // this.orderModelObj.name = this.formValue.value.name;
+      this.toastr.success('Order successfully sent!!!')
+      console.log(this.orderModelObj.id);
+      console.log(res);
+
+      // alert('fill request form');
+    });
+
+    console.log(this.orderModelObj);
+  }
+
+
+  // get all available artisans
 
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
@@ -124,57 +158,114 @@ export class AllartisanComponent implements OnInit {
     this.searchLocation = this.location;
   }
 
-  onEdit(row: any) {
-    this.orderModelObj.id = row.id;
-    console.log(row);
-
-    this.formValue.controls['name'];
-    this.formValue.controls[' propertyAddress'];
-    this.formValue.controls[' propertyAddress'];
-    this.formValue.controls['mobilenumber'];
-    this.formValue.controls[' AltNumber'];
-    this.formValue.controls['issue'];
-  }
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
 
+  working = false;
+  uploadFile?: File | null;
+  uploadFileLabel: string | undefined = 'Choose an image to upload';
+  uploadProgress: number = 0;
+  uploadUrl!: string;
+
+  handleFileInput(files: FileList) {
+    if (files.length > 0) {
+      this.uploadFile = files.item(0);
+      this.uploadFileLabel = this.uploadFile?.name;
+    }
+  }
+
   upload(): void {
-    // this.progress = 0;
+    this.progress = 0;
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
+      console.log(this.selectedFiles);
+      
+
 
       if (file) {
         this.currentFile = file;
 
         const uploadObserver = {
           next: (event: any) => {
-            console.log(event);
-            
+
+
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round((100 * event.loaded) / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
             }
+
+            console.log('done');
+            
           },
           error: (err: any) => {
-            console.log(err);
-            
-            // this.progress = 0;
+            this.progress = 0;
+
             if (err.error && err.error.message) {
               this.message = err.error.message;
             } else {
               this.message = 'Could not upload the file!';
             }
             this.currentFile = undefined;
+
+            console.log(err);
+            
           },
         };
-console.log(uploadObserver);
 
-        this.api.uploadOrderIssue(this.currentFile).subscribe(uploadObserver);
+        this.api.uploadIssue(this.currentFile).subscribe(uploadObserver);
       }
       this.selectedFiles = undefined;
+      console.log();
+      
     }
   }
+
+  sortArtisan() {
+    this.api.sortArtisanLocation().subscribe((data: any) => {
+      const result = Object.entries(data);
+      console.log(data.state);
+
+      // this.countries = data;
+    });
+
+    // this.api.getAll().subscribe((data: any, i: any) => {
+    //   const result = Object.entries(data);
+
+    //   this.countries = data;
+    // });
+  }
+
+  uploadedImage!: File;
+  dbImage: any;
+  postResponse: any;
+  successResponse!: string;
+  image: any;
+
+  public onImageUpload(event: any) {
+    this.uploadedImage = event.target.files[0];
+  }
+
+  imageUploadAction() {
+    const imageFormData = new FormData();
+    imageFormData.append('image', this.uploadedImage, this.uploadedImage.name);
+
+    this.http
+      .post(
+        'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload',
+        imageFormData,
+        { observe: 'response' }
+      )
+      .subscribe((response) => {
+        if (response.status === 200) {
+          this.postResponse = response;
+          this.successResponse = this.postResponse.body.message;
+        } else {
+          this.successResponse = 'Image not uploaded due to some error!';
+        }
+      });
+  }
+
 }

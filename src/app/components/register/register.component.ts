@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
+import { of } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -23,16 +24,7 @@ export class RegisterComponent implements OnInit {
   locationData: any;
   // form :any
 
-  countries: any=[];
-  selectedCountry:any={
-    id:0,
-    name:''
-  }
-  // states: any;
-  cities:any=[];
 
-  state:any=[];
-  city:any=[]
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,10 +35,11 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-   
-      
-    this.showAll();
-    this.onSelect(this.selectedCountry.id)
+
+    // this.showAll();
+    this.showAll2();
+    // this.onSelect(this.selectedCountry.id)
+
 
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -57,41 +50,20 @@ export class RegisterComponent implements OnInit {
       state: ['', Validators.required],
       city: ['', Validators.required],
       address: ['', Validators.required],
+      cities: ['', Validators.required],
     });
 
-    this.api.getCountries().subscribe((data) => (this.countries = data));
+    // this.api.getCountries().subscribe((data) => (this.countries = data));
   }
 
- 
+  // show all location within lagos
+  // showAll() {
+  //   this.api.getAllStateData().subscribe((data: any) => {
+  //     this.statelga = data;
+  //     console.log(this.statelga);
+  //   });
+  // }
 
-  showAll(){
-     this.api.getAllStateData().subscribe((res: any) => {
-      console.log(res);
-      this.countries =res.name
-      console.log(this.countries);
-      
-     
-    });
-   
-  }
-
-  onSelect(country_id:any){
-
-    this.api.getAllStateData().subscribe((res: any) => {
-      // console.log(res[('')].name);
-    //  this.cities = res
-      this.cities =res['cities'].filter(
-        (res:any)=>res.country_id ==country_id.value
-      )
-      console.log(this.cities);
-      
-     
-    });
-
-    
-  
-
-  }
 
   onSubmit() {
     this.alertService.info('Working on creating new account');
@@ -108,4 +80,46 @@ export class RegisterComponent implements OnInit {
 
     this.api.registerUser(this.signupForm.value).subscribe(registerObserver);
   }
+
+
+  countries: any;
+  states: any;
+  selectedCountry: any = {
+    id: 0,
+    name: '',
+    cities: '',
+  };
+
+  showAll2() {
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
+
+      this.countries = data;
+    });
+  }
+
+  onSelect(data: any) {
+    let result = Object.entries(this.countries);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.states = (statesList as any)['cities'];
+
+    console.log(this.states);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.countries);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.states = (statesList as any)['cities'];
+
+    console.log(this.states);
+  }
+
 }

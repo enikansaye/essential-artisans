@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -50,6 +50,8 @@ export class UserprofileComponent implements OnInit {
   min: any = '';
   value: any;
   formSubmitted: boolean = false;
+  public form!: FormGroup;
+  rating3: number =0;
 
   constructor(
     private observer: BreakpointObserver,
@@ -73,7 +75,7 @@ export class UserprofileComponent implements OnInit {
   
      
     });
-
+    this.getUser()
     this.showAll();
 
     this.updateOrder = this.formBuilder.group({
@@ -87,6 +89,40 @@ export class UserprofileComponent implements OnInit {
     });
     this.pastDateTime();
     // this.getUserserInfo();
+
+    this.rating3 = 0;
+    this.form = this.formBuilder.group({
+   
+      rating: ['', Validators.required],
+      comment:['']
+    })
+  }
+
+  submitRating(){
+    
+
+   
+      // this.alertService.info('Working on creating new account');
+  
+      const registerObserver = {
+        
+        next: (res: any) => {
+          this.userProfileModelObj.artisanId = res.id;
+          console.log(this.userProfileModelObj.artisanId);
+          // this.router.navigate(['/checkemail']);
+          console.log(res);
+          
+        },
+        error: (err: any) => {
+          console.log(err);
+          console.log(this.form.value);
+          
+          // this.alertService.danger('signup failed');
+        },
+      };
+  
+      this.api.postRating(this.form.value,).subscribe(registerObserver);
+  
   }
   //  date and time selection
   pastDateTime() {
@@ -256,38 +292,20 @@ export class UserprofileComponent implements OnInit {
     // this.progressBar.startLoading();
     const updateEmployerObserver = {
       next: (x: any) => {
-        // this.progressBar.setSuccess();
+      
         console.log('Account Updated');
         this.router.navigate(['/']);
-        // this.alertService.success("Account Updated");
-        // this.progressBar.completeLoading();
+       
       },
       error: (err: any) => {
-        // this.progressBar.setError();
+        
         console.log(err);
-        // this.alertService.danger("Unable to Update Account");
-        // this.progressBar.completeLoading();
+        
       },
     };
     this.api.userUpdate(this.formValue).subscribe(updateEmployerObserver);
   }
-  // getUserDetails(id:any) {
-
-  //   this.api.getUser(id).subscribe((res: any) => {
-  //     this.data = res;
-  //   });
-  // }
-  // getAllEmployee() {
-  //   this.api.getEmployee().subscribe((res: any) => {
-  //     this.employeeData = res;
-  //   });
-  // }
-
-  // getAllEmployee(row:any) {
-  //   this.api.getUser(row.id).subscribe((res: any) => {
-  //     this.userData = res;
-  //   });
-  // }
+ 
   deleteOrder() {
     this.api.deleteUser().subscribe((res) => {
       alert('employee deleted');
@@ -319,5 +337,17 @@ export class UserprofileComponent implements OnInit {
           
         }
       })
+  }
+  getUser(){
+    this.api.getUserinfo( this.api.loggedinUser.id).subscribe(
+      
+      
+      (res: any) => {
+      console.log(res);
+      
+      this.userData = res;
+      console.log(this.userData);
+      
+    });
   }
 }

@@ -50,8 +50,14 @@ export class ApiService implements OnInit {
   public forgetpasswordUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
     public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
-    public locationUrl : string = 'https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location';
-    public allLocationUrl : string = 'https://lyticalartisanapi.azurewebsites.net/api/App/locations';
+
+    public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/'
+    public userinfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/'
+    public issueImage:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload'
+    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
+    public locationSearch: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location'
+    public rating: string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/Review/create/'
+
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -112,6 +118,14 @@ export class ApiService implements OnInit {
       // {withCredentials:true}
       );
   }
+getUserinfo(id:string){
+  return this.http.get(this.userinfo +id)
+
+}
+getArtisaninfo(id:string){
+  return this.http.get(this.artisaninfo +id)
+}
+
   isUserLoggedIn() {
     return localStorage.getItem('token') != null;
   }
@@ -168,7 +182,7 @@ export class ApiService implements OnInit {
   }
   artisanUpdate(ArtisanInfo: any) {
   
-      return this.http.put(this.url.updateArtisan, ArtisanInfo,httpOptions);
+      return this.http.put(this.url.updateArtisan, ArtisanInfo);
   }
 
   // fakeapi
@@ -235,20 +249,24 @@ export class ApiService implements OnInit {
   
   }
 
-  uploadOrderIssue(file: File): Observable<HttpEvent<any>> {
+
+  uploadIssue(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
  formData.append('file', file);
  
-    const req = new HttpRequest('POST', this.url.uploadService, formData, {
+    const req = new HttpRequest('POST', this.issueImage, formData, {
+
       reportProgress: true,
       responseType: 'json',
     });
   
+
     
     return this.http.request(req);
 
   
   }
+
   updateUser(userInfo: any, ){
     return this.http.put(this.updateArtisan , userInfo,  httpOptions);
     // public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
@@ -281,41 +299,15 @@ export class ApiService implements OnInit {
 
 
 
-  getAllStateData() {
-    return this.http.get(this.allLocationUrl);
-    // return this.http
-    //   .get<any>(this.allLocationUrl)
 
-    //   .pipe(
-    //     map((res: any) => {
-    //       console.log(res);
-          
-    //       return res;
-    //     })
-    //   );
-  }
-
-  getUser() {
-    return this.http.get<any>(this.url.allUsers).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
-
-  getArtisan() {
-    return this.http.get<any>(this.url.allArtisans).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
 
 
 
   //  create service
-  createService(data: any, id:number) {
-    return this.http.post<any>(this.url.createService +id, data).pipe();
+
+  createService(data:any, ) {
+    return this.http.post<any>(this.url.createService , data).pipe();
+
   }
   // fake api
   createService2(data:any, id:number) {
@@ -361,71 +353,16 @@ Logout() {
 }
 
 
-
-
-// fake api for service categories
-// postService(data: any) {
-//   return this.http.post<any>('http://localhost:3000/posts', data).pipe(
-//     map((res: any) => {
-//       return res;
-//     })
-//   );
-// }
-
-// getService() {
-//   return this.http.get<any>('http://localhost:3000/posts').pipe(
-//     map((res: any) => {
-//       return res;
-//     })
-//   );
-// }
-// deleteService(id:number) {
-//   return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
-//     map((res: any) => {
-//       return res;
-//     })
-//   );
-// }
-
-updateService(data:any, id:number) {
-  return this.http.put<any>('http://localhost:3000/posts/' + id , data).pipe(
-    map((res: any) => {
-      return res;
-    })
-  );
+// location2
+getAll():any{
+  return this.http.get<any>(this.location2)
 }
 
-
-
-
-getCountries() {
-  return this.http.get(this.allLocationUrl).pipe(
-    catchError(this.handleError)
-  );
+sortArtisanLocation():any{
+  return this.http.get<any>(this.locationSearch)
 }
+postRating(data:any, ) {
+  return this.http.post(this.rating ,data).pipe();
 
-getStates(countryId: number) {
-  return this.http.get(this.allLocationUrl +name).pipe(
-    catchError(this.handleError)
-  );
-}
-
-getCities() {
-  return this.http.get(this.allLocationUrl).pipe(
-    catchError(this.handleError)
-  );
-}
-
-private handleError(error: HttpErrorResponse) {
-  if (error.error instanceof ErrorEvent) {
-    // A client-side or network error occurred. Handle it accordingly.
-    console.error('An error occurred:', error.error.message);
-  } else {
-    // The backend returned an unsuccessful response code.
-    // The response body may contain clues as to what went wrong,
-    console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
-  }
-  // return an observable with a user-facing error message
-  return throwError('Something bad happened. Please try again later.');
 }
 }

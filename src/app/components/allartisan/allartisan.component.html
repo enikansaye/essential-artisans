@@ -42,8 +42,10 @@
                     }
                 | filter: '':'gender'|sort:['email','asc']
             "
-         (click)="onEdit(data)" >
-            <div class="card card-profile">
+
+          >
+            <div class="card card-profile" (click)="onEdit(data)">
+
               <div class="card-avatar">
                 <a>
                   <img class="img" src="data:image/png;base64,{{ data.profileImage}}" />
@@ -52,9 +54,11 @@
 
               <div class="table">
                 <h4 class="card-caption">
-                  <!-- {{ data.name.first }} {{ data.name.last }} -->
+
+                  {{ data.name }} 
+                 
                 </h4>
-                <p class="category text-muted h6 pt-3">Carpenter</p>
+
                 <p class="category text-muted h6 pt-3">{{ data.email }}</p>
                 <p class="card-description text-center">
                   15 years working experience.
@@ -157,9 +161,12 @@
         <!-- modal form -->
         <form
           [formGroup]="formValue"
-          (ngSubmit)="createnewService(this.formValue.value)"
-       
+
+         
+         
+
         >
+        <!-- (ngSubmit)="createnewService(this.formValue.value)" -->
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
@@ -176,7 +183,7 @@
               >Address</label
             >
             <input
-              formControlName="propertyAdress"
+              formControlName="propertyAddress"
               type="text"
               class="form-control"
               id="exampleInputPassword1"
@@ -226,19 +233,60 @@
               class="form-control"
             />
           </div>
-          <div class="mb-1">
+          <!-- <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Photo of issue</label
             >
             <input
-              formControlName="Photo"
+              formControlName="file"
               type="file"
+<<<<<<< HEAD
               class="form-control file"
               (change)="selectFile($event)"
+=======
+              class="form-control file" (change)="selectFile($event)"
+>>>>>>> dev
             />
+          </div> -->
+          <!-- <button class="btn btn-info" (click)="upload()">upload</button> -->
+
+          <!-- <div class="row mt-5">
+          <div class="col">
+            <div class="custom-file">
+              <input type="file" accept="image/*" class="custom-file-input" id="customFile" (change)="handleFileInput($any($event.target).files)" [disabled]="working">
+              <label class="custom-file-label" for="customFile">{{ uploadFileLabel }}</label>
+            </div>
           </div>
-          <button class="btn btn-danger"  (click)="upload()">upload image</button>
-          <div class="mb-1">
+
+          <div class="col-auto pl-sm-0">
+            <button type="button" class="btn btn-outline-primary" ngbTooltip="Upload" (click)="upload()" [disabled]="working">Upload</button>
+          </div>
+        </div>
+        <div class="row mt-3" *ngIf="working">
+          <div class="col">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploadProgress + '%' }" [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100">{{ uploadProgress }}%</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3" *ngIf="uploadUrl?.length">
+          <div class="col">
+            <img [src]="uploadUrl" alt="preview" class="rounded shadow w-100">
+          </div>
+        </div> -->
+
+        <div class="form-group">
+          <input type="file" (change)="onImageUpload($event)">
+          <input type="button" formControlName="issueImage" (click)="upload()" value="Upload Image" class="btn1">
+      </div>
+
+
+      <div>
+          <output *ngIf=successResponse class="success"><b>{{successResponse}}</b></output>
+      </div>
+          
+  <div class="mb-1">
+
             <label for="exampleInputPassword1" class="form-label"
               >Description</label
             >
@@ -262,15 +310,34 @@
               (change)="onChange(input.value)"
             />
           </div>
-          <button type="submit"  (click)="upload()"  class="btn btn-info" data-bs-dismiss="modal">
+
+          <!-- <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
+>>>>>>> dev
             Send
-          </button>
+          </button> -->
+
+          
+
+
+
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
+        <button (click)="upload()" (click)="createnewService(this.formValue.value)" class="btn btn-info" data-bs-dismiss="modal">
           Send
         </button>
+        <div *ngIf="currentFile" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress + '%' }"
+          >
+            {{ progress }}%
+          </div>
+        </div>
         <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
         <!-- <button *ngIf="showUpdate" type="button" (click)="updateEmployeeDetails()" class="btn btn-primary">Update</button> -->
       </div>

@@ -1,22 +1,27 @@
 export class userProfileModel{
-    id: number = 0;
+    id: string = "";
     firstName: string ="";
     lastName: string ="";
     email: string ="";
     city: string ="";
     state: string ="";
-    PhoneNumber: string = "" ;
+    mobilenumber: string = "" ;
     AltnmbNr: number = 0 ;
     name: string ="";
     address: string ="";
     propertyAddress: string =""
     inspectionDate: string =""
     issue: string =""
-    artisanId:number=0;
-  
-    // userId: 0,
+
+  phoneNumber: string='';
+//   address: string='';
+//   state: string='';
+//   city: string='';
+  service: string='';  
+  artisanId: number=0
+
     
   
    
-    service: string=''
+    // service: string=''
 }

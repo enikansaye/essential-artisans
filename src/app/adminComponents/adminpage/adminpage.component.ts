@@ -27,6 +27,7 @@ export class AdminpageComponent implements OnInit {
   page:number=1
   artisanData: any;
   othersData: any;
+  AllOrderData: any;
   
 
   constructor(private observer: BreakpointObserver, private api: ApiService,  private adminApi: AdminService) {}
@@ -176,16 +177,16 @@ export class AdminpageComponent implements OnInit {
 //     console.log(this.totalRecord);
     
   
-//   });
-// }
-// getAllArtisan() {
-//   this.adminApi.getArtisan().subscribe((res: any) => {
-//     this.artisanData = res.results;
-//     console.log(this.artisanData)
-//     this.totalRecord=res.length;
-//     console.log(this.totalRecord);
-//   });
-// }
+
+getAllArtisan() {
+  this.adminApi.getArtisan().subscribe((res: any) => {
+    this.artisanData = res;
+    console.log(this.artisanData)
+    this.totalRecord=res.length;
+    console.log(this.totalRecord);
+  });
+}
+
 getAllOthers() {
   this.adminApi.getOthers().subscribe((res: any) => {
     this.othersData = res;
@@ -199,5 +200,14 @@ getAllOthers() {
 //    this.getAllArtisan();
 //   })
 // }
+
+getArtisanById(id:string){
+  this.adminApi.getArtisanbyid(id).subscribe((res:any)=>{
+    this.artisanData = res;
+  })
+}
+
+
+
 
 }

@@ -32,7 +32,7 @@
   
      
       
-
+<!-- 
       <div class="mb-3" >
         
         <label for="exampleInputPassword1" class="form-label"
@@ -54,7 +54,36 @@
           <option  *ngFor="let city of cities" [value]="city.id" >{{city.cities}}</option>
         
         </select>
+       </div> -->
+
+
+       <div class="mb-3" >
+        
+        <label for="country" class="form-label"
+        >Select Location</label
+      >
+        <select class="form-select" aria-label="Default select example" formControlName="location" [(ngModel)]="selectedCountry.name" (change)="onSelect($event.target)" >
+          <option selected value=""> select location</option>
+          <option  *ngFor="let country of countries" value="{{ countries.indexOf(country) }}" >{{country.name}}</option>
+        
+        </select>
        </div>
+       <div class="mb-3" >
+        
+        <label for="states" class="form-label"
+        >Select Location</label
+      >
+        <select class="form-select" aria-label="Default select example" formControlName="cities" 
+          [(ngModel)]="selectedCountry.cities" (change)="onSelectCities($event.target)"
+        >
+          <option selected value=""> select location</option>
+          <option  *ngFor="let state of states" value="cities" >{{state}}</option>
+        
+        </select>
+       </div>
+
+
+
       <mat-form-field class="example-full-width" appearance="fill" >
         <mat-label>ADDRESS</mat-label>
         <input matInput formControlName="address" placeholder="Ex. 22 kabiru" />

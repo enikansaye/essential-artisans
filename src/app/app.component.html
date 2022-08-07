@@ -39,23 +39,25 @@
             <a class="nav-link active h5" aria-current="page" routerLink="/">Home</a>
            
           </li>
-          <li> <button class="btn btn-primary" routerLink="/signin" *ngIf="!api.loggedIn()">Sign in</button></li>
+       
        
         </ul>
         <span class="navbar-text">
+          <div> <button class="btn btn-info" routerLink="/signin" *ngIf="!api.loggedIn()">Sign in</button></div>
           
           <div class="dropdown" *ngIf="api.loggedIn();">
             
             <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
           
               welcome <span class="text-primary" >   {{api.loggedinUser.email}} </span>
+              <!-- welcome <span class="text-primary" (click)="onEdit(api.loggedinUser)">   {{api.loggedinUser.id}} </span> -->
            
         
             </a>
           
             <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
-              <li><a class="dropdown-item" *ngIf="this.displayUser" routerLink="/userprofile" >My Profile</a></li>
-              <li><a class="dropdown-item" *ngIf="this.displayArtisan" routerLink="/artisanprofile">My Profile</a></li>
+              <li><a class="dropdown-item" *ngIf="this.displayUser" routerLink="/userprofile" (click)="onClick(api.loggedinUser.id)">My Profile</a></li>
+              <li><a class="dropdown-item" *ngIf="this.displayArtisan" routerLink="/artisanprofile" (click)="onClick(api.loggedinUser.id)">My Profile</a></li>
               <li><a class="dropdown-item" *ngIf="this.displayAdmin" routerLink="/admin">My Profile</a></li>
               <li><a class="dropdown-item" routerLink="">Edit</a></li>
               <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
