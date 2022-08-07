@@ -95,19 +95,7 @@ export class ServicecategoryComponent implements OnInit {
     this.formValue.controls['name'].setValue(row.name);
     
   }
-  
-  updateData(value: any) {
-    let body = {
-      name: value.name,
-      // age: value.age
-    }
 
-    this.adminApi
-    .updateServiceCategory(body,  this.servicecategoryModelObj.name)
-      .subscribe(response => {
-        console.log(response)
-      })
-  }
 
 
   updateServiceCategory() {
