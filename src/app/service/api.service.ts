@@ -313,13 +313,13 @@ getArtisaninfo(){
       })
     )
   }
-  // updateUserOrder(){
-  //   return this.http.get(this.baseUrl + "/api/Customer/ServiceOrder/update").pipe(
-  //     map((res:any)=>{
-  //       return res;
-  //     })
-  //   )
-  // }
+  updateUserOrder(){
+    return this.http.get(this.baseUrl + "/api/Customer/ServiceOrder/update").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
 
   getArtisan() {
     return this.http.get<any>('http://localhost:3000/posts').pipe(
@@ -336,13 +336,13 @@ getArtisaninfo(){
     return this.http.post<any>(this.url.createService , data).pipe();
   }
   // fake api
-  createService2(data:any, id:number) {
-    return this.http.put<any>(this.url.createService + id , data).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
+  // createService2(data:any, id:number) {
+  //   return this.http.put<any>(this.url.createService + id , data).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
 
   //  create invoice by artisans
   createInvoice(data:any) {
@@ -367,9 +367,30 @@ getArtisaninfo(){
   //     })
   //   );
   // }
-  updateService(userInfo: any, userId: string){
+  updateService(userInfo: any){
     return this.http.put(this.baseUrl + "/api/Customer/ServiceOrder/update", userInfo);
 }
+
+
+deletes(data:any){
+
+  const req = new HttpRequest('DELETE', 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/delete' ,data, {
+    reportProgress: true,
+    responseType: 'json',
+  });
+
+  
+
+
+  
+  return this.http.request(req);
+
+}
+
+
+
+
+  
 
 // checking with refresh token
 Logout() {
@@ -394,6 +415,10 @@ sortArtisanLocation():any{
 }
 postRating(data:any, ) {
   return this.http.post(this.rating ,data).pipe();
+}
+
+generateInvoice(data:any){
+  return this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/invoice/create',data)
 }
 
 }

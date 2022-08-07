@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { ApiService } from 'src/app/service/api.service';
 
 
 @Component({
@@ -42,12 +43,59 @@ export class DashboardComponent implements OnInit {
   image4 : string = "../assets/images/0thers08.png";
   image5 : string = "../assets/images/electrical.svg";
   image6 : string = "../assets/images/iphone.png";
+  searchArtisan: any;
+  location: any;
 
-  constructor() { }
+  constructor(private api: ApiService,) { }
 
   ngOnInit(): void {
+    this.showAll()
   }
 
+  selectedCountry: any = {
+    id: 0,
+    name: '',
+    cities: '',
+  };
+  countries: any;
+  states: any;
 
+  showAll() {
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
 
+      this.countries = data;
+    });
+  }
+
+  onSelect(data: any) {
+    let result = Object.entries(this.countries);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.states = (statesList as any)['cities'];
+
+    console.log(this.states);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.countries);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.states = (statesList as any)['cities'];
+
+    console.log(this.states);
+  }
+
+  onLocationFilter() {
+    this.searchArtisan = this.location;
+  }
 }
+
+
+

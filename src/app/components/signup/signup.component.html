@@ -1,142 +1,210 @@
-<div class="register mt-5 mt-sm-2">
-  <div class="signup mt-5 mt-sm-3">
-    <div>SIGN UP</div>
-    <!-- <p routerLink="/partnerregister">signup as Artisan</p> -->
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>FIRST NAME</mat-label>
-        <input matInput formControlName="firstName" placeholder="Ex. john " />
-        <mat-error
-          style="color: red"
-          *ngIf="
-            signupForm.controls['firstName'].dirty &&
-            signupForm.hasError('required', 'firstName')
-          "
-        >
-          Full name is required</mat-error
-        >
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>LAST NAME</mat-label>
-        <input matInput formControlName="lastName" placeholder="Ex.  paul" />
-        <mat-error
-          style="color: red"
-          *ngIf="
-            signupForm.controls['lastName'].dirty &&
-            signupForm.hasError('required', 'lastName')
-          "
-        >
-          Full name is required</mat-error
-        >
-      </mat-form-field>
 
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label"
-          >Select Location</label
-        >
-        <select
-          class="form-select"
-          aria-label="Default select example"
-          formControlName="location"
-        >
-          <option selected>select location</option>
-          <option *ngFor="let statelga of statelga">{{ statelga }}</option>
-        </select>
+
+<section class="w-100 d-flex justify-content-center align-items-center" style="background-color: #f4f4f8;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-6">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row ">
+           
+            <div class="col-md-12 col-lg-12 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
+                <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <i
+                      class="fas fa-cubes fa-2x me-3"
+                      style="color: #3111c0"
+                    ></i>
+                    <span class="h3 fw-bold mb-0">Essential</span>
+                  </div>
+
+                  <div class="fw-normal h4 mb-3 pb-3" style="letter-spacing: 1px">
+                    Sign up as an Artisan
+                  </div>
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="firstName"
+                      class="form-control form-control-lg mb-1"
+                    />
+                    <span class="text-danger"
+                    *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
+                    First Name is required
+                </span>
+                   
+                  <div>  <label class="form-label" for="">First Name</label></div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="lastName"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                      class="text-danger"
+                      *ngIf="(signupFormControl['lastName'].touched || submitted) && signupFormControl['lastName'].errors?.['required']"
+                    >
+                      lastName is required
+                    </span>
+                    <label class="form-label" for="form2Example27">Last Name</label>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="email"
+                      id=""
+                      formControlName="email"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                      class="text-danger"
+                      *ngIf="(signupFormControl['email'].touched || submitted) && signupFormControl['email'].errors?.['required']"
+                    >
+                      Email is required
+                    </span>
+                    <span
+                      class="text-danger"
+                      *ngIf="signupFormControl['email'].touched && signupFormControl['email'].errors?.['email']"
+                    >
+                      Enter a valid email address
+                    </span>
+                    <div>  <label class="form-label" for="">Email</label></div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="phoneNumber"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                      class="text-danger"
+                      *ngIf="(signupFormControl['phoneNumber'].touched || submitted) && signupFormControl['phoneNumber'].errors?.['required']"
+                    >
+                      Phone Number is required
+                    </span>
+                    <div>  <label class="form-label" for="">Phone</label></div>
+                  </div>
+                  <div class="form-group form-outline mb-4">
+                   
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="state"
+                      [(ngModel)]="selectedCountry.name"
+                      (change)="onSelect($event.target)"
+                    >
+                      <option selected value="" >select location</option>
+                      <option class="form-control form-control-lg mb-1"
+                        *ngFor="let country of state"
+                        value="{{ state.indexOf(country) }}"
+                      >
+                        {{ country.name }}
+                      </option>
+                    </select>
+                   <div> <label for="country" class="form-label">Select State</label></div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+      
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="city"
+                      [(ngModel)]="selectedCountry.cities"
+                    >
+                      <option selected value="">select location</option>
+                      <option *ngFor="let state of city" value="cities">
+                        {{ state }}
+                      </option>
+                    </select>
+                    <label for="country" class="form-label">Select City</label>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="address"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                      class="text-danger"
+                      *ngIf="(signupFormControl['address'].touched || submitted) && signupFormControl['address'].errors?.['required']"
+                    >
+                      Address is required
+                    </span>
+                   <div> <label for="country" class="form-label">Address</label></div>
+                  </div>
+
+                  <mat-form-field class="example-full-width" >
+                    
+                    <input
+                      matInput
+                      [type]="hide ? 'password' : 'text'"
+                      type="password"
+                      id="mypassword"
+                      formControlName="password"
+                      name="password"
+                    />
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide"
+                    >
+                      <mat-icon >{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                    </button>
+                    <mat-error
+                      *ngIf="
+                        signupForm.controls['password'].dirty &&
+                        signupForm.hasError('required', 'minLength')
+                      "
+                    >
+                      password cann't be less than four
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.hasError('required')">
+                      password is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <label for="country" class="form-label">Password</label>
+
+
+                  <div class="form-group pt-1 mb-4">
+                    <button
+                      class="btn btn-dark btn-lg btn-block"
+                      type="submit"
+                      [disabled]="signupForm.invalid"
+                    >
+                      Login
+                    </button>
+                  </div>
+
+                  
+                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a routerLink="/signin"
+                      style="color: #393f81;">Sign in here</a></p>
+                  <a href="#!" class="small text-muted">Terms of use.</a>
+                  <a href="#!" class="small text-muted">Privacy policy</a>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>ADDRESS</mat-label>
-        <input matInput formControlName="address" placeholder="Ex. 22 kabiru" />
-        <mat-error
-          style="color: red"
-          *ngIf="
-            signupForm.controls['address'].dirty &&
-            signupForm.hasError('required', 'address')
-          "
-        >
-          Your Address is required</mat-error
-        >
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>PHONE NUMBER</mat-label>
-        <input matInput formControlName="phone" placeholder="Ex. 22 kabiru" />
-        <mat-error
-          style="color: red"
-          *ngIf="
-            signupForm.controls['phone'].dirty &&
-            signupForm.hasError('required', 'phone')
-          "
-        >
-          Phone number is required</mat-error
-        >
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Email</mat-label>
-        <input
-          type="email"
-          matInput
-          formControlName="email"
-          placeholder="Ex. pat@example.com"
-        />
-        <mat-error
-          *ngIf="
-            signupForm.controls['email'].dirty &&
-            signupForm.hasError('required', 'email')
-          "
-        >
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="signupForm.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Enter your password</mat-label>
-        <input
-          matInput
-          [type]="hide ? 'password' : 'text'"
-          type="password"
-          id="mypassword"
-          formControlName="password"
-          name="password"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
-        >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
-        <mat-error
-          *ngIf="
-            signupForm.controls['password'].dirty &&
-            signupForm.hasError('required', 'minLength')
-          "
-        >
-          password cann't be less than four
-        </mat-error>
-        <mat-error *ngIf="signupForm.hasError('required')">
-          password is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- <div>
-        <input type="password" id="mypassword" formControlName="password" name="password" >
-      </div> -->
-      <div class="d-flex justify-content-center">
-        <p>
-          <a routerLink="/signin">Already User? <strong>signin</strong></a>
-        </p>
-        <p>
-          <a routerLink="/signin">signup as <strong>user</strong></a>
-        </p>
-        
-      </div>
-
-      <button class="btn btn-primary" [disabled]="signupForm.invalid">
-        SIGN UP
-      </button>
-    </form>
+    </div>
   </div>
-</div>
+</section>
+
+

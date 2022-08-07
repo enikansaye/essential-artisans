@@ -16,5 +16,7 @@ export class userProfileModel{
   service: string='';  
   artisanId: number=0
   userId: number=0
+  orderId: number= 0
+  controls: any;
     
 }

@@ -538,8 +538,8 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class=" col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/plumbing">
-              <div class="card shadow h-100">
+            <div class=" col-6 col-sm-6 col-lg-4 col-xl-3" >
+              <div class="card shadow h-100" routerLink="/plumbing">
                 <!-- Image -->
                 <img
                   src="assets/images/plumbing.png"
@@ -725,7 +725,7 @@
     <button class=" h6 text-light mt-4" style="background-color: #1daeff; border: none;" routerLink="">Become A Vendor</button>
   </div>
     </div>
-      <div class="col-md-6 partner">
+      <div class="col-md-6 partner d-none d-md-block  ">
         <img src="assets/images/partnerimage.jpg" alt="" class="img-fluid img w-100"  />
       </div>
    
@@ -790,6 +790,8 @@
     </div>
   </section>
 </div>
+
+<!-- modal -->
 <div
   class="modal fade"
   id="exampleModal"
@@ -810,31 +812,50 @@
       </div>
       <div class="modal-body">
         <div class="d-flex">
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label=".form-select-lg example"
-          >
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-          <select
-            class="form-select form-select-lg mb-3"
-            aria-label=".form-select-lg example"
-          >
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+          <div class="form-group form-outline mb-4">
+                   
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="State"
+              [(ngModel)]="selectedCountry.name"
+              (change)="onSelect($event.target)"
+            >
+              <option selected value="" >select location</option>
+              <option class="form-control form-control-lg mb-1"
+                *ngFor="let country of countries"
+                value="{{ countries.indexOf(country) }}"
+              >
+                {{ country.name }}
+              </option>
+            </select>
+           <div> <label for="country" class="form-label">Select Location</label></div>
+          </div>
+
+          <div class="form-group form-outline mb-4">
+
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="City"
+              [(ngModel)]="location"
+            >
+              <option selected value="">select location</option>
+              <option *ngFor="let state of states" value="cities">
+                {{ state }}
+              </option>
+            </select>
+            <label for="country" class="form-label">Select Location</label>
+          </div>
+          <button type="button" class="btn btn-info h-50 ms-2" (click)="onLocationFilter()">search</button>
         </div>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <!-- <button type="button" class="btn btn-primary">Send message</button> -->
       </div>
     </div>
   </div>

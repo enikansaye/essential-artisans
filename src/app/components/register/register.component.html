@@ -162,14 +162,11 @@
 <section class="w-100 d-flex justify-content-center align-items-center" style="background-color: #f4f4f8;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-xl-10">
+      <div class="col col-xl-6">
         <div class="card" style="border-radius: 1rem;">
-          <div class="row g-0">
-            <!-- <div class="col-md-6 col-lg-5 d-none d-md-block">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
-            </div> -->
-            <div class="col-md-12 col-lg-7 d-flex align-items-center">
+          <div class="row ">
+           
+            <div class="col-md-12 col-lg-12 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
 
                 <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
@@ -194,10 +191,10 @@
                     />
                     <span class="text-danger"
                     *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
-                    User Name is required
+                    First Name is required
                 </span>
                    
-                  <div>  <label class="form-label" for="">Firstname</label></div>
+                  <div>  <label class="form-label" for="">First Name</label></div>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -214,7 +211,7 @@
                     >
                       lastName is required
                     </span>
-                    <label class="form-label" for="form2Example27">Lastname</label>
+                    <label class="form-label" for="form2Example27">Last Name</label>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -237,7 +234,7 @@
                     >
                       Enter a valid email address
                     </span>
-                    <div>  <label class="form-label" for="">Firstname</label></div>
+                    <div>  <label class="form-label" for="">Email</label></div>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -254,7 +251,7 @@
                     >
                       Phone Number is required
                     </span>
-                    <div>  <label class="form-label" for="">Firstname</label></div>
+                    <div>  <label class="form-label" for="">Phone</label></div>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -274,7 +271,7 @@
                         {{ country.name }}
                       </option>
                     </select>
-                   <div> <label for="country" class="form-label">Select Location</label></div>
+                   <div> <label for="country" class="form-label">Select State</label></div>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -290,7 +287,7 @@
                         {{ state }}
                       </option>
                     </select>
-                    <label for="country" class="form-label">Select Location</label>
+                    <label for="country" class="form-label">Select City</label>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -310,12 +307,15 @@
                    <div> <label for="country" class="form-label">Address</label></div>
                   </div>
 
-                  <div class="form-group form-outline mb-4">
+                  <mat-form-field class="example-full-width" >
+                    
                     <input
-                      formControlName="password"
-                      type="password"
+                      matInput
                       [type]="hide ? 'password' : 'text'"
-                      class="form-control form-control-lg mb-1"
+                      type="password"
+                      id="mypassword"
+                      formControlName="password"
+                      name="password"
                     />
                     <button
                       mat-icon-button
@@ -324,21 +324,22 @@
                       [attr.aria-label]="'Hide password'"
                       [attr.aria-pressed]="hide"
                     >
-                      <mat-icon>{{
-                        hide ? "visibility_off" : "visibility"
-                      }}</mat-icon>
+                      <mat-icon >{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                     </button>
-                    <span
-                      class="text-danger"
-                      *ngIf="(signupFormControl['password'].touched || submitted) && signupFormControl['password'].errors?.['required']"
+                    <mat-error
+                      *ngIf="
+                        signupForm.controls['password'].dirty &&
+                        signupForm.hasError('required', 'minLength')
+                      "
                     >
-                      Password is required
-                    </span>
+                      password cann't be less than four
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.hasError('required')">
+                      password is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <label for="country" class="form-label">Password</label>
 
-                    <div>  <label class="form-label" for="">Password</label></div>
-                    >
-                   
-                  </div>
 
                   <div class="form-group pt-1 mb-4">
                     <button
@@ -351,7 +352,7 @@
                   </div>
 
                   
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a href="#!"
+                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a routerLink="/signin"
                       style="color: #393f81;">Sign in here</a></p>
                   <a href="#!" class="small text-muted">Terms of use.</a>
                   <a href="#!" class="small text-muted">Privacy policy</a>

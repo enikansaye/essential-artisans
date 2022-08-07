@@ -1,11 +1,11 @@
 <mat-sidenav-container class="">
     <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3  ">
         <mat-toolbar class="w-100 d-flex justify-content-end">
-          <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+          <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
                    
-            <mat-icon *ngIf="sidenav.opened" class="d-flex justify-content-end">close</mat-icon>
+            <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'over'" class="d-flex justify-content-end">close</mat-icon>
       
-          </button>
+          <!-- </button> -->
         </mat-toolbar>
         <div class="w-100 d-flex flex-column text-center">
           <img src="assets/images/mayor.jpg" class="image image-fluid mx-auto ">
@@ -118,12 +118,12 @@
     <div class="ms-3" [ngSwitch]="expression">
       <div>
         <mat-toolbar>
-            <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
-                <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+            <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
+                <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over' ">menu</mat-icon>
              
                 
           
-              </button>
+              <!-- </button> -->
           <nav class="navbar-default navbar w-100 navbar-expand float-right">
             <a id="nav-toggle" href="#">
               <i class="bi bi-menu"></i>
@@ -472,7 +472,7 @@
           </nav>
         </mat-toolbar>
 
-        <div class="container-fluid p-4" *ngSwitchCase="'page1'">
+        <div class="container-fluid p-4 " *ngSwitchCase="'page1'">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
               <div
@@ -499,12 +499,12 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xl-3 col-lg-6 col-md-12 col-12 justify-content-center">
+          <div class="row text-light">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6 justify-content-center">
               <!-- Card -->
               <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body col1  justify-content-center">
+                <div class="card-body col1 rounded justify-content-center">
                   <div
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
@@ -524,7 +524,7 @@
 
 
                   <span class="text-danger fw-semi-bold">120+</span>
-                  <span class="ms-1 fw-medium">Number of pending</span>
+                  <span class="ms-1 fw-medium">Pending Orders</span>
 
                  
                 </div>
@@ -534,11 +534,11 @@
              
 
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
               <!-- Card -->
               <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body col2" >
+                <div class="card-body rounded col2" >
                   <div
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
@@ -560,11 +560,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 col-12">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
               <!-- Card -->
               <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body col3">
+                <div class="card-body col3 rounded">
                   <div
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
@@ -586,32 +586,33 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-12 col-12 ">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
               <!-- Card -->
-              <div class="card mb-4 w-100">
+              <div class="card mb-4">
                 <!-- Card body -->
-                <div class="card-body col4 rounded ">
+                <div class="card-body col4 rounded">
                   <div
-                    class="d-flex flex-column align-items-center justify-content-center mb-3 lh-1"
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
-                 
+                    <div>
                       <i class="fa-solid fa-users-viewfinder"></i>
                       <span class="fs-6 text-uppercase fw-semi-bold"
-                        >Artisans</span
+                        >artisans</span
                       >
-                     
-                 
-                    <h2 class="fw-bold mb-1">1000</h2>
-                    <span class="text-success fw-semi-bold"
-                      ><i class="bi bi-trending-up me-1"></i>10% <i class="fa-solid fa-chart-line-up"></i></span
-                    ><i class="fa-solid fa-chart-line-up"></i>
-                    <span class="ms-1 fw-medium">Artisan</span>
-                    <i class="bi bi-graph-up-arrow"></i>
                     </div>
-                   
+                    <div>
+                      <span class="bi bi-users fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1">1000</h2>
+                  <span class="text-success fw-semi-bold"
+                    ><i class="bi bi-trending-up me-1"></i>+5</span
+                  >
+                  <span class="ms-1 fw-medium">Total Artisans</span>
                 </div>
               </div>
             </div>
+           
           </div>
           <div class="row">
             <div class="col-xl-8 col-lg-12 col-md-12 col-12">

@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   ngOnInit(): void {
     // this.showAll();
-    this.showAll2();
+    this.showAll();
     // this.onSelect(this.selectedCountry.id)
 
     this.signupForm = this.formBuilder.group({
@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit {
     cities: '',
   };
 
-  showAll2() {
+  showAll() {
     this.api.getAll().subscribe((data: any, i: any) => {
       const result = Object.entries(data);
 

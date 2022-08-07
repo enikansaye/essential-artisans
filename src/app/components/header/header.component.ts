@@ -1,16 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, HostListener, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, HostListener, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
+import { ApiService } from 'src/app/service/api.service';
 import { Emitters } from 'src/emitters/emitters';
+import { userProfileModel } from '../userprofile/userprofile.model';
+// import { MenuItem } from './menu-item';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnChanges {
+export class HeaderComponent implements OnInit {
 
+
+  userProfileModelObj: userProfileModel = new userProfileModel();
+  
   searchTerm: any;
   term!:string;
   total:any = 0;
@@ -25,60 +31,113 @@ export class HeaderComponent implements OnChanges {
   public signinForm !: FormGroup;
   authenticated = false;
 
-  constructor(private formBuilder: FormBuilder, private http : HttpClient,private route: ActivatedRoute, private router: Router) { }
-  ngOnChanges(changes: SimpleChanges): void {
- 
-    this.route.params.subscribe(params =>{
-      // console.log(params.searchTerm);
-      // if(params.searchTerm)
-        // this.searchTerm = params.searchTerm;
-    })
+  loggedinUser: any;
+  userResponse: any;
+  displayUser: any;
+  displayArtisan: any;
+  currentRole: any;
+  displayAdmin: any;
+
+
+  constructor(private formBuilder: FormBuilder,public api: ApiService,
+    private http : HttpClient,private route: ActivatedRoute, private router: Router) { }
+  ngOnInit(): void {
+    this.roleDisplay();
+    this.api.loggedIn()
+    this.onClick(this.userProfileModelObj.id)
+    
     
   }
 
-  // get user(): User {
-  //   return this.userService.User;
-  // }
+  onClick(row:any){
+    
+    console.log(row);
+    
+        this.userProfileModelObj.id = row.id;
+        console.log(this.userProfileModelObj.id);
+        
+    
+        // this.formValue.controls['name'].setValue(row.name);
+      }
 
-  // logout(prop): void {
-  //   this.show = prop;
-  //   this.authService.logout();
-  // }
+      roleDisplay(){
+        if (this.api.getUserToken()!='') {
+          this.currentRole = this.api.haveaccess(this.api.getUserToken());
+    
+          console.log(this.currentRole);
+    
+          this.displayUser = this.currentRole === 'CUSTOMER';
+    
+          console.log(this.displayUser);
+    
+          this.displayArtisan = this.currentRole === 'ARTISAN';
+          console.log(this.displayArtisan);
+          this.displayAdmin = this.currentRole === 'ADMIN';
+          console.log(this.displayAdmin);
+        }
+      this.api.loggedIn()
+      }
 
-  // get isLoggedIn(): boolean {
-  //   return this.authService.isLoggedIn;
-  // }
+      logout() {
+        // this.router.navigate(['/']);
+        localStorage.removeItem('accesstoken')
+        return localStorage.removeItem('token');
+      }
 
-  onMouseover() {
-    this.searchBarVisible = true;
+ menuItems = [
+    {
+      // buttonClickValue:this.logout,
+      label: 'Help',
+      icon: 'help',
+      showOnMobile: true,
+      showOnTablet: true,
+      showOnDesktop: true,
+      routeLink: 'helpcenter',
+      
+    },
+   
+   
+    {
+      label: 'Sign In',
+      icon: 'login',
+      showOnMobile: true,
+      showOnTablet: true,
+      showOnDesktop: true,
+      routeLink: 'signin',
+      // buttonClickValue:this.logout
+    },
+
+    {
+      label: 'Profile',
+      icon: 'person',
+      showOnMobile: false,
+      showOnTablet: true,
+      showOnDesktop: true,
+      routeLink: 'userprofile',
+      
+      
+    },
+    {
+      label: 'Logout',
+      icon: 'logout',
+      showOnMobile: false,
+      showOnTablet: true,
+      showOnDesktop: true,
+      buttonClickValue: this.logout,
+      routeLink: '/',
+      
+    },
+  ];
+
+
+  isShowDivIf = true;
+  toggleDisplayDivIf(){
+    this.isShowDivIf = !this.isShowDivIf;
   }
 
-  onMouseout() {
-    this.searchBarVisible = false;
-  }
 
-  onChangeClass() {
-    this.showBar = !this.showBar;
-  }
 
-  dropdown(): void {
-    this.show = !this.show;
-  }
-  @HostListener('window:click', ['$event']) onDocumentClick(event:any): void {
-    this.show = false;
-  }
 
-  @HostListener('window:resize', ['$event']) onResize(event:any): void {
-    this.show = false;
-  }
-
-  openModal(id: string) {
-    // this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    // this.modalService.close(id);
-  }
 
   search():void{
     if(this.searchTerm)

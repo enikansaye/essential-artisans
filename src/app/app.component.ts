@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userProfileModel } from './components/userprofile/userprofile.model';
@@ -12,6 +13,7 @@ import { UserModel } from './shared/models/user.model';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+ 
 })
 export class AppComponent implements OnInit {
   title = 'artisan finder';
@@ -20,11 +22,12 @@ export class AppComponent implements OnInit {
     userName: '',
     id: 0,
   };
-  menu_icon_variable: boolean = false;
-  menuVariable: boolean = false;
+  
+ 
   userProfileModelObj: userProfileModel = new userProfileModel();
   loggedinUser1: any;
   displayAdmin: any;
+  menuState!: string;
 
   constructor(
     public api: ApiService,
@@ -46,8 +49,10 @@ export class AppComponent implements OnInit {
     this.api.loggedIn()
     this.onClick(this.userProfileModelObj.id)
     
-    // this.api.getToken()
-    // this.api.getUserToken();
+    this.api.getToken()
+    this.api.getUserToken();
+
+    
 
   }
   onClick(row:any){
@@ -61,7 +66,10 @@ console.log(row);
     // this.formValue.controls['name'].setValue(row.name);
   }
 
- 
+  toggleMenu() {
+    // 1-line if statement that toggles the value:
+    this.menuState = this.menuState === 'out' ? 'in' : 'out';
+}
 
   roleDisplay() {
     if (this.api.getUserToken()!='') {
@@ -80,10 +88,10 @@ console.log(row);
     }
   this.api.loggedIn()
   }
-  openMenu() {
-    this.menuVariable =! this.menuVariable;
-    this.menu_icon_variable =! this.menu_icon_variable;
-  }
+  // openMenu() {
+  //   this.menuVariable =! this.menuVariable;
+  //   this.menu_icon_variable =! this.menu_icon_variable;
+  // }
 
   logout() {
     this.router.navigate(['/']);
@@ -91,10 +99,7 @@ console.log(row);
     return localStorage.removeItem('token');
   }
 
-  menuVisible = false;
-toggleMenu() {
-  this.menuVisible = !this.menuVisible;
-}
+ 
 
 
 }

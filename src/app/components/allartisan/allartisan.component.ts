@@ -19,10 +19,12 @@ import { orderModel } from './allartisanmodel';
   styleUrls: ['./allartisan.component.css'],
 })
 export class AllartisanComponent implements OnInit {
-  statelga: any;
-  selectedStatelga: any = {
+  state: any;
+  city: any;
+  selectedCountry: any = {
     id: 0,
     name: '',
+    cities: '',
   };
 
   formValue!: FormGroup;
@@ -58,7 +60,7 @@ export class AllartisanComponent implements OnInit {
 
     this.formValue = this.formBuilder.group({
       id: this.api.loggedinUser.id,
-      name: ['asdfghj'],
+      name: [''],
       artisanId: 0,
       propertyAddress: [''],
       inspectionDate: ['2022-06-30T10:58:37.452Z'],
@@ -70,7 +72,7 @@ export class AllartisanComponent implements OnInit {
       file: [''],
       issueImage: [''],
       artisanEmail: [],
-
+      orderId:[],
       fileSource: [''],
     });
 
@@ -104,10 +106,35 @@ export class AllartisanComponent implements OnInit {
 
   // selecting location section
   showAll() {
-    this.api.getAllStateData().subscribe((data: any) => {
-      this.statelga = data;
-      console.log(this.statelga);
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
+
+      this.state = data;
     });
+  }
+
+  onSelect(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
   }
 
   onEdit(row: any) {
@@ -119,9 +146,17 @@ export class AllartisanComponent implements OnInit {
  
   }
 
-  createnewService(data:string) {
+  createnewService(data:any) {
+    console.log(data);
+    console.log(data.artisanId);
+    // this.orderModelObj.artisanId = data.artisanId;
+    // this.formValue.artisanId = data.artisanId
+    
     this.api.createService(data).subscribe((res) => {
-      // this.orderModelObj.name = this.formValue.value.name;
+      this.formValue.controls['artisanId'].setValue(data.artisanId);
+     this.formValue.value.artisanId = data.artisanId;
+     console.log(data.artisanId);
+     
       this.toastr.success('Order successfully sent!!!')
       console.log(this.orderModelObj.id);
       console.log(res);
@@ -249,6 +284,41 @@ export class AllartisanComponent implements OnInit {
           this.successResponse = 'Image not uploaded due to some error!';
         }
       });
+  }
+
+  
+
+  submit(): void {
+    this.progress = 0;
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        const uploadObserver = {
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+            }
+          },
+          error: (err: any) => {
+            this.progress = 0;
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+            this.currentFile = undefined;
+          },
+        };
+
+        this.api.uploadIssue(this.currentFile).subscribe(uploadObserver);
+      }
+      this.selectedFiles = undefined;
+    }
   }
 
   onFileSelect(event:any) {

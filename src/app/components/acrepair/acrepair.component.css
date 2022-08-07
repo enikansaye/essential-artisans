@@ -12,6 +12,9 @@
     flex-wrap: wrap;
   
 }
+img{
+    height: 120px;
+}
 
 .box{
     border: 3px solid whitesmoke;

@@ -34,7 +34,7 @@
     "echarts-gl": "^2.0.9",
     "highcharts": "^10.0.0",
     "highcharts-angular": "^3.0.0",
-    "html-to-pdfmake": "^2.3.11",
+    "html-to-pdfmake": "^2.4.5",
     "jspdf": "^2.5.1",
     "jwthelper": "0.0.4",
     "ng-alertify": "^1.0.2",

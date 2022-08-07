@@ -87,6 +87,10 @@ right: 0;
 transition: 0.4s ease-in-out;
 
 }
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
 }
 
 

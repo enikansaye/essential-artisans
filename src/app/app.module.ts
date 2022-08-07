@@ -84,6 +84,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { AvatarModule } from 'ngx-avatar';
 import { EmptycartComponent } from './components/emptycart/emptycart.component';
 import { HelpComponent } from './components/help/help.component';
+import { ArtisantransactionsComponent } from './components/artisantransactions/artisantransactions.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AppRoutingModule } from './app-routing.module';
+import {MatListModule} from '@angular/material/list'
 
 
 @NgModule({
@@ -130,6 +134,7 @@ import { HelpComponent } from './components/help/help.component';
     AdminartisanbyidComponent,
     EmptycartComponent,
     HelpComponent,
+    ArtisantransactionsComponent,
   
   ],
   imports: [
@@ -138,7 +143,7 @@ import { HelpComponent } from './components/help/help.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    CarouselModule,
+    // CarouselModule,
     NgbModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -154,7 +159,13 @@ import { HelpComponent } from './components/help/help.component';
     MatMenuModule,
     NgxPaginationModule,
     NgxStarRatingModule,
-    AvatarModule,
+    // AvatarModule,
+    FlexLayoutModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    // MatDividerModule
     ToastrModule.forRoot(
       {
         timeOut: 10000,
@@ -199,7 +210,7 @@ import { HelpComponent } from './components/help/help.component';
         { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
         { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
-        { path: 'pagenotfound', component: PagenotfoundComponent },
+        
         { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard]  },
         { path: 'forbidden', component: ForbiddenComponent },
         {
@@ -213,11 +224,13 @@ import { HelpComponent } from './components/help/help.component';
         { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'invoice', component: InvoiceComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
+        { path: '**', component: PagenotfoundComponent },
 
        
       ],
       { scrollPositionRestoration: 'enabled' }
     ),
+      AppRoutingModule,
     // ServiceWorkerModule.register('ngsw-worker.js', {
     //   enabled: environment.production,
     //   // Register the ServiceWorker as soon as the app is stable

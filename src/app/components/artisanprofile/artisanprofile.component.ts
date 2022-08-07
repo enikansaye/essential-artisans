@@ -7,7 +7,17 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
+import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
+
+
+class itemObject {
+  itemNo:any;
+  unitPrice:number=0;
+  quantity:number=0;
+  total:number=0;
+
+}
 
 declare let alertify: any;
 @Component({
@@ -16,8 +26,32 @@ declare let alertify: any;
   styleUrls: ['./artisanprofile.component.css'],
 })
 export class ArtisanprofileComponent implements OnInit {
+
+
+  
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   artisanProfileModelObj: userProfileModel = new userProfileModel();
+
+
+  InvoiceObject={
+    personName:"",
+    invoiceDate:"",
+    invoiceNo:"",
+    totalAmount:0
+  }
+  
+  
+  
+  itemObject=new itemObject()
+  itemsArray:Array<itemObject>=[
+    {
+      itemNo:"",
+      unitPrice:0,
+      quantity:0,
+      total:0
+  
+    }
+  ]
 
   showIcon: boolean = false;
   icon: boolean = false;
@@ -62,10 +96,20 @@ export class ArtisanprofileComponent implements OnInit {
   statelga: any;
   artisanData: any;
   orderData: any;
+  serviceCategory: any;
+  state: any;
+  city: any;
+  selectedCountry: any = {
+    id: 0,
+    name: '',
+    cities: '',
+  };
+
 
   constructor(
     private observer: BreakpointObserver,
     public api: ApiService,
+    public adminApi: AdminService,
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
@@ -73,6 +117,9 @@ export class ArtisanprofileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getAllServiceCategory();
+
+    this.showAll();
     this.usersForm = this.fb.group({
       users: this.fb.array([
         this.fb.group({
@@ -83,6 +130,10 @@ export class ArtisanprofileComponent implements OnInit {
         }),
       ]),
     });
+
+
+
+    
 
     this.updateForm = this.fb.group({
       firstName: [''],
@@ -113,10 +164,35 @@ export class ArtisanprofileComponent implements OnInit {
 
   // sellection of location
   showAll() {
-    this.api.getAllStateData().subscribe((data: any) => {
-      this.statelga = data;
-      console.log(this.statelga);
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
+
+      this.state = data;
     });
+  }
+
+  onSelect(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
   }
 
   toggleEditMode(): void {
@@ -316,5 +392,13 @@ export class ArtisanprofileComponent implements OnInit {
       this.orderData = data
       console.log(this.statelga);
     });
+  }
+
+  getAllServiceCategory(){
+    this.adminApi.getServiceCategory().subscribe((data:any)=>{
+      this.serviceCategory = data
+      console.log(this.serviceCategory);
+      
+    })
   }
 }
