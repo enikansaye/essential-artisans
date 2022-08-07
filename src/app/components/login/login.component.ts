@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   data: any;
   responsedata: any;
   tokenresp: any;
-
+ errorMessage = '';
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -32,21 +32,27 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService
     
   ) {}
-
+  submitted = false;
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required,Validators.email]],
       password: ['', Validators.required],
     });
 
     // this.display()
   }
+  get signinFormControl() {
+    return this.signinForm.controls;
+  }
+
+
 
   login() {
-    if (this.signinForm.valid) {
-      this.api.loginUser(this.signinForm.value).subscribe((result) => {
-        if (result != null) {
-          this.responsedata = result;
+    this.alertService.info('Working on creating new account');
+
+    const registerObserver = {
+      next: (result: any) => {
+        this.responsedata = result;
           localStorage.setItem(
             'accesstoken',
             this.responsedata.data.accessToken
@@ -57,14 +63,15 @@ export class LoginComponent implements OnInit {
           // this.toastr.success('Hello world!');
           this.toastr.success('Welcome you are logged in')
           return this.responsedata;
-          
-        } else {
-          // console.log(this.error.checkerr);
-          
-          this.toastr.error('something went wrong!', 'Toastr !');
-        }
-      });
-    }
+      },
+      error: (err: any) => {
+        console.log(err.error);
+       return this.errorMessage = err.error
+        // this.alertService.danger('signup failed');
+      },
+    };
+
+    this.api.loginUser(this.signinForm.value).subscribe(registerObserver);
   }
 
 }

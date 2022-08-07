@@ -30,32 +30,30 @@ export class RegisterComponent implements OnInit {
     private api: ApiService,
     private alertService: AlertService
   ) {}
-
+  submitted = false;
   ngOnInit(): void {
     // this.showAll();
-    this.showAll2();
+    this.showAll();
     // this.onSelect(this.selectedCountry.id)
 
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      phone: ['', Validators.required],
+      email: ['', Validators.required,Validators.email],
+      PhoneNumber: ['', Validators.required],
       password: ['', Validators.required],
-      location: ['', Validators.required],
+      // location: ['', Validators.required],
       address: ['', Validators.required],
-      cities: ['', Validators.required],
+      city: ['', Validators.required],
+      State: ['', Validators.required],
     });
   }
-  // show all location within lagos
-  // showAll() {
-  //   this.api.getAllStateData().subscribe((data: any) => {
-  //     this.statelga = data;
-  //     console.log(this.statelga);
-  //   });
-  // }
+  get signupFormControl() {
+    return this.signupForm.controls;
+  }
 
   onSubmit() {
+    this.submitted = false;
     this.alertService.info('Working on creating new account');
 
     const registerObserver = {
@@ -79,7 +77,7 @@ export class RegisterComponent implements OnInit {
     cities: '',
   };
 
-  showAll2() {
+  showAll() {
     this.api.getAll().subscribe((data: any, i: any) => {
       const result = Object.entries(data);
 

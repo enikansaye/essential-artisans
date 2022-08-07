@@ -4,9 +4,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
+import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
+
+
+class itemObject {
+  itemNo:any;
+  unitPrice:number=0;
+  quantity:number=0;
+  total:number=0;
+
+}
 
 declare let alertify: any;
 @Component({
@@ -15,8 +26,32 @@ declare let alertify: any;
   styleUrls: ['./artisanprofile.component.css'],
 })
 export class ArtisanprofileComponent implements OnInit {
+
+
+  
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  userProfileModelObj: userProfileModel = new userProfileModel();
+  artisanProfileModelObj: userProfileModel = new userProfileModel();
+
+
+  InvoiceObject={
+    personName:"",
+    invoiceDate:"",
+    invoiceNo:"",
+    totalAmount:0
+  }
+  
+  
+  
+  itemObject=new itemObject()
+  itemsArray:Array<itemObject>=[
+    {
+      itemNo:"",
+      unitPrice:0,
+      quantity:0,
+      total:0
+  
+    }
+  ]
 
   showIcon: boolean = false;
   icon: boolean = false;
@@ -60,16 +95,31 @@ export class ArtisanprofileComponent implements OnInit {
   heeo: any;
   statelga: any;
   artisanData: any;
+  orderData: any;
+  serviceCategory: any;
+  state: any;
+  city: any;
+  selectedCountry: any = {
+    id: 0,
+    name: '',
+    cities: '',
+  };
+
 
   constructor(
     private observer: BreakpointObserver,
     public api: ApiService,
+    public adminApi: AdminService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.getAllServiceCategory();
+
+    this.showAll();
     this.usersForm = this.fb.group({
       users: this.fb.array([
         this.fb.group({
@@ -81,57 +131,82 @@ export class ArtisanprofileComponent implements OnInit {
       ]),
     });
 
+
+
+    
+
     this.updateForm = this.fb.group({
       firstName: [''],
       lastName: [''],
-      email: [''],
+      // email: [''],
+      Address: [''],
+      city: [''],
       state: [''],
-     city: [''],
-      service : [''],
       phoneNumber: [''],
-      address: [''],
-
-  
+      userId: [0],
+      service: [''],
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
 
-    this.getArtisan()
+    this.getArtisan();
+    this.getOrder()
   }
 
-  getArtisan(){
-      this.api.getArtisaninfo( this.api.loggedinUser.id).subscribe(
-        
-        
-        (res: any) => {
-        console.log(res);
-        
-        this.artisanData = res;
-        console.log(this.artisanData);
-        
-      });
-    }
+  getArtisan() {
+    this.api.getArtisaninfo().subscribe((res: any) => {
+      console.log(res);
 
+      this.artisanData = res;
+      console.log(this.artisanData);
+    });
+  }
 
   // sellection of location
   showAll() {
-    this.api.getAllStateData().subscribe((data: any) => {
-      this.statelga = data;
-      console.log(this.statelga);
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
+
+      this.state = data;
     });
+  }
+
+  onSelect(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
   }
 
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
+
     if (this.isEditMode) {
       this.formControls['firstName'].enable();
       this.formControls['lastName'].enable();
       this.formControls['phoneNumber'].enable();
-      this.formControls['address'].enable();
+      this.formControls['Address'].enable();
       this.formControls['service'].enable();
       this.formControls['state'].enable();
       this.formControls['city'].enable();
-      // this.formControls['email'].enable();
+      this.formControls['userId'].enable();
 
       this.updateForm.controls['firstName'].setValue(
         this.api.loggedinUser.userName
@@ -139,15 +214,15 @@ export class ArtisanprofileComponent implements OnInit {
       this.updateForm.controls['lastName'].setValue(
         this.api.loggedinUser.lastName
       );
-      this.updateForm.controls['email'].setValue(this.api.loggedinUser.email);
-      // this.updateForm.controls['email'].setValue(data.email);
-      this.updateForm.controls['mobilenumber'].setValue(
-        this.api.loggedinUser.mobilenumber
+    
+      this.updateForm.controls['phoneNumber'].setValue(
+        this.api.loggedinUser.phoneNumber
       );
-  
-  
+      this.updateForm.controls['userId'].setValue(this.api.loggedinUser.id);
+      console.log(this.api.loggedinUser.id);
+      
     } else {
-      this.updateForm.disable();
+      // this.updateForm.disable();
     }
   }
 
@@ -237,51 +312,93 @@ export class ArtisanprofileComponent implements OnInit {
     }
   }
 
-  updateUserInformation() {
-    this.formSubmitted = true;
-    if (this.updateForm.valid) {
-      this.api.updateUser(this.updateForm.value).subscribe({
-     next:   (data) => {
-          alertify.success('Profile successsfully updated.');
-          alert('Profile successsfully updated.');
-          this.updateForm.disable();
-          this.isEditMode = false;
-          console.log(data);
-          this.isEditMode = !this.isEditMode;
-        },
-     error:   (error: any) => {
-          alert('Profile update failed');
-          console.log(error);
+  // updateUserInformation() {
+  //   this.formSubmitted = true;
+  //   if (this.updateForm.valid) {
+  //     this.api.updateUser(this.updateForm.value).subscribe({
+  //    next:   (data) => {
+  //         alertify.success('Profile successsfully updated.');
+  //         alert('Profile successsfully updated.');
+  //         this.updateForm.disable();
+  //         this.isEditMode = false;
+  //         console.log(data);
+  //         this.isEditMode = !this.isEditMode;
+  //       },
+  //    error:   (error: any) => {
+  //         alert('Profile update failed');
+  //         console.log(error);
 
-          alertify.error('Profile update failed');
-        }
-    });
-    }
-  }
+  //         alertify.error('Profile update failed');
+  //       }
+  //   });
+  //   }
+  // }
 
-  updateArtisanDetails() {
-    this.userProfileModelObj.firstName = this.updateForm.value.firstName;
-    this.userProfileModelObj.lastName = this.updateForm.value.lastName;
-    this.userProfileModelObj.service = this.updateForm.value.service;
-    this.userProfileModelObj.state = this.updateForm.value.state;
-    this.userProfileModelObj.city = this.updateForm.value.city;
-    this.userProfileModelObj.phoneNumber = this.updateForm.value.phoneNumber;
-    this.userProfileModelObj.address = this.updateForm.value.address;
-    // this.userProfileModelObj.email = this.updateForm.value.email;
-    this.userProfileModelObj.mobilenumber = this.updateForm.value.mobilenumber;
+  updateUserDetails(row: any) {
+    console.log(row);
+    console.log(row.id);
 
-    this.api.artisanUpdate(this.userProfileModelObj).subscribe((res: any) => {
+    this.artisanProfileModelObj.userId = this.updateForm.value.userId;
+    this.artisanProfileModelObj.firstName = this.updateForm.value.firstName;
+    this.artisanProfileModelObj.lastName = this.updateForm.value.lastName;
+    this.artisanProfileModelObj.Address = this.updateForm.value.Address;
+    this.artisanProfileModelObj.city = this.updateForm.value.city;
+    this.artisanProfileModelObj.state = this.updateForm.value.state;
+    this.artisanProfileModelObj.phoneNumber = this.updateForm.value.PhoneNumber;
+    this.artisanProfileModelObj.service = this.updateForm.value.service;
+
+    this.api.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
       console.log(res);
-        alert('employee updated sucessfully');
-        
-        
+      this.toastr.success('Profile updated');
+      //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
       //   // ref?.click();
 
-      //   // this.getUserserInfo() //this is to refresh and get the resent data
+      // this.getUserserInfo() //this is to refresh and get the resent data
     });
-    console.log("failes");
-    
+  }
+
+  // onEdit() {
+  //   this.updateForm.controls['userId'].setValue(
+  //     this.api.loggedinUser.id
+  //   );
+  //   this.updateForm.controls['firstName'].setValue(
+  //     this.api.loggedinUser.firstName
+  //   );
+  //   this.updateForm.controls['lastName'].setValue(
+  //     this.api.loggedinUser.lastName
+  //   );
+  //   this.updateForm.controls['Address'].setValue(
+  //     this.api.loggedinUser.Address
+  //   );
+  //   this.updateForm.controls['city'].setValue(
+  //     this.api.loggedinUser.city
+  //   );
+  //   this.updateForm.controls['state'].setValue(
+  //     this.api.loggedinUser.state
+  //   );
+
+  //   this.updateForm.controls['phoneNumber'].setValue(
+  //     this.api.loggedinUser.phoneNumber
+  //   );
+
+  //   this.showAddEmployee = false;
+  //   this.showUpdate = true;
+  // }
+
+  getOrder() {
+    this.api.getArtisanOrder().subscribe((data: any) => {
+      this.orderData = data
+      console.log(this.statelga);
+    });
+  }
+
+  getAllServiceCategory(){
+    this.adminApi.getServiceCategory().subscribe((data:any)=>{
+      this.serviceCategory = data
+      console.log(this.serviceCategory);
+      
+    })
   }
 }

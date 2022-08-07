@@ -1,5 +1,5 @@
 <div>
-  <div
+  <!-- <div
     id="carouselExampleCaptions"
     class="carousel slide"
     data-bs-ride="carousel"
@@ -18,7 +18,7 @@
         data-bs-target="#carouselExampleCaptions"
         data-bs-slide-to="1"
         aria-label="Slide 2"
-      ></button>
+      >asdfghjkl;</button>
       <button
         type="button"
         data-bs-target="#carouselExampleCaptions"
@@ -29,7 +29,7 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <section class="container-fluid background1 center">
-          <div class="row align-items-center mt-md-2">
+          <div class="row align-items-center ">
             <div class="col-lg-7 order-lg-2 mb-lg-0 pb-4 pb-2 pb-lg-0">
               <img
                 class="d-block mx-auto img-fluid h-100"
@@ -67,29 +67,27 @@
                 >
               </h1>
               <p
-                class="text-lg-start text-center mb-lg-5 fs-lg lead font-monospace mb-2"
+                class="text-lg-start text-center mb-lg-5 fs-lg lead Montserrat sans-serif mb-2"
               >
                 Find satisfying Certified Artisans, to ease you of the stress
                 and budden of doing it alone.
               </p>
-              <!-- Search form-->
+              Search form
               <div class="me-lg-n5">
                 <form
                   class="form-group d-block d-md-flex position-relative rounded-md-pill me-lg-n5"
                 >
-                  <!-- <div class="input-group input-group-lg border-end-md"><span class="input-group-text text-muted rounded-pill ps-3"><i class="bi bi-search"></i></span>
-                <input class="form-control" type="text" placeholder="What are you looking for?">
-              </div> -->
+              
                 </form>
               </div>
             </div>
           </div>
         </section>
       </div>
-      <!-- carousel 2 -->
+      carousel 2
       <div class="carousel-item">
-        <section class="container-fluid background2 center">
-          <div class="row align-items-center mt-md-2">
+        <section class="container-fluid backgroundimage center">
+          <div class="row align-items-center ">
             <div class="col-lg-7 order-lg-2 mb-lg-0 mb-4 pb-2 pb-lg-0">
               <img
                 class="d-block mx-auto img-fluid h-100"
@@ -126,29 +124,27 @@
                 >
               </h1>
               <p
-                class="text-lg-start text-center mb-lg-5 fs-lg lead font-monospace mb-2"
+                class="text-lg-start text-center mb-lg-5 fs-lg lead Montserrat sans-serif mb-2"
               >
                 Find satisfying Certified Artisans, to ease you of the stress
                 and budden of doing it alone.
               </p>
-              <!-- Search form-->
+              Search form
               <div class="me-lg-n5">
                 <form
                   class="form-group d-block d-md-flex position-relative rounded-md-pill me-lg-n5"
                 >
-                  <!-- <div class="input-group input-group-lg border-end-md"><span class="input-group-text text-muted rounded-pill ps-3"><i class="bi bi-search"></i></span>
-                <input class="form-control" type="text" placeholder="What are you looking for?">
-              </div> -->
+                
                 </form>
               </div>
             </div>
           </div>
         </section>
       </div>
-      <!-- carousel3 -->
-      <div class="carousel-item pt-3">
+      carousel3
+      <div class="carousel-item ">
         <section class="container-fluid background3 center">
-          <div class="row align-items-center mt-md-2">
+          <div class="row align-items-center ">
             <div class="col-lg-7 order-lg-2 mb-lg-0 mb-4 pb-2 pb-lg-0">
               <img
               class="d-block mx-auto img-fluid h-100"
@@ -186,7 +182,7 @@
                 >
               </h1>
               <p
-                class="text-lg-start text-center mb-4 mb-lg-5 fs-lg lead font-monospace mb-2"
+                class="text-lg-start text-center mb-4 mb-lg-5 fs-lg lead Montserrat sans-serif mb-2"
               >
                 Find satisfying Certified Artisans, to ease you of the stress
                 and budden of doing it alone.
@@ -216,7 +212,56 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
+  </div> -->
+  <!-- hero -->
+  <section id="hero" class="hero d-flex align-items-center">
+    <div class="container-fluid">
+      <div class="ms-5 mb-5">
+        <p class="text-light h1" style="width: 18rem">
+          1000+ Artisans at your fingertip
+        </p>
+        <p class="text-light lead Montserrat sans-serif mt-5">
+          ease the stress of finding artisans
+        </p>
+      </div>
+      <div class="col-12  rounded d-flex mt-5">
+        <div class="card col-6 col-md-4 bg-light bg-opacity-50 d-flex p-1 pe-4">
+          <div class="mb-2 h4">Location</div>
+          <div
+            class="h5 text-light"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo"
+          >
+            Search your location
+            <i class="fa-solid fa-location-dot float-end"></i>
+          </div>
+        </div>
+        <!-- <div class="card col-4  d-flex p-3 bg-light bg-opacity-50 "> -->
+        <div class="dropdown card col-6 col-md-4 d-flex p-1 bg-light bg-opacity-50 pe-4">
+          <div class="mb-2 h4">Service</div>
+          <div
+            class="h5 text-light"
+            role="button"
+            id="dropdownMenuLink"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            choose service <span class="dropdown-toggle float-end"></span>
+          </div>
+
+          <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </section>
+  <!-- End Hero -->
 
   <!-- counter -->
 
@@ -224,7 +269,7 @@
     <div class="container">
       <div class="row g-4">
         <!-- Counter item -->
-        <div class="col-sm-6 col-xl-3">
+        <div class=" col-6 col-sm-6 col-xl-3">
           <div
             class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
           >
@@ -246,12 +291,12 @@
           </div>
         </div>
         <!-- Counter item -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-6 col-sm-6 col-xl-3">
           <div
             class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
           >
-            <span class="display-6 lh-1 text-blue mb-0"
-              ><i class="bi bi-user-tie"></i
+            <span class="display-6 lh-1 text-primary mb-0"
+              ><i class="fa-solid fa-users"></i
             ></span>
             <div class="ms-4 h6 fw-normal mb-0">
               <div class="d-flex">
@@ -268,12 +313,12 @@
           </div>
         </div>
         <!-- Counter item -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-6 col-sm-6 col-xl-3">
           <div
             class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
           >
-            <span class="display-6 lh-1 text-purple mb-0"
-              ><i class="bi bi-user-graduate"></i
+            <span class="display-6 lh-1 text-success mb-0"
+              ><i class="fa-solid fa-circle-check"></i
             ></span>
             <div class="ms-4 h6 fw-normal mb-0">
               <div class="d-flex">
@@ -290,14 +335,14 @@
           </div>
         </div>
         <!-- Counter item -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-6 col-sm-6 col-xl-3">
           <div
             class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-10 rounded-3"
           >
             <span class="display-6 lh-1 text-info mb-0"
               ><i class="bi bi-patch-check-fill"></i
             ></span>
-            <div class="ms-4 h6 fw-normal mb-0">
+            <div class="ms-2 h6 fw-normal mb-0">
               <div class="d-flex">
                 <h5
                   class="purecounter mb-0 fw-bold"
@@ -339,7 +384,7 @@
         >
           <div class="row g-4">
             <!-- Card item START -->
-            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/electrician">
+            <div class="col-6 col-lg-4 col-xl-3" routerLink="/electrician">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -391,7 +436,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/acrepair">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/acrepair">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -442,7 +487,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/carpentry">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/carpentry">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -451,7 +496,6 @@
                   alt="course image"
                 />
                 <div class="card-body pb-0">
-               
                   <!-- Title -->
                   <h5 class="card-title fw-normal">
                     <a class="text-decoration-none text-info"> CARPENTRY</a>
@@ -494,8 +538,8 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-sm-6 col-lg-4 col-xl-3" routerLink="/plumbing">
-              <div class="card shadow h-100">
+            <div class=" col-6 col-sm-6 col-lg-4 col-xl-3" >
+              <div class="card shadow h-100" routerLink="/plumbing">
                 <!-- Image -->
                 <img
                   src="assets/images/plumbing.png"
@@ -667,48 +711,152 @@
     </div>
   </section>
 
+  <!-- ======= About Section ======= -->
+  <section class="container mt-5 "  >
+    <div class="row partner g-0" style="background-image: linear-gradient(#c6e1ee, #ddeff7); overflow: hidden;">
+      <div
+      class="col-md-6 d-flex flex-column align-items-center justify-content-center position-relative zindex-2 p-0 pb-2 p-lg-4 "
+      
+    >
+    <div class="h2 mt-1 mt-md-4 "> Earn extra money </div>
+    <p class="h6 mt-2">Set your own schedule, be your own boss</p>
+  <div class="d-flex">
+    <button class=" h6 text-light mt-4 me-2" style="background-color: #1daeff; border: none;" routerLink="/signup">Become An Artisans</button>
+    <button class=" h6 text-light mt-4" style="background-color: #1daeff; border: none;" routerLink="">Become A Vendor</button>
+  </div>
+    </div>
+      <div class="col-md-6 partner d-none d-md-block  ">
+        <img src="assets/images/partnerimage.jpg" alt="" class="img-fluid img w-100"  />
+      </div>
+   
+    </div>
+  </section>
+
+  <!-- End About Section -->
+
   <!-- supported brands -->
   <section class="container mt-2 pt-3 pt-lg-5 pb-5">
     <div class="text-center h2 pb-md-2">Trusted by Leading Companies</div>
-    
-<div class="row">
-  <div class="col-12 card-group justify-content-between align-items-center d-flex">
-    <div class="col-2  col-sm-2 col-lg-3 col-xl-3 ">
-      <!-- Card -->
-      <img src="assets/images/all-smiles.png" alt="" class="img-fluid rounded-circle">
-      <!-- <div class="card mb-4 rounded box h-100">
+
+    <div class="row">
+      <div
+        class="col-12 card-group justify-content-between align-items-center d-flex"
+      >
+        <div class="col-2 col-sm-2 col-lg-3 col-xl-3">
+          <!-- Card -->
+          <img
+            src="assets/images/all-smiles.png"
+            alt=""
+            class="img-fluid rounded-circle"
+          />
+          <!-- <div class="card mb-4 rounded box h-100">
         <img src="assets/images/all-smiles.png" alt="" class="img-fluid rounded-circle">
       </div> -->
-    </div>
-    <div class=" col-2 col-sm-2 col-lg-3 col-xl-3">
-      <!-- Card -->
-      <img src="assets/images/flash-gas.jpg" alt="" class="img-fluid rounded-circle">
-      <!-- <div class="card mb-4 rounded h-100 box">
+        </div>
+        <div class="col-2 col-sm-2 col-lg-3 col-xl-3">
+          <!-- Card -->
+          <img
+            src="assets/images/flash-gas.jpg"
+            alt=""
+            class="img-fluid rounded-circle"
+          />
+          <!-- <div class="card mb-4 rounded h-100 box">
       <img src="" alt="" class="img-fluid">
     </div> -->
-  
-  </div>
-    <div class="col-2 col-sm-2 col-lg-3 col-xl-3 ">
-      <!-- Card -->
-      <img src="assets/images/appletrees.png" alt="" class="img-fluid rounded-circle">
-      <!-- <div class="card mb-4 rounded h-100 box">
+        </div>
+        <div class="col-2 col-sm-2 col-lg-3 col-xl-3">
+          <!-- Card -->
+          <img
+            src="assets/images/appletrees.png"
+            alt=""
+            class="img-fluid rounded-circle"
+          />
+          <!-- <div class="card mb-4 rounded h-100 box">
         <img src="" alt="" class="img-fluid">
     </div> -->
-  
-  </div>
-    <div class="col-2 col-sm-2 col-lg-3 col-xl-3 ">
-      <!-- Card -->
-      <img src="assets/images/kwodra.png" alt="" class="border border-5 border-dark img-fluid rounded-circle">
-      <!-- <div class="card mb-4 rounded h-100 box">
+        </div>
+        <div class="col-2 col-sm-2 col-lg-3 col-xl-3">
+          <!-- Card -->
+          <img
+            src="assets/images/kwodra.png"
+            alt=""
+            class="border border-5 border-dark img-fluid rounded-circle"
+          />
+          <!-- <div class="card mb-4 rounded h-100 box">
         <img src="" alt="" class="img-fluid">
     </div> -->
-    
+        </div>
+      </div>
     </div>
-
-    
-</div>
-</div>
   </section>
+</div>
 
-  
+<!-- modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex">
+          <div class="form-group form-outline mb-4">
+                   
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="State"
+              [(ngModel)]="selectedCountry.name"
+              (change)="onSelect($event.target)"
+            >
+              <option selected value="" >select location</option>
+              <option class="form-control form-control-lg mb-1"
+                *ngFor="let country of countries"
+                value="{{ countries.indexOf(country) }}"
+              >
+                {{ country.name }}
+              </option>
+            </select>
+           <div> <label for="country" class="form-label">Select Location</label></div>
+          </div>
+
+          <div class="form-group form-outline mb-4">
+
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="City"
+              [(ngModel)]="location"
+            >
+              <option selected value="">select location</option>
+              <option *ngFor="let state of states" value="cities">
+                {{ state }}
+              </option>
+            </select>
+            <label for="country" class="form-label">Select Location</label>
+          </div>
+          <button type="button" class="btn btn-info h-50 ms-2" (click)="onLocationFilter()">search</button>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+      </div>
+    </div>
+  </div>
 </div>

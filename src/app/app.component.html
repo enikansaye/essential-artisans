@@ -1,74 +1,155 @@
-<!-- <nav class="navbar navbar-expand-lg bg-light ">
-    <div class="container-fluid">
-      <a class="navbar-brand h2" routerLink="/">ESSENTIAL ARTISAN</a>
-      <button class="navbar-toggler text-primary border-primary " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon ">x</span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown d-flex justify-content-between w-100">
 
-        <ul class="navbar-nav ">
-            <li>
-              <button class="btn btn-primary" routerLink="/signin" *ngIf="(loggedinUser.id?? 0) === 0">Login</button>
-              <button class="btn btn-primary" routerLink="/signin" >Login</button>
-            </li>
-            <li>
-              <button class="btn btn-primary" (click)=" logout()" *ngIf="(loggedinUser.id?? 0) !== 0">Log out</button>
+ 
 
-            </li>
-        </ul>
-        <ul class=" navbar-text" >
-          <div routerLink="/userprofile">welcome {{loggedinUser.email}}</div>
-       
 
-        </ul>
-      </div>
+<!-- <nav class="navbar navbar-expand-lg ">
+  <div class="container-fluid">
+    <div class="col-4 col-md-2 align-items-center mb-3 pb-1 d-flex">
+      <img
+        routerLink="/"
+        src="/assets/images/logoE.jpeg"
+        alt=""
+        class="img-fluid"
+      />
     </div>
-  </nav> -->
-  
 
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid" >
-      <a class="navbar-brand h1" routerLink="/">ESSENTIAL ARTISAN</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active h5" aria-current="page" routerLink="/">Home</a>
-           
-          </li>
-       
-       
-        </ul>
-        <span class="navbar-text">
-          <div> <button class="btn btn-info" routerLink="/signin" *ngIf="!api.loggedIn()">Sign in</button></div>
-          
-          <div class="dropdown" *ngIf="api.loggedIn();">
-            
-            <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          
-              welcome <span class="text-primary" >   {{api.loggedinUser.email}} </span>
-              <!-- welcome <span class="text-primary" (click)="onEdit(api.loggedinUser)">   {{api.loggedinUser.id}} </span> -->
-           
-        
-            </a>
-          
-            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink" >
-              <li><a class="dropdown-item" *ngIf="this.displayUser" routerLink="/userprofile" (click)="onClick(api.loggedinUser.id)">My Profile</a></li>
-              <li><a class="dropdown-item" *ngIf="this.displayArtisan" routerLink="/artisanprofile" (click)="onClick(api.loggedinUser.id)">My Profile</a></li>
-              <li><a class="dropdown-item" *ngIf="this.displayAdmin" routerLink="/admin">My Profile</a></li>
-              <li><a class="dropdown-item" routerLink="">Edit</a></li>
-              <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
-            </ul>
+    <button
+      class="navbar-toggler border-info border-4 text-info"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarText"
+      aria-controls="navbarText"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span
+        class="fa-solid fa-bars text-info pr-3"
+        aria-hidden="true"
+        style="color: #3111c0"
+      ></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        </li>
+
+        <li>
+          <div class="h6 ms-3" routerLink="/helpcenter">
+            <i class="fa-solid fa-circle-question me-2"></i>Help
           </div>
-        </span>
-      </div>
-    </div>
-  </nav>
-<router-outlet></router-outlet>
+        </li>
+      </ul>
+      <span class="navbar-text d-flex">
+        <div>
+          <button
+            class="btn btn-info"
+            routerLink="/signin"
+            *ngIf="!api.loggedIn()"
+          >
+            Sign in
+          </button>
+        </div>
 
-<app-footer></app-footer> 
+        <div class="dropdown" *ngIf="api.loggedIn()">
+          <a
+            class="btn btn-secondary dropdown-toggle"
+            role="button"
+            id="dropdownMenuLink"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            welcome
+            <span class="text-primary"> {{ api.loggedinUser.email }} </span>
+          </a>
+
+          <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink">
+            <li>
+              <a
+                class="dropdown-item"
+                *ngIf="this.displayUser"
+                routerLink="/userprofile"
+                (click)="onClick(api.loggedinUser.id)"
+                >My Profile</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                *ngIf="this.displayArtisan"
+                routerLink="/artisanprofile"
+                (click)="onClick(api.loggedinUser.id)"
+                >My Profile</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                *ngIf="this.displayAdmin"
+                routerLink="/admin"
+                >My Profile</a
+              >
+            </li>
+            <li><a class="dropdown-item" routerLink="">Edit</a></li>
+            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </span>
+    </div>
+  </div>
+</nav> -->
+
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ESSENTIAL</a>
+    <div class="text-info" routerLink="/helpcenter"><i class="fa-solid fa-circle-question me-2"></i>Help</div><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- <span class="navbar-toggler-icon"></span> -->
+      
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+ 
+      </ul>
+      <span class="navbar-text">
+       
+     <div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li>        <button class="btn btn-info" routerLink="/signin" *ngIf="!api.loggedIn()">Sign In</button>
+        </li>
+        <li class="nav-item pt-2" *ngIf="api.loggedIn()">
+          <span class="nav-link active "  aria-current="page" *ngIf="this.displayUser"
+          routerLink="/userprofile"
+          (click)="onClick(api.loggedinUser.id)">My Profile</span>
+        </li>
+        <li class="nav-item pt-2" *ngIf="api.loggedIn()">
+          <span class="nav-link"  *ngIf="this.displayArtisan"
+          routerLink="/artisanprofile"
+          (click)="onClick(api.loggedinUser.id)">My profile</span>
+        </li>
+        <li class="nav-item pt-2" *ngIf="api.loggedIn()">
+          <span class="nav-link"   *ngIf="this.displayAdmin"
+          routerLink="/admin">My Profile</span>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-info" *ngIf="api.loggedIn()" (click)="logout()">Log Out</button>
+
+        </li>
+   
+        </ul>
+     </div>
+      </span>
+    </div>
+  </div>
+</nav>
+
+
+
+
+<router-outlet class="mt-5"></router-outlet>
+
+<app-footer ></app-footer>
 <ng-container *ngIf="loading$ | async">
   <div class="overlay"></div>
   <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
