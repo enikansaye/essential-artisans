@@ -78,12 +78,9 @@ export class AllartisanComponent implements OnInit {
       mobilenumber: [''],
       AltNumber: [''],
       issue: [''],
-<<<<<<< HEAD
 
-      issueImage:File,
-=======
       profile: [''],
->>>>>>> dev
+
       file: [''],
       issueImage: [''],
       artisanEmail: [],
@@ -123,10 +120,7 @@ export class AllartisanComponent implements OnInit {
   }
 
   // selecting location section
-<<<<<<< HEAD
-  
 
-=======
   showAll() {
     this.api.getAll().subscribe((data: any, i: any) => {
       const result = Object.entries(data);
@@ -134,7 +128,7 @@ export class AllartisanComponent implements OnInit {
       this.state = data;
     });
   }
->>>>>>> dev
+
 
   onSelect(data: any) {
     let result = Object.entries(this.state);
@@ -317,8 +311,7 @@ export class AllartisanComponent implements OnInit {
       });
   }
 
-<<<<<<< HEAD
-=======
+
   
 
   submit(): void {
@@ -370,5 +363,5 @@ export class AllartisanComponent implements OnInit {
       (err) => console.log(err)
     );
   }
->>>>>>> dev
+
 }

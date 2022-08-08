@@ -181,13 +181,11 @@ getArtisaninfo(){
   // }
 
   userUpdate(userInfo: any) {
-<<<<<<< HEAD
-    console.log(userInfo);
+
     
-    return this.http.put(this.url.updateUser, userInfo);
-=======
     return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Customer/update', userInfo);
->>>>>>> dev
+
+    
   }
   artisanUpdate(ArtisanInfo: any) {
   
@@ -295,10 +293,8 @@ getArtisaninfo(){
   // location selection api
 
 
-<<<<<<< HEAD
 
-
-=======
+  
   getArtisanOrder(){
     return this.http.get(this.baseUrl + "/api/Artisan/orders").pipe(
       map((res:any)=>{
@@ -370,11 +366,8 @@ getArtisaninfo(){
   //     })
   //   );
   // }
-<<<<<<< HEAD
-//   updateService(userInfo: any, userId: string){
-//     return this.http.put(this.url.updateService +userId, userInfo);
-// }
-=======
+
+  
   updateService(userInfo: any){
     return this.http.put(this.baseUrl + "/api/Customer/ServiceOrder/update", userInfo);
 }
@@ -408,12 +401,10 @@ Logout() {
   this.router.navigateByUrl('signin');
 }
 
-<<<<<<< HEAD
 
-// location2
-=======
+
 // this is is to get a default artisans
->>>>>>> dev
+
 getAll():any{
   return this.http.get<any>(this.location)
 }

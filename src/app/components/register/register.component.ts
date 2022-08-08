@@ -47,12 +47,9 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.required,Validators.email],
       PhoneNumber: ['', Validators.required],
       password: ['', Validators.required],
-<<<<<<< HEAD
-      state: ['', Validators.required],
-      city: ['', Validators.required],
-=======
+
       // location: ['', Validators.required],
->>>>>>> dev
+
       address: ['', Validators.required],
       city: ['', Validators.required],
       State: ['', Validators.required],
@@ -60,20 +57,10 @@ export class RegisterComponent implements OnInit {
 
     // this.api.getCountries().subscribe((data) => (this.countries = data));
   }
-<<<<<<< HEAD
 
-  // show all location within lagos
-  // showAll() {
-  //   this.api.getAllStateData().subscribe((data: any) => {
-  //     this.statelga = data;
-  //     console.log(this.statelga);
-  //   });
-  // }
-=======
   get signupFormControl() {
     return this.signupForm.controls;
   }
->>>>>>> dev
 
 
   onSubmit() {

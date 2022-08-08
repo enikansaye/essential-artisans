@@ -48,19 +48,13 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-<<<<<<< HEAD
-    if (this.signinForm.valid) {
-      this.api.loginUser(this.signinForm.value).subscribe((result) => {
-        this.responsedata = result;
-        if (this.responsedata != null) {
-          // this.responsedata = result;
-=======
+
     this.alertService.info('Working on creating new account');
 
     const registerObserver = {
       next: (result: any) => {
         this.responsedata = result;
->>>>>>> dev
+
           localStorage.setItem(
             'accesstoken',
             this.responsedata.data.accessToken
