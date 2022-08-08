@@ -15,8 +15,7 @@ export class userProfileModel{
 
     phoneNumber: string='';
   Address: string='';
-  state: string='';
-  city: string='';
+ 
   service: string='';  
   artisanId: number=0
   userId: number=0

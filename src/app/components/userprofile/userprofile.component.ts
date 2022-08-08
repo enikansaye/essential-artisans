@@ -71,17 +71,7 @@ export class UserprofileComponent implements OnInit {
     this.formValue = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
-<<<<<<< HEAD
-      email: [''],
-      PhoneNumber: [''],
-     address: [''],
-     state: [''],
-     city: [''],
-    
-     
-  
-     
-=======
+
       // email: [''],
       Address: [''],
       city: [''],
@@ -91,7 +81,7 @@ export class UserprofileComponent implements OnInit {
     });
     this.deleteForm = this.formBuilder.group({
       orderId: 0,
->>>>>>> dev
+
     });
     this.getUser();
     this.showAll();
@@ -101,15 +91,11 @@ export class UserprofileComponent implements OnInit {
       name: [''],
       artisanId: 0,
       propertyAddress: [''],
-<<<<<<< HEAD
-      inspectionDate: [''],
-      inspectionTime: [''],
-  PhoneNumber: [''],
-=======
+
       inspectionDate: ['2022-06-30T10:58:37.452Z'],
       inspectionTime: ['2022-06-30T10:58:37.452Z'],
       mobilenumber: [''],
->>>>>>> dev
+
       AltNumber: [''],
       issue: [''],
       userId: 0,
@@ -234,23 +220,13 @@ export class UserprofileComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-    this.formValue.controls['name'].setValue(row.name);
-    this.formValue.controls['propertyAddress'].setValue(row.propertyAddress);
-    this.formValue.controls['email'].setValue(row.email);
-    this.formValue.controls['phoneNumber'].setValue(row.phoneNumber);
-    this.formValue.controls['AltNumber'].setValue(row.AltNumber);
-    this.formValue.controls['inspectionDate'].setValue(row.inspectionDate);
-    this.formValue.controls['issue'].setValue(row.issue);
-    this.formValue.controls['address'].setValue(row.issue);
-    this.formValue.controls['city'].setValue(row.issue);
-=======
+
   deleteOrder(row: any) {
     let body = {
       orderid: row.id,
     };
     console.log(row.id);
->>>>>>> dev
+
 
     this.api.deletes(body).subscribe((res) => {
       this.toastr.success('Order deleted');
@@ -301,17 +277,13 @@ export class UserprofileComponent implements OnInit {
     this.formValue.controls['lastName'].setValue(
       this.api.loggedinUser.lastName
     );
-<<<<<<< HEAD
-    this.formValue.controls['email'].setValue(this.api.loggedinUser.email);
-    // this.formValue.controls['email'].setValue(data.email);
-    this.formValue.controls['PhoneNumber'].setValue(
-=======
+
     this.formValue.controls['Address'].setValue(this.api.loggedinUser.Address);
     this.formValue.controls['city'].setValue(this.api.loggedinUser.city);
     this.formValue.controls['state'].setValue(this.api.loggedinUser.state);
 
     this.formValue.controls['phoneNumber'].setValue(
->>>>>>> dev
+
       this.api.loggedinUser.phoneNumber
     );
 
@@ -327,18 +299,12 @@ export class UserprofileComponent implements OnInit {
     this.userprofileModelObj.userId = this.formValue.value.userId;
     this.userprofileModelObj.firstName = this.formValue.value.firstName;
     this.userprofileModelObj.lastName = this.formValue.value.lastName;
-<<<<<<< HEAD
-    this.userprofileModelObj.email = this.formValue.value.email;
-    this.userprofileModelObj.PhoneNumber = this.formValue.value.PhoneNumber;
-    this.userprofileModelObj.address = this.formValue.value.address;
-    this.userprofileModelObj.city = this.formValue.value.city;
-    this.userprofileModelObj.state = this.formValue.value.state;
-=======
+
     this.userprofileModelObj.Address = this.formValue.value.Address;
     this.userprofileModelObj.city = this.formValue.value.city;
     this.userprofileModelObj.state = this.formValue.value.state;
     this.userprofileModelObj.phoneNumber = this.formValue.value.PhoneNumber;
->>>>>>> dev
+
 
     this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
       console.log(res);

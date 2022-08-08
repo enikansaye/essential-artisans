@@ -24,7 +24,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NetworkInterceptor } from './loader/network.interceptor';
 import {MatMenuModule} from '@angular/material/menu';
-
+// import { NgxStarRatingModule } from 'ngx-star-rating';
 
 
 import { AppComponent } from './app.component';
@@ -82,10 +82,7 @@ import { ServicecategoryComponent } from './components/servicecategory/serviceca
 import { AdminartisanbyidComponent } from './components/adminartisanbyid/adminartisanbyid.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ToastrModule } from 'ngx-toastr';
-<<<<<<< HEAD
-import { AllartisanComponent } from './components/allartisan/allartisan.component';
 
-=======
 import { AvatarModule } from 'ngx-avatar';
 import { EmptycartComponent } from './components/emptycart/emptycart.component';
 import { HelpComponent } from './components/help/help.component';
@@ -93,7 +90,8 @@ import { ArtisantransactionsComponent } from './components/artisantransactions/a
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import {MatListModule} from '@angular/material/list'
->>>>>>> dev
+import { AllartisanComponent } from './components/allartisan/allartisan.component';
+
 
 
 @NgModule({
@@ -139,13 +137,11 @@ import {MatListModule} from '@angular/material/list'
     ServicecategoryComponent,
 
     AdminartisanbyidComponent,
-<<<<<<< HEAD
 
-=======
     EmptycartComponent,
     HelpComponent,
     ArtisantransactionsComponent,
->>>>>>> dev
+
   
   ],
   imports: [
@@ -223,13 +219,12 @@ import {MatListModule} from '@angular/material/list'
         { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
         { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
-<<<<<<< HEAD
-        { path: 'pagenotfound', component: PagenotfoundComponent },
-        { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard],  },
-=======
+
+        
         
         { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard]  },
->>>>>>> dev
+
+        
         { path: 'forbidden', component: ForbiddenComponent },
    
         {

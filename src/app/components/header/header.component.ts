@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, HostListener, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-<<<<<<< HEAD
-import { Router } from '@angular/router';
-=======
+
 import { ActivatedRoute,Router } from '@angular/router';
->>>>>>> dev
+
 import { ApiService } from 'src/app/service/api.service';
 import { Emitters } from 'src/emitters/emitters';
 import { userProfileModel } from '../userprofile/userprofile.model';
@@ -40,58 +38,28 @@ export class HeaderComponent implements OnInit {
   loggedinUser1: any;
   displayAdmin: any;
 
-<<<<<<< HEAD
-  constructor(private formBuilder: FormBuilder, public api: ApiService,
-    private router: Router,) { }
-=======
+
+  
   loggedinUser: any;
   userResponse: any;
-  displayUser: any;
-  displayArtisan: any;
-  currentRole: any;
-  displayAdmin: any;
 
->>>>>>> dev
+
+
+  
+  // displayUser: any;
+  // displayArtisan: any;
+  // currentRole: any;
+  // displayAdmin: any;
+
+
+  
 
   constructor(private formBuilder: FormBuilder,public api: ApiService,
     private http : HttpClient,private route: ActivatedRoute, private router: Router) { }
   ngOnInit(): void {
     this.roleDisplay();
     this.api.loggedIn()
-<<<<<<< HEAD
-    // Emitters.authEmitter.subscribe(
-    //  ( auth:boolean)=>{
-    //    this.authenticated = auth
 
-    //  }
-    // )
- 
-  }
-
-
-  roleDisplay() {
-    if (this.api.getUserToken()!='') {
-      this.currentRole = this.api.haveaccess(this.api.getUserToken());
-
-      console.log(this.currentRole);
-
-      this.displayUser = this.currentRole === 'CUSTOMER';
-
-      console.log(this.displayUser);
-
-      this.displayArtisan = this.currentRole === 'ARTISAN';
-      console.log(this.displayArtisan);
-      this.displayAdmin = this.currentRole === 'ADMIN';
-      console.log(this.displayAdmin);
-    }
-  this.api.loggedIn()
-  }
-
-  logout() {
-    this.router.navigate(['/']);
-    localStorage.removeItem('accesstoken')
-    return localStorage.removeItem('token');
-=======
     this.onClick(this.userProfileModelObj.id)
     
     
@@ -190,7 +158,7 @@ export class HeaderComponent implements OnInit {
   search():void{
     if(this.searchTerm)
       this.router.navigateByUrl('articles/search/' + this.searchTerm)
->>>>>>> dev
+
   }
 
   menuVisible = false;

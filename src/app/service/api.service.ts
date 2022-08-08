@@ -324,7 +324,7 @@ getArtisaninfo(){
       })
     );
   }
->>>>>>> dev
+
 
 
 
@@ -387,7 +387,7 @@ deletes(data:any){
   return this.http.request(req);
 
 }
->>>>>>> dev
+
 
 
 

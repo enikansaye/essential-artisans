@@ -138,25 +138,21 @@ export class ArtisanprofileComponent implements OnInit {
     this.updateForm = this.fb.group({
       firstName: [''],
       lastName: [''],
-<<<<<<< HEAD
-      email: [''],
 
-=======
+      
       // email: [''],
       Address: [''],
       city: [''],
->>>>>>> dev
+
+      
       state: [''],
       phoneNumber: [''],
-<<<<<<< HEAD
-      address: [''],
 
-  
-
-=======
+      
       userId: [0],
       service: [''],
->>>>>>> dev
+
+      
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
@@ -175,14 +171,8 @@ export class ArtisanprofileComponent implements OnInit {
   }
 
   // sellection of location
-<<<<<<< HEAD
-  // showAll() {
-  //   this.api.getAllStateData().subscribe((data: any) => {
-  //     this.statelga = data;
-  //     console.log(this.statelga);
-  //   });
-  // }
-=======
+
+  
   showAll() {
     this.api.getAll().subscribe((data: any, i: any) => {
       const result = Object.entries(data);
@@ -190,7 +180,7 @@ export class ArtisanprofileComponent implements OnInit {
       this.state = data;
     });
   }
->>>>>>> dev
+
 
   onSelect(data: any) {
     let result = Object.entries(this.state);
@@ -222,13 +212,10 @@ export class ArtisanprofileComponent implements OnInit {
     if (this.isEditMode) {
       this.formControls['firstName'].enable();
       this.formControls['lastName'].enable();
-<<<<<<< HEAD
-      this.formControls['PhoneNumber'].enable();
-      this.formControls['address'].enable();
-=======
+
       this.formControls['phoneNumber'].enable();
       this.formControls['Address'].enable();
->>>>>>> dev
+
       this.formControls['service'].enable();
 
       this.formControls['state'].enable();
@@ -242,16 +229,11 @@ export class ArtisanprofileComponent implements OnInit {
       this.updateForm.controls['lastName'].setValue(
         this.api.loggedinUser.lastName
       );
-<<<<<<< HEAD
-      this.updateForm.controls['email'].setValue(this.api.loggedinUser.email);
-      // this.updateForm.controls['email'].setValue(data.email);
-      this.updateForm.controls['PhoneNumber'].setValue(
-        this.api.loggedinUser.PhoneNumber
-=======
+
     
       this.updateForm.controls['phoneNumber'].setValue(
         this.api.loggedinUser.phoneNumber
->>>>>>> dev
+
       );
       this.updateForm.controls['userId'].setValue(this.api.loggedinUser.id);
       console.log(this.api.loggedinUser.id);
@@ -347,44 +329,7 @@ export class ArtisanprofileComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-  updateUserInformation() {
-    this.formSubmitted = true;
-    if (this.updateForm.valid) {
-      this.api.updateUser(this.updateForm.value).subscribe({
-     next:   (data) => {
-          alertify.success('Profile successsfully updated.');
-          alert('Profile successsfully updated.');
-          this.updateForm.disable();
-          this.isEditMode = false;
-          console.log(data);
-          this.isEditMode = !this.isEditMode;
-        },
-     error:   (error: any) => {
-          alert('Profile update failed');
-          console.log(error);
 
-          alertify.error('Profile update failed');
-        }
-    });
-    }
-  }
-
-  updateArtisanDetails() {
-    this.userProfileModelObj.firstName = this.updateForm.value.firstName;
-    this.userProfileModelObj.lastName = this.updateForm.value.lastName;
-
-    this.userProfileModelObj.service = this.updateForm.value.service;
-    this.userProfileModelObj.state = this.updateForm.value.state;
-    this.userProfileModelObj.city = this.updateForm.value.city;
-    this.userProfileModelObj.phoneNumber = this.updateForm.value.phoneNumber;
-    this.userProfileModelObj.address = this.updateForm.value.address;
-    // this.userProfileModelObj.email = this.updateForm.value.email;
-    this.userProfileModelObj.mobilenumber = this.updateForm.value.mobilenumber;
-
-
-    this.api.artisanUpdate(this.userProfileModelObj).subscribe((res: any) => {
-=======
   // updateUserInformation() {
   //   this.formSubmitted = true;
   //   if (this.updateForm.valid) {
@@ -421,7 +366,7 @@ export class ArtisanprofileComponent implements OnInit {
     this.artisanProfileModelObj.service = this.updateForm.value.service;
 
     this.api.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
->>>>>>> dev
+
       console.log(res);
       this.toastr.success('Profile updated');
       //   alert('employee updated sucessfully');
