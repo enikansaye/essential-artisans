@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
 import { ApiService } from 'src/app/service/api.service';
+import { AdminService } from 'src/app/shared/admin.service';
 import { UserModel } from 'src/app/shared/models/user.model';
 
 @Component({
@@ -12,12 +13,22 @@ import { UserModel } from 'src/app/shared/models/user.model';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
- 
-
   signupForm!: FormGroup;
   password?: string;
   hide = true;
   statelga: any;
+  serviceData:any;
+  state: any;
+
+
+  countries: any;
+  submitted = false;
+  selectedCountry: any = {
+    id: 0,
+    name: '',
+    cities: '',
+  };
+  city: any;
   // form :any
 
   constructor(
@@ -25,42 +36,72 @@ export class SignupComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private api: ApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private adminApi: AdminService
   ) {}
 
   ngOnInit(): void {
     this.showAll();
+    // this.getService()
+   this.getAllServiceCategory()
 
     this.signupForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      phone: [
-        '',
-        Validators.required,
-      
-      ],
-      password: ['', Validators.required],
-      location: ['', Validators.required],
-      address: ['', Validators.required],
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      phoneNumber: [''],
+      password: [''],
+     
+      state: [''],
+      city: [''],
+      address: [''],
+      service: [''],
+
     });
+  }
+  get signupFormControl() {
+    return this.signupForm.controls;
   }
 
-  showAll() {
-    this.api.getAllStateData().subscribe(
-      (data: any) => {
-      this.statelga = data;
-      console.log(this.statelga)
-    });
-  }
+ // sellection of location
+ showAll() {
+  this.api.getAll().subscribe((data: any, i: any) => {
+    const result = Object.entries(data);
+
+    this.state = data;
+  });
+}
+
+onSelect(data: any) {
+  let result = Object.entries(this.state);
+  console.log(data.value);
+
+  const statesList = Object.values(result[data.value])[1];
+
+  console.log((statesList as any)['cities']);
+  this.city = (statesList as any)['cities'];
+
+  console.log(this.city);
+}
+
+onSelectCities(data: any) {
+  let result = Object.entries(this.state);
+  console.log(data.value);
+
+  const statesList = Object.values(result[data.value])[1];
+
+  console.log((statesList as any)['cities']);
+  this.city = (statesList as any)['cities'];
+
+  console.log(this.city);
+}
   onSubmit() {
     this.alertService.info('Working on creating new account');
 
     const registerObserver = {
       next: (res: any) => {
-    
-      console.log('Artican created')
-      this.router.navigate(['/checkemail']);
+        console.log('Artican created');
+        this.router.navigate(['/checkemail']);
       },
       error: (err: any) => {
         console.log(err);
@@ -70,4 +111,16 @@ export class SignupComponent implements OnInit {
 
     this.api.signupArtisan(this.signupForm.value).subscribe(registerObserver);
   }
+
+
+
+  getAllServiceCategory() {
+    this.adminApi.getServiceCategory().subscribe((res: any) => {
+      this.serviceData = res;
+      console.log( this.serviceData);
+      
+    });
+  }
+
+  
 }

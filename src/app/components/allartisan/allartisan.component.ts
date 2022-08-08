@@ -23,10 +23,12 @@ import { orderModel } from './allartisanmodel';
   styleUrls: ['./allartisan.component.css'],
 })
 export class AllartisanComponent implements OnInit {
-  statelga: any;
-  selectedStatelga: any = {
+  state: any;
+  city: any;
+  selectedCountry: any = {
     id: 0,
     name: '',
+    cities: '',
   };
 
   formValue!: FormGroup;
@@ -67,7 +69,7 @@ export class AllartisanComponent implements OnInit {
 
     this.formValue = this.formBuilder.group({
       id: this.api.loggedinUser.id,
-      name: ['asdfghj'],
+      name: [''],
       artisanId: 0,
 
       propertyAddress: [''],
@@ -76,11 +78,16 @@ export class AllartisanComponent implements OnInit {
       mobilenumber: [''],
       AltNumber: [''],
       issue: [''],
+<<<<<<< HEAD
 
       issueImage:File,
+=======
+      profile: [''],
+>>>>>>> dev
       file: [''],
+      issueImage: [''],
       artisanEmail: [],
-
+      orderId:[],
       fileSource: [''],
 
     });
@@ -116,8 +123,42 @@ export class AllartisanComponent implements OnInit {
   }
 
   // selecting location section
+<<<<<<< HEAD
   
 
+=======
+  showAll() {
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
+
+      this.state = data;
+    });
+  }
+>>>>>>> dev
+
+  onSelect(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
 
   onEdit(row: any) {
     this.orderModelObj.id = row.id;
@@ -128,9 +169,17 @@ export class AllartisanComponent implements OnInit {
  
   }
 
-  createnewService(data:string) {
+  createnewService(data:any) {
+    console.log(data);
+    console.log(data.artisanId);
+    // this.orderModelObj.artisanId = data.artisanId;
+    // this.formValue.artisanId = data.artisanId
+    
     this.api.createService(data).subscribe((res) => {
-      // this.orderModelObj.name = this.formValue.value.name;
+      this.formValue.controls['artisanId'].setValue(data.artisanId);
+     this.formValue.value.artisanId = data.artisanId;
+     console.log(data.artisanId);
+     
       this.toastr.success('Order successfully sent!!!')
       console.log(this.orderModelObj.id);
       console.log(res);
@@ -268,4 +317,58 @@ export class AllartisanComponent implements OnInit {
       });
   }
 
+<<<<<<< HEAD
+=======
+  
+
+  submit(): void {
+    this.progress = 0;
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+
+      if (file) {
+        this.currentFile = file;
+
+        const uploadObserver = {
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round((100 * event.loaded) / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+            }
+          },
+          error: (err: any) => {
+            this.progress = 0;
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+            this.currentFile = undefined;
+          },
+        };
+
+        this.api.uploadIssue(this.currentFile).subscribe(uploadObserver);
+      }
+      this.selectedFiles = undefined;
+    }
+  }
+
+  onFileSelect(event:any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.formValue.controls['profile'].setValue(file);
+      // this.formValue.get('profile').setValue(file);
+    }
+  }
+  onSubmit(){
+    const formData = new FormData();
+    formData.append('file', this.formValue.controls['profile'].value);
+
+    this.http.post<any>('https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload', formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+  }
+>>>>>>> dev
 }

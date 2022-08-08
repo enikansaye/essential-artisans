@@ -104,8 +104,8 @@ export class AdminService {
     return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/update' +name , data).pipe(
 =======
 
-  updateServiceCategory(data:any, newName:string ) {
-    return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/update' +newName, data).pipe(
+  updateServiceCategory(data:any ) {
+    return this.http.put<any>('https://lyticalartisanapi.azurewebsites.net/api/Admin/ServiceCategory/update' , data).pipe(
       map((res: any) => {
         return res;
       })

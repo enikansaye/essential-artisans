@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid" >
     <a class="navbar-brand h1" routerLink="/">ESSENTIAL ARTISAN</a>
@@ -36,3 +37,121 @@
     </div>
   </div>
 </nav> 
+=======
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" href="#">Admin Header</a>
+      <button (click)="toggleDisplayDivIf()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      *ngIf="!isShowDivIf" --- hide and show
+      <div [ngClass]="!isShowDivIf ? 'responsive__active' : 'responsive__inactive'" class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+              <li (click)="toggleDisplayDivIf()"  class="nav-item" routerLinkActive="active">
+                  <a class="nav-link" routerLink="./home">Home
+                      <span class="sr-only">(current)</span>
+                  </a>
+              </li>
+              <li (click)="toggleDisplayDivIf()" class="nav-item" routerLinkActive="active">
+                  <a class="nav-link" routerLink="./about">About</a>
+              </li>
+              <li (click)="toggleDisplayDivIf()" class="nav-item" routerLinkActive="active">
+                  <a class="nav-link" routerLink="./services">Services</a>
+              </li>
+              <li (click)="toggleDisplayDivIf()" class="nav-item" routerLinkActive="active">
+                  <a class="nav-link" routerLink="./contact">Contact</a>
+              </li>
+              
+          </ul>
+      </div>
+  </div>
+</nav> -->
+
+<mat-toolbar fxLayout="row" color="primary">
+  <span fxFlex>essential</span>
+  <div *ngFor="let item of menuItems">
+    <button mat-button  [routerLink]="[item.routeLink]" *ngIf="api.loggedIn()" (click)="logout()" 
+      [fxShow]="item.showOnDesktop" 
+      [fxShow.xs]="item.showOnMobile"
+      [fxShow.sm]="item.showOnTablet">
+      
+        <mat-icon class="mr" >{{ item.icon == "logout" ? 'logout' : ''}}</mat-icon>
+      <!-- {{item.label}} -->
+      {{ item.label == "Logout" ? 'logout' : ''}}
+     
+      <!-- {{element.source == 1 ? 'upwork' : (element.source == 2 ? 'refer from friend' : '')}} -->
+  </button>
+    <button mat-button  [routerLink]="[item.routeLink]" *ngIf="!api.loggedIn()"  
+      [fxShow]="item.showOnDesktop" 
+      [fxShow.xs]="item.showOnMobile"
+      [fxShow.sm]="item.showOnTablet">
+      
+        <mat-icon class="mr" >{{ item.icon == "login" ? 'login' : ''}}</mat-icon>
+      <!-- {{item.label}} -->
+      {{ item.label == "Sign In" ? 'Sign In' : ''}}
+     
+      <!-- {{element.source == 1 ? 'upwork' : (element.source == 2 ? 'refer from friend' : '')}} -->
+  </button>
+    <button mat-button  [routerLink]="[item.routeLink]"   
+     >
+      
+        <mat-icon class="mr" >{{ item.icon == "help" ? 'help' : ''}}</mat-icon>
+      <!-- {{item.label}} -->
+      {{ item.label == "Help" ? 'Help' : ''}}
+     
+      <!-- {{element.source == 1 ? 'upwork' : (element.source == 2 ? 'refer from friend' : '')}} -->
+  </button>
+    <button mat-button  [routerLink]="[item.routeLink]"   
+     >
+      
+        <mat-icon class="mr" >{{ item.icon == "help" ? 'help' : ''}}</mat-icon>
+      <!-- {{item.label}} -->
+      {{ item.label == "Help" ? 'Help' : ''}}
+     
+      <!-- {{element.source == 1 ? 'upwork' : (element.source == 2 ? 'refer from friend' : '')}} -->
+  </button>
+    <button mat-button  [routerLink]="[item.routeLink]"   
+     >
+      
+        <mat-icon class="mr" >{{ item.icon == "help" ? 'help' : ''}}</mat-icon>
+      <!-- {{item.label}} -->
+      {{ item.label == "Help" ? 'Help' : ''}}
+     
+      <!-- {{element.source == 1 ? 'upwork' : (element.source == 2 ? 'refer from friend' : '')}} -->
+  </button>
+    
+  </div>
+  
+
+  
+</mat-toolbar>
+
+
+<!-- <nav class="navbar navbar-expand-lg bg-light">
+
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Navbar</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" (click)="toggleDisplayDivIf()" aria-current="page" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav> -->
+>>>>>>> dev

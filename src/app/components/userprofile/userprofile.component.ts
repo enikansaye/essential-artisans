@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from './userprofile.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-userprofile',
@@ -40,31 +41,37 @@ export class UserprofileComponent implements OnInit {
   selectedFile: null = null;
   userprofileModelObj: userProfileModel = new userProfileModel();
 
-  statelga: any;
-  selectedStatelga: any = {
+  state: any;
+  city: any;
+  selectedCountry: any = {
     id: 0,
     name: '',
+    cities: '',
   };
 
   updateOrder!: FormGroup;
+  deleteForm!: FormGroup;
   min: any = '';
   value: any;
   formSubmitted: boolean = false;
   public form!: FormGroup;
-  rating3: number =0;
+  rating3: number = 0;
+  orderData: any;
 
   constructor(
     private observer: BreakpointObserver,
     public api: ApiService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
+<<<<<<< HEAD
       email: [''],
       PhoneNumber: [''],
      address: [''],
@@ -74,55 +81,82 @@ export class UserprofileComponent implements OnInit {
      
   
      
+=======
+      // email: [''],
+      Address: [''],
+      city: [''],
+      state: [''],
+      phoneNumber: [''],
+      userId: [0],
     });
-    this.getUser()
+    this.deleteForm = this.formBuilder.group({
+      orderId: 0,
+>>>>>>> dev
+    });
+    this.getUser();
     this.showAll();
+    this.getOrder();
 
     this.updateOrder = this.formBuilder.group({
       name: [''],
+      artisanId: 0,
       propertyAddress: [''],
+<<<<<<< HEAD
       inspectionDate: [''],
       inspectionTime: [''],
   PhoneNumber: [''],
+=======
+      inspectionDate: ['2022-06-30T10:58:37.452Z'],
+      inspectionTime: ['2022-06-30T10:58:37.452Z'],
+      mobilenumber: [''],
+>>>>>>> dev
       AltNumber: [''],
       issue: [''],
+      userId: 0,
+      orderId: 0,
     });
-    this.pastDateTime();
-    // this.getUserserInfo();
 
-    this.rating3 = 0;
+    this.deleteForm = this.formBuilder.group({
+      orderId: 0,
+    });
+
+    this.pastDateTime();
+    
     this.form = this.formBuilder.group({
-   
       rating: ['', Validators.required],
-      comment:['']
-    })
+      comment: [''],
+      artisanId: 0,
+      orderId: 0
+    });
   }
 
-  submitRating(){
-    
+  onClickRating(row: any) {
+    console.log(row);
+    this.userProfileModelObj.artisanId = row.artisanId;
+    this.userProfileModelObj.orderId = row.id;
+    this.form.controls['artisanId'].setValue(row.artisanId);
+    this.form.controls['orderId'].setValue(row.id);
+  }
 
-   
-      // this.alertService.info('Working on creating new account');
-  
-      const registerObserver = {
+  submitRating(data: any) {
+    console.log(data);
+
+    const registerObserver = {
+      next: (res: any) => {
+        this.userProfileModelObj.artisanId = res.id;
+        console.log(this.userProfileModelObj.artisanId);
+        // this.router.navigate(['/checkemail']);
+        console.log(res);
+      },
+      error: (err: any) => {
+        console.log(err);
+        console.log(this.form.value);
+
         
-        next: (res: any) => {
-          this.userProfileModelObj.artisanId = res.id;
-          console.log(this.userProfileModelObj.artisanId);
-          // this.router.navigate(['/checkemail']);
-          console.log(res);
-          
-        },
-        error: (err: any) => {
-          console.log(err);
-          console.log(this.form.value);
-          
-          // this.alertService.danger('signup failed');
-        },
-      };
-  
-      this.api.postRating(this.form.value,).subscribe(registerObserver);
-  
+      },
+    };
+
+    this.api.postRating(this.form.value).subscribe(registerObserver);
   }
   //  date and time selection
   pastDateTime() {
@@ -151,9 +185,40 @@ export class UserprofileComponent implements OnInit {
 
   // selecting location section
   showAll() {
-    this.api.getAllStateData().subscribe((data: any) => {
-      this.statelga = data;
-      console.log(this.statelga);
+    this.api.getAll().subscribe((data: any, i: any) => {
+      const result = Object.entries(data);
+
+      this.state = data;
+    });
+  }
+
+  onSelect(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
+
+  onSelectCities(data: any) {
+    let result = Object.entries(this.state);
+    console.log(data.value);
+
+    const statesList = Object.values(result[data.value])[1];
+
+    console.log((statesList as any)['cities']);
+    this.city = (statesList as any)['cities'];
+
+    console.log(this.city);
+  }
+  getOrder() {
+    this.api.getUserOrder().subscribe((data: any) => {
+      this.orderData = data;
+      console.log(this.orderData);
     });
   }
 
@@ -167,14 +232,9 @@ export class UserprofileComponent implements OnInit {
         this.sidenav.open();
       }
     });
-    
   }
-  onEditOrder(row: any) {
-    this.showAddEmployee = false;
-    this.showUpdate = true;
 
-    this.userProfileModelObj.id = row.id;
-
+<<<<<<< HEAD
     this.formValue.controls['name'].setValue(row.name);
     this.formValue.controls['propertyAddress'].setValue(row.propertyAddress);
     this.formValue.controls['email'].setValue(row.email);
@@ -184,16 +244,20 @@ export class UserprofileComponent implements OnInit {
     this.formValue.controls['issue'].setValue(row.issue);
     this.formValue.controls['address'].setValue(row.issue);
     this.formValue.controls['city'].setValue(row.issue);
+=======
+  deleteOrder(row: any) {
+    let body = {
+      orderid: row.id,
+    };
+    console.log(row.id);
+>>>>>>> dev
 
- 
+    this.api.deletes(body).subscribe((res) => {
+      this.toastr.success('Order deleted');
+      this.getOrder();
+    });
   }
 
-  // getUserserInfo() {
-  //   this.userResponse = localStorage.getItem('token');
-  //   this.userData = JSON.parse(this.userResponse).data;
-
-  //   return this.userData;
-  // }
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
@@ -230,15 +294,24 @@ export class UserprofileComponent implements OnInit {
 
   // on click to update userprofile
   onEdit() {
+    this.formValue.controls['userId'].setValue(this.api.loggedinUser.id);
     this.formValue.controls['firstName'].setValue(
-      this.api.loggedinUser.userName
+      this.api.loggedinUser.firstName
     );
     this.formValue.controls['lastName'].setValue(
       this.api.loggedinUser.lastName
     );
+<<<<<<< HEAD
     this.formValue.controls['email'].setValue(this.api.loggedinUser.email);
     // this.formValue.controls['email'].setValue(data.email);
     this.formValue.controls['PhoneNumber'].setValue(
+=======
+    this.formValue.controls['Address'].setValue(this.api.loggedinUser.Address);
+    this.formValue.controls['city'].setValue(this.api.loggedinUser.city);
+    this.formValue.controls['state'].setValue(this.api.loggedinUser.state);
+
+    this.formValue.controls['phoneNumber'].setValue(
+>>>>>>> dev
       this.api.loggedinUser.phoneNumber
     );
 
@@ -246,23 +319,36 @@ export class UserprofileComponent implements OnInit {
     this.showUpdate = true;
   }
 
-  updateEmployeeDetails() {
+  // updating user profile
+  updateUserDetails(row: any) {
+    console.log(row);
+    console.log(row.id);
+
+    this.userprofileModelObj.userId = this.formValue.value.userId;
     this.userprofileModelObj.firstName = this.formValue.value.firstName;
     this.userprofileModelObj.lastName = this.formValue.value.lastName;
+<<<<<<< HEAD
     this.userprofileModelObj.email = this.formValue.value.email;
     this.userprofileModelObj.PhoneNumber = this.formValue.value.PhoneNumber;
     this.userprofileModelObj.address = this.formValue.value.address;
     this.userprofileModelObj.city = this.formValue.value.city;
     this.userprofileModelObj.state = this.formValue.value.state;
+=======
+    this.userprofileModelObj.Address = this.formValue.value.Address;
+    this.userprofileModelObj.city = this.formValue.value.city;
+    this.userprofileModelObj.state = this.formValue.value.state;
+    this.userprofileModelObj.phoneNumber = this.formValue.value.PhoneNumber;
+>>>>>>> dev
 
-    this.api.userUpdate(this.userprofileModelObj).subscribe((res: any) => {
+    this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
       console.log(res);
+      this.toastr.success('Profile updated');
       //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
       //   // ref?.click();
 
-      //   // this.getUserserInfo() //this is to refresh and get the resent data
+      // this.getUserserInfo() //this is to refresh and get the resent data
     });
   }
 
@@ -292,62 +378,66 @@ export class UserprofileComponent implements OnInit {
     // this.progressBar.startLoading();
     const updateEmployerObserver = {
       next: (x: any) => {
-      
         console.log('Account Updated');
         this.router.navigate(['/']);
-       
       },
       error: (err: any) => {
-        
         console.log(err);
-        
       },
     };
     this.api.userUpdate(this.formValue).subscribe(updateEmployerObserver);
   }
- 
-  deleteOrder() {
-    this.api.deleteUser().subscribe((res) => {
-      alert('employee deleted');
-      console.log('deleted');
-      console.log(res);
 
-      // this.getAllEmployee(); //this is to automatically refresh the page
-    });
-  }
   toggleEditMode(): void {
     this.isComplete = !this.isComplete;
   }
 
-  updateServiceOrder(){
-    this.formSubmitted = true;
-    if(!this.updateOrder .valid){
-      return;
-    }
-    this.api.updateService(this.updateOrder.value, this.updateOrder.value.id).subscribe({
-      next: (data: any) => {
-   
-          // alertify.success('Profile successsfully updated.'); 
-          this.updateOrder.disable();
-          this.isComplete = false;
-        },
-     error:  ( error:any )=> {
-          // alertify.error('Profile update failed'); 
-          console.log(error);
-          
-        }
-      })
+  onEditOrder(row: any) {
+    console.log(row);
+    console.log(row.artisanId);
+
+    this.userprofileModelObj.userId = row.userId;
+    this.userprofileModelObj.firstName = row.firstName;
+    this.userprofileModelObj.lastName = row.lastName;
+    this.userprofileModelObj.propertyAddress = row.propertyAddress;
+    this.userprofileModelObj.city = row.city;
+    this.userprofileModelObj.state = row.state;
+    this.userprofileModelObj.phoneNumber = row.PhoneNumber;
+    this.userprofileModelObj.artisanId = row.artisanId;
+    this.updateOrder.controls['artisanId'].setValue(row.artisanId);
+    this.updateOrder.controls['orderId'].setValue(row.id);
   }
-  getUser(){
-    this.api.getUserinfo( this.api.loggedinUser.id).subscribe(
-      
-      
-      (res: any) => {
+
+  updateServiceOrder() {
+    // console.log(row);
+    // console.log(row.id);
+
+    this.userprofileModelObj.userId = this.updateOrder.value.userId;
+    this.userprofileModelObj.firstName = this.updateOrder.value.firstName;
+    this.userprofileModelObj.lastName = this.updateOrder.value.lastName;
+    this.userprofileModelObj.propertyAddress =
+      this.updateOrder.value.propertyAddress;
+    this.userprofileModelObj.city = this.updateOrder.value.city;
+    this.userprofileModelObj.state = this.updateOrder.value.state;
+    this.userprofileModelObj.phoneNumber = this.updateOrder.value.PhoneNumber;
+    this.userprofileModelObj.artisanId = this.updateOrder.value.artisanId;
+
+    this.api.updateService(this.updateOrder.value).subscribe((res: any) => {
       console.log(res);
-      
+      this.toastr.success('Profile updated');
+
+      //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
+      //   // ref?.click();
+
+      // this.getUserserInfo() //this is to refresh and get the resent data
+    });
+  }
+  getUser() {
+    this.api.getUserinfo(this.api.loggedinUser.id).subscribe((res: any) => {
+      console.log(res);
+
       this.userData = res;
       console.log(this.userData);
-      
     });
   }
 }

@@ -19,7 +19,7 @@
           </div>
           <div>
             <form class="d-flex flex-end" role="search">
-              <input class="form-control me-2" [(ngModel)]="location" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control me-2"  type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit" (click)="onLocationFilter()">Search</button>
             </form>
            
@@ -40,7 +40,7 @@
                       currentPage: page,
                       totalItems: totalRecord
                     }
-                | filter: '':'gender'|sort:['email','asc']
+                | filter: '':'searchArtisan'|sort:['email','asc']
             "
 
           >
@@ -48,7 +48,8 @@
 
               <div class="card-avatar">
                 <a>
-                  <img class="img" src="data:image/png;base64,{{ data.profileImage}}" />
+                  <img class="img img-fluid" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
+                  <img class="img img-fluid" *ngIf="!data.profileImage" src="/assets/images/1.jpg" />
                 </a>
               </div>
 
@@ -189,14 +190,40 @@
               id="exampleInputPassword1"
             />
           </div>
-          <div class="mb-1">
-            <label for="exampleInputPassword1" class="form-label"
-              >Select Location</label
+          <div class="form-group form-outline mb-4">
+                   
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="state"
+              [(ngModel)]="selectedCountry.name"
+              (change)="onSelect($event.target)"
             >
-            <select class="form-select" aria-label="Default select example">
-              <option selected>select location</option>
-              <option *ngFor="let statelga of statelga">{{ statelga }}</option>
+              <option selected value="" >select location</option>
+              <option class="form-control form-control-lg mb-1"
+                *ngFor="let country of state"
+                value="{{ state.indexOf(country) }}"
+              >
+                {{ country.name }}
+              </option>
             </select>
+           <div> <label for="country" class="form-label">Select State</label></div>
+          </div>
+
+          <div class="form-group form-outline mb-4">
+
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="city"
+              [(ngModel)]="selectedCountry.cities"
+            >
+              <option selected value="">select location</option>
+              <option *ngFor="let state of city" value="cities">
+                {{ state }}
+              </option>
+            </select>
+            <label for="country" class="form-label">Select City</label>
           </div>
 
           <div class="mb-1">
@@ -233,6 +260,12 @@
               class="form-control"
             />
           </div>
+          <!-- <div>
+            <input type="file" formControlName="issueImage" name="profile" (change)="selectFile($event)" />
+          </div>
+          <div>
+            <button class="btn btn-info" (click)="submit()">Upload</button>
+          </div> -->
           <!-- <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Photo of issue</label
@@ -274,11 +307,11 @@
             <img [src]="uploadUrl" alt="preview" class="rounded shadow w-100">
           </div>
         </div> -->
-
+<!-- 
         <div class="form-group">
           <input type="file" (change)="onImageUpload($event)">
           <input type="button" formControlName="issueImage" (click)="upload()" value="Upload Image" class="btn1">
-      </div>
+      </div> -->
 
 
       <div>

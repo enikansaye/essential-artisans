@@ -1,13 +1,11 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-secondary d-flex justify-content-between">
-    <a class="navbar-brand" href="#">INVOICE GENERATOR</a>
-    <!-- <div>
-        <a class="text-white" href="https://github.com/ngdevelop-tech/angular-pdfmake-invoice-generator" target="_blank"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
-    </div> -->
+    <a class="navbar-brand"> GENERATE INVOICE/QUOTE</a>
+   
 </nav>
-<form #invoiceForm="ngForm">
+<form #invoiceForm="ngForm" (ngSubmit)="invoiceForm.form.valid && onSubmit()">
     <div class="container-fluid pt-2 mb-5">
         <div class="row">
-            <div class="col-md-8"  id="pdfTable" #pdfTable>
+            <div class="col-md-8">
                 <div class="card border-secondary">
                     <div class="card-body">
                         <h4 class="card-title">Customer Details</h4>
@@ -74,12 +72,9 @@
                                                 [ngClass]="{'is-invalid': invoiceForm.submitted && ProductQty.invalid}"
                                                 [(ngModel)]="product.qty" #ProductQty="ngModel" required>
                                         </td>
-                                      <td>
-                                        <input type="nummber" name="total" [(ngModel)]="product.total" #ProductTotal="ngModel" value=" {{product.price * product.qty || ''}}">
-                                      </td>
-                                        <!-- <td>
+                                        <td>
                                             {{product.price * product.qty || ''}}
-                                        </td> -->
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -98,22 +93,18 @@
 
             </div>
             <div class="col-md-4">
-                <!-- <button type="button" class="btn btn-secondary btn-lg btn-block"
+                <button type="button" class="btn btn-secondary btn-lg btn-block"
                     (click)="invoiceForm.valid ? generatePDF('download') : ''">Download Invoice</button>
                 <button type="button" class="btn btn-secondary btn-lg btn-block"
                     (click)="invoiceForm.valid ? generatePDF('print') : ''">Print
-                    Invoice</button> -->
+                    Invoice</button>
                 <button type="submit" class="btn btn-secondary btn-lg btn-block"
                     (click)="invoiceForm.valid ? generatePDF() : ''">Open
                     Invoice</button>
-                    <button type="submit" class="btn btn-secondary btn-lg btn-block"
-                    (click)="invoiceForm.valid ? downloadAsPDF() : ''" >upload</button>
-                    <button type="submit" class="btn btn-secondary btn-lg btn-block"
-                    (click)="invoiceForm.valid ? onSubmitData() : ''" >submit</button>
-                    <button class="btn btn-primary" (click)="downloadAsPDF();">Export To PDF</button>
-                
+               
+
+                    <button class="btn btn-primary" type="submit">send</button>
             </div>
         </div>
     </div>
 </form>
-

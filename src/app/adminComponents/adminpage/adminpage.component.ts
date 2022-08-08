@@ -29,6 +29,7 @@ export class AdminpageComponent implements OnInit {
   othersData: any;
   AllOrderData: any;
   
+  
 
   constructor(private observer: BreakpointObserver, private api: ApiService,  private adminApi: AdminService) {}
 

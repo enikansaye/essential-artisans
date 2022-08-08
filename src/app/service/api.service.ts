@@ -27,6 +27,9 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
+
+  public baseUrl:string = "https://lyticalartisanapi.azurewebsites.net"
+
   public refreshTokenUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/refresh-token';
 
@@ -34,7 +37,7 @@ export class ApiService implements OnInit {
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
 
   public userUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/​/api​/Admin​/customers';
+    'https://lyticalartisanapi.azurewebsites.net/​api​/Admin​/customers';
 
   public userSignupUrl: string =
     'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
@@ -54,7 +57,8 @@ export class ApiService implements OnInit {
     public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/'
     public userinfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/'
     public issueImage:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload'
-    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
+    public location: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
+    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations/'
     public locationSearch: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location'
     public rating: string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/Review/create/'
 
@@ -119,12 +123,13 @@ export class ApiService implements OnInit {
       );
   }
 getUserinfo(id:string){
-  return this.http.get(this.userinfo +id)
+  return this.http.get(this.userinfo )
 
 }
-getArtisaninfo(id:string){
-  return this.http.get(this.artisaninfo +id)
+getArtisaninfo(){
+  return this.http.get(this.artisaninfo )
 }
+
 
   isUserLoggedIn() {
     return localStorage.getItem('token') != null;
@@ -176,13 +181,17 @@ getArtisaninfo(id:string){
   // }
 
   userUpdate(userInfo: any) {
+<<<<<<< HEAD
     console.log(userInfo);
     
     return this.http.put(this.url.updateUser, userInfo);
+=======
+    return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Customer/update', userInfo);
+>>>>>>> dev
   }
   artisanUpdate(ArtisanInfo: any) {
   
-      return this.http.put(this.url.updateArtisan, ArtisanInfo);
+      return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Artisan/update', ArtisanInfo);
   }
 
   // fakeapi
@@ -219,19 +228,7 @@ getArtisaninfo(id:string){
     console.log(event);
     
   }  
-  // public uploadImage(image: File): Observable<any> {
-  //   const formData = new FormData();
 
-  //   formData.append('image', image);
-
-  //   return this.http.post(this.imageUrl, formData);
-  // }
-
-  // upload2(userId: string, file: File): Observable<any>{
-  //   const formData = new FormData();
-  //   formData.append("Photo", file, file.name);
-  //   return this.http.post(this.imageUrl, formData);
-  // }
 
   // picture upload
   upload(file: File): Observable<HttpEvent<any>> {
@@ -298,8 +295,40 @@ getArtisaninfo(id:string){
   // location selection api
 
 
+<<<<<<< HEAD
 
 
+=======
+  getArtisanOrder(){
+    return this.http.get(this.baseUrl + "/api/Artisan/orders").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
+  getUserOrder(){
+    return this.http.get(this.baseUrl + "/api/Customer/orders").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
+  updateUserOrder(){
+    return this.http.get(this.baseUrl + "/api/Customer/ServiceOrder/update").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
+
+  getArtisan() {
+    return this.http.get<any>('http://localhost:3000/posts').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+>>>>>>> dev
 
 
 
@@ -310,13 +339,13 @@ getArtisaninfo(id:string){
 
   }
   // fake api
-  createService2(data:any, id:number) {
-    return this.http.put<any>(this.url.createService + id , data).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
+  // createService2(data:any, id:number) {
+  //   return this.http.put<any>(this.url.createService + id , data).pipe(
+  //     map((res: any) => {
+  //       return res;
+  //     })
+  //   );
+  // }
 
   //  create invoice by artisans
   createInvoice(data:any) {
@@ -341,9 +370,36 @@ getArtisaninfo(id:string){
   //     })
   //   );
   // }
+<<<<<<< HEAD
 //   updateService(userInfo: any, userId: string){
 //     return this.http.put(this.url.updateService +userId, userInfo);
 // }
+=======
+  updateService(userInfo: any){
+    return this.http.put(this.baseUrl + "/api/Customer/ServiceOrder/update", userInfo);
+}
+
+
+deletes(data:any){
+
+  const req = new HttpRequest('DELETE', 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/delete' ,data, {
+    reportProgress: true,
+    responseType: 'json',
+  });
+
+  
+
+
+  
+  return this.http.request(req);
+
+}
+>>>>>>> dev
+
+
+
+
+  
 
 // checking with refresh token
 Logout() {
@@ -352,10 +408,20 @@ Logout() {
   this.router.navigateByUrl('signin');
 }
 
+<<<<<<< HEAD
 
 // location2
+=======
+// this is is to get a default artisans
+>>>>>>> dev
 getAll():any{
-  return this.http.get<any>(this.location2)
+  return this.http.get<any>(this.location)
+}
+getLocation():any{
+  return this.http.get<any>(this.location)
+}
+getLocation2(state:string):any{
+  return this.http.get<any>(this.location2 +state)
 }
 
 sortArtisanLocation():any{
@@ -365,4 +431,9 @@ postRating(data:any, ) {
   return this.http.post(this.rating ,data).pipe();
 
 }
+
+generateInvoice(data:any){
+  return this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/invoice/create',data)
+}
+
 }
