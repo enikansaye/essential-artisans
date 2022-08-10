@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -27,6 +27,10 @@ declare let alertify: any;
 })
 export class ArtisanprofileComponent implements OnInit {
 
+  progress=0;
+  message='';
+  @Output() public onUploadFinished = new EventEmitter();
+  
 
   
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
@@ -79,8 +83,7 @@ export class ArtisanprofileComponent implements OnInit {
 
   selectedFiles?: FileList;
   currentFile?: File;
-  progress = 0;
-  message = '';
+
   fileInfos?: Observable<any>;
 
   num1: any;
@@ -209,56 +212,68 @@ export class ArtisanprofileComponent implements OnInit {
       this.formControls['userId'].enable();
 
       this.updateForm.controls['firstName'].setValue(
-        this.api.loggedinUser.userName
+        this.artisanData.firstName
       );
       this.updateForm.controls['lastName'].setValue(
-        this.api.loggedinUser.lastName
+        this.artisanData.lastName
       );
     
       this.updateForm.controls['phoneNumber'].setValue(
-        this.api.loggedinUser.phoneNumber
+        this.artisanData.phoneNumber
       );
-      this.updateForm.controls['userId'].setValue(this.api.loggedinUser.id);
+      this.updateForm.controls['userId'].setValue(this.artisanData.id);
       console.log(this.api.loggedinUser.id);
+      
+      this.updateForm.controls['Address'].setValue(this.artisanData.location);
+      // console.log(this.api.loggedinUser.id);
+      
+      this.updateForm.controls['service'].setValue(this.artisanData.address);
+      // console.log(this.api.loggedinUser.id);
+      
+      this.updateForm.controls['state'].setValue(this.artisanData.state);
+      // console.log(this.api.loggedinUser.id);
+      
+      this.updateForm.controls['city'].setValue(this.artisanData.city);
+      // console.log(this.api.loggedinUser.id);
       
     } else {
       // this.updateForm.disable();
     }
   }
 
-  grandtotal() {
-    this.alltotal = parseInt(this.result) + parseInt(this.result);
-  }
-  celltotal() {
-    this.result = parseInt(this.num1) * parseInt(this.num2);
-  }
-  onEnter() {
-    this.result = parseInt(this.num1) * parseInt(this.num2);
-    this.alltotal = this.result + parseInt(this.result);
-  }
+  // grandtotal() {
+  //   this.alltotal = parseInt(this.result) + parseInt(this.result);
+  // }
+  // celltotal() {
+  //   this.result = parseInt(this.num1) * parseInt(this.num2);
+  // }
+  // onEnter() {
+  //   this.result = parseInt(this.num1) * parseInt(this.num2);
+  //   this.alltotal = this.result + parseInt(this.result);
+  // }
 
   get userFormGroups() {
     return this.usersForm.get('users') as FormArray;
   }
 
-  removeFormControl(i: number) {
-    let usersArray = this.usersForm.get('users') as FormArray;
-    usersArray.removeAt(i);
-  }
+  // removeFormControl(i: number) {
+  //   let usersArray = this.usersForm.get('users') as FormArray;
+  //   usersArray.removeAt(i);
+  // }
 
-  addFormControl() {
-    let usersArray = this.usersForm.get('users') as FormArray;
-    let arraylen = usersArray.length;
+  // addFormControl() {
+  //   let usersArray = this.usersForm.get('users') as FormArray;
+  //   let arraylen = usersArray.length;
 
-    let newUsergroup: FormGroup = this.fb.group({
-      gHService: [''],
-      quantity: [''],
-      startTime: [''],
-      total: [''],
-    });
+  //   let newUsergroup: FormGroup = this.fb.group({
+  //     gHService: [''],
+  //     quantity: [''],
+  //     startTime: [''],
+  //     total: [''],
+  //   });
 
-    usersArray.insert(arraylen, newUsergroup);
-  }
+  //   usersArray.insert(arraylen, newUsergroup);
+  // }
   onSubmit() {
     console.log(this.usersForm.value);
   }
@@ -310,6 +325,31 @@ export class ArtisanprofileComponent implements OnInit {
       }
       this.selectedFiles = undefined;
     }
+  }
+
+
+  
+  uploadFile(files: any) {
+    if (files.length === 0) {
+      return;
+    }
+    let fileToUpload = <File>files[0];
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    
+    this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
+      .subscribe({
+        next: (event:any) => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round(100 * event.loaded / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'Upload success.';
+          this.onUploadFinished.emit(event.body);
+        }
+        this.getArtisan()
+      },
+      error: (err: HttpErrorResponse) => console.log(err)
+    });
   }
 
   // updateUserInformation() {

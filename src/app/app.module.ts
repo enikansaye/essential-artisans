@@ -159,7 +159,7 @@ import {MatListModule} from '@angular/material/list'
     MatMenuModule,
     NgxPaginationModule,
     NgxStarRatingModule,
-    // AvatarModule,
+    AvatarModule,
     FlexLayoutModule,
     MatMenuModule,
     MatButtonModule,

@@ -228,13 +228,22 @@ getArtisaninfo(){
     const req = new HttpRequest('POST', this.imageUrl, formData, {
       reportProgress: true,
       responseType: 'json',
-    });
+    },);
   
     
     return this.http.request(req);
 
   
   }
+
+  // onUpload(files: any): void{
+   
+  //   let fileToUpload = <File>files[0];
+  //   const formData = new FormData();
+  //   formData.append('file', fileToUpload, fileToUpload.name);
+
+  //   this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
+  // }
 
   uploadIssue(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();

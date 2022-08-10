@@ -43,11 +43,12 @@
                 | filter: '':'searchArtisan'|sort:['email','asc']
             "
           >
-            <div class="card card-profile" (click)="onEdit(data)">
-              <div class="card-avatar">
+            <div class="card card-profile  " (click)="onEdit(data)">
+              <div class="card-avatar  ">
                 <a>
-                  <img class="img img-fluid" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
-                  <img class="img img-fluid" *ngIf="!data.profileImage" src="/assets/images/1.jpg" />
+                  <img class="img-fluid  " size="110" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
+                 <div class="img " *ngIf="!data.profileImage "><ngx-avatar size="130" name="{{data.firstName}} {{data.lastName}}"></ngx-avatar></div>
+                  <!-- <img class="img img-fluid " *ngIf="!data.profileImage" src="/assets/images/avatar1.webp" /> -->
                 </a>
               </div>
 
@@ -63,7 +64,7 @@
 
                 <div class="d-flex justify-content-between">
                   <div class="list-inline-item mt-2 small">
-                    <i class="bi bi-geo-alt-fill"></i>{{ data.location.city }}
+                    <i class="bi bi-geo-alt-fill"></i>{{ data.location }}
                   </div>
                   <div>
                     <ul class="">
@@ -192,7 +193,7 @@
               <option selected value="" >select location</option>
               <option class="form-control form-control-lg mb-1"
                 *ngFor="let country of state"
-                value="{{ state.indexOf(country) }}"
+                
               >
                 {{ country.name }}
               </option>
@@ -209,7 +210,7 @@
               [(ngModel)]="selectedCountry.cities"
             >
               <option selected value="">select location</option>
-              <option *ngFor="let state of city" value="cities">
+              <option *ngFor="let state of city" >
                 {{ state }}
               </option>
             </select>

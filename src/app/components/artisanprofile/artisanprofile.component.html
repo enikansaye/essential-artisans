@@ -18,7 +18,8 @@
       src="data:image/png;base64,{{artisanData.profileImage}}" alt="/assets/images/1.jpg"
       class="img-fluid bg-success rounded-circle w-50"
     />
-    <img class="img img-fluid rounded-circle" *ngIf="!artisanData.profileImage" src="/assets/images/1.jpg" />
+    <div class="img " *ngIf="!artisanData.profileImage "><ngx-avatar size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar></div>
+
       <h4 class="mt-2 mt-md-4">{{artisanData.firstName}} {{artisanData.lastName}}</h4>
       <h4>{{artisanData.service}}</h4>
       <h4>{{artisanData.email}}</h4>
@@ -127,18 +128,35 @@
                 <div class="col-4 col-md-2 rounded-circle me-3">
                   <img  *ngIf="artisanData.profileImage"
                     src="data:image/png;base64,{{artisanData.profileImage}}" alt="/assets/images/1.jpg"
-                    class="img-fluid bg-success rounded-circle"
+                    class="img-fluid bg-success rounded-circle "
                   />
-                  <img class="img img-fluid rounded-circle" *ngIf="!artisanData.profileImage" src="/assets/images/1.jpg" />
+                  <img class="img img-fluid rounded-circle " *ngIf="!artisanData.profileImage" src="/assets/images/1.jpg" />
                 </div>
-                <!-- *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" -->
+              
 
-                <div class="align-text-bottom">
+
+                <div class="row" style="margin-bottom:15px;">
+                  <div class="col-md-3">
+                    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+                    <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="upload" *ngIf="progress > 0">
+                      {{progress}}%
+                    </span>
+                    <span class="upload" *ngIf="message">
+                      {{message}}
+                    </span>
+                  </div>
+                </div>
+
+
+                <!-- <div class="align-text-bottom">
                   <label class="btn btn-default p-0">
                     <input type="file" (change)="selectFile($event)" />
                   </label>
   
-                 <button  (click)="upload()" class="btn btn-success">upload picture</button>
+                 <button  (click)="upload()" class="btn btn-success">upload picture</button> -->
                  <!-- <div class="info-wrapper">
                   <div class="info-img m-auto">  
                       <img [src]="userPhoto? userPhoto : '../../../../assets/images/avartar.png'" class="img-fluid" alt="personal photo">
@@ -157,7 +175,7 @@
                   </div> -->
                  
   
-                 <div *ngIf="currentFile" class="progress my-3">
+                 <!-- <div *ngIf="currentFile" class="progress my-3">
                   <div
                     class="progress-bar progress-bar-info progress-bar-striped"
                     role="progressbar"
@@ -168,19 +186,19 @@
                   >
                     {{ progress }}%
                   </div>
-                </div>
+                </div> -->
 
 
-                <div class="container text-center jumbotron"
+                <!-- <div class="container text-center jumbotron"
     *ngIf="shortLink">
     <h2> Visit Here</h2>
     <a href="{{shortLink}}">{{shortLink}}</a>
 </div>
-  
+   -->
 <!--Flag variable is used here-->
-<div class="container" *ngIf="loading">
+<!-- <div class="container" *ngIf="loading">
     <h3>Loading ...</h3>
-</div>
+</div> -->
                   <!-- <h4 class="d-none d-lg-block pt-2">
                     Acceptable format, jpg, png only<br /><span>
                       Max file size is 100kb and min size 70kb</span
@@ -188,7 +206,7 @@
                   </h4>
               <div>    {{api.loggedinUser.email}}</div> -->
                 </div>
-              </div>
+              <!-- </div> -->
             </section>
             <!-- <mat-divider></mat-divider> -->
 
@@ -274,7 +292,7 @@
                       [(ngModel)]="selectedCountry.name"
                       (change)="onSelect($event.target)"
                     >
-                      <option selected value="" >select location</option>
+                      <option selected  >select location</option>
                       <option class="form-control form-control-lg mb-1"
                         *ngFor="let country of state"
                         value="{{ state.indexOf(country) }}"
@@ -294,7 +312,7 @@
                       [(ngModel)]="selectedCountry.cities"
                     >
                       <option selected value="">select location</option>
-                      <option *ngFor="let state of city" value="cities">
+                      <option *ngFor="let state of city" value="{{state}}">
                         {{ state }}
                       </option>
                     </select>
@@ -309,7 +327,7 @@
                     <!-- <button class="btn btn-outline-success mx-1"  type="submit"   *ngIf="isEditMode">
                      update profile
                     </button> -->
-                    <button class="btn btnPrimary" type="submit" *ngIf="isEditMode">Save Profile</button>
+                    <button class="btn btn-info me-2" type="submit" *ngIf="isEditMode">Save Profile</button>
                     <!-- <button class="btn btnPrimary" type="submit" *ngIf="isEditMode">Save Profile</button> -->
                     <button class="btn btn-danger "(click)="toggleEditMode()" *ngIf="isEditMode">Cancel</button>
                     <!-- <button class="btn btn-outline-danger mx-1">
