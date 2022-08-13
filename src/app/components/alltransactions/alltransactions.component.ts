@@ -51,7 +51,7 @@ export class AlltransactionsComponent implements OnInit {
       console.log(res);
 
       this.AllOrderData = res;
-      console.log(this.othersData);
+      console.log(this.AllOrderData);
     });
   }
 

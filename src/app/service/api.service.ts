@@ -56,7 +56,7 @@ export class ApiService implements OnInit {
     public userinfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/'
     public issueImage:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload'
     public location: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
-    public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations/'
+    // public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations/'
     public locationSearch: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location'
     public rating: string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/Review/create/'
 
@@ -416,7 +416,7 @@ getLocation():any{
   return this.http.get<any>(this.location)
 }
 getLocation2(state:string):any{
-  return this.http.get<any>(this.location2 +state)
+  return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/App/locations/' +state)  
 }
 
 sortArtisanLocation():any{

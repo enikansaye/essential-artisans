@@ -94,7 +94,7 @@
                     </span>
                     <div>  <label class="form-label" for="">Phone</label></div>
                   </div>
-                  <div class="form-group form-outline mb-4">
+                  <!-- <div class="form-group form-outline mb-4">
                    
                     <select
                       class="form-select"
@@ -103,12 +103,13 @@
                       [(ngModel)]="selectedCountry.name"
                       (change)="onSelect($event.target)"
                     >
-                      <option selected value="" >select location</option>
+                      <option selected   *ngFor="let country of state"
+                      
+                        >{{ country.name }}</option>
                       <option class="form-control form-control-lg mb-1"
-                        *ngFor="let country of state"
-                        value="{{ state.indexOf(country) }}"
+                      *ngFor="let country of state"    value="{{ state.valueOf(country) }}"
                       >
-                        {{ country.name }}
+                        
                       </option>
                     </select>
                    <div> <label for="country" class="form-label">Select State</label></div>
@@ -123,12 +124,29 @@
                       [(ngModel)]="selectedCountry.cities"
                     >
                       <option selected value="">select location</option>
-                      <option *ngFor="let state of city" value="cities">
+                      <option *ngFor="let state of city" value="{{state}}">
                         {{ state }}
                       </option>
                     </select>
                     <label for="country" class="form-label">Select City</label>
+                  </div> -->
+                  <div class="form-group form-outline mb-4">
+                  <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+                    <option value="" selected disabled>Select Location</option>
+                    <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
+                    
+                  </select>
                   </div>
+
+                  <div class="form-group form-outline mb-4"   >
+                    <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+                      <option selected value="">Select Location</option>
+                      <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                      
+                    </select>
+                    </div>
+
+
 
                   <div class="form-group form-outline mb-4">
                     <input
@@ -178,14 +196,20 @@
                       password is <strong>required</strong>
                     </mat-error>
                   </mat-form-field>
-                  <label for="country" class="form-label">Password</label>
+                  <label for="country" class="form-label">Password</label><br/>
 
-
+                <div>  <span
+                  class="text-danger h3" role="alert"
+                  *ngIf="signupForm.invalid || submitted"
+                  
+                >
+                 {{ errorMessage }}
+                </span></div>
                   <div class="form-group pt-1 mb-4">
                     <button
                       class="btn btn-dark btn-lg btn-block"
                       type="submit"
-                      [disabled]="signupForm.invalid"
+                      
                     >
                     Sign Up
                     </button>

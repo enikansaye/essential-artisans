@@ -19,6 +19,8 @@ export class SignupComponent implements OnInit {
   statelga: any;
   serviceData:any;
   state: any;
+  state2: any;
+  city2: any;
 
 
   countries: any;
@@ -29,6 +31,7 @@ export class SignupComponent implements OnInit {
     cities: '',
   };
   city: any;
+  errorMessage = '';
   // form :any
 
   constructor(
@@ -41,6 +44,7 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getState()
     this.showAll();
     // this.getService()
    this.getAllServiceCategory()
@@ -105,7 +109,9 @@ onSelectCities(data: any) {
       },
       error: (err: any) => {
         console.log(err);
-        this.alertService.danger('signup failed');
+        console.log();
+        return this.errorMessage = err.error
+        // this.alertService.danger('signup failed');
       },
     };
 
@@ -122,5 +128,25 @@ onSelectCities(data: any) {
     });
   }
 
+  getState(){
+    this.api.getLocation().subscribe((data:any)=>{
+      this.state2= data
+      console.log( this.state2);
+      
+    })
+  }
+  onChangeState(event:any){
+    let userProfile =this.signupForm.controls['state'].value
+    if(userProfile){
+      this.api.getLocation2(userProfile).subscribe((data:any)=>{
+        this. city2= data
+        console.log( this.city2);
+    })
+  }
+}
+onChangeCity(event:any){
+return this.signupForm.controls['city'].value
   
 }
+}
+

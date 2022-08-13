@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
@@ -40,7 +40,8 @@ class Product {
 })
 export class InvoiceComponent {
   @Output() newItemEvent = new EventEmitter<string>();
-
+  // @Input() lastName!: string;
+  // @Input()  check!:any;
   invoice:any= {
     customerName:[],
     address:[],

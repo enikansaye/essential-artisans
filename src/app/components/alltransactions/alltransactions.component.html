@@ -27,7 +27,7 @@
                   <h2 class="fw-bold mb-1">110</h2>
 
 
-                  <span class="text-danger fw-semi-bold">2+</span>
+                  <span class="text-danger fw-semi-bold">2+ /per day</span>
                   <span class="ms-1 fw-medium">Pending</span>
 
                  
@@ -47,7 +47,7 @@
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
                     <div>
-                      <i class="fa-solid fa-face-smile"></i>
+                      <!-- <i class="fa-solid fa-face-smile"></i> -->
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >Pending</span
                       >
@@ -58,7 +58,7 @@
                   </div>
                   <h2 class="fw-bold mb-1"> 6</h2>
                   <span class="text-success fw-semi-bold"
-                  ><i class="bi bi-trending-up me-1"></i>+2;</span
+                  ><i class="bi bi-trending-up me-1"></i>2+ /per day</span
                 >
                 <span class="ms-1 fw-medium">Pending Orders</span>
                 </div>
@@ -73,7 +73,7 @@
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
                     <div>
-                      <i class="fa-solid fa-heart"></i>
+                      <!-- <i class="fa-solid fa-heart"></i> -->
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >Completed</span
                       >
@@ -84,7 +84,7 @@
                   </div>
                   <h2 class="fw-bold mb-1">100</h2>
                   <span class="text-success fw-semi-bold"
-                    ><i class="bi bi-trending-up me-1"></i>+2</span
+                    ><i class="bi bi-trending-up me-1"></i>2+ /per day</span
                   >
                   <span class="ms-1 fw-medium">Completed</span>
                 </div>
@@ -110,7 +110,7 @@
                   </div>
                   <h2 class="fw-bold mb-1">4</h2>
                   <span class="text-success fw-semi-bold"
-                    ><i class="bi bi-trending-up me-1"></i>+1</span
+                    ><i class="bi bi-trending-up me-1"></i>1+ /per day</span
                   >
                   <span class="ms-1 fw-medium">Canceled</span>
                 </div>
@@ -158,7 +158,7 @@
       </nav>
 
       <section > 
-        <div [ngSwitch]="service" *ngIf="!AllOrderData">
+        <div [ngSwitch]="service" *ngIf="AllOrderData">
           <!-- all transaction -->
           <div *ngSwitchCase="'completed'" id="no-tables" >
          <div >
@@ -167,21 +167,25 @@
               <tr>
                 <th scope="col">Order ID</th>
                 <th scope="col">Date</th>
-                <th scope="col">Location</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Status</th>
+                <th scope="col">User's Name</th>
                 <th scope="col">Artisan's Name</th>
+                
+                <th scope="col">Location</th>
+               
+                <th scope="col">Status</th>
+                
               
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let data of AllOrderData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
                 <td data-title="Order ID" >{{data.id}}</td>
+                <td data-title="Order ID" >{{data.date}}</td>
                 <td data-title="Date">{{data.artisanEmail}}</td>
                 <td data-title="Location">{{data.issue}}</td>
                 <td data-title="Amount">{{data.title}}</td>
                 <td data-title="Status">completed</td>
-                <td data-title="Artisan's Name">ope</td>
+                <td data-title="Artisan's Name">{{data.artisanName}}</td>
                 <td data-title="Artisan's Name">
                   <button class="btn btn-info"  (click)="aproveOrder(data)" *ngIf="!data.isApproved">Waiting Approval</button>
                   <button class="btn btn-success"  *ngIf="data.isApproved">Approved</button>

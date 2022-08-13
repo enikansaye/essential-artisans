@@ -21,6 +21,9 @@ export class RegisterComponent implements OnInit {
   password?: string;
   hide = true;
   statelga: any;
+  state2: any;
+  city2: any;
+  errorMessage = '';
   // form :any
 
   constructor(
@@ -34,25 +37,26 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     // this.showAll();
     this.showAll();
+    this.getState()
     // this.onSelect(this.selectedCountry.id)
 
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required,Validators.email],
+      email: ['', Validators.required],
       PhoneNumber: ['', Validators.required],
       password: ['', Validators.required],
       // location: ['', Validators.required],
       address: ['', Validators.required],
       city: ['', Validators.required],
-      State: ['', Validators.required],
+      state: ['', Validators.required],
     });
   }
   get signupFormControl() {
     return this.signupForm.controls;
   }
 
-  onSubmit() {
+  onSubmit(data:any) {
     this.submitted = false;
     this.alertService.info('Working on creating new account');
 
@@ -62,7 +66,10 @@ export class RegisterComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
-        this.alertService.danger('signup failed');
+        console.log(data);
+        return this.errorMessage = err.error
+        
+        // this.alertService.danger('signup failed');
       },
     };
 
@@ -108,4 +115,27 @@ export class RegisterComponent implements OnInit {
 
     console.log(this.states);
   }
+
+
+
+  getState(){
+    this.api.getLocation().subscribe((data:any)=>{
+      this.state2= data
+      console.log( this.state2);
+      
+    })
+  }
+  onChangeState(event:any){
+    let userProfile =this.signupForm.controls['state'].value
+    if(userProfile){
+      this.api.getLocation2(userProfile).subscribe((data:any)=>{
+        this. city2= data
+        console.log( this.city2);
+    })
+  }
+}
+onChangeCity(event:any){
+return this.signupForm.controls['city'].value
+  
+}
 }

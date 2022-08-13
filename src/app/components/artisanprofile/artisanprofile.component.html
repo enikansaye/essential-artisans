@@ -62,12 +62,12 @@
           (click)="expression = 'match4'"
           ><i class="bi bi-gear"> </i>ORDER REVIEWS</span
         > -->
-        <span
+        <!-- <span
           class="pb-3"
           [class.active]="expression == 'match5'"
           (click)="expression = 'match5'"
           ><i class="bi bi-gear"> </i>Create Quote</span
-        >
+        > -->
         <!-- <span class="pb-3"><i class="bi bi-arrow-down"></i> MY REVIEWS</span> -->
         <!-- <span class="pb-3"><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span> -->
 
@@ -223,6 +223,7 @@
                         type="text"
                         class="form-control"
                         id="inputFirstName"
+                        placeholder="{{artisanData.firstName}}"
                         value="{{artisanData.firstName}}"
                         formControlName="firstName"
                       />
@@ -237,7 +238,7 @@
                         type="text"
                         class="form-control"
                         id="inputtext"
-                     
+                        placeholder="{{artisanData.lastName}}"
                         formControlName="lastName"
                       />
                     </div>
@@ -283,7 +284,7 @@
                       </select>
                     
                   </div>
-                  <div class="form-group form-outline mb-4">
+                  <!-- <div class="form-group form-outline mb-4">
                    
                     <select
                       class="form-select"
@@ -295,7 +296,8 @@
                       <option selected  >select location</option>
                       <option class="form-control form-control-lg mb-1"
                         *ngFor="let country of state"
-                        value="{{ state.indexOf(country) }}"
+                        value="{{  state.indexOf(country)}}"
+                        
                       >
                         {{ country.name }}
                       </option>
@@ -310,6 +312,7 @@
                       aria-label="Default select example"
                       formControlName="city"
                       [(ngModel)]="selectedCountry.cities"
+                      (change)="onSelectCities($event.target)"
                     >
                       <option selected value="">select location</option>
                       <option *ngFor="let state of city" value="{{state}}">
@@ -317,8 +320,25 @@
                       </option>
                     </select>
                     <label for="country" class="form-label">Select City</label>
-                  </div>
+                  </div> -->
                  
+
+                  <div class="form-group form-outline mb-4">
+                    <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+                      <option value="" selected disabled>Select Location</option>
+                      <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
+                      
+                    </select>
+                    </div>
+  
+                    <div class="form-group form-outline mb-4"   >
+                      <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+                        <option selected value="">Select Location</option>
+                        <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                        
+                      </select>
+                      </div>
+
                    <div class="d-flex">
 
                     <button class="btn btn-outline-success mx-1" (click)="toggleEditMode()" *ngIf="!isEditMode">
@@ -327,7 +347,7 @@
                     <!-- <button class="btn btn-outline-success mx-1"  type="submit"   *ngIf="isEditMode">
                      update profile
                     </button> -->
-                    <button class="btn btn-info me-2" type="submit" *ngIf="isEditMode">Save Profile</button>
+                    <button class="btn btn-info me-2" type="submit"  *ngIf="isEditMode">Save Profile</button>
                     <!-- <button class="btn btnPrimary" type="submit" *ngIf="isEditMode">Save Profile</button> -->
                     <button class="btn btn-danger "(click)="toggleEditMode()" *ngIf="isEditMode">Cancel</button>
                     <!-- <button class="btn btn-outline-danger mx-1">

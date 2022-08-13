@@ -358,10 +358,19 @@ export class UserprofileComponent implements OnInit {
     this.userprofileModelObj.propertyAddress = row.propertyAddress;
     this.userprofileModelObj.city = row.city;
     this.userprofileModelObj.state = row.state;
+    this.userprofileModelObj.issue = row.issue;
     this.userprofileModelObj.phoneNumber = row.PhoneNumber;
     this.userprofileModelObj.artisanId = row.artisanId;
     this.updateOrder.controls['artisanId'].setValue(row.artisanId);
     this.updateOrder.controls['orderId'].setValue(row.id);
+    this.updateOrder.controls['name'].setValue(row.name);
+    // this.updateOrder.controls['lastName'].setValue(row.lastName);
+    this.updateOrder.controls['propertyAddress'].setValue(row.propertyAddress);
+    // this.updateOrder.controls['city'].setValue(row.city);
+    // this.updateOrder.controls['state'].setValue(row.state);
+    this.updateOrder.controls['phoneNumber'].setValue(row.phoneNumber);
+    this.updateOrder.controls['issue'].setValue(row.issue);
+    this.updateOrder.controls['issue'].setValue(row.inspectionDate);
   }
 
   updateServiceOrder() {

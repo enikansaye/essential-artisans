@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ApiService } from 'src/app/service/api.service';
+import { AdminService } from 'src/app/shared/admin.service';
 
 
 @Component({
@@ -45,11 +46,13 @@ export class DashboardComponent implements OnInit {
   image6 : string = "../assets/images/iphone.png";
   searchArtisan: any;
   location: any;
+  serviceData: any;
 
-  constructor(private api: ApiService,) { }
+  constructor(private api: ApiService, private adminApi:AdminService) { }
 
   ngOnInit(): void {
     this.showAll()
+    this.getAllServiceCategory() 
   }
 
   selectedCountry: any = {
@@ -94,6 +97,13 @@ export class DashboardComponent implements OnInit {
 
   onLocationFilter() {
     this.searchArtisan = this.location;
+  }
+
+
+  getAllServiceCategory() {
+    this.adminApi.getServiceCategory().subscribe((res: any) => {
+      this.serviceData = res;
+    });
   }
 }
 

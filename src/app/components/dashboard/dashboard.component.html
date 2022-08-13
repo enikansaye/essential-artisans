@@ -221,7 +221,7 @@
           1000+ Artisans at your fingertip
         </p>
         <p class="text-light lead Montserrat sans-serif mt-5">
-          ease the stress of finding artisans
+          Ease the stress of finding artisans
         </p>
       </div>
       <div class="col-12  rounded d-flex mt-5">
@@ -250,11 +250,9 @@
             choose service <span class="dropdown-toggle float-end"></span>
           </div>
 
-          <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          <ul class="dropdown-menu" *ngFor="let data of serviceData ">
+            <li><a class="dropdown-item" routerLink="/available artisan">{{data.name}}</a></li>
+           
           </ul>
         </div>
         <!-- </div> -->
@@ -284,7 +282,7 @@
                   data-purecounter-end="10"
                   data-purecounter-delay="200"
                 ></h5>
-                <span class="mb-0 h5">100K+</span>
+                <span class="mb-0 h5">100+</span>
               </div>
               <p class="mb-0">Reviews</p>
             </div>
@@ -306,7 +304,7 @@
                   data-purecounter-end="200"
                   data-purecounter-delay="200"
                 ></h5>
-                <span class="mb-0 h5">1.5K+</span>
+                <span class="mb-0 h5">100+</span>
               </div>
               <p class="mb-0">Users</p>
             </div>
@@ -328,7 +326,7 @@
                   data-purecounter-end="60"
                   data-purecounter-delay="200"
                 ></h5>
-                <span class="mb-0 h5">200K+</span>
+                <span class="mb-0 h5">200+</span>
               </div>
               <p class="mb-0">Job Done</p>
             </div>
@@ -352,7 +350,7 @@
                 >
                   <!-- 0 -->
                 </h5>
-                <span class="mb-0 h5">100K+</span>
+                <span class="mb-0 h5">200+</span>
               </div>
               <p class="mb-0">Certified Artisans</p>
             </div>
@@ -384,7 +382,7 @@
         >
           <div class="row g-4">
             <!-- Card item START -->
-            <div class="col-6 col-lg-4 col-xl-3" routerLink="/electrician">
+            <div class="col-6 col-lg-4 col-xl-3" routerLink="/available artisan">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -436,7 +434,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/acrepair">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/available artisan">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -487,7 +485,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/carpentry">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/available artisan">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -539,7 +537,7 @@
 
             <!-- Card item START -->
             <div class=" col-6 col-sm-6 col-lg-4 col-xl-3" >
-              <div class="card shadow h-100" routerLink="/plumbing">
+              <div class="card shadow h-100" routerLink="/available artisan">
                 <!-- Image -->
                 <img
                   src="assets/images/plumbing.png"
@@ -721,8 +719,8 @@
     <div class="h2 mt-1 mt-md-4 "> Earn extra money </div>
     <p class="h6 mt-2">Set your own schedule, be your own boss</p>
   <div class="d-flex">
-    <button class=" h6 text-light mt-4 me-2" style="background-color: #1daeff; border: none;" routerLink="/signup">Become An Artisans</button>
-    <button class=" h6 text-light mt-4" style="background-color: #1daeff; border: none;" routerLink="">Become A Vendor</button>
+    <button class=" h5 text-light mt-4 " style="background-color: #1daeff; border: none;" routerLink="/signup">Become An Artisans</button>
+    <!-- <button class=" h6 text-light mt-4 ms-2" style="background-color: #1daeff; border: none;" routerLink="">Become A Vendor</button> -->
   </div>
     </div>
       <div class="col-md-6 partner d-none d-md-block  ">

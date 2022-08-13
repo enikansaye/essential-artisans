@@ -337,4 +337,18 @@ export class AllartisanComponent implements OnInit {
       (err) => console.log(err)
     );
   }
+
+
+
+  // upload user issue
+
+  ImageBaseData:string | ArrayBuffer='';
+
+  
 }
+
+
+
+
+
+

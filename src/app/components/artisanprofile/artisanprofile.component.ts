@@ -27,6 +27,8 @@ declare let alertify: any;
 })
 export class ArtisanprofileComponent implements OnInit {
 
+  
+
   progress=0;
   message='';
   @Output() public onUploadFinished = new EventEmitter();
@@ -107,6 +109,8 @@ export class ArtisanprofileComponent implements OnInit {
     name: '',
     cities: '',
   };
+  state2: any;
+  city2: any;
 
 
   constructor(
@@ -120,7 +124,11 @@ export class ArtisanprofileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.getState()
     this.getAllServiceCategory();
+
+    
 
     this.showAll();
     this.usersForm = this.fb.group({
@@ -174,19 +182,30 @@ export class ArtisanprofileComponent implements OnInit {
     });
   }
 
+  
+
   onSelect(data: any) {
     let result = Object.entries(this.state);
     console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+    // const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.city = (statesList as any)['cities'];
-
+    // console.log((statesList as any)['cities']);
+    // this.city = (statesList as any)['cities'];
+this.city=data.value
     console.log(this.city);
   }
 
   onSelectCities(data: any) {
+
+    // this.api.getLocation2(this.city).subscribe((data: any, i: any) => {
+    //   const result = Object.entries(data);
+
+    //   this.state = data;
+    //   console.log(this.state);
+      
+    // });
+
     let result = Object.entries(this.state);
     console.log(data.value);
 
@@ -294,38 +313,38 @@ export class ArtisanprofileComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  upload(): void {
-    this.progress = 0;
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
+  // upload(): void {
+  //   this.progress = 0;
+  //   if (this.selectedFiles) {
+  //     const file: File | null = this.selectedFiles.item(0);
 
-      if (file) {
-        this.currentFile = file;
+  //     if (file) {
+  //       this.currentFile = file;
 
-        const uploadObserver = {
-          next: (event: any) => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.progress = Math.round((100 * event.loaded) / event.total);
-            } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
-            }
-          },
-          error: (err: any) => {
-            this.progress = 0;
-            if (err.error && err.error.message) {
-              this.message = err.error.message;
-            } else {
-              this.message = 'Could not upload the file!';
-            }
-            this.currentFile = undefined;
-          },
-        };
+  //       const uploadObserver = {
+  //         next: (event: any) => {
+  //           if (event.type === HttpEventType.UploadProgress) {
+  //             this.progress = Math.round((100 * event.loaded) / event.total);
+  //           } else if (event instanceof HttpResponse) {
+  //             this.message = event.body.message;
+  //           }
+  //         },
+  //         error: (err: any) => {
+  //           this.progress = 0;
+  //           if (err.error && err.error.message) {
+  //             this.message = err.error.message;
+  //           } else {
+  //             this.message = 'Could not upload the file!';
+  //           }
+  //           this.currentFile = undefined;
+  //         },
+  //       };
 
-        this.api.upload(this.currentFile).subscribe(uploadObserver);
-      }
-      this.selectedFiles = undefined;
-    }
-  }
+  //       this.api.upload(this.currentFile).subscribe(uploadObserver);
+  //     }
+  //     this.selectedFiles = undefined;
+  //   }
+  // }
 
 
   
@@ -390,6 +409,9 @@ export class ArtisanprofileComponent implements OnInit {
     this.api.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
       console.log(res);
       this.toastr.success('Profile updated');
+      this.isEditMode = this.isEditMode;
+      this.getArtisan();
+      this.toggleEditMode();
       //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
@@ -441,4 +463,25 @@ export class ArtisanprofileComponent implements OnInit {
       
     })
   }
+
+  getState(){
+    this.api.getLocation().subscribe((data:any)=>{
+      this.state2= data
+      console.log( this.state2);
+      
+    })
+  }
+  onChangeState(event:any){
+    let userProfile =this.updateForm.controls['state'].value
+    if(userProfile){
+      this.api.getLocation2(userProfile).subscribe((data:any)=>{
+        this. city2= data
+        console.log( this.city2);
+    })
+  }
+}
+onChangeCity(event:any){
+return this.updateForm.controls['city'].value
+  
+}
 }

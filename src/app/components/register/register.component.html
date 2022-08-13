@@ -169,7 +169,7 @@
             <div class="col-md-12 col-lg-12 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
 
-                <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <form  [formGroup]="signupForm" (ngSubmit)="onSubmit(this.signupForm.value)">
 
                   <div class="d-flex align-items-center mb-3 pb-1">
                     <i
@@ -254,7 +254,7 @@
                     <div>  <label class="form-label" for="">Phone</label></div>
                   </div>
 
-                  <div class="form-group form-outline mb-4">
+                  <!-- <div class="form-group form-outline mb-4">
                    
                     <select
                       class="form-select"
@@ -288,7 +288,23 @@
                       </option>
                     </select>
                     <label for="country" class="form-label">Select City</label>
-                  </div>
+                  </div> -->
+
+                  <div class="form-group form-outline mb-4">
+                    <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+                      <option value="" selected disabled>Select Location</option>
+                      <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
+                      
+                    </select>
+                    </div>
+  
+                    <div class="form-group form-outline mb-4"   >
+                      <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+                        <option selected value="">Select Location</option>
+                        <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                        
+                      </select>
+                      </div>
 
                   <div class="form-group form-outline mb-4">
                     <input
@@ -340,12 +356,18 @@
                   </mat-form-field>
                   <label for="country" class="form-label">Password</label>
 
-
+                <div>  <span
+                  class="text-danger h3" role="alert"
+                  *ngIf="signupForm.invalid || submitted"
+                  
+                >
+                 {{ errorMessage }}
+                </span></div>
                   <div class="form-group pt-1 mb-4">
                     <button
                       class="btn btn-dark btn-lg btn-block"
                       type="submit"
-                      [disabled]="signupForm.invalid"
+                      
                     >
                       Sign Up
                     </button>

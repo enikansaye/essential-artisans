@@ -24,6 +24,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NetworkInterceptor } from './loader/network.interceptor';
 import {MatMenuModule} from '@angular/material/menu';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+// import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -88,6 +91,7 @@ import { ArtisantransactionsComponent } from './components/artisantransactions/a
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import {MatListModule} from '@angular/material/list'
+import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -135,6 +139,7 @@ import {MatListModule} from '@angular/material/list'
     EmptycartComponent,
     HelpComponent,
     ArtisantransactionsComponent,
+    
   
   ],
   imports: [
@@ -165,7 +170,10 @@ import {MatListModule} from '@angular/material/list'
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    // MatDividerModule
+    MatDialogModule,
+    // MatDialogModule,
+    // MatDividerModule,
+    ModalModule.forRoot(),
     ToastrModule.forRoot(
       {
         timeOut: 10000,
@@ -244,6 +252,7 @@ import {MatListModule} from '@angular/material/list'
     // authInterceptorProviders
     // , useClass: ShowOnDirtyErrorStateMatcher
   ],
+ 
   bootstrap: [AppComponent],
 })
 export class AppModule {}

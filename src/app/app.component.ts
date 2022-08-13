@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { userProfileModel } from './components/userprofile/userprofile.model';
 import { ApiService } from './service/api.service';
 import { EventBusService } from './service/event-bus.service';
@@ -28,11 +29,13 @@ export class AppComponent implements OnInit {
   loggedinUser1: any;
   displayAdmin: any;
   menuState!: string;
-
+  modalRef?: BsModalRef | null;
+  modalRef2?: BsModalRef;
   constructor(
     public api: ApiService,
     private router: Router,
-    public loader: LoaderService
+    public loader: LoaderService,
+    private modalService: BsModalService
     
   ) {}
 
@@ -55,6 +58,7 @@ export class AppComponent implements OnInit {
     
 
   }
+  logo!: "/assets/images/logos.png";
   onClick(row:any){
     
 console.log(row);
@@ -99,7 +103,23 @@ console.log(row);
     return localStorage.removeItem('token');
   }
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { id: 1, class: 'modal-lg' });
+  }
+  openModal2(template: TemplateRef<any>) {
+    this.modalRef2 = this.modalService.show(template, {id: 2, class: 'second' });
+  }
+  closeFirstModal() {
+    if (!this.modalRef) {
+      return;
+    }
  
+    this.modalRef.hide();
+    this.modalRef = null;
+  }
+  closeModal(modalId?: number){
+    this.modalService.hide(modalId);
+  }
 
 
 }
