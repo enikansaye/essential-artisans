@@ -9,6 +9,7 @@ import { LoaderService } from './service/loader.service';
 import { StorageService } from './service/storage.service';
 
 import { UserModel } from './shared/models/user.model';
+import { UpdateService } from './update.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,11 @@ export class AppComponent implements OnInit {
     userName: '',
     id: 0,
   };
-  
+  offline: boolean = true;
+
+  onNetwortStatusChange(){
+    this.offline = !navigator.onLine
+  }
  
   userProfileModelObj: userProfileModel = new userProfileModel();
   loggedinUser1: any;
@@ -35,9 +40,10 @@ export class AppComponent implements OnInit {
     public api: ApiService,
     private router: Router,
     public loader: LoaderService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private updateService: UpdateService
     
-  ) {}
+  ) {updateService.checkForUpdate()}
 
   loading$ = this.loader.loading$;
   
@@ -55,7 +61,9 @@ export class AppComponent implements OnInit {
     this.api.getToken()
     this.api.getUserToken();
 
-    
+    this.onNetwortStatusChange();
+    window.addEventListener('online', this.onNetwortStatusChange.bind(this))
+    window.addEventListener('offline', this.onNetwortStatusChange.bind(this))
 
   }
   logo!: "/assets/images/logos.png";

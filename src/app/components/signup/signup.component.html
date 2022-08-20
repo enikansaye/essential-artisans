@@ -13,14 +13,10 @@
                 <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
                   <div class="d-flex align-items-center mb-3 pb-1">
-                    <i
-                      class="fas fa-cubes fa-2x me-3"
-                      style="color: #3111c0"
-                    ></i>
-                    <span class="h3 fw-bold mb-0">Essential</span>
+                  <img src="/assets/images/logos.png" class="w-50" alt="">
                   </div>
 
-                  <div class="fw-normal h4 mb-3 pb-3" style="letter-spacing: 1px">
+                  <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
                     Sign up as an Artisan
                   </div>
                   <div class="form-group form-outline mb-4">
@@ -30,7 +26,7 @@
                       formControlName="firstName"
                       class="form-control form-control-lg mb-1"
                     />
-                    <span class="text-danger"
+                    <span style="color: #dc3545;"
                     *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
                     First Name is required
                 </span>
@@ -47,12 +43,12 @@
                     />
 
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="(signupFormControl['lastName'].touched || submitted) && signupFormControl['lastName'].errors?.['required']"
                     >
-                      lastName is required
+                      LastName is required
                     </span>
-                    <label class="form-label" for="form2Example27">Last Name</label>
+                    <div class="form-label" for="form2Example27">Last Name</div>
                   </div>
 
                   <div class="form-group form-outline mb-4">
@@ -64,13 +60,13 @@
                     />
 
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="(signupFormControl['email'].touched || submitted) && signupFormControl['email'].errors?.['required']"
                     >
                       Email is required
                     </span>
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="signupFormControl['email'].touched && signupFormControl['email'].errors?.['email']"
                     >
                       Enter a valid email address
@@ -87,7 +83,7 @@
                     />
 
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="(signupFormControl['phoneNumber'].touched || submitted) && signupFormControl['phoneNumber'].errors?.['required']"
                     >
                       Phone Number is required
@@ -130,20 +126,23 @@
                     </select>
                     <label for="country" class="form-label">Select City</label>
                   </div> -->
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group input-group-lg form-outline mb-4">
                   <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
-                    <option value="" selected disabled>Select Location</option>
+                    <option value="" selected disabled>Select State</option>
                     <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
                     
                   </select>
+
+                  <div> <label for="country" class="form- mt-2">State Location</label></div>
                   </div>
 
-                  <div class="form-group form-outline mb-4"   >
+                  <div class="form-group input-group-lg form-outline mb-4"   >
                     <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
-                      <option selected value="">Select Location</option>
+                      <option selected value="">Select LGA</option>
                       <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                       
                     </select>
+                    <div> <label for="country" class="form-label mt-2"> LGA Location</label></div>
                     </div>
 
 
@@ -157,7 +156,7 @@
                     />
 
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="(signupFormControl['address'].touched || submitted) && signupFormControl['address'].errors?.['required']"
                     >
                       Address is required
@@ -165,41 +164,26 @@
                    <div> <label for="country" class="form-label">Address</label></div>
                   </div>
 
-                  <mat-form-field class="example-full-width" >
-                    
-                    <input
-                      matInput
-                      [type]="hide ? 'password' : 'text'"
-                      type="password"
-                      id="mypassword"
-                      formControlName="password"
-                      name="password"
-                    />
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hide = !hide"
-                      [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hide"
-                    >
-                      <mat-icon >{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <!-- <mat-label>Enter your password</mat-label> -->
+                    <input matInput [type]="hide ? 'password' : 'text'" class="ps-1 fs-5" 
+                    id="mypassword"
+                    formControlName="password"
+                    name="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
-                    <mat-error
-                      *ngIf="
-                        signupForm.controls['password'].dirty &&
-                        signupForm.hasError('required', 'minLength')
-                      "
-                    >
-                      password cann't be less than four
-                    </mat-error>
-                    <mat-error *ngIf="signupForm.hasError('required')">
-                      password is <strong>required</strong>
-                    </mat-error>
                   </mat-form-field>
+                  <div
+                  style="color: #dc3545;"
+                  *ngIf="(signupFormControl['password'].touched || submitted) && signupFormControl['password'].errors?.['required']"
+                >
+                  Password is required
+                </div>
                   <label for="country" class="form-label">Password</label><br/>
 
                 <div>  <span
-                  class="text-danger h3" role="alert"
+                  class=" h3" role="alert" style="color: #dc3545;"
                   *ngIf="signupForm.invalid || submitted"
                   
                 >
@@ -216,8 +200,7 @@
                   </div>
 
                   
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a routerLink="/signin"
-                      style="color: #393f81;">Sign in here</a></p>
+                  <p class="mb-5 pb-lg-2" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
                   <a href="#!" class="small text-muted">Terms of use.</a>
                   <a href="#!" class="small text-muted">Privacy policy</a>
                 </form>

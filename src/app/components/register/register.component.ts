@@ -17,9 +17,11 @@ import { ApiService } from 'src/app/service/api.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+
+  hide = true;
   signupForm!: FormGroup;
   password?: string;
-  hide = true;
+  
   statelga: any;
   state2: any;
   city2: any;

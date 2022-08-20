@@ -11,7 +11,13 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { orderModel } from './allartisanmodel';
+import { Observable, Subscriber } from 'rxjs';
+import { FileToUpload } from '../../file-upload/file-to-upload';
 // import { ToastrService } from 'ngx-toastr';
+
+ 
+// Maximum file size allowed to be uploaded = 1MB
+const MAX_SIZE: number = 1048576;
 
 @Component({
   selector: 'app-allartisan',
@@ -19,6 +25,12 @@ import { orderModel } from './allartisanmodel';
   styleUrls: ['./allartisan.component.css'],
 })
 export class AllartisanComponent implements OnInit {
+  myimage!: Observable<any>;
+
+  theFile: any = '';
+messages: string[] = [];
+
+
   state: any;
   city: any;
   selectedCountry: any = {
@@ -55,7 +67,7 @@ export class AllartisanComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllArtisan();
-    this.showAll();
+    // this.showAll();
     this.sortArtisan();
 
     this.formValue = this.formBuilder.group({
@@ -105,37 +117,37 @@ export class AllartisanComponent implements OnInit {
   }
 
   // selecting location section
-  showAll() {
-    this.api.getAll().subscribe((data: any, i: any) => {
-      const result = Object.entries(data);
+  // showAll() {
+  //   this.api.getAll().subscribe((data: any, i: any) => {
+  //     const result = Object.entries(data);
 
-      this.state = data;
-    });
-  }
+  //     this.state = data;
+  //   });
+  // }
 
-  onSelect(data: any) {
-    let result = Object.entries(this.state);
-    console.log(data.value);
+  // onSelect(data: any) {
+  //   let result = Object.entries(this.state);
+  //   console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+  //   const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.city = (statesList as any)['cities'];
+  //   console.log((statesList as any)['cities']);
+  //   this.city = (statesList as any)['cities'];
 
-    console.log(this.city);
-  }
+  //   console.log(this.city);
+  // }
 
-  onSelectCities(data: any) {
-    let result = Object.entries(this.state);
-    console.log(data.value);
+  // onSelectCities(data: any) {
+  //   let result = Object.entries(this.state);
+  //   console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+  //   const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.city = (statesList as any)['cities'];
+  //   console.log((statesList as any)['cities']);
+  //   this.city = (statesList as any)['cities'];
 
-    console.log(this.city);
-  }
+  //   console.log(this.city);
+  // }
 
   onEdit(row: any) {
     this.orderModelObj.id = row.id;
@@ -342,9 +354,102 @@ export class AllartisanComponent implements OnInit {
 
   // upload user issue
 
-  ImageBaseData:string | ArrayBuffer='';
 
+  // onChange1($event: Event) {
+  //   const file = ($event.target as HTMLInputElement).files[0];
+  //   this.convertToBase64(file);
+  // }
+
+  convertToBase64(file: File) {
+    this.myimage = new Observable((subscriber: Subscriber<any>) => {
+      this.readFile(file, subscriber);
+    });
+  }
+
+  readFile(file: File, subscriber: Subscriber<any>) {
+    const filereader = new FileReader();
+    filereader.readAsDataURL(file);
+
+    filereader.onload = () => {
+      subscriber.next(filereader.result);
+      subscriber.complete();
+    };
+    filereader.onerror = (error) => {
+      subscriber.error(error);
+      subscriber.complete();
+    };
+  }
+
+
+//   handleUpload(event:any){
+//     const file = event.target.files[0];
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//         console.log(reader.result);
+//     };
+// }
+
+onFileChange(event:any) {
+  this.theFile = null;
+  if (event.target.files && event.target.files.length > 0) {
+      // Don't allow file sizes over 1MB
+      if (event.target.files[0].size < MAX_SIZE) {
+          // Set theFile property
+          this.theFile = event.target.files[0];
+      }
+      else {
+          // Display error message
+          this.messages.push("File: " + event.target.files[0].name + " is too large to upload.");
+      }
+  }
+}
+
+private readAndUploadFile(theFile: any) {
+  let file = new FileToUpload();
   
+  // Set File Information
+  file.fileName = theFile.name;
+  file.fileSize = theFile.size;
+  file.fileType = theFile.type;
+  file.lastModifiedTime = theFile.lastModified;
+  // file.lastModifiedDate = theFile.lastModifiedDate;
+  
+  // Use FileReader() object to get file to upload
+  // NOTE: FileReader only works with newer browsers
+  let reader = new FileReader();
+  reader.readAsDataURL(this.theFile as Blob)
+  
+  
+  // Setup onload event for reader
+  reader.onload = () => {
+    console.log(reader.result);
+      // Store base64 encoded representation of file
+      file.fileAsBase64 = reader.result as string;
+      console.log(file.fileAsBase64);
+      
+      // file.fileAsBase64 = JSON.parse(reader.result as string);
+     
+      
+      // POST to server
+      this.api.uploadFile(file).subscribe(resp => { 
+          this.messages.push("Upload complete"); });
+          console.log(reader.result);
+          // console.log(resp);
+      
+          
+  }
+  
+  // Read the file
+  reader.readAsDataURL(theFile);
+}
+
+uploadFile2(): void {
+  this.readAndUploadFile(this.theFile);
+}
+
+
+
 }
 
 

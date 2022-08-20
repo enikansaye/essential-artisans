@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "node-sass": "node-sass --output-style compressed -o dist/css src/scss"
+    "node-sass": "node-sass --output-style compressed -o dist/css src/scss",
+    "pwa": "ng build && http-server -c-1 disk/joyhouse"
   },
   "private": true,
   "dependencies": {

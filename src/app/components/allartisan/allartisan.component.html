@@ -10,6 +10,12 @@
           <div class="location text-center me-2 p-1">Ikoyi</div>
           <div class="location text-center me-2 p-1">Jakande</div>
           <div class="location text-center me-2 p-1">Lekki</div>
+
+          <!-- <input type="file" (change)="onChange1($event)" /> -->
+
+<!-- <div *ngIf="myimage">
+  <img [src]="myimage | async" width="200px" height="200px" alt="" />
+</div> -->
           <div
             class="location text-center me-2 p-1"
             data-bs-toggle="modal"
@@ -183,7 +189,7 @@
           </div>
           <div class="form-group form-outline mb-4">
                    
-            <select
+            <!-- <select
               class="form-select"
               aria-label="Default select example"
               formControlName="state"
@@ -197,7 +203,7 @@
               >
                 {{ country.name }}
               </option>
-            </select>
+            </select> -->
            <div> <label for="country" class="form-label">Select State</label></div>
           </div>
 
@@ -326,9 +332,25 @@
           <!-- <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
             Send
           </button> -->
+<!-- 
+          <div>
+            <input type="file" (change)="handleUpload($event)"/>
+          </div> -->
+          <h1>File Upload</h1>
 
+          <label>Select a File (&lt; 1MB)</label><br/>
+          <input type="file" (change)="onFileChange($event)" /><br/>
+          <button (click)="uploadFile2()" [disabled]="!theFile">Upload File</button><br/><br/>
           
-
+          <!-- ** BEGIN: INFORMATION MESSAGE AREA ** -->
+          <div *ngIf="messages.length > 0">
+              <span *ngFor="let msg of messages">
+                  {{msg}}
+                  <br />
+                  </span>
+              </div>
+              <!-- ** END: INFORMATION MESSAGE AREA ** -->
+          
 
 
         </form>

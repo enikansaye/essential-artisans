@@ -50,16 +50,16 @@ export class SignupComponent implements OnInit {
    this.getAllServiceCategory()
 
     this.signupForm = this.formBuilder.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      phoneNumber: [''],
-      password: [''],
+      firstName: ['',Validators.required],
+      lastName: ['',Validators.required],
+      email: ['',Validators.required],
+      phoneNumber: ['',Validators.required],
+      password: ['',Validators.required],
      
-      state: [''],
-      city: [''],
-      address: [''],
-      service: [''],
+      state: ['',Validators.required],
+      city: ['',Validators.required],
+      address: ['',Validators.required],
+      service: ['',Validators.required],
 
     });
   }

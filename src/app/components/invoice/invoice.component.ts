@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
 
@@ -42,6 +42,7 @@ export class InvoiceComponent {
   @Output() newItemEvent = new EventEmitter<string>();
   // @Input() lastName!: string;
   // @Input()  check!:any;
+  invoiceForm!: FormGroup;
   invoice:any= {
     customerName:[],
     address:[],
@@ -209,9 +210,9 @@ export class InvoiceComponent {
   addProduct(){    
     this.invoice.products.push(new Product());    
   } 
-  onSubmit() {
-    console.log(this.api);
-    this.userprofileModelObj.orderId = this.invoice.orderId;
+  onSubmit(data:any) {
+    // console.log(this.api);
+    // this.userprofileModelObj.orderId = this.invoice.orderId;
 
     // this.userprofileModelObj.artisanId = this.updateOrder.value.artisanId;
     // this.userprofileModelObj.firstName = this.updateOrder.value.firstName;
@@ -222,15 +223,15 @@ export class InvoiceComponent {
     // this.userprofileModelObj.state = this.updateOrder.value.state;
     // this.userprofileModelObj.phoneNumber = this.updateOrder.value.PhoneNumber;
     // this.userprofileModelObj.artisanId = this.updateOrder.value.artisanId;
-    this.api.generateInvoice(this.invoice).subscribe((res: any) => {
-      console.log(res);
-      // this.toastr.success('Profile updated');
+    // this.api.generateInvoice(this.invoice).subscribe((res: any) => {
+    //   console.log(res);
+    //   // this.toastr.success('Profile updated');
 
-      //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
-      //   // ref?.click();
+    //   //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
+    //   //   // ref?.click();
 
-      // this.getUserserInfo() //this is to refresh and get the resent data
-    });
+    //   // this.getUserserInfo() //this is to refresh and get the resent data
+    // });
     
     // console.log(this.invoice);
     // this.invoice['ID']= (data.id);

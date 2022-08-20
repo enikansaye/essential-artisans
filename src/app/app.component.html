@@ -1,175 +1,181 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid text-dark">
-    <a class="navbar-brand" routerLink="/"
-      ><img src="/assets/images/logos.png" style="width: 200px" alt=""
-    /></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-    <mat-icon>menu</mat-icon>
-    </button>
-    <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
-      <ul class="navbar-nav ms-auto mb-4 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link text-dark my-2 my-lg-0 me-4" routerLink="/helpcenter" style="font-size: 20px; font-weight: 400;"
-            ><i class="fa-solid fa-circle-question me-2"></i>Help</a
-          >
-        </li>
-        <li class="nav-item my-2 my-lg-0">
-          <a class="nav-link text-dark me-4" routerLink="/aboutus" style="font-size: 20px; font-weight: 400;"
-            ><i class="fa-solid fa-address-card"></i> About</a
-          >
-        </li>
-        <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayAdmin" routerLink="/admin">
-          <a class="nav-link text-dark me-4"  style="font-size: 20px; font-weight: 400;"
-            ><i class="fa-solid fa-user"></i> My Profile</a
-          >
-        </li>
-        <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayUser"  routerLink="/userprofile"
-        (click)="onClick(api.loggedinUser.id)">
-          <a class="nav-link text-dark me-4"  style="font-size: 20px; font-weight: 400;"
-            ><i class="fa-solid fa-user"></i> My Profile</a
-          >
-        </li>
-        <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayArtisan"  
-        routerLink="/artisanprofile"
-        (click)="onClick(api.loggedinUser.id)">
-          <a class="nav-link text-dark me-4"  style="font-size: 20px; font-weight: 400;"
-            ><i class="fa-solid fa-user"></i> My Profile</a
-          >
-        </li>
-
-        <li class="nav-item my-2 my-lg-0">
-          <div
-            class=" nav-link d-flex justify-content-center text-white"
-            style="
-              background-color: #42aae7;
-              width: 120px;
-              height: 40px;
-              border: none;
-              border-radius: 7px;
-              font-size: 20px;
-            "
-            routerLink="/signin"
-            *ngIf="!api.loggedIn()"
-          >
-            Sign In
-          </div>
-        </li>
-
-        <li class="nav-item my-2 my-lg-0">
-          <div
-            class="nav-link d-flex justify-content-center text-white"
-            style="
-              background-color: #42aae7;
-              width: 120px;
-              height: 40px;
-              border: none;
-              border-radius: 7px;
-              font-size: 20px;
-            "
-            *ngIf="api.loggedIn()"
-            (click)="logout()"
-          >
-            Log Out
-          </div>
-        </li>
-  
-      </ul>
-    </div>
-  </div>
-</nav>
-
-
-
-
-
-<!-- <nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">{{ logo }}</a>
-    <div class="text-dark" routerLink="/helpcenter">
-      <i class="fa-solid fa-circle-question me-2"></i>Help
-    </div>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-       <span class="navbar-toggler-icon"></span> 
-
+<div >
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid text-dark">
+      <a class="navbar-brand" routerLink="/"
+        ><img src="/assets/images/logos.png" style="width: 200px" alt=""
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
       <mat-icon>menu</mat-icon>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      <span class="navbar-text">
-        <div>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li>
-              <button
-                class="btn btn-info"
-                routerLink="/signin"
-                *ngIf="!api.loggedIn()"
-              >
-                Sign In
-              </button>
-            </li>
-            <li class="nav-item pt-2" *ngIf="api.loggedIn()">
-              <span
-                class="nav-link active"
-                aria-current="page"
-                *ngIf="this.displayUser"
-                routerLink="/userprofile"
-                (click)="onClick(api.loggedinUser.id)"
-                >My Profile</span
-              >
-            </li>
-            <li class="nav-item pt-2" *ngIf="api.loggedIn()">
-              <span
-                class="nav-link"
-                *ngIf="this.displayArtisan"
-                routerLink="/artisanprofile"
-                (click)="onClick(api.loggedinUser.id)"
-                >My profile</span
-              >
-            </li>
-            <li class="nav-item pt-2" *ngIf="api.loggedIn() && this.displayAdmin">
-              <span
-                class="nav-link"
-                *ngIf="this.displayAdmin"
-                routerLink="/admin"
-                >My Profile</span
-              >
-            </li>
-            <li class="nav-item">
-              <button
-                class="btn btn-info"
-                *ngIf="api.loggedIn()"
-                (click)="logout()"
-              >
-                Log Out
-              </button>
-            </li>
-          </ul>
-        </div>
-      </span>
+      </button>
+      <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
+        <ul class="navbar-nav ms-auto mb-4 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-dark my-2 my-lg-0 me-4" routerLink="/helpcenter" style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-solid fa-circle-question me-2"></i>Help</a
+            >
+          </li>
+          <li class="nav-item my-2 my-lg-0">
+            <a class="nav-link text-dark me-4" routerLink="/aboutus" style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-solid fa-address-card"></i> About</a
+            >
+          </li>
+          <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayAdmin" routerLink="/admin">
+            <a class="nav-link text-dark me-4"  style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-solid fa-user"></i> My Profile</a
+            >
+          </li>
+          <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayUser"  routerLink="/userprofile"
+          (click)="onClick(api.loggedinUser.id)">
+            <a class="nav-link text-dark me-4"  style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-solid fa-user"></i> My Profile</a
+            >
+          </li>
+          <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayArtisan"  
+          routerLink="/artisanprofile"
+          (click)="onClick(api.loggedinUser.id)">
+            <a class="nav-link text-dark me-4"  style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-solid fa-user"></i> My Profile</a
+            >
+          </li>
+  
+          <li class="nav-item my-2 my-lg-0">
+            <div
+              class=" nav-link d-flex justify-content-center text-white"
+              style="
+                background-color: #42aae7;
+                width: 120px;
+                height: 40px;
+                border: none;
+                border-radius: 7px;
+                font-size: 20px;
+              "
+              routerLink="/signin"
+              *ngIf="!api.loggedIn()"
+            >
+              Sign In
+            </div>
+          </li>
+  
+          <li class="nav-item my-2 my-lg-0">
+            <div
+              class="nav-link d-flex justify-content-center text-white"
+              style="
+                background-color: #42aae7;
+                width: 120px;
+                height: 40px;
+                border: none;
+                border-radius: 7px;
+                font-size: 20px;
+              "
+              *ngIf="api.loggedIn()"
+              (click)="logout()"
+            >
+              Log Out
+            </div>
+          </li>
+    
+        </ul>
+      </div>
     </div>
-  </div>
-</nav> -->
-
-<router-outlet class="mt-5"></router-outlet>
-
-<app-footer></app-footer>
+  </nav>
+  
+  
+  
+  
+  
+  <!-- <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/">{{ logo }}</a>
+      <div class="text-dark" routerLink="/helpcenter">
+        <i class="fa-solid fa-circle-question me-2"></i>Help
+      </div>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarText"
+        aria-controls="navbarText"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+         <span class="navbar-toggler-icon"></span> 
+  
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+        <span class="navbar-text">
+          <div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li>
+                <button
+                  class="btn btn-info"
+                  routerLink="/signin"
+                  *ngIf="!api.loggedIn()"
+                >
+                  Sign In
+                </button>
+              </li>
+              <li class="nav-item pt-2" *ngIf="api.loggedIn()">
+                <span
+                  class="nav-link active"
+                  aria-current="page"
+                  *ngIf="this.displayUser"
+                  routerLink="/userprofile"
+                  (click)="onClick(api.loggedinUser.id)"
+                  >My Profile</span
+                >
+              </li>
+              <li class="nav-item pt-2" *ngIf="api.loggedIn()">
+                <span
+                  class="nav-link"
+                  *ngIf="this.displayArtisan"
+                  routerLink="/artisanprofile"
+                  (click)="onClick(api.loggedinUser.id)"
+                  >My profile</span
+                >
+              </li>
+              <li class="nav-item pt-2" *ngIf="api.loggedIn() && this.displayAdmin">
+                <span
+                  class="nav-link"
+                  *ngIf="this.displayAdmin"
+                  routerLink="/admin"
+                  >My Profile</span
+                >
+              </li>
+              <li class="nav-item">
+                <button
+                  class="btn btn-info"
+                  *ngIf="api.loggedIn()"
+                  (click)="logout()"
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+        </span>
+      </div>
+    </div>
+  </nav> -->
+  
+  <router-outlet class="mt-5"></router-outlet>
+  
+  <app-footer></app-footer>
+</div>
 <!-- <ng-container *ngIf="loading$ | async">
   <div class="overlay"></div>
   <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
 </ng-container> -->
+
+<!-- <div *ngIf="offline">
+  <app-offline ></app-offline>
+</div> -->

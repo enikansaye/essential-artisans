@@ -13,6 +13,7 @@ import { AllurlService } from './allurl.service';
 import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
+import { FileToUpload } from '../file-upload/file-to-upload';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -27,38 +28,7 @@ export class ApiService implements OnInit {
   currentUser!: UserModel;
 
 
-  public baseUrl:string = "https://lyticalartisanapi.azurewebsites.net"
-
-  public refreshTokenUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/refresh-token';
-
-  public authUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/';
-
-  public userUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/​api​/Admin​/customers';
-
-  public userSignupUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
-  public imageUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image';
-
-  public userSigninUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/login';
-  public emailUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/verify-email';
-  public passwordresetUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/reset-password';
-  public forgetpasswordUrl: string =
-    'https://lyticalartisanapi.azurewebsites.net/api/Auth/forgot-password';
-    public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
-    public artisaninfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Artisan/'
-    public userinfo:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/'
-    public issueImage:string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload'
-    public location: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations'
-    // public location2: string ='https://lyticalartisanapi.azurewebsites.net/api/App/locations/'
-    public locationSearch: string ='https://lyticalartisanapi.azurewebsites.net/api/App/artisans/location'
-    public rating: string ='https://lyticalartisanapi.azurewebsites.net/api/Customer/Review/create/'
+  public baseUrl:string =  "https://longashdart75.conveyor.cloud"
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -94,17 +64,17 @@ export class ApiService implements OnInit {
 
   // user signup
   registerUser(model: any) {
-    return this.http.post(this.userSignupUrl, model, httpOptions);
+    return this.http.post( this.baseUrl + '/api/Auth/register/customer', model, httpOptions);
   }
 
   //artisan loginin
   signupArtisan(data: any) {
-    return this.http.post<any>(this.url.signupArtisan, data, httpOptions);
+    return this.http.post<any>( this.baseUrl+ '/api/Auth/register/partner', data, httpOptions);
   }
 // refresh token
   refreshToken(token: string) {
     return this.http.post(
-      this.refreshTokenUrl ,
+       this.baseUrl+ '/api/Auth/refresh-token',
       {
         refreshToken: token,
       },
@@ -114,16 +84,16 @@ export class ApiService implements OnInit {
  
   // login user
   loginUser(usercard: any) {
-    return this.http.post(this.userSigninUrl, usercard,
+    return this.http.post( this.baseUrl+ '/api/Auth/login', usercard,
       // {withCredentials:true}
       );
   }
 getUserinfo(id:string){
-  return this.http.get(this.userinfo )
+  return this.http.get( this.baseUrl+ '/api/Customer/')
 
 }
 getArtisaninfo(){
-  return this.http.get(this.artisaninfo )
+  return this.http.get( this.baseUrl+ '/api/Artisan/')
 }
 
 
@@ -145,7 +115,7 @@ getArtisaninfo(){
     
       "refreshToken": this.getRefresToken()
     } 
-    return this.http.post(this.url.refreshToken, input);
+    return this.http.post( this.baseUrl+ '/api/Auth/refresh-token', input);
   }
   // saveToken(token: any) {
   //   localStorage.setItem('accesstoken', token.accessToken);
@@ -177,11 +147,11 @@ getArtisaninfo(){
   // }
 
   userUpdate(userInfo: any) {
-    return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Customer/update', userInfo);
+    return this.http.put( this.baseUrl+ '/api/Customer/update', userInfo);
   }
   artisanUpdate(ArtisanInfo: any) {
   
-      return this.http.put('https://lyticalartisanapi.azurewebsites.net/api/Artisan/update', ArtisanInfo);
+      return this.http.put( this.baseUrl+ '/api/Artisan/update', ArtisanInfo);
   }
 
   // fakeapi
@@ -196,7 +166,7 @@ getArtisaninfo(){
     const formData = new FormData();
     formData.append('profileimage', model.file);
     return (
-      this.http.put(this.url.updateArtisan, model).pipe(
+      this.http.put( this.baseUrl+ '/api/Artisan/update', model).pipe(
         map((response: any) => {
           const user = response;
           if (user) {
@@ -225,7 +195,7 @@ getArtisaninfo(){
     const formData: FormData = new FormData();
  formData.append('file', file);
  
-    const req = new HttpRequest('POST', this.imageUrl, formData, {
+    const req = new HttpRequest('POST',this.baseUrl+ '/api/Artisan/upload-profile-image', formData, {
       reportProgress: true,
       responseType: 'json',
     },);
@@ -242,14 +212,14 @@ getArtisaninfo(){
   //   const formData = new FormData();
   //   formData.append('file', fileToUpload, fileToUpload.name);
 
-  //   this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
+  //   this.http.post( this.baseUrl+ '/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
   // }
 
   uploadIssue(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
  formData.append('file', file);
  
-    const req = new HttpRequest('POST', this.issueImage, formData, {
+    const req = new HttpRequest('POST',  this.baseUrl+ '/api/Customer/ServiceOrder/upload', formData, {
       reportProgress: true,
       responseType: 'json',
     });
@@ -262,14 +232,14 @@ getArtisaninfo(){
   }
 
   updateUser(userInfo: any, ){
-    return this.http.put(this.updateArtisan , userInfo,  httpOptions);
-    // public updateArtisan : string = 'https://lyticalartisanapi.azurewebsites.net/api/Artisan/update';
+    return this.http.put( this.baseUrl+ '/api/Artisan/update', userInfo,  httpOptions);
+    // public updateArtisan : string =  this.baseUrl+ '/api/Artisan/update';
 }
   check(data:string): Observable<HttpEvent<any>> {
 //     const formData: FormData = new FormData();
 //  formData.append('file', file);
  
-    const req = new HttpRequest('PUT', this.url.updateArtisan, data );
+    const req = new HttpRequest('PUT',this.baseUrl+ '/api/Artisan/update', data );
   
     
     return this.http.request(req);
@@ -280,28 +250,28 @@ getArtisaninfo(){
 
 
   confirmEmail(data: any) {
-    return this.http.get(this.emailUrl, data);
+    return this.http.get( this.baseUrl+ '/api/Auth/verify-email', data);
   }
   resetPassword(data: any) {
-    return this.http.post(this.passwordresetUrl, data);
+    return this.http.post( this.baseUrl+ '/api/Auth/reset-password', data);
   }
   forgetPassword(data: any) {
-    return this.http.post(this.forgetpasswordUrl, data);
+    return this.http.post( this.baseUrl+ '/api/Auth/forgot-password', data);
   }
 
   // location selection api
-  getAllStateData() {
-    return this.http
-      .get<any>('http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas')
-      .pipe(
-        map((res: any) => {
-          return res;
-        })
-      );
-  }
+  // getAllStateData() {
+  //   return this.http
+  //     .get<any>('http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas')
+  //     .pipe(
+  //       map((res: any) => {
+  //         return res;
+  //       })
+  //     );
+  // }
 
   getUser() {
-    return this.http.get<any>(this.userUrl).pipe(
+    return this.http.get<any>( this.baseUrl+ '/​api​/Admin​/customers').pipe(
       map((res: any) => {
         return res;
       })
@@ -342,7 +312,7 @@ getArtisaninfo(){
 
   //  create service
   createService(data:any, ) {
-    return this.http.post<any>(this.url.createService , data).pipe();
+    return this.http.post<any>( this.baseUrl+ '/api/Customer/ServiceOrder/create/', data).pipe();
   }
   // fake api
   // createService2(data:any, id:number) {
@@ -355,15 +325,15 @@ getArtisaninfo(){
 
   //  create invoice by artisans
   createInvoice(data:any) {
-    return this.http.post(this.url.createInvoice,data).pipe();
+    return this.http.post( this.baseUrl+ '/api/Artisan/invoice/create',data).pipe();
   }
  
   uploadService(data: any) {
-    return this.http.post<any>(this.url.uploadService, data);
+    return this.http.post<any>( this.baseUrl+ '/api/Customer/ServiceOrder/upload', data);
   }
   // delete service order
   deleteUser() {
-    return this.http.delete<any>(this.url.deleteService ).pipe(
+    return this.http.delete<any>( this.baseUrl+ '/api/Customer​/ServiceOrder/delete' ).pipe(
       map((res: any) => {
         return res;
       })
@@ -383,7 +353,7 @@ getArtisaninfo(){
 
 deletes(data:any){
 
-  const req = new HttpRequest('DELETE', 'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/delete' ,data, {
+  const req = new HttpRequest('DELETE',  this.baseUrl+ '/api/Customer/ServiceOrder/delete' ,data, {
     reportProgress: true,
     responseType: 'json',
   });
@@ -410,24 +380,29 @@ Logout() {
 
 // this is is to get a default artisans
 getAll():any{
-  return this.http.get<any>(this.location)
+  return this.http.get<any>( this.baseUrl + '/api/App/locations')
 }
 getLocation():any{
-  return this.http.get<any>(this.location)
+  return this.http.get<any>( this.baseUrl + '/api/App/locations')
 }
 getLocation2(state:string):any{
-  return this.http.get<any>('https://lyticalartisanapi.azurewebsites.net/api/App/locations/' +state)  
+  return this.http.get<any>( this.baseUrl + '/api/App/locations/' +state)  
 }
 
 sortArtisanLocation():any{
-  return this.http.get<any>(this.locationSearch)
+  return this.http.get<any>( this.baseUrl+ '/api/App/artisans/location')
 }
 postRating(data:any, ) {
-  return this.http.post(this.rating ,data).pipe();
+  return this.http.post( this.baseUrl+ '/api/Customer/Review/create/' ,data).pipe();
 }
 
 generateInvoice(data:any){
-  return this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/invoice/create',data)
+  return this.http.post( this.baseUrl+ '/api/Artisan/invoice/create',data)
 }
+
+uploadFile(theFile: FileToUpload) : Observable<any> {
+  return this.http.post<FileToUpload>( this.baseUrl+ '/api/Customer/ServiceOrder/upload', theFile, httpOptions);
+}
+
 
 }

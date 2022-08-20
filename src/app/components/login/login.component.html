@@ -74,17 +74,13 @@
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
                 <form [formGroup]="signinForm" (ngSubmit)="login()">
-                  <div class="d-flex align-items-center mb-3 pb-1">
-                    <i
-                      class="fas fa-cubes fa-2x me-3"
-                      style="color: #3111c0"
-                    ></i>
-                    <span class="h1 fw-bold mb-0">Essential</span>
+                  <div class="d-flex align-items-center mb-3 pb-3">
+                   <img src="/assets/images/logos.png" class="w-50" alt="">
                   </div>
 
-                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
-                    Sign into your account
-                  </h5>
+                  <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
+                    Sign in to your account
+                  </div>
 
                   <div class="form-group form-outline mb-4">
                     <input
@@ -95,48 +91,41 @@
                     />
 
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="(signinFormControl['email'].touched || submitted) && signinFormControl['email'].errors?.['required']"
                     >
                       Email is required
                     </span>
                     <span
-                      class="text-danger"
+                    style="color: #dc3545;"
                       *ngIf="signinFormControl['email'].touched && signinFormControl['email'].errors?.['email']"
                     >
                       Enter a valid email address
                     </span>
 
-                    <label class="form-label" for="form2Example27">Email</label>
+                    <div class="form-label" >Email</div>
                   </div>
 
                   <div class="form-group form-outline mb-4">
-                    <input
+                    <mat-form-field appearance="outline" class="w-100">
+                      <!-- <mat-label>Enter your password</mat-label> -->
+                      <input matInput [type]="hide ? 'password' : 'text'" class="ps-1 fs-5" 
+                    
                       formControlName="password"
-                      type="password"
-                      [type]="hide ? 'password' : 'text'"
-                      class="form-control form-control-lg mb-1"
-                    />
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hide = !hide"
-                      [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hide"
-                    >
-                      <mat-icon>{{
-                        hide ? "visibility_off" : "visibility"
-                      }}</mat-icon>
-                    </button>
+                     >
+                      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                    </mat-form-field>
                     <span
-                      class="text-danger"
-                      *ngIf="(signinFormControl['password'].touched || submitted) && signinFormControl['password'].errors?.['required']"
-                    >
-                      Password is required
-                    </span><br>
+                    style="color: #dc3545;"
+                    *ngIf="(signinFormControl['password'].touched || submitted) && signinFormControl['password'].errors?.['required']"
+                  >
+                    Password is required
+                  </span>
 
-                    <label class="form-label mt-1" for="form2Example27"
-                      >Password</label
+                    <div class="form-label mt-1" for="form2Example27"
+                      >Password</div
                     >
                   </div>
                   <span
@@ -157,12 +146,11 @@
                   </div>
 
                   <a class="small text-muted" href="/forgetpassword">Forgot password?</a>
-                  <p class="mb-5 pb-lg-2" style="color: #3111c0">
-                    Don't have an account?
-                    <a href="/register" style="color: #3111c0">Register here</a>
+                  <p class="mb-5 pb-lg-2" style="color: #3111c0" routerLink="/register">
+                    Don't have an account? Register here
                   </p>
                   <!-- <a href="#!" class="small text-muted">Terms of use.</a> -->
-                  <a href="ourpolicy" class="small text-muted">Privacy policy</a>
+                  <a routerLink="/ourpolicy" class="small text-muted">Privacy policy</a>
                 </form>
               </div>
             </div>

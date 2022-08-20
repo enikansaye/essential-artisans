@@ -60,6 +60,7 @@ export class ArtisantransactionsComponent implements OnInit {
      ID:[''],
      orderId:0,
     products:  [],
+    
     // products:  typeof Product[],
     
     additionalDetails:[],
@@ -126,8 +127,11 @@ export class ArtisantransactionsComponent implements OnInit {
     console.log(row);
     console.log(row.id);
     // this.userprofileModelObj.orderId = row.id;
+    this.invoice.setValue(row.id);
+    console.log(this.invoice.setValue(row.id));
+    console.log(this.invoice.patchValue(row.id));
     
-    this.invoice.controls['orderId'].setValue(row.id);
+    // this.invoice.controls['orderId'].setValue(row.id);
     
    
     

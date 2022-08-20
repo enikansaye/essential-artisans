@@ -26,6 +26,7 @@ import { NetworkInterceptor } from './loader/network.interceptor';
 import {MatMenuModule} from '@angular/material/menu';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {MatSnackBarModule} from  '@angular/material/snack-bar'
 // import {MatDialogModule} from '@angular/material/dialog';
 
 
@@ -58,7 +59,7 @@ import { EmailComponent } from './components/email/email.component';
 import { MyorderComponent } from './components/myorder/myorder.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 
-// import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ArtisanprofileComponent } from './components/artisanprofile/artisanprofile.component';
 
@@ -70,6 +71,7 @@ import { AlltransactionsComponent } from './components/alltransactions/alltransa
 import { ArtisansdetailsComponent } from './components/artisansdetails/artisansdetails.component';
 import { SignuprouteComponent } from './components/signuproute/signuproute.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { OfflineComponent } from './components/offline/offline.component';
 // import { authInterceptorProviders } from '../_helpers/auth.interceptor';
 
 // import { AuthGuard } from './service/auth-guard';
@@ -113,6 +115,7 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@a
     ElectricianComponent,
     AcrepairComponent,
     CapentaryComponent,
+    OfflineComponent,
 
     RegisterComponent,
 
@@ -149,6 +152,7 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@a
     HttpClientModule,
     BrowserAnimationsModule,
     // CarouselModule,
+    MatSnackBarModule,
     NgbModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -232,6 +236,7 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@a
         { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'invoice', component: InvoiceComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
+        { path: 'privacy', component: PrivacyComponent },
         { path: '**', component: PagenotfoundComponent },
 
        
@@ -239,12 +244,12 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@a
       { scrollPositionRestoration: 'enabled' }
     ),
       AppRoutingModule,
-    // ServiceWorkerModule.register('ngsw-worker.js', {
-    //   enabled: environment.production,
-    //   // Register the ServiceWorker as soon as the app is stable
-    //   // or after 30 seconds (whichever comes first).
-    //   registrationStrategy: 'registerWhenStable:30000'
-    // })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,  useClass: AuthInterceptor, multi:true },

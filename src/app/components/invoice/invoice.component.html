@@ -3,7 +3,7 @@
 >
   <a class="navbar-brand"> GENERATE INVOICE/QUOTE</a>
 </nav>
-<form #invoiceForm="ngForm" (ngSubmit)="invoiceForm.form.valid && onSubmit()">
+<form  (ngSubmit)="onSubmit(this.invoiceForm.value)" [formGroup]="invoiceForm">
   <div class="container-fluid pt-2 mb-5">
     <div class="row">
       <div class="col-md-8">
@@ -19,11 +19,10 @@
                     class="form-control"
                     name="name"
                     id="name"
-                    [ngClass]="{
-                      'is-invalid': invoiceForm.submitted && CustName.invalid
-                    }"
+                    formControlName="name"
+                  
                     [(ngModel)]="invoice.customerName"
-                    #CustName="ngModel"
+                  
                     required
                   />
                 </div>
@@ -34,9 +33,7 @@
                     name="address"
                     id="address"
                     row="3"
-                    [ngClass]="{
-                      'is-invalid': invoiceForm.submitted && Address.invalid
-                    }"
+                   
                     [(ngModel)]="invoice.address"
                     #Address="ngModel"
                     required
@@ -62,9 +59,7 @@
                     class="form-control"
                     name="contactNo"
                     id="contactNo"
-                    [ngClass]="{
-                      'is-invalid': invoiceForm.submitted && ContactNo.invalid
-                    }"
+                   
                     [(ngModel)]="invoice.contactNo"
                     #ContactNo="ngModel"
                     required
@@ -103,10 +98,7 @@
                         type="text"
                         class="form-control"
                         name="productName{{ i }}"
-                        [ngClass]="{
-                          'is-invalid':
-                            invoiceForm.submitted && ProductName.invalid
-                        }"
+                       
                         id="productName"
                         [(ngModel)]="product.name"
                         #ProductName="ngModel"
@@ -119,10 +111,7 @@
                         class="form-control"
                         name="price{{ i }}"
                         id="price"
-                        [ngClass]="{
-                          'is-invalid':
-                            invoiceForm.submitted && ProductPrice.invalid
-                        }"
+                 
                         [(ngModel)]="product.price"
                         #ProductPrice="ngModel"
                         required
@@ -134,10 +123,7 @@
                         class="form-control"
                         name="quantity{{ i }}"
                         id="quantity"
-                        [ngClass]="{
-                          'is-invalid':
-                            invoiceForm.submitted && ProductQty.invalid
-                        }"
+                     
                         [(ngModel)]="product.qty"
                         #ProductQty="ngModel"
                         required

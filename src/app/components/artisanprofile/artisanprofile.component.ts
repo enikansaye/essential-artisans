@@ -410,8 +410,10 @@ this.city=data.value
       console.log(res);
       this.toastr.success('Profile updated');
       this.isEditMode = this.isEditMode;
-      this.getArtisan();
+      this.updateForm.disable()
+      
       this.toggleEditMode();
+      this.getArtisan();
       //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
