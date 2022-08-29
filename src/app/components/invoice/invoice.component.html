@@ -1,184 +1,135 @@
-<nav
-  class="navbar navbar-expand-sm navbar-dark bg-secondary d-flex justify-content-between"
->
-  <a class="navbar-brand"> GENERATE INVOICE/QUOTE</a>
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <a class="navbar-brand" >INVOICE</a>
 </nav>
-<form  (ngSubmit)="onSubmit(this.invoiceForm.value)" [formGroup]="invoiceForm">
-  <div class="container-fluid pt-2 mb-5">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card border-secondary">
-          <div class="card-body">
-            <h4 class="card-title">Customer Details</h4>
-            <div class="row">
-              <div class="col-md-8">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    id="name"
-                    formControlName="name"
-                  
-                    [(ngModel)]="invoice.customerName"
-                  
-                    required
-                  />
+
+<div class="container-fluid pt-2" style="margin-bottom: 250px" *ngFor="let data of InvoiceObject.items">
+  <form action="" #invoiceBody="ngForm" (submit)="addInvoiceBody(this.invoiceBody.value)">
+      <div class="card border-secondary">
+        <div class="card-body">
+          <h4 class="card-title">Invoice Details</h4>
+          
+          <div class="row">
+
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="name">Person Name</label>
+                <input type="text" class="form-control" name="personName" id="name" [(ngModel)]="data.name" #personName="ngModel" required>
+
+                <div class="alert alert-danger" *ngIf="!personName.valid">
+                  <!-- <span *ngIf="personName?.errors?.required">This field is required</span> -->
                 </div>
-                <div class="form-group">
-                  <label for="address">Address</label>
-                  <textarea
-                    class="form-control"
-                    name="address"
-                    id="address"
-                    row="3"
-                   
-                    [(ngModel)]="invoice.address"
-                    #Address="ngModel"
-                    required
-                  ></textarea>
-                </div>
+
+
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="email">Email ID</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    id="email"
-                    [(ngModel)]="invoice.email"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="contactNo">Contact No.</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="contactNo"
-                    id="contactNo"
-                   
-                    [(ngModel)]="invoice.contactNo"
-                    #ContactNo="ngModel"
-                    required
-                  />
+              <div class="form-group">
+                <label for="date">Invoice Date</label>
+                <input type="date" class="form-control" name="invoiceDate" id="date" [(ngModel)]="data.invoiceDate"  #invoiceNo="ngModel"
+invoiceNo="ngModel"   required>
+
+                <div class="alert alert-danger" *ngIf="!invoiceNo.valid">
+                  <!-- <span *ngIf="invoiceNo
+invoiceNo?.errors?.required">This field is required</span> -->
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="card border-secondary mt-2">
-          <div class="card-body">
-            <h4 class="card-title d-flex justify-content-between">
-              Order Details
-              <button
-                type="button"
-                class="btn btn-secondary"
-                (click)="addProduct()"
-              >
-                +
-              </button>
-            </h4>
-            <div class="row">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th width="25%">Product</th>
-                    <th width="25%">Price</th>
-                    <th width="25%">Quantity</th>
-                    <th width="25%">Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let product of invoice.products; let i = index">
-                    <td scope="row">
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="productName{{ i }}"
-                       
-                        id="productName"
-                        [(ngModel)]="product.name"
-                        #ProductName="ngModel"
-                        required
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="form-control"
-                        name="price{{ i }}"
-                        id="price"
-                 
-                        [(ngModel)]="product.price"
-                        #ProductPrice="ngModel"
-                        required
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="form-control"
-                        name="quantity{{ i }}"
-                        id="quantity"
-                     
-                        [(ngModel)]="product.qty"
-                        #ProductQty="ngModel"
-                        required
-                      />
-                    </td>
-                    <td>
-                      {{ product.price * product.qty || "" }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="invoiceNo">Invoice No</label>
+                <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" [(ngModel)]="data.invoiceNo "  #invoiceNo="ngModel" required>
+
+                <div class="alert alert-danger" *ngIf="!invoiceNo.valid">
+                  <!-- <span *ngIf="invoiceNo?.errors?.required">This field is required</span> -->
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="TAmount">Total Amount</label>
+
+
+                <input  type="text" class="form-control" name="totalAmount" id="TAmount" [(ngModel)]="data.totalAmount" [ngModel]="getInvoiceTotalAmount()"  >
+
+              </div>
             </div>
+
+         
+
           </div>
-        </div>
-        <div class="card border-secondary mt-2">
-          <div class="card-body">
-            <h4 class="card-title">Additional Details</h4>
-            <div class="form-group">
-              <textarea
-                class="form-control"
-                name="additionalDetails"
-                rows="3"
-                [(ngModel)]="invoice.additionalDetails"
-              ></textarea>
-            </div>
-          </div>
+          
         </div>
       </div>
-      <div class="col-md-4">
-        <button
-          type="button"
-          class="btn btn-secondary btn-lg btn-block"
-          (click)="invoiceForm.valid ? generatePDF('download') : ''"
-        >
-          Download Invoice
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary btn-lg btn-block"
-          (click)="invoiceForm.valid ? generatePDF('print') : ''"
-        >
-          Print Invoice
-        </button>
-        <button
-          type="submit"
-          class="btn btn-secondary btn-lg btn-block"
-          (click)="invoiceForm.valid ? generatePDF() : ''"
-        >
-          Open Invoice
-        </button>
+      <div class="card border-secondary mt-2 mb-5">
+        <div class="card-body">
+          <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4>
 
-        <button class="btn btn-primary" type="submit">send</button>
 
-        <!-- First Name: {{ this.onEdit()}} -->
-      </div>
-    </div>
-  </div>
-</form>
+         
+            <div *ngFor="let obj of itemsArray;let i=index">
+          <div class="row" >
+
+            <div class="col-md-3">
+              <label>Item No</label>
+              <input type="text" class="form-control" name="itemNo{{i}}" [(ngModel)]="obj.itemNo" #itemNo="ngModel"   required >
+
+              <div class="alert alert-danger" *ngIf="!itemNo.valid">
+                <!-- <span *ngIf="name3?.errors?.required">This field is required</span> -->
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label>Unit Price</label>
+              <input type="number" class="form-control" name="unitPrice{{i}}" [(ngModel)]="obj.unitPrice" (ngModelChange)="data.price = $event;" #unitPrice="ngModel"   required>
+
+              <div class="alert alert-danger" *ngIf="!unitPrice.valid">
+                <!-- <span *ngIf="name4?.errors?.required">This field is required</span> -->
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label>Quantity</label>
+              <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" (ngModelChange)="data.quantity = $event;" #quantity="ngModel"   required>
+
+              <div class="alert alert-danger" *ngIf="!quantity.valid">
+                <!-- <span *ngIf="name5?.errors?.required">This field is required</span> -->
+              </div>
+
+            </div>
+            <div class="col-md-2">
+              <label>Total</label><br>
+              <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="data.total"  [ngModel]="updateTotalInItemsArray(obj)">
+
+            </div>
+
+            <div class="col-md-1" *ngIf="i!=0">
+              <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
+            </div>
+
+
+
+           </div>
+
+          </div>
+
+
+   <div class="form-group">
+                <label for="TAmount">Description</label>
+
+
+                <input  type="text" class="form-control" name="description" id="description" [(ngModel)]="data.description"  #description="ngModel" >
+
+              </div>
+
+          
+
+
+          </div>
+
+        </div>
+        <button type="submit" name="" class="btn btn-primary btn-lg"   >SEND</button>
+
+        </form>
+
+
+<!--  [hidden]="!invoiceinformation.valid" [disabled]="!invoiceBody.valid"-->
+
+
+
+
+</div>

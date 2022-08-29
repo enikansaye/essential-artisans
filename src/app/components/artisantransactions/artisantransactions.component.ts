@@ -7,31 +7,34 @@ import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
 // import {MatDialog,  MatDialogRef, MAT_DIALOG_DATA,} from '@angular/material/dialog';
-import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogConfig,
+} from '@angular/material/dialog';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
 
 const htmlToPdfmake = require('html-to-pdfmake');
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-class Product{
+class Product {
   name!: string;
   price!: number;
   qty!: number;
   total!: number;
+  orderId!: number;
 }
 
 @Component({
   selector: 'app-artisantransactions',
   templateUrl: './artisantransactions.component.html',
-  styleUrls: ['./artisantransactions.component.css']
+  styleUrls: ['./artisantransactions.component.css'],
 })
 export class ArtisantransactionsComponent implements OnInit {
-  
-
   modalRef?: BsModalRef | null;
   modalRef2?: BsModalRef;
-//  lastName!:string;
+  //  lastName!:string;
   userprofileModelObj: userProfileModel = new userProfileModel();
   accept: boolean = false;
   // isAprove: boolean = false;
@@ -40,7 +43,7 @@ export class ArtisantransactionsComponent implements OnInit {
   signupForm!: FormGroup;
   service = 'completed';
   othersData: any;
-  check!:any
+  check!: any;
 
   totalRecord: any;
   page: number = 1;
@@ -49,29 +52,31 @@ export class ArtisantransactionsComponent implements OnInit {
   pageIndex = 1;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
-  updateOrder!: FormGroup;
+  invoiceForm!: FormGroup;
+  totalLength: any;
+  issue: any; //string for search of data
+  p: number = 1; //pagination
 
+  invoice: any = {
+    customerName: [],
+    address: [],
+    contactNo: [],
+    email: [],
+    id: 0,
+    orderId: [],
+    total: 0,
+    products: [],
 
-  invoice:any= {
-    customerName:[],
-    address:[],
-    contactNo:[],
-    email:[],
-     ID:[''],
-     orderId:0,
-    products:  [],
-    
     // products:  typeof Product[],
-    
-    additionalDetails:[],
+
+    additionalDetails: [],
     // submitted = false
     constructor() {
-          // Initially one empty product row we will show
-          this.products.push(new Product());
-        }
-  }
+      // Initially one empty product row we will show
+      this.products.push(new Product());
+    },
+  };
 
-  
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -86,14 +91,14 @@ export class ArtisantransactionsComponent implements OnInit {
     private modalService: BsModalService
   ) {}
 
-  
-
   ngOnInit(): void {
-
-
-    this.updateOrder = this.formBuilder.group({
-
-    })
+    this.invoiceForm = this.formBuilder.group({
+      description: [''],
+      quantity: [],
+      price: [],
+      orderId: 1,
+      items: '',
+    });
 
     // this.onEdit(this.check)
     this.getAllOrder();
@@ -108,193 +113,225 @@ export class ArtisantransactionsComponent implements OnInit {
 
   openDialog() {
     // const dialogRef = this.dialog.open(DialogContentExampleDialog);
-
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log(`Dialog result: ${result}`);
     // });
-
-    
     // const dialogConfig = new MatDialogConfig();
-
     // dialogConfig.data = {};
-
     // this.dialog.open(DialogContentExampleDialog, dialogConfig);
   }
 
-  
   onEdit(row: any) {
-    
     console.log(row);
     console.log(row.id);
     // this.userprofileModelObj.orderId = row.id;
-    this.invoice.setValue(row.id);
-    console.log(this.invoice.setValue(row.id));
-    console.log(this.invoice.patchValue(row.id));
-    
-    // this.invoice.controls['orderId'].setValue(row.id);
-    
-   
-    
- 
-  }
+    // this.invoice.setValue(row.id);
+    // this.invoice.patchValue(row.id)
+    // console.log(this.invoice.setValue(row.id));
+    // console.log(this.invoice.patchValue(row.id));
+    this.invoice.id = row.id;
+    console.log(this.invoice.id);
 
+    // this.invoice.controls['orderId'].setValue(row.id);
+  }
 
   getAllOrder() {
     this.api.getArtisanOrder().subscribe((res: any) => {
       this.AllOrderData = res;
       console.log(this.AllOrderData);
-      
+      this.totalLength = res.length;
+      console.log(this.totalLength);
+
+      console.log(res.length);
     });
+  }
+  // method for Search
+  Search() {
+    if (this.issue == '') {
+      this.getAllOrder();
+    } else {
+      this.AllOrderData = this.AllOrderData.filter((res: any) => {
+        console.log(res);
+        
+        return res.issue
+          .toLocaleLowerCase()
+          .match(this.issue.toLocaleLowerCase());
+      });
+    }
+  }
+  key: string = 'id';
+  reverse: boolean = false;
+  sort(key: any) {
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 
   // generate invoice section
 
-  generatePDF(action = 'open') {    
-        
-    let docDefinition = {  
-      content: [  
-        {  
-          text: 'ELECTRONIC SHOP',  
-          fontSize: 16,  
-          alignment: 'center' as const,  
-          color: '#047886'  
-        },  
-        {  
-          text: 'INVOICE',  
-          fontSize: 20,  
-          bold: true,  
-          alignment: 'center'as const,  
-          decoration: 'underline' as const,  
-          color: 'skyblue'  
+  generatePDF(action = 'open') {
+    let docDefinition = {
+      content: [
+        {
+          text: 'ELECTRONIC SHOP',
+          fontSize: 16,
+          alignment: 'center' as const,
+          color: '#047886',
         },
-        {  
-          text: 'Customer Details',  
-          style: 'sectionHeader'  
-      },
-      {
-        columns: [
-          [
-            {
-              text: this.invoice.customerName,
-              bold:true
-            },
-            { text: this.invoice.address },
-            { text: this.invoice.email },
-            { text: this.invoice.contactNo },
-        ],
-        [
-          {
-            text: `Date: ${new Date().toLocaleString()}`,
-            alignment: 'right' as const
+        {
+          text: 'INVOICE',
+          fontSize: 20,
+          bold: true,
+          alignment: 'center' as const,
+          decoration: 'underline' as const,
+          color: 'skyblue',
+        },
+        {
+          text: 'Customer Details',
+          style: 'sectionHeader',
+        },
+        {
+          columns: [
+            [
+              {
+                text: this.invoice.customerName,
+                bold: true,
+              },
+              { text: this.invoice.address },
+              { text: this.invoice.email },
+              { text: this.invoice.contactNo },
+            ],
+            [
+              {
+                text: `Date: ${new Date().toLocaleString()}`,
+                alignment: 'right' as const,
+              },
+              {
+                text: `Bill No : ${(Math.random() * 1000).toFixed(0)}`,
+                alignment: 'right' as const,
+              },
+            ],
+          ],
+        },
+        {
+          text: 'Order Details',
+          style: 'sectionHeader',
+        },
+        {
+          table: {
+            headerRows: 1,
+            widths: ['*', 'auto', 'auto', 'auto'],
+            body: [
+              ['Product', 'Price', 'Quantity', 'Amount'],
+              ...this.invoice.products.map((p: any) => [
+                p.name,
+                p.price,
+                p.qty,
+                (p.price * p.qty).toFixed(2),
+              ]),
+              [
+                { text: 'Total Amount', colSpan: 3 },
+                {},
+                {},
+                this.invoice.products
+                  .reduce((sum: any, p: any) => sum + p.qty * p.price, 0)
+                  .toFixed(2),
+              ],
+            ],
           },
-          { 
-            text: `Bill No : ${((Math.random() *1000).toFixed(0))}`,
-            alignment: 'right' as const
-          } 
-        ]
-      ]
-      },
-      {
-        text: 'Order Details',
-        style: 'sectionHeader'
-      },
-      {
-        table: {
-          headerRows: 1,
-          widths: ['*', 'auto', 'auto', 'auto'],
-          body: [
-            ['Product', 'Price', 'Quantity', 'Amount'],
-            ...this.invoice.products.map((p:any) => ([p.name, p.price, p.qty, (p.price*p.qty).toFixed(2)])),
-            [{text: 'Total Amount', colSpan: 3}, {}, {}, this.invoice.products.reduce((sum:any, p:any)=> sum + (p.qty * p.price), 0).toFixed(2)]
-          ]
-        }
-      },
-      {
-        text: 'Additional Details',
-        style: 'sectionHeader',
-      },
-      {
-        text: this.invoice.additionalDetails,
-        // margin: [0, 0 ,0, 15] 
-      },
-      {
-        columns: [
-          [{
-            qr: `${this.invoice.customerName}`,
-          //  fit: '50' as const
-          }],
-          [{ text: 'Signature', alignment: 'right' as const, italics: true}],
-        ]
-      },
-      {
-        text: 'Terms and Conditions',
-        style: 'sectionHeader'
-      },
-      {
-        ul: [
-          'Order can be return in max 10 days.',
-          'Warrenty of the product will be subject to the manufacturer terms and conditions.',
-          'This is system generated invoice.',
-        ],
-    }
-      
+        },
+        {
+          text: 'Additional Details',
+          style: 'sectionHeader',
+        },
+        {
+          text: this.invoice.additionalDetails,
+          // margin: [0, 0 ,0, 15]
+        },
+        {
+          columns: [
+            [
+              {
+                qr: `${this.invoice.customerName}`,
+                //  fit: '50' as const
+              },
+            ],
+            [{ text: 'Signature', alignment: 'right' as const, italics: true }],
+          ],
+        },
+        {
+          text: 'Terms and Conditions',
+          style: 'sectionHeader',
+        },
+        {
+          ul: [
+            'Order can be return in max 10 days.',
+            'Warrenty of the product will be subject to the manufacturer terms and conditions.',
+            'This is system generated invoice.',
+          ],
+        },
       ],
-      styles: {  
-        sectionHeader: {  
-            bold: true,  
-            decoration: 'underline' as const,  
-            fontSize: 14,  
-            // margin: [0, 15, 0, 15] as const,
-        }  
-    } 
-      } 
-    
-    if(action==='download'){    
-      pdfMake.createPdf(docDefinition).download();    
-    }else if(action === 'print'){    
-      pdfMake.createPdf(docDefinition).print();          
-    }else{    
-      pdfMake.createPdf(docDefinition).open();          
-    } 
+      styles: {
+        sectionHeader: {
+          bold: true,
+          decoration: 'underline' as const,
+          fontSize: 14,
+          // margin: [0, 15, 0, 15] as const,
+        },
+      },
+    };
+
+    if (action === 'download') {
+      pdfMake.createPdf(docDefinition).download();
+    } else if (action === 'print') {
+      pdfMake.createPdf(docDefinition).print();
+    } else {
+      pdfMake.createPdf(docDefinition).open();
+    }
 
     console.log(docDefinition.content);
-    
   }
-  addProduct(){    
-    this.invoice.products.push(new Product());    
-  } 
-  onSubmit() {
-    console.log(this.api);
-    this.userprofileModelObj.orderId = this.invoice.orderId;
-
-
-    this.api.generateInvoice(this.invoice).subscribe((res: any) => {
-      console.log(res);
-     
-    });
-    
-    
+  addProduct() {
+    this.invoice.products.push(new Product());
   }
+  onSubmitData(data: any) {
+    console.log(data.value);
+    console.log(this.invoice.value);
 
+    // this.userprofileModelObj.orderId = this.invoice.orderId;
+
+    // this.invoice.value.id = data.id;
+    this.api
+      .generateInvoice(this.invoiceForm.getRawValue())
+      .subscribe((res: any) => {
+        console.log(res);
+        console.log('successful');
+      });
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.invoiceForm.getRawValue()));
+  }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { id: 1, class: 'modal-lg' });
+    this.modalRef = this.modalService.show(template, {
+      id: 1,
+      class: 'modal-lg',
+    });
   }
   openModal2(template: TemplateRef<any>) {
-    this.modalRef2 = this.modalService.show(template, {id: 2, class: 'second' });
+    this.modalRef2 = this.modalService.show(template, {
+      id: 2,
+      class: 'second',
+    });
   }
   closeFirstModal() {
     if (!this.modalRef) {
       return;
     }
- 
+
     this.modalRef.hide();
     this.modalRef = null;
   }
-  closeModal(modalId?: number){
+  closeModal(modalId?: number) {
     this.modalService.hide(modalId);
   }
-
 }
 // @Component({
 //   selector: 'dialog-content-example-dialog',
@@ -316,7 +353,7 @@ export class ArtisantransactionsComponent implements OnInit {
 //      orderId:[''],
 //     products:  [],
 //     // products:  typeof Product[],
-    
+
 //     additionalDetails:[],
 //     // submitted = false
 //     constructor() {
@@ -325,27 +362,27 @@ export class ArtisantransactionsComponent implements OnInit {
 //         }
 //   }
 
-//   generatePDF(action = 'open') {    
-        
-//     let docDefinition = {  
-//       content: [  
-//         {  
-//           text: 'ELECTRONIC SHOP',  
-//           fontSize: 16,  
-//           alignment: 'center' as const,  
-//           color: '#047886'  
-//         },  
-//         {  
-//           text: 'INVOICE',  
-//           fontSize: 20,  
-//           bold: true,  
-//           alignment: 'center'as const,  
-//           decoration: 'underline' as const,  
-//           color: 'skyblue'  
+//   generatePDF(action = 'open') {
+
+//     let docDefinition = {
+//       content: [
+//         {
+//           text: 'ELECTRONIC SHOP',
+//           fontSize: 16,
+//           alignment: 'center' as const,
+//           color: '#047886'
 //         },
-//         {  
-//           text: 'Customer Details',  
-//           style: 'sectionHeader'  
+//         {
+//           text: 'INVOICE',
+//           fontSize: 20,
+//           bold: true,
+//           alignment: 'center'as const,
+//           decoration: 'underline' as const,
+//           color: 'skyblue'
+//         },
+//         {
+//           text: 'Customer Details',
+//           style: 'sectionHeader'
 //       },
 //       {
 //         columns: [
@@ -363,10 +400,10 @@ export class ArtisantransactionsComponent implements OnInit {
 //             text: `Date: ${new Date().toLocaleString()}`,
 //             alignment: 'right' as const
 //           },
-//           { 
+//           {
 //             text: `Bill No : ${((Math.random() *1000).toFixed(0))}`,
 //             alignment: 'right' as const
-//           } 
+//           }
 //         ]
 //       ]
 //       },
@@ -391,7 +428,7 @@ export class ArtisantransactionsComponent implements OnInit {
 //       },
 //       {
 //         text: this.invoice.additionalDetails,
-//         // margin: [0, 0 ,0, 15] 
+//         // margin: [0, 0 ,0, 15]
 //       },
 //       {
 //         columns: [
@@ -413,30 +450,30 @@ export class ArtisantransactionsComponent implements OnInit {
 //           'This is system generated invoice.',
 //         ],
 //     }
-      
+
 //       ],
-//       styles: {  
-//         sectionHeader: {  
-//             bold: true,  
-//             decoration: 'underline' as const,  
-//             fontSize: 14,  
+//       styles: {
+//         sectionHeader: {
+//             bold: true,
+//             decoration: 'underline' as const,
+//             fontSize: 14,
 //             // margin: [0, 15, 0, 15] as const,
-//         }  
-//     } 
-//       } 
-    
-//     if(action==='download'){    
-//       pdfMake.createPdf(docDefinition).download();    
-//     }else if(action === 'print'){    
-//       pdfMake.createPdf(docDefinition).print();          
-//     }else{    
-//       pdfMake.createPdf(docDefinition).open();          
-//     } 
+//         }
+//     }
+//       }
+
+//     if(action==='download'){
+//       pdfMake.createPdf(docDefinition).download();
+//     }else if(action === 'print'){
+//       pdfMake.createPdf(docDefinition).print();
+//     }else{
+//       pdfMake.createPdf(docDefinition).open();
+//     }
 
 //     console.log(docDefinition.content);
-    
+
 //   }
-//   addProduct(){    
-//     this.invoice.products.push(new Product());    
-//   } 
+//   addProduct(){
+//     this.invoice.products.push(new Product());
+//   }
 // }

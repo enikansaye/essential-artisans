@@ -28,7 +28,7 @@ export class ApiService implements OnInit {
   currentUser!: UserModel;
 
 
-  public baseUrl:string =  "https://longashdart75.conveyor.cloud"
+  public baseUrl:string =  "https://localhost:7130"
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -312,7 +312,8 @@ getArtisaninfo(){
 
   //  create service
   createService(data:any, ) {
-    return this.http.post<any>( this.baseUrl+ '/api/Customer/ServiceOrder/create/', data).pipe();
+    const formData = new FormData();
+    return this.http.post<any>( this.baseUrl+ '/api/Customer/ServiceOrder/create', data).pipe();
   }
   // fake api
   // createService2(data:any, id:number) {
@@ -393,7 +394,7 @@ sortArtisanLocation():any{
   return this.http.get<any>( this.baseUrl+ '/api/App/artisans/location')
 }
 postRating(data:any, ) {
-  return this.http.post( this.baseUrl+ '/api/Customer/Review/create/' ,data).pipe();
+  return this.http.post( this.baseUrl+ '/api/Customer/Review/create/' ,data);
 }
 
 generateInvoice(data:any){
@@ -404,5 +405,18 @@ uploadFile(theFile: FileToUpload) : Observable<any> {
   return this.http.post<FileToUpload>( this.baseUrl+ '/api/Customer/ServiceOrder/upload', theFile, httpOptions);
 }
 
+  // Returns an observable
+  upload2(file:any):Observable<any> {
+  
+    // Create form data
+    const formData = new FormData(); 
+      
+    // Store form name as "file" with file data
+    formData.append("file", file, );
+      
+    // Make http post request over api
+    // with formData as req
+    return this.http.post(this.baseUrl + "/api/Customer/ServiceOrder/upload", formData)
+}
 
 }

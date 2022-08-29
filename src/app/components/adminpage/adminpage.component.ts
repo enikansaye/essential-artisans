@@ -189,17 +189,17 @@ getAllArtisan() {
   });
 }
 getAllOthers() {
-  this.adminApi.getOthers().subscribe((res: any) => {
-    this.othersData = res;
-    console.log(this.othersData)
-  });
+  // this.adminApi.getOthers().subscribe((res: any) => {
+  //   this.othersData = res;
+  //   console.log(this.othersData)
+  // });
 }
 
 deleteArtisan(id:number){
-  this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
-    alert('artisan deleted')
-   this.getAllArtisan();
-  })
+  // this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
+  //   alert('artisan deleted')
+  //  this.getAllArtisan();
+  // })
 }
 
 getArtisanById(id:string){

@@ -1,13 +1,13 @@
-.location{
+/* .location{
     width: 100px;
     height: 25px;
     border-radius: 30px;
     cursor: pointer;
     border: 1px solid skyblue;
-    /* background: grey; */
+ background: grey; 
    
     
-}
+} */
 ul.list{
     list-style-type: none;
     /* margin-bottom: 25px; */

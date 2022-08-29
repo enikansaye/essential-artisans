@@ -1,63 +1,5 @@
-<!-- <div class="login ">
-  <div class="form">
-    <div>USSIGN IN</div>
-    <form [formGroup]="signinForm" (ngSubmit)="login()" >
-  
-  
-    
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
-        <mat-error   *ngIf="
-        signinForm.controls['email'].dirty &&
-        signinForm.hasError('required', 'email')
-      ">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="signinForm.hasError('required', 'email')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="example-full-width"  appearance="fill">
-        <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'"  formControlName="password" >
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-       
-        </button>
-        <mat-error   *ngIf="
-        signinForm.controls['password'].dirty &&
-        signinForm.hasError('required', 'password')
-      ">
-          Please enter a valid email address
-        </mat-error>
-      </mat-form-field>  
-      <div class="forgetpassword d-flex justify-content-between text-primary">
-        <p routerLink="/register">New User? <strong>Register</strong></p>
-        <p routerLink="/forgetpassword">Forget Password</p>
-        <p routerLink="/forgetpassword">Artisan Signin</p>
-      </div>
 
-      <button
-      type="submit"
-      mat-raised-button
-        class="btn btn-primary"
-        [disabled]="signinForm.invalid"
-      
-        
-      >
-      SIGN IN
-      </button>
-    
-    
-    </form> 
-
-    
-  </div>
-</div>
-
- -->
-<section class="w-100" style="background-color: #f4f4f8">
+ <section class="w-100" style="background-color: #f4f4f8">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
@@ -137,7 +79,7 @@
                 </span>
                   <div class="form-group pt-1 mb-4">
                     <button
-                      class="btn btn-dark btn-lg btn-block"
+                      class="btn btn-dark btn-lg btn-block cursor"
                       type="submit"
                       [disabled]="signinForm.invalid"
                     >
@@ -146,7 +88,7 @@
                   </div>
 
                   <a class="small text-muted" href="/forgetpassword">Forgot password?</a>
-                  <p class="mb-5 pb-lg-2" style="color: #3111c0" routerLink="/register">
+                  <p class="mb-5 pb-lg-2 cursor" style="color: #3111c0" routerLink="/register">
                     Don't have an account? Register here
                   </p>
                   <!-- <a href="#!" class="small text-muted">Terms of use.</a> -->

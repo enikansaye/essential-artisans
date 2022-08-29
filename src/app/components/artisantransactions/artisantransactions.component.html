@@ -23,7 +23,7 @@
                       <span class="bi bi-shopping-bag fs-3 text-primary"></span>
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1">110</h2>
+                  <h2 class="fw-bold mb-1">{{totalLength}}</h2>
 
 
                   <span class="text-danger fw-semi-bold">2+</span>
@@ -122,13 +122,16 @@
       </section>
     
       <nav class="navbar navbar-light bg-light ">
+        <mat-toolbar class="w-100 ">
+          <input class="form-control" type="text" placeholder="name Search" name="issue" [(ngModel)]="issue" (ngModelChange)="Search()" />
+           </mat-toolbar>
         <div class="container-fluid ">
           <div class="navbar-brand w-100" href="#">
             <div class="w-100 d-flex w-100 justify-content-between ">
-              <div [class.active]="service == 'completed'" class="mat d-none d-lg-block p-2" (click)="service = 'completed'">All Transactions(10)</div>
-              <div [class.active]="service == 'completed1'"  class="mat d-none d-lg-block p-2 " (click)="service = 'completed1'">Pending Orders(8)</div>
-              <div [class.active]="service == 'completed2'" class="mat d-none d-lg-block p-2" (click)="service = 'completed2'">Completed Orders(12)</div>
-              <div [class.active]="service == 'completed3'" class="mat d-none d-lg-block p-2 " (click)="service = 'completed3'">Cancel Orders(5)</div>
+              <div [class.active]="service == 'completed'" class="mat cursor d-none d-lg-block p-2" (click)="service = 'completed'">All Transactions({{totalLength}})</div>
+              <div [class.active]="service == 'completed1'"  class="mat cursor d-none d-lg-block p-2 " (click)="service = 'completed1'">Pending Orders(8)</div>
+              <div [class.active]="service == 'completed2'" class="mat cursor d-none d-lg-block p-2" (click)="service = 'completed2'">Completed Orders(12)</div>
+              <div [class.active]="service == 'completed3'" class="mat cursor d-none d-lg-block p-2 " (click)="service = 'completed3'">Cancel Orders(5)</div>
     
             </div>
           </div>
@@ -144,10 +147,10 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 
-                  <li [class.active]="service == 'completed'" class="mat  " (click)="service = 'completed'">All Transactions(10)</li>
-                  <li [class.active]="service == 'completed1'"  class="mat   " (click)="service = 'completed1'">Pending Orders(8)</li>
-                  <li [class.active]="service == 'completed2'" class="mat   " (click)="service = 'completed2'">Completed Orders(12)</li>
-                  <li [class.active]="service == 'completed3'" class="mat   " (click)="service = 'completed3'">Cancel Orders(5)</li>
+                  <li [class.active]="service == 'completed'" class="mat  cursor " (click)="service = 'completed'">All Transactions(10)</li>
+                  <li [class.active]="service == 'completed1'"  class="mat  cursor  " (click)="service = 'completed1'">Pending Orders(8)</li>
+                  <li [class.active]="service == 'completed2'" class="mat  cursor  " (click)="service = 'completed2'">Completed Orders(12)</li>
+                  <li [class.active]="service == 'completed3'" class="mat  cursor  " (click)="service = 'completed3'">Cancel Orders(5)</li>
     
               </ul>
              
@@ -164,20 +167,25 @@
             <table class="table table-striped" >
               <thead>
                 <tr>
-                  <th scope="col">Order ID</th>
                   <th scope="col">Date</th>
-                  <th scope="col">User's Name</th>
+                  <th>Inspection Date</th>
+                  <th>Completion Date</th>
+                  <th scope="col" (click)="sort('id')" >Order ID&nbsp;<i class="fa fa-sort"></i> </th>
                   <th scope="col">Issue</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Inspection Date</th>
-                  
+
                   <th scope="col">Status</th>
+
+                  
+                  <!-- <th scope="col">User's Name</th> -->
+                  <th scope="col">Location</th>
+                  <!-- <th scope="col">Inspection Date</th> -->
+                  
                 
                 
                 </tr>
               </thead>
-              <tbody  *ngIf="AllOrderData.isApproved">
-                <tr *ngFor="let data of AllOrderData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}" >
+              <tbody  *ngIf="!AllOrderData.isApproved">
+                <tr *ngFor="let data of AllOrderData | orderBy: key : reverse | paginate: { itemsPerPage:5, currentPage:p};" >
         
           <td data-title="Order ID" >{{data.id}}</td>
           <td data-title="Date">{{data.date }}</td>
@@ -191,8 +199,9 @@
             <!-- <button class="btn btn-info" (click)="onEdit(data)">Create Qoute</button> -->
             <!-- <div [class.active]="service == 'completed6'" class="mat btn btn-info p-2 " routerLink="service = 'completed6'"> <div (click)="onEdit(data)">Create Quote </div> </div> -->
             
-            <button type="button" class="btn btn-primary" (click)="onEdit(data);  " >Create Quote</button>
+            <!-- <button type="button" class="btn btn-primary" (click)="onEdit(data)" >Create Quote</button> -->
  
+            <button type="button" class="btn btn-primary" (click)="openModal(template)" (click)="onEdit(data)">Open modal</button>
 
  
 
@@ -213,7 +222,7 @@
               
               <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
             </table>
-            <mat-paginator
+            <!-- <mat-paginator
             (page)="handlePageEvent($event)"
             [length]="length"
             [pageSize]="pageSize"
@@ -221,8 +230,8 @@
             [pageSizeOptions]="pageSizeOptions"
             [pageIndex]="pageIndex"
             aria-label="Select page">
-        </mat-paginator>
-          
+        </mat-paginator> -->
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
       
       </div>
 
@@ -475,209 +484,7 @@
             <div *ngSwitchCase="'completed6'"   >
              <!-- <app-invoice [check]="check"></app-invoice> -->
 
-             <nav
-             class="navbar navbar-expand-sm navbar-dark bg-secondary d-flex justify-content-between"
-           >
-             <a class="navbar-brand"> GENERATE INVOICE/QUOTE</a>
-           </nav>
-           <form #invoiceForm="ngForm" (ngSubmit)="invoiceForm.form.valid && onSubmit()">
-             <div class="container-fluid pt-2 mb-5">
-               <div class="row">
-                 <div class="col-md-8">
-                   <div class="card border-secondary">
-                     <div class="card-body">
-                       <h4 class="card-title">Customer Details</h4>
-                       <div class="row">
-                         <div class="col-md-8">
-                           <div class="form-group">
-                             <label for="name">Name</label>
-                             <input
-                               type="text"
-                               class="form-control"
-                               name="name"
-                               id="name"
-                               [ngClass]="{
-                                 'is-invalid': invoiceForm.submitted && CustName.invalid
-                               }"
-                               [(ngModel)]="invoice.customerName"
-                               #CustName="ngModel"
-                               required
-                             />
-                           </div>
-                           <div class="form-group">
-                             <label for="address">Address</label>
-                             <textarea
-                               class="form-control"
-                               name="address"
-                               id="address"
-                               row="3"
-                               [ngClass]="{
-                                 'is-invalid': invoiceForm.submitted && Address.invalid
-                               }"
-                               [(ngModel)]="invoice.address"
-                               #Address="ngModel"
-                               required
-                             ></textarea>
-                           </div>
-                         </div>
-                         <div class="col-md-4">
-                           <div class="form-group">
-                             <label for="email">Email ID</label>
-                             <input
-                               type="email"
-                               class="form-control"
-                               name="email"
-                               id="email"
-                               [(ngModel)]="invoice.email"
-                               required
-                             />
-                           </div>
-                           <div class="form-group">
-                             <label for="contactNo">Contact No.</label>
-                             <input
-                               type="number"
-                               class="form-control"
-                               name="contactNo"
-                               id="contactNo"
-                               [ngClass]="{
-                                 'is-invalid': invoiceForm.submitted && ContactNo.invalid
-                               }"
-                               [(ngModel)]="invoice.contactNo"
-                               #ContactNo="ngModel"
-                               required
-                             />
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                   <div class="card border-secondary mt-2">
-                     <div class="card-body">
-                       <h4 class="card-title d-flex justify-content-between">
-                         Order Details
-                         <button
-                           type="button"
-                           class="btn btn-secondary"
-                           (click)="addProduct()"
-                         >
-                           +
-                         </button>
-                       </h4>
-                       <div class="row">
-                         <table class="table">
-                           <thead>
-                             <tr>
-                               <th width="25%">Product</th>
-                               <th width="25%">Price</th>
-                               <th width="25%">Quantity</th>
-                               <th width="25%">Amount</th>
-                             </tr>
-                           </thead>
-                           <tbody>
-                             <tr *ngFor="let product of invoice.products; let i = index">
-                               <td scope="row">
-                                 <input
-                                   type="text"
-                                   class="form-control"
-                                   name="productName{{ i }}"
-                                   [ngClass]="{
-                                     'is-invalid':
-                                       invoiceForm.submitted && ProductName.invalid
-                                   }"
-                                   id="productName"
-                                   [(ngModel)]="product.name"
-                                   #ProductName="ngModel"
-                                   required
-                                 />
-                               </td>
-                               <td>
-                                 <input
-                                   type="number"
-                                   class="form-control"
-                                   name="price{{ i }}"
-                                   id="price"
-                                   [ngClass]="{
-                                     'is-invalid':
-                                       invoiceForm.submitted && ProductPrice.invalid
-                                   }"
-                                   [(ngModel)]="product.price"
-                                   #ProductPrice="ngModel"
-                                   required
-                                 />
-                               </td>
-                               <td>
-                                 <input
-                                   type="number"
-                                   class="form-control"
-                                   name="quantity{{ i }}"
-                                   id="quantity"
-                                   [ngClass]="{
-                                     'is-invalid':
-                                       invoiceForm.submitted && ProductQty.invalid
-                                   }"
-                                   [(ngModel)]="product.qty"
-                                   #ProductQty="ngModel"
-                                   required
-                                 />
-                               </td>
-                               <td>
-                                 {{ product.price * product.qty || "" }}
-                               </td>
-                             </tr>
-                           </tbody>
-                         </table>
-                       </div>
-                     </div>
-                   </div>
-                   <div class="card border-secondary mt-2">
-                     <div class="card-body">
-                       <h4 class="card-title">Additional Details</h4>
-                       <div class="form-group">
-                         <textarea
-                           class="form-control"
-                           name="additionalDetails"
-                           rows="3"
-                           [(ngModel)]="invoice.additionalDetails"
-                         ></textarea>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-                 <div class="col-md-4">
-                   <button
-                     type="button"
-                     class="btn btn-secondary btn-lg btn-block"
-                     (click)="invoiceForm.valid ? generatePDF('download') : ''"
-                   >
-                     Download Invoice
-                   </button>
-                   <button
-                     type="button"
-                     class="btn btn-secondary btn-lg btn-block"
-                     (click)="invoiceForm.valid ? generatePDF('print') : ''"
-                   >
-                     Print Invoice
-                   </button>
-                   <button
-                     type="submit"
-                     class="btn btn-secondary btn-lg btn-block"
-                     (click)="invoiceForm.valid ? generatePDF() : ''"
-                   >
-                     Open Invoice
-                   </button>
-           
-                   <button class="btn btn-primary" type="submit">send</button>
-           
-                   First Name: {{ check }}
-                 </div>
-               </div>
-             </div>
-           </form>
-           
-
-
-
-              </div>
+        </div>
             </div>
        
       </section>
@@ -698,205 +505,55 @@
     <div    >
       <!-- <app-invoice [check]="check"></app-invoice> -->
 
-      <nav
-      class="navbar navbar-expand-sm navbar-dark bg-secondary d-flex justify-content-between"
-    >
-      <a class="navbar-brand"> GENERATE INVOICE/QUOTE</a>
-    </nav>
-    <form #invoiceForm="ngForm" (ngSubmit)="invoiceForm.form.valid && onSubmit()">
-      <div class="container-fluid pt-2 mb-5">
-        <div class="row">
-          <div class="col-md-8">
-            <div class="card border-secondary">
-              <div class="card-body">
-                <h4 class="card-title">Customer Details</h4>
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <label for="name">Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="name"
-                        id="name"
-                        [ngClass]="{
-                          'is-invalid': invoiceForm.submitted && CustName.invalid
-                        }"
-                        [(ngModel)]="invoice.customerName"
-                        #CustName="ngModel"
-                        required
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="address">Address</label>
-                      <textarea
-                        class="form-control"
-                        name="address"
-                        id="address"
-                        row="3"
-                        [ngClass]="{
-                          'is-invalid': invoiceForm.submitted && Address.invalid
-                        }"
-                        [(ngModel)]="invoice.address"
-                        #Address="ngModel"
-                        required
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="email">Email ID</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        name="email"
-                        id="email"
-                        [(ngModel)]="invoice.email"
-                        required
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="contactNo">Contact No.</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        name="contactNo"
-                        id="contactNo"
-                        [ngClass]="{
-                          'is-invalid': invoiceForm.submitted && ContactNo.invalid
-                        }"
-                        [(ngModel)]="invoice.contactNo"
-                        #ContactNo="ngModel"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card border-secondary mt-2">
-              <div class="card-body">
-                <h4 class="card-title d-flex justify-content-between">
-                  Order Details
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    (click)="addProduct()"
-                  >
-                    +
-                  </button>
-                </h4>
-                <div class="row">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th width="25%">Product</th>
-                        <th width="25%">Price</th>
-                        <th width="25%">Quantity</th>
-                        <th width="25%">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let product of invoice.products; let i = index">
-                        <td scope="row">
-                          <input
-                            type="text"
-                            class="form-control"
-                            name="productName{{ i }}"
-                            [ngClass]="{
-                              'is-invalid':
-                                invoiceForm.submitted && ProductName.invalid
-                            }"
-                            id="productName"
-                            [(ngModel)]="product.name"
-                            #ProductName="ngModel"
-                            required
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            class="form-control"
-                            name="price{{ i }}"
-                            id="price"
-                            [ngClass]="{
-                              'is-invalid':
-                                invoiceForm.submitted && ProductPrice.invalid
-                            }"
-                            [(ngModel)]="product.price"
-                            #ProductPrice="ngModel"
-                            required
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="number"
-                            class="form-control"
-                            name="quantity{{ i }}"
-                            id="quantity"
-                            [ngClass]="{
-                              'is-invalid':
-                                invoiceForm.submitted && ProductQty.invalid
-                            }"
-                            [(ngModel)]="product.qty"
-                            #ProductQty="ngModel"
-                            required
-                          />
-                        </td>
-                        <td>
-                          {{ product.price * product.qty || "" }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="card border-secondary mt-2">
-              <div class="card-body">
-                <h4 class="card-title">Additional Details</h4>
-                <div class="form-group">
-                  <textarea
-                    class="form-control"
-                    name="additionalDetails"
-                    rows="3"
-                    [(ngModel)]="invoice.additionalDetails"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <button
-              type="button"
-              class="btn btn-secondary btn-lg btn-block"
-              (click)="invoiceForm.valid ? generatePDF('download') : ''"
-            >
-              Download Invoice
-            </button>
-            <!-- <button
-              type="button"
-              class="btn btn-secondary btn-lg btn-block"
-              (click)="invoiceForm.valid ? generatePDF('print') : ''"
-            >
-              Print Invoice
-            </button> -->
-            <button
-              type="submit"
-              class="btn btn-secondary btn-lg btn-block"
-              (click)="invoiceForm.valid ? generatePDF() : ''"
-            >
-              Open Invoice
-            </button>
     
-            <button class="btn btn-primary" type="submit">send</button>
-    
-            First Name: {{ check }}
-          </div>
-        </div>
+    <form  [formGroup]="invoiceForm" (submit)="onSubmitData(this.invoiceForm)"> 
+
+      <div class="mb-1">
+        <label for="exampleInputEmail1" class="form-label">Full Name</label>
+        <input
+          formControlName="description"
+          type="text"
+          class="form-control"
+          id="exampleInputText"
+          aria-describedby="emailHelp"
+        />
       </div>
+      <div class="mb-1">
+        <label for="exampleInputEmail1" class="form-label">Full Name</label>
+        <input
+          formControlName="price"
+          type="number"
+          class="form-control"
+          id="exampleInputText"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-1">
+        <label for="exampleInputEmail1" class="form-label">Full Name</label>
+        <input
+          formControlName="quantity"
+          type="number"
+          class="form-control"
+          id="exampleInputText"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-1">
+        <label for="exampleInputEmail1" class="form-label">item</label>
+        <input
+          formControlName="items"
+          type="text"
+          class="form-control"
+          id="exampleInputText"
+          aria-describedby="emailHelp"
+        />
+      </div>
+
+
+
+      <button class="btn btn-info" type="submit">send invoice</button>
+
     </form>
-    
 
 
 

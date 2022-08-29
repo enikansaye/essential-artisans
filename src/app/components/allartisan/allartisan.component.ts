@@ -1,10 +1,11 @@
 import {
   HttpClient,
+  HttpErrorResponse,
   HttpEventType,
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +16,6 @@ import { Observable, Subscriber } from 'rxjs';
 import { FileToUpload } from '../../file-upload/file-to-upload';
 // import { ToastrService } from 'ngx-toastr';
 
- 
 // Maximum file size allowed to be uploaded = 1MB
 const MAX_SIZE: number = 1048576;
 
@@ -25,13 +25,14 @@ const MAX_SIZE: number = 1048576;
   styleUrls: ['./allartisan.component.css'],
 })
 export class AllartisanComponent implements OnInit {
+  @Output() public onUploadFinished = new EventEmitter();
+
   myimage!: Observable<any>;
 
   theFile: any = '';
-messages: string[] = [];
+  messages: string[] = [];
 
-
-  state: any;
+  location: any;
   city: any;
   selectedCountry: any = {
     id: 0,
@@ -40,6 +41,7 @@ messages: string[] = [];
   };
 
   formValue!: FormGroup;
+  search!: FormGroup;
   min: any = '';
   value: any;
   artisanData: any;
@@ -47,7 +49,7 @@ messages: string[] = [];
   totalRecord: any;
   page: number = 1;
 
-  location = '';
+  // location = '';
   searchLocation = '';
   selectedFiles: any;
   currentFile?: File;
@@ -55,6 +57,11 @@ messages: string[] = [];
   progress!: number;
   orderModelObj: orderModel = new orderModel();
   countries: any;
+  state2: any;
+  city2: any;
+
+  myFiles: string[] = [];
+  issue!: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,6 +75,7 @@ messages: string[] = [];
   ngOnInit(): void {
     this.getAllArtisan();
     // this.showAll();
+    this.getState();
     this.sortArtisan();
 
     this.formValue = this.formBuilder.group({
@@ -81,11 +89,16 @@ messages: string[] = [];
       AltNumber: [''],
       issue: [''],
       profile: [''],
-      file: [''],
+      files: [''],
       issueImage: [''],
       artisanEmail: [],
-      orderId:[],
+      orderId: [],
       fileSource: [''],
+    });
+
+    this.search = this.formBuilder.group({
+      state: [''],
+      city: [''],
     });
 
     this.pastDateTime();
@@ -153,32 +166,63 @@ messages: string[] = [];
     this.orderModelObj.id = row.id;
     console.log(this.orderModelObj.id);
     console.log(row);
-   
+
     this.formValue.controls['artisanId'].setValue(row.id);
- 
   }
 
-  createnewService(data:any) {
+  createnewService(data: any) {
     console.log(data);
     console.log(data.artisanId);
     // this.orderModelObj.artisanId = data.artisanId;
     // this.formValue.artisanId = data.artisanId
-    
-    this.api.createService(data).subscribe((res) => {
+    const formData = new FormData();
+    formData.append('file', this.formValue.controls['files'].value);
+
+    this.api.createService(formData).subscribe((res) => {
       this.formValue.controls['artisanId'].setValue(data.artisanId);
-     this.formValue.value.artisanId = data.artisanId;
-     console.log(data.artisanId);
-     
-      this.toastr.success('Order successfully sent!!!')
+      this.formValue.value.artisanId = data.artisanId;
+      console.log(data.artisanId);
+
+      this.toastr.success('Order successfully sent!!!');
       console.log(this.orderModelObj.id);
       console.log(res);
 
       // alert('fill request form');
     });
 
-    console.log(this.orderModelObj);
+    // console.log(this.orderModelObj);
   }
 
+  submitCheck(data: any) {
+    const formData = new FormData();
+    console.log(data);
+    console.log(formData);
+
+    for (var i = 0; i < this.myFiles.length; i++) {
+      formData.append('file[]', this.myFiles[i]);
+    }
+
+    this.http
+      .post('https://localhost:7130/api/Customer/ServiceOrder/upload', formData)
+      .subscribe((res) => {
+        console.log(res);
+        alert('Uploaded Successfully.');
+      });
+  }
+
+  onFileSelect(event: any) {
+    // if (event.target.files.length > 0) {
+    //   const file = event.target.files[0];
+    //   this.formValue.controls['files'].setValue(file);
+    // }
+    this.selectedFiles = event.target.files;
+  }
+
+  onFileChange(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
+  }
 
   // get all available artisans
   getAllArtisan() {
@@ -192,7 +236,10 @@ messages: string[] = [];
   }
 
   onLocationFilter() {
-    this.searchLocation = this.location;
+    // this.searchLocation = this.location;
+    this.api.sortArtisanLocation().subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
   selectFile(event: any): void {
@@ -200,24 +247,23 @@ messages: string[] = [];
   }
 
   working = false;
-  uploadFile?: File | null;
+  // uploadFile?: File | null;
   uploadFileLabel: string | undefined = 'Choose an image to upload';
   uploadProgress: number = 0;
   uploadUrl!: string;
 
-  handleFileInput(files: FileList) {
-    if (files.length > 0) {
-      this.uploadFile = files.item(0);
-      this.uploadFileLabel = this.uploadFile?.name;
-    }
-  }
+  // handleFileInput(files: FileList) {
+  //   if (files.length > 0) {
+  //     this.uploadFile = files.item(0);
+  //     this.uploadFileLabel = this.uploadFile?.name;
+  //   }
+  // }
 
   upload(): void {
     this.progress = 0;
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       console.log(this.selectedFiles);
-      
 
       if (file) {
         this.currentFile = file;
@@ -230,7 +276,6 @@ messages: string[] = [];
               this.message = event.body.message;
             }
             console.log('done');
-            
           },
           error: (err: any) => {
             this.progress = 0;
@@ -241,7 +286,6 @@ messages: string[] = [];
             }
             this.currentFile = undefined;
             console.log(err);
-            
           },
         };
 
@@ -249,8 +293,35 @@ messages: string[] = [];
       }
       this.selectedFiles = undefined;
       console.log();
-      
     }
+  }
+
+  uploadFile(files: any) {
+    if (files.length === 0) {
+      return;
+    }
+    let fileToUpload = <File>files[0];
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+
+    this.http
+      .post(
+        'https://localhost:7130/api/Customer/ServiceOrder/upload',
+        formData,
+        { reportProgress: true, observe: 'events' }
+      )
+      .subscribe({
+        next: (event: any) => {
+          if (event.type === HttpEventType.UploadProgress)
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          else if (event.type === HttpEventType.Response) {
+            this.message = 'Upload success.';
+            this.onUploadFinished.emit(event.body);
+          }
+          // this.getArtisan()
+        },
+        error: (err: HttpErrorResponse) => console.log(err),
+      });
   }
 
   sortArtisan() {
@@ -273,32 +344,6 @@ messages: string[] = [];
   postResponse: any;
   successResponse!: string;
   image: any;
-
-  public onImageUpload(event: any) {
-    this.uploadedImage = event.target.files[0];
-  }
-
-  imageUploadAction() {
-    const imageFormData = new FormData();
-    imageFormData.append('image', this.uploadedImage, this.uploadedImage.name);
-
-    this.http
-      .post(
-        'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload',
-        imageFormData,
-        { observe: 'response' }
-      )
-      .subscribe((response) => {
-        if (response.status === 200) {
-          this.postResponse = response;
-          this.successResponse = this.postResponse.body.message;
-        } else {
-          this.successResponse = 'Image not uploaded due to some error!';
-        }
-      });
-  }
-
-  
 
   submit(): void {
     this.progress = 0;
@@ -333,127 +378,55 @@ messages: string[] = [];
     }
   }
 
-  onFileSelect(event:any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.formValue.controls['profile'].setValue(file);
-      // this.formValue.get('profile').setValue(file);
-    }
-  }
-  onSubmit(){
+  onSubmit() {
     const formData = new FormData();
     formData.append('file', this.formValue.controls['profile'].value);
 
-    this.http.post<any>('https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload', formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
+    this.http
+      .post<any>(
+        'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload',
+        formData
+      )
+      .subscribe(
+        (res) => console.log(res),
+        (err) => console.log(err)
+      );
   }
 
-
-
-  // upload user issue
-
-
-  // onChange1($event: Event) {
-  //   const file = ($event.target as HTMLInputElement).files[0];
-  //   this.convertToBase64(file);
-  // }
-
-  convertToBase64(file: File) {
-    this.myimage = new Observable((subscriber: Subscriber<any>) => {
-      this.readFile(file, subscriber);
+  getState() {
+    this.api.getLocation().subscribe((data: any) => {
+      this.state2 = data;
+      console.log(this.state2);
     });
   }
-
-  readFile(file: File, subscriber: Subscriber<any>) {
-    const filereader = new FileReader();
-    filereader.readAsDataURL(file);
-
-    filereader.onload = () => {
-      subscriber.next(filereader.result);
-      subscriber.complete();
-    };
-    filereader.onerror = (error) => {
-      subscriber.error(error);
-      subscriber.complete();
-    };
+  onChangeState(event: any) {
+    let userProfile = this.search.controls['state'].value;
+    if (userProfile) {
+      this.api.getLocation2(userProfile).subscribe((data: any) => {
+        this.city2 = data;
+        console.log(this.city2);
+      });
+    }
+  }
+  onChangeCity(event: any) {
+    return this.search.controls['city'].value;
   }
 
-
-//   handleUpload(event:any){
-//     const file = event.target.files[0];
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => {
-//         console.log(reader.result);
-//     };
-// }
-
-onFileChange(event:any) {
-  this.theFile = null;
-  if (event.target.files && event.target.files.length > 0) {
-      // Don't allow file sizes over 1MB
-      if (event.target.files[0].size < MAX_SIZE) {
-          // Set theFile property
-          this.theFile = event.target.files[0];
-      }
-      else {
-          // Display error message
-          this.messages.push("File: " + event.target.files[0].name + " is too large to upload.");
-      }
+hope!:any
+  Search() {
+    if (this.location == '') {
+      console.log(location);
+      
+      this.getAllArtisan();
+    } else {
+      this.artisanData  = this.artisanData.filter((res: any) => {
+        console.log(res);
+        
+        return res.location
+          .toLocaleLowerCase()
+          .match(this.location.toLocaleLowerCase());
+      });
+    }
+return this.hope;
   }
 }
-
-private readAndUploadFile(theFile: any) {
-  let file = new FileToUpload();
-  
-  // Set File Information
-  file.fileName = theFile.name;
-  file.fileSize = theFile.size;
-  file.fileType = theFile.type;
-  file.lastModifiedTime = theFile.lastModified;
-  // file.lastModifiedDate = theFile.lastModifiedDate;
-  
-  // Use FileReader() object to get file to upload
-  // NOTE: FileReader only works with newer browsers
-  let reader = new FileReader();
-  reader.readAsDataURL(this.theFile as Blob)
-  
-  
-  // Setup onload event for reader
-  reader.onload = () => {
-    console.log(reader.result);
-      // Store base64 encoded representation of file
-      file.fileAsBase64 = reader.result as string;
-      console.log(file.fileAsBase64);
-      
-      // file.fileAsBase64 = JSON.parse(reader.result as string);
-     
-      
-      // POST to server
-      this.api.uploadFile(file).subscribe(resp => { 
-          this.messages.push("Upload complete"); });
-          console.log(reader.result);
-          // console.log(resp);
-      
-          
-  }
-  
-  // Read the file
-  reader.readAsDataURL(theFile);
-}
-
-uploadFile2(): void {
-  this.readAndUploadFile(this.theFile);
-}
-
-
-
-}
-
-
-
-
-
-

@@ -14,67 +14,49 @@
           >
         <!-- </button> -->
       </mat-toolbar>
-      <img  *ngIf="artisanData.profileImage"
-      src="data:image/png;base64,{{artisanData.profileImage}}" alt="/assets/images/1.jpg"
-      class="img-fluid bg-success rounded-circle w-50"
-    />
-    <div class="img " *ngIf="!artisanData.profileImage "><ngx-avatar size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar></div>
+ <div class="w-100 d-flex flex-column align-items-center ">
+  <img  *ngIf="artisanData.profileImage"
+  src="data:image/png;base64,{{artisanData.profileImage}}" alt=""
+  class="img-fluid bg-success rounded-circle w-50"
+/>
+<ngx-avatar *ngIf="!artisanData.profileImage " size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar>
 
-      <h4 class="mt-2 mt-md-4">{{artisanData.firstName}} {{artisanData.lastName}}</h4>
-      <h4>{{artisanData.service}}</h4>
-      <h4>{{artisanData.email}}</h4>
+  <h4 class="mt-2 mt-md-4">{{artisanData.firstName}} {{artisanData.lastName}}</h4>
+  <h4>{{artisanData.service}}</h4>
+  <h4>{{artisanData.email}}</h4>
 
-      <h4>
-        Rank :
-        <strong>
-          <i class="bi bi-star-fill text-warning"></i>
-          <i class="bi bi-star-fill text-warning"></i>
-          <i class="bi bi-star-fill text-warning"></i>
-          <i class="bi bi-star-fill text-warning"></i>
-          <i class="bi bi-star text-warning"></i>
-        </strong>
-      </h4>
+  <h4>
+    Rank :
+    <strong>
+      <i class="bi bi-star-fill text-warning"></i>
+      <i class="bi bi-star-fill text-warning"></i>
+      <i class="bi bi-star-fill text-warning"></i>
+      <i class="bi bi-star-fill text-warning"></i>
+      <i class="bi bi-star text-warning"></i>
+    </strong>
+  </h4>
+ </div>
       <hr class="divider" />
-      <div class="icons">
+      <div class="icons d-flex flex-column ">
         <span
-          class="pb-3"
+          class="cursor p-3 "
           [class.active]="expression == 'match1'"
           (click)="expression = 'match1'"
-          ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span
+          ><i class="bi bi-grid-3x3-gap"></i> My Profile</span
         >
-        <!-- <span class="pb-3" ><i class="bi bi-grid-3x3-gap" ></i> DASHBOARD</span> -->
-        <!-- <span class="pb-3"><i class="bi bi-person"> </i> INFORMATION</span> -->
-        <!-- <span
-          class="pb-3"
-          [class.active]="expression == 'match2'"
-          (click)="expression = 'match2'"
-          ><i class="bi bi-gear"> </i> MY ORDERS</span
-        > -->
-        <span
-          class="pb-3"
+       <span
+          class="cursor p-3"
           [class.active]="expression == 'match3'"
           (click)="expression = 'match3'"
-          ><i class="bi bi-gear"> </i>ORDER</span
+          ><i class="bi bi-gear"> </i> My Orders</span
         >
-        <!-- <span
-          class="pb-3"
-          [class.active]="expression == 'match4'"
-          (click)="expression = 'match4'"
-          ><i class="bi bi-gear"> </i>ORDER REVIEWS</span
-        > -->
-        <!-- <span
-          class="pb-3"
-          [class.active]="expression == 'match5'"
-          (click)="expression = 'match5'"
-          ><i class="bi bi-gear"> </i>Create Quote</span
-        > -->
-        <!-- <span class="pb-3"><i class="bi bi-arrow-down"></i> MY REVIEWS</span> -->
-        <!-- <span class="pb-3"><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span> -->
-
-        <hr class="divided" />
+    
+        <!-- <hr class="divided" /> -->
       </div>
 
       <hr class="divided" />
+
+      
 
       <!-- <mat-divider></mat-divider> -->
     </mat-sidenav>
@@ -122,21 +104,22 @@
             <section
               class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
             >
-              <div class="h5 text-primary">EDIT INFORMATION</div>
+              <div class="h5 text-dark">EDIT INFORMATION</div>
 
-              <div class="col align-items-end d-flex">
+              <div class="col-12 align-items-end d-flex">
                 <div class="col-4 col-md-2 rounded-circle me-3">
                   <img  *ngIf="artisanData.profileImage"
                     src="data:image/png;base64,{{artisanData.profileImage}}" alt="/assets/images/1.jpg"
                     class="img-fluid bg-success rounded-circle "
                   />
-                  <img class="img img-fluid rounded-circle " *ngIf="!artisanData.profileImage" src="/assets/images/1.jpg" />
+                  <ngx-avatar size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}" *ngIf="!artisanData.profileImage"></ngx-avatar>
+                  <!-- <img class="img img-fluid rounded-circle " *ngIf="!artisanData.profileImage" src="/assets/images/1.jpg" /> -->
                 </div>
               
 
 
                 <div class="row" style="margin-bottom:15px;">
-                  <div class="col-md-3">
+                  <div class="">
                     <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
                     <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
                   </div>
@@ -254,7 +237,7 @@
                         type="text"
                         class="form-control"
                         id="inputnumber"
-                     
+                        placeholder="{{artisanData.phoneNumber}}"
                         formControlName="phoneNumber"
                       />
                     </div>
@@ -268,18 +251,18 @@
                         type="text"
                         class="form-control"
                         id="inputtext"
-                   
+                        placeholder="{{artisanData.address}}"
                         formControlName="Address"
                       />
                     </div>
                   </div>
-                  <div class="mb-3 row">
+                  <div class="mb-3 d-flex">
                     <label for="inputtext" class="col-sm-2 col-form-label"
                       >SERVICE</label
                     >
                    
-                      <select class="form-select col-3" formControlName="service" aria-label="Default select example">
-                        <option selected >select Service</option>
+                      <select class="form-select " formControlName="service" aria-label="Default select example">
+                        <option selected value="" >select Service</option>
                         <option *ngFor="let data of serviceCategory" selected>{{ data.name }}</option>
                       </select>
                     
@@ -323,17 +306,23 @@
                   </div> -->
                  
 
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group form-outline mb-4 d-flex">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                    >STATE</label
+                  >
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
-                      <option value="" selected disabled>Select Location</option>
+                      <option value="" selected disabled>{{artisanData.location}}</option>
                       <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
                       
                     </select>
                     </div>
   
-                    <div class="form-group form-outline mb-4"   >
+                    <div class="form-group form-outline mb-4 d-flex"   >
+                      <label for="inputtext" class="col-sm-2 col-form-label"
+                      >LGA</label
+                    >
                       <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
-                        <option selected value="">Select Location</option>
+                        <option selected value="">{{artisanData.city}}</option>
                         <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                         
                       </select>

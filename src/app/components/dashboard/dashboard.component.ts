@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAll()
+    this.showArtisan()
     this.getAllServiceCategory() 
   }
 
@@ -69,6 +70,12 @@ export class DashboardComponent implements OnInit {
 
       this.countries = data;
     });
+  }
+  showArtisan(){
+    this.api.sortArtisanLocation().subscribe((data:any)=>{
+console.log(data);
+
+    })
   }
 
   onSelect(data: any) {

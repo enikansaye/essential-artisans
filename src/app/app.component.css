@@ -92,6 +92,9 @@ transition: 0.4s ease-in-out;
   flex: 1 1 auto;
 }
 }
+.cursor{
+  cursor: pointer;
+}
 
 
 

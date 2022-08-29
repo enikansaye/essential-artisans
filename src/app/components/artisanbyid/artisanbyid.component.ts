@@ -25,14 +25,14 @@ export class ArtisanbyidComponent implements OnInit {
   clickEvent(){
     this.accept = !this.accept
   }
-  getAllOthers(id:any) {
-    this.adminApi.getOthersById(id).subscribe((res: any) => {
-      this.othersData = res;
-      console.log(this.othersData)
-      this.totalRecord=res.length;
-      console.log(this.totalRecord);
-    });
-  }
+  // getAllOthers(id:any) {
+  //   this.adminApi.getOthersById(id).subscribe((res: any) => {
+  //     this.othersData = res;
+  //     console.log(this.othersData)
+  //     this.totalRecord=res.length;
+  //     console.log(this.totalRecord);
+  //   });
+  // }
 
   getArtisanById(id:string){
     this.adminApi.getArtisanbyid(id).subscribe((res:any)=>{

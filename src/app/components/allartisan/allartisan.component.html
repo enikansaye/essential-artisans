@@ -1,38 +1,18 @@
 <div class="d-flex">
-  <div class="container-fluid d-flex align-center justify-content-center">
+  <div class="container-fluid">
     <!-- PROFILE CARDS 1 -->
 
     <div class="cards-6 section-gray">
       <div class="container-fluid w-100">
         <div class="h4">Availabe Artisans within your location</div>
-        <div class="d-flex mb-5">
-          <div class="location text-center me-2 p-1">Ajah</div>
-          <div class="location text-center me-2 p-1">Ikoyi</div>
-          <div class="location text-center me-2 p-1">Jakande</div>
-          <div class="location text-center me-2 p-1">Lekki</div>
 
-          <!-- <input type="file" (change)="onChange1($event)" /> -->
+<div class="w-50 mb-5">
+  <input class="form-control" type="text" placeholder="State and LGA Search" name="location" [(ngModel)]="location" (ngModelChange)="Search()" />
 
-<!-- <div *ngIf="myimage">
-  <img [src]="myimage | async" width="200px" height="200px" alt="" />
-</div> -->
-          <div
-            class="location text-center me-2 p-1"
-            data-bs-toggle="modal"
-            data-bs-target="#location"
-          >
-            View All
-          </div>
-          <div>
-            <form class="d-flex flex-end" role="search">
-              <input class="form-control me-2"  type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit" (click)="onLocationFilter()">Search</button>
-            </form>
-           
-          </div>
-        </div>
+</div>
+     
        
-        <div class="row">
+        <div class="row mt-3">
           <div
             class="col-md-4"
             data-bs-toggle="modal"
@@ -63,7 +43,7 @@
                   {{ data.name }} 
                  
                 </h4>
-                <p class="category text-muted h6 pt-3">{{ data.email }}</p>
+                <p class="category text-muted h6 pt-3">{{ data.firstName }} {{data.lastName}}</p>
                 <p class="card-description text-center">
                   15 years working experience.
                 </p>
@@ -99,44 +79,15 @@
             </div>
           </div>
         </div>
+
+        <div *ngIf="location">asdfghjkl</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-  hello
-</div> -->
-
-<div
-  class="modal fade"
-  id="location"
-  tabindex="-1"
-  aria-labelledby="locationLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="locationLabel">Sortby Location</h3>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list">
-          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Ajah</li>
-          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Ikoyi</li>
-          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Ibeju Lekki</li>
-          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Jakande</li>
-          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Lekki</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div>
+  
 </div>
 
 <div
@@ -160,7 +111,7 @@
       <div class="modal-body">
         <!-- modal form -->
         <form
-          [formGroup]="formValue"
+          [formGroup]="formValue" (ngSubmit)="submitCheck(this.formValue.value)"
          
          
         >
@@ -187,53 +138,9 @@
               id="exampleInputPassword1"
             />
           </div>
-          <div class="form-group form-outline mb-4">
-                   
-            <!-- <select
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="state"
-              [(ngModel)]="selectedCountry.name"
-              (change)="onSelect($event.target)"
-            >
-              <option selected value="" >select location</option>
-              <option class="form-control form-control-lg mb-1"
-                *ngFor="let country of state"
-                
-              >
-                {{ country.name }}
-              </option>
-            </select> -->
-           <div> <label for="country" class="form-label">Select State</label></div>
-          </div>
+        
 
-          <div class="form-group form-outline mb-4">
-
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="city"
-              [(ngModel)]="selectedCountry.cities"
-            >
-              <option selected value="">select location</option>
-              <option *ngFor="let state of city" >
-                {{ state }}
-              </option>
-            </select>
-            <label for="country" class="form-label">Select City</label>
-          </div>
-
-          <!-- <div class="mb-1">
-            <label for="exampleInputPassword1" class="form-label"
-              >Email ID</label
-            >
-            <input
-              formControlName="email"
-              type="email"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div> -->
+         
           <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Whatsapp Number</label
@@ -254,53 +161,7 @@
               class="form-control"
             />
           </div>
-          <!-- <div>
-            <input type="file" formControlName="issueImage" name="profile" (change)="selectFile($event)" />
-          </div>
-          <div>
-            <button class="btn btn-info" (click)="submit()">Upload</button>
-          </div> -->
-          <!-- <div class="mb-1">
-            <label for="exampleInputPassword1" class="form-label"
-              >Photo of issue</label
-            >
-            <input
-              formControlName="file"
-              type="file"
-              class="form-control file" (change)="selectFile($event)"
-            />
-          </div> -->
-          <!-- <button class="btn btn-info" (click)="upload()">upload</button> -->
-
-          <!-- <div class="row mt-5">
-          <div class="col">
-            <div class="custom-file">
-              <input type="file" accept="image/*" class="custom-file-input" id="customFile" (change)="handleFileInput($any($event.target).files)" [disabled]="working">
-              <label class="custom-file-label" for="customFile">{{ uploadFileLabel }}</label>
-            </div>
-          </div>
-          <div class="col-auto pl-sm-0">
-            <button type="button" class="btn btn-outline-primary" ngbTooltip="Upload" (click)="upload()" [disabled]="working">Upload</button>
-          </div>
-        </div>
-        <div class="row mt-3" *ngIf="working">
-          <div class="col">
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploadProgress + '%' }" [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100">{{ uploadProgress }}%</div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-3" *ngIf="uploadUrl?.length">
-          <div class="col">
-            <img [src]="uploadUrl" alt="preview" class="rounded shadow w-100">
-          </div>
-        </div> -->
-<!-- 
-        <div class="form-group">
-          <input type="file" (change)="onImageUpload($event)">
-          <input type="button" formControlName="issueImage" (click)="upload()" value="Upload Image" class="btn1">
-      </div> -->
-
+       
 
       <div>
           <output *ngIf=successResponse class="success"><b>{{successResponse}}</b></output>
@@ -329,51 +190,42 @@
               (change)="onChange(input.value)"
             />
           </div>
-          <!-- <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
-            Send
-          </button> -->
-<!-- 
-          <div>
-            <input type="file" (change)="handleUpload($event)"/>
+    
+         <div class="mb-1">
+          <input type="file" name="profile" (change)="onFileSelect($event)" formControlName="file" />
+         </div>
+
+         <div class="form-group">
+          <label for="file">File</label>
+          <input 
+              formControlName="files"
+              id="file" 
+              type="file" 
+              multiple
+              class="form-control"
+              (change)="onFileChange($event)">
+          <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+              <div *ngIf="f.file.errors && f.file.errors.required">File is required.</div>
           </div> -->
-          <h1>File Upload</h1>
-
-          <label>Select a File (&lt; 1MB)</label><br/>
-          <input type="file" (change)="onFileChange($event)" /><br/>
-          <button (click)="uploadFile2()" [disabled]="!theFile">Upload File</button><br/><br/>
-          
-          <!-- ** BEGIN: INFORMATION MESSAGE AREA ** -->
-          <div *ngIf="messages.length > 0">
-              <span *ngFor="let msg of messages">
-                  {{msg}}
-                  <br />
-                  </span>
-              </div>
-              <!-- ** END: INFORMATION MESSAGE AREA ** -->
-          
+      </div>
 
 
+<button class="btn btn-info" type="submit">Send</button>
         </form>
       </div>
       <div class="modal-footer">
-        <button (click)="upload()" (click)="createnewService(this.formValue.value)" class="btn btn-info" data-bs-dismiss="modal">
+        <!-- <button  (click)="createnewService(this.formValue.value)" class="btn btn-info" data-bs-dismiss="modal">
           Send
-        </button>
-        <div *ngIf="currentFile" class="progress my-3">
-          <div
-            class="progress-bar progress-bar-info progress-bar-striped"
-            role="progressbar"
-            attr.aria-valuenow="{{ progress }}"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            [ngStyle]="{ width: progress + '%' }"
-          >
-            {{ progress }}%
-          </div>
-        </div>
+        </button> -->
+      
         <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
         <!-- <button *ngIf="showUpdate" type="button" (click)="updateEmployeeDetails()" class="btn btn-primary">Update</button> -->
       </div>
+
+
+      
+      
+   
     </div>
   </div>
 </div>

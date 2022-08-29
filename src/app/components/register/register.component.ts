@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   ngOnInit(): void {
     // this.showAll();
-    this.showAll();
+    // this.showAll();
     this.getState()
     // this.onSelect(this.selectedCountry.id)
 
@@ -78,45 +78,45 @@ export class RegisterComponent implements OnInit {
     this.api.registerUser(this.signupForm.value).subscribe(registerObserver);
   }
 
-  countries: any;
-  states: any;
-  selectedCountry: any = {
-    id: 0,
-    name: '',
-    cities: '',
-  };
+  // countries: any;
+  // states: any;
+  // selectedCountry: any = {
+  //   id: 0,
+  //   name: '',
+  //   cities: '',
+  // };
 
-  showAll() {
-    this.api.getAll().subscribe((data: any, i: any) => {
-      const result = Object.entries(data);
+  // showAll() {
+  //   this.api.getAll().subscribe((data: any, i: any) => {
+  //     const result = Object.entries(data);
 
-      this.countries = data;
-    });
-  }
+  //     this.countries = data;
+  //   });
+  // }
 
-  onSelect(data: any) {
-    let result = Object.entries(this.countries);
-    console.log(data.value);
+  // onSelect(data: any) {
+  //   let result = Object.entries(this.countries);
+  //   console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+  //   const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.states = (statesList as any)['cities'];
+  //   console.log((statesList as any)['cities']);
+  //   this.states = (statesList as any)['cities'];
 
-    console.log(this.states);
-  }
+  //   console.log(this.states);
+  // }
 
-  onSelectCities(data: any) {
-    let result = Object.entries(this.countries);
-    console.log(data.value);
+  // onSelectCities(data: any) {
+  //   let result = Object.entries(this.countries);
+  //   console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+  //   const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.states = (statesList as any)['cities'];
+  //   console.log((statesList as any)['cities']);
+  //   this.states = (statesList as any)['cities'];
 
-    console.log(this.states);
-  }
+  //   console.log(this.states);
+  // }
 
 
 

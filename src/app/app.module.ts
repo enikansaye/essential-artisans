@@ -94,6 +94,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import {MatListModule} from '@angular/material/list'
 import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 
 @NgModule({
@@ -175,6 +176,7 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@a
     MatIconModule,
     MatListModule,
     MatDialogModule,
+    Ng2OrderModule,
     // MatDialogModule,
     // MatDividerModule,
     ModalModule.forRoot(),

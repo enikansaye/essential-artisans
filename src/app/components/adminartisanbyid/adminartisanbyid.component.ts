@@ -24,12 +24,12 @@ export class AdminartisanbyidComponent implements OnInit {
     this.accept = !this.accept
   }
   getAllOthers() {
-    this.adminApi.getOthers().subscribe((res: any) => {
-      this.othersData = res;
-      console.log(this.othersData)
-      this.totalRecord=res.length;
-      console.log(this.totalRecord);
-    });
+    // this.adminApi.getOthers().subscribe((res: any) => {
+    //   this.othersData = res;
+    //   console.log(this.othersData)
+    //   this.totalRecord=res.length;
+    //   console.log(this.totalRecord);
+    // });
   }
 
   getArtisanById(id:string){

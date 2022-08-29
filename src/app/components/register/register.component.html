@@ -129,7 +129,7 @@
                   <div class="form-group input-group-lg form-outline mb-4">
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
                       <option value="" selected disabled>Select State</option>
-                      <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
+                      <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                       
                     </select>
                     <div>  <label class="form-label mt-2" for="">State Location</label></div>
