@@ -2,6 +2,7 @@ import {
   HttpClient,
   HttpEvent,
   HttpHeaders,
+  HttpParams,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
@@ -27,8 +28,7 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
-
-  public baseUrl:string =  "https://localhost:7130"
+  public baseUrl: string = 'https://localhost:7130';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -46,7 +46,6 @@ export class ApiService implements OnInit {
   currentuserType: any;
   finaldata: any;
 
-
   selectedFiles?: FileList;
   her: any;
   // items!: User[],
@@ -55,55 +54,69 @@ export class ApiService implements OnInit {
     private http: HttpClient,
     private url: AllurlService,
     private tokenStorage: StorageService,
-    private router: Router,
+    private router: Router
   ) {}
   ngOnInit(): void {
     // this.loggedIn()
     this.getUserToken();
+    if (this.finaldata.role === '2') {
+      this.router.navigate(['/admin']);
+    } else if (this.finaldata.role === 'ARTISAN') {
+      this.router.navigate(['/']);
+    } else if (this.finaldata.role === '0') {
+      this.router.navigate(['/userprofile']);
+    }
   }
 
   // user signup
   registerUser(model: any) {
-    return this.http.post( this.baseUrl + '/api/Auth/register/customer', model, httpOptions);
+    return this.http.post(
+      this.baseUrl + '/api/Auth/register/customer',
+      model,
+      httpOptions
+    );
   }
 
   //artisan loginin
   signupArtisan(data: any) {
-    return this.http.post<any>( this.baseUrl+ '/api/Auth/register/partner', data, httpOptions);
+    return this.http.post<any>(
+      this.baseUrl + '/api/Auth/register/partner',
+      data,
+      httpOptions
+    );
   }
-// refresh token
+  // refresh token
   refreshToken(token: string) {
     return this.http.post(
-       this.baseUrl+ '/api/Auth/refresh-token',
+      this.baseUrl + '/api/Auth/refresh-token',
       {
         refreshToken: token,
       },
       httpOptions
     );
   }
- 
+
   // login user
   loginUser(usercard: any) {
-    return this.http.post( this.baseUrl+ '/api/Auth/login', usercard,
+    return this.http.post(
+      this.baseUrl + '/api/Auth/login',
+      usercard
       // {withCredentials:true}
-      );
+    );
   }
-getUserinfo(id:string){
-  return this.http.get( this.baseUrl+ '/api/Customer/')
-
-}
-getArtisaninfo(){
-  return this.http.get( this.baseUrl+ '/api/Artisan/')
-}
-
+  getUserinfo(id: string) {
+    return this.http.get(this.baseUrl + '/api/Customer/');
+  }
+  getArtisaninfo() {
+    return this.http.get(this.baseUrl + '/api/Artisan/');
+  }
 
   isUserLoggedIn() {
     return localStorage.getItem('token') != null;
   }
 
-
   getUserToken() {
-      return localStorage.getItem('accesstoken');
+    return localStorage.getItem('accesstoken');
   }
   getRefresToken() {
     console.log('hello');
@@ -112,10 +125,9 @@ getArtisaninfo(){
 
   GenerateRefreshToken() {
     let input = {
-    
-      "refreshToken": this.getRefresToken()
-    } 
-    return this.http.post( this.baseUrl+ '/api/Auth/refresh-token', input);
+      refreshToken: this.getRefresToken(),
+    };
+    return this.http.post(this.baseUrl + '/api/Auth/refresh-token', input);
   }
   // saveToken(token: any) {
   //   localStorage.setItem('accesstoken', token.accessToken);
@@ -139,6 +151,7 @@ getArtisaninfo(){
   getToken() {
     console.log('hello');
     return localStorage.getItem('accessToken');
+    // return window.sessionStorage.getItem(TOKEN_KEY)
   }
 
   // saveUserToLocalStorage(data: UserModel) {
@@ -147,26 +160,15 @@ getArtisaninfo(){
   // }
 
   userUpdate(userInfo: any) {
-    return this.http.put( this.baseUrl+ '/api/Customer/update', userInfo);
+    return this.http.put(this.baseUrl + '/api/Customer/update', userInfo);
   }
-  artisanUpdate(ArtisanInfo: any) {
-  
-      return this.http.put( this.baseUrl+ '/api/Artisan/update', ArtisanInfo);
-  }
-
-  // fakeapi
-  updateArisan2(data:any){
-    return this.http.put('https://randomuser.me/api/?results=5000',data)
-  }
- 
-
 
   // update user
   updateUser1(model: any) {
     const formData = new FormData();
     formData.append('profileimage', model.file);
     return (
-      this.http.put( this.baseUrl+ '/api/Artisan/update', model).pipe(
+      this.http.put(this.baseUrl + '/api/Artisan/update', model).pipe(
         map((response: any) => {
           const user = response;
           if (user) {
@@ -186,28 +188,28 @@ getArtisaninfo(){
   selectFile(event: any): void {
     this.selectedFiles = event.target.files[0];
     console.log(event);
-    
-  }  
-
+  }
 
   // picture upload
   upload(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
- formData.append('file', file);
- 
-    const req = new HttpRequest('POST',this.baseUrl+ '/api/Artisan/upload-profile-image', formData, {
-      reportProgress: true,
-      responseType: 'json',
-    },);
-  
-    
-    return this.http.request(req);
+    formData.append('file', file);
 
-  
+    const req = new HttpRequest(
+      'POST',
+      this.baseUrl + '/api/Artisan/upload-profile-image',
+      formData,
+      {
+        reportProgress: true,
+        responseType: 'json',
+      }
+    );
+
+    return this.http.request(req);
   }
 
   // onUpload(files: any): void{
-   
+
   //   let fileToUpload = <File>files[0];
   //   const formData = new FormData();
   //   formData.append('file', fileToUpload, fileToUpload.name);
@@ -217,103 +219,83 @@ getArtisaninfo(){
 
   uploadIssue(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
- formData.append('file', file);
- 
-    const req = new HttpRequest('POST',  this.baseUrl+ '/api/Customer/ServiceOrder/upload', formData, {
-      reportProgress: true,
-      responseType: 'json',
-    });
-  
-  
-    
-    return this.http.request(req);
+    formData.append('file', file);
 
-  
+    const req = new HttpRequest(
+      'POST',
+      this.baseUrl + '/api/Customer/ServiceOrder/upload',
+      formData,
+      {
+        reportProgress: true,
+        responseType: 'json',
+      }
+    );
+
+    return this.http.request(req);
   }
 
-  updateUser(userInfo: any, ){
-    return this.http.put( this.baseUrl+ '/api/Artisan/update', userInfo,  httpOptions);
+  updateUser(userInfo: any) {
+    return this.http.put(
+      this.baseUrl + '/api/Artisan/update',
+      userInfo,
+      httpOptions
+    );
     // public updateArtisan : string =  this.baseUrl+ '/api/Artisan/update';
-}
-  check(data:string): Observable<HttpEvent<any>> {
-//     const formData: FormData = new FormData();
-//  formData.append('file', file);
- 
-    const req = new HttpRequest('PUT',this.baseUrl+ '/api/Artisan/update', data );
-  
-    
-    return this.http.request(req);
-
-  
   }
+  check(data: string): Observable<HttpEvent<any>> {
+    //     const formData: FormData = new FormData();
+    //  formData.append('file', file);
 
+    const req = new HttpRequest(
+      'PUT',
+      this.baseUrl + '/api/Artisan/update',
+      data
+    );
 
+    return this.http.request(req);
+  }
 
   confirmEmail(data: any) {
-    return this.http.get( this.baseUrl+ '/api/Auth/verify-email', data);
+    return this.http.get(this.baseUrl + '/api/Auth/verify-email', data);
   }
   resetPassword(data: any) {
-    return this.http.post( this.baseUrl+ '/api/Auth/reset-password', data);
+    return this.http.post(this.baseUrl + '/api/Auth/reset-password', data);
   }
   forgetPassword(data: any) {
-    return this.http.post( this.baseUrl+ '/api/Auth/forgot-password', data);
+    return this.http.post(this.baseUrl + '/api/Auth/forgot-password', data);
   }
-
-  // location selection api
-  // getAllStateData() {
-  //   return this.http
-  //     .get<any>('http://locationsng-api.herokuapp.com/api/v1/states/lagos/lgas')
-  //     .pipe(
-  //       map((res: any) => {
-  //         return res;
-  //       })
-  //     );
-  // }
 
   getUser() {
-    return this.http.get<any>( this.baseUrl+ '/​api​/Admin​/customers').pipe(
+    return this.http.get<any>(this.baseUrl + '/​api​/Admin​/customers').pipe(
       map((res: any) => {
         return res;
       })
     );
   }
 
-  getArtisanOrder(){
-    return this.http.get(this.baseUrl + "/api/Artisan/orders").pipe(
-      map((res:any)=>{
-        return res;
-      })
-    )
-  }
-  getUserOrder(){
-    return this.http.get(this.baseUrl + "/api/Customer/orders").pipe(
-      map((res:any)=>{
-        return res;
-      })
-    )
-  }
-  updateUserOrder(){
-    return this.http.get(this.baseUrl + "/api/Customer/ServiceOrder/update").pipe(
-      map((res:any)=>{
-        return res;
-      })
-    )
-  }
-
-  getArtisan() {
-    return this.http.get<any>('http://localhost:3000/posts').pipe(
+  getUserOrder() {
+    return this.http.get(this.baseUrl + '/api/Customer/orders').pipe(
       map((res: any) => {
         return res;
       })
     );
   }
-
-
+  updateUserOrder() {
+    return this.http
+      .get(this.baseUrl + '/api/Customer/ServiceOrder/update')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
 
   //  create service
-  createService(data:any, ) {
-    const formData = new FormData();
-    return this.http.post<any>( this.baseUrl+ '/api/Customer/ServiceOrder/create', data).pipe();
+  createService(data: any) {
+    // const formData = new FormData();
+    return this.http
+      .post<any>(this.baseUrl + '/api/Customer/ServiceOrder/create', data)
+      .pipe();
   }
   // fake api
   // createService2(data:any, id:number) {
@@ -325,20 +307,27 @@ getArtisaninfo(){
   // }
 
   //  create invoice by artisans
-  createInvoice(data:any) {
-    return this.http.post( this.baseUrl+ '/api/Artisan/invoice/create',data).pipe();
+  createInvoice(data: any) {
+    return this.http
+      .post(this.baseUrl + '/api/Artisan/invoice/create', data)
+      .pipe();
   }
- 
+
   uploadService(data: any) {
-    return this.http.post<any>( this.baseUrl+ '/api/Customer/ServiceOrder/upload', data);
+    return this.http.post<any>(
+      this.baseUrl + '/api/Customer/ServiceOrder/upload',
+      data
+    );
   }
   // delete service order
   deleteUser() {
-    return this.http.delete<any>( this.baseUrl+ '/api/Customer​/ServiceOrder/delete' ).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
+    return this.http
+      .delete<any>(this.baseUrl + '/api/Customer​/ServiceOrder/delete')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
   }
   // deleteUser(id:number) {
   //   return this.http.delete<any>(this.url.deleteService +id).pipe(
@@ -347,76 +336,139 @@ getArtisaninfo(){
   //     })
   //   );
   // }
-  updateService(userInfo: any){
-    return this.http.put(this.baseUrl + "/api/Customer/ServiceOrder/update", userInfo);
-}
 
+  deletes(data: any) {
+    const req = new HttpRequest(
+      'DELETE',
+      this.baseUrl + '/api/Customer/ServiceOrder/delete',
+      data,
+      {
+        reportProgress: true,
+        responseType: 'json',
+      }
+    );
 
-deletes(data:any){
+    return this.http.request(req);
+  }
 
-  const req = new HttpRequest('DELETE',  this.baseUrl+ '/api/Customer/ServiceOrder/delete' ,data, {
-    reportProgress: true,
-    responseType: 'json',
-  });
+  // checking with refresh token
+  Logout() {
+    alert('Your session expired, kindly login');
+    localStorage.clear();
+    this.router.navigateByUrl('signin');
+  }
 
-  
+  // this is is to get a default artisans
+  getAll(): any {
+    return this.http.get<any>(this.baseUrl + '/api/App/locations');
+  }
+  getLocation(): any {
+    return this.http.get<any>(this.baseUrl + '/api/App/locations');
+  }
+  getLocation2(state: string): any {
+    return this.http.get<any>(this.baseUrl + '/api/App/locations/' + state);
+  }
 
+  sortArtisanLocation(data:any){
+    return this.http.get<any>(this.baseUrl + '/api/App/artisans/location',data);
+  }
+  postRating(data: any) {
+    return this.http.post(this.baseUrl + '/api/Customer/Review/create/', data);
+  }
 
-  
-  return this.http.request(req);
-
-}
-
-
-
-
-  
-
-// checking with refresh token
-Logout() {
-  alert('Your session expired, kindly login')
-  localStorage.clear();
-  this.router.navigateByUrl('signin');
-}
-
-// this is is to get a default artisans
-getAll():any{
-  return this.http.get<any>( this.baseUrl + '/api/App/locations')
-}
-getLocation():any{
-  return this.http.get<any>( this.baseUrl + '/api/App/locations')
-}
-getLocation2(state:string):any{
-  return this.http.get<any>( this.baseUrl + '/api/App/locations/' +state)  
-}
-
-sortArtisanLocation():any{
-  return this.http.get<any>( this.baseUrl+ '/api/App/artisans/location')
-}
-postRating(data:any, ) {
-  return this.http.post( this.baseUrl+ '/api/Customer/Review/create/' ,data);
-}
-
-generateInvoice(data:any){
-  return this.http.post( this.baseUrl+ '/api/Artisan/invoice/create',data)
-}
-
-uploadFile(theFile: FileToUpload) : Observable<any> {
-  return this.http.post<FileToUpload>( this.baseUrl+ '/api/Customer/ServiceOrder/upload', theFile, httpOptions);
-}
+  uploadFile(theFile: FileToUpload): Observable<any> {
+    return this.http.post<FileToUpload>(
+      this.baseUrl + '/api/Customer/ServiceOrder/upload',
+      theFile,
+      httpOptions
+    );
+  }
 
   // Returns an observable
-  upload2(file:any):Observable<any> {
-  
+  upload2(file: any): Observable<any> {
     // Create form data
-    const formData = new FormData(); 
-      
+    const formData = new FormData();
+
     // Store form name as "file" with file data
-    formData.append("file", file, );
-      
+    formData.append('file', file);
+
     // Make http post request over api
     // with formData as req
-    return this.http.post(this.baseUrl + "/api/Customer/ServiceOrder/upload", formData)
-}
+    return this.http.post(
+      this.baseUrl + '/api/Customer/ServiceOrder/upload',
+      formData
+    );
+  }
+  getArtisanByService(name: string) {
+    return this.http.get(
+      this.baseUrl + '/api/ServiceCategory/ServiceCategory/artisans/' + name
+    );
+  }
 
+  artisanGetPendingOrders() {
+    return this.http
+      .get<any>(this.baseUrl + '/api/Artisan/ServiceOrder/pending')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+
+  userGetPendingOrders() {
+    return this.http
+      .get<any>(this.baseUrl + '/api/Customer/ServiceOrder/pending')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+  userGetInvoice() {
+    return this.http
+      .get<any>(this.baseUrl + '/api/Customer/customer/invoices')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+  getInvoiveById(data: any, id:number) {
+    return this.http
+      .get<any>(this.baseUrl + '/api/Invoice/getinvoice/' +id, data)
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+  customerApproveInvoice( id: number,data:any) {
+   
+    return this.http
+      .put<any>(this.baseUrl + '/api/Customer/invoice/accept/'+id,data)
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+  customerCancelInvoice(data: any, id: number) {
+   
+    return this.http
+      .put<any>(this.baseUrl + '/api/Customer/invoice/cancel/' +id , data)
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+
+  userCompletedOrder(){
+    return this.http.get<any>(this.baseUrl + '/api/Customer/ServiceOrder/completed')
+    .pipe(
+      map((res:any) =>{
+        return res
+      })
+    )
+  }
 }

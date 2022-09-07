@@ -27,20 +27,13 @@
         <!-- <div class="card col-4  d-flex p-3 bg-light bg-opacity-50 "> -->
         <div class="dropdown card col-6 col-md-4 d-flex p-1 bg-light bg-opacity-50 pe-4">
           <div class="mb-2 h4">Service</div>
-          <div
-            class="h5 text-light"
-            role="button"
-            id="dropdownMenuLink"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            choose service <span class="dropdown-toggle float-end"></span>
-          </div>
-
-          <ul class="dropdown-menu" *ngFor="let data of serviceData ">
-            <li><a class="dropdown-item" routerLink="/available artisan">{{data.name}}</a></li>
+          <select class="form-select" aria-label="Default select example" >
+            <option selected>Select Service</option>
+            <option value="" *ngFor="let data of serviceData " routerLink="/available artisan">{{data.name}}</option>
            
-          </ul>
+          </select>
+
+         
         </div>
         <!-- </div> -->
       </div>
@@ -169,7 +162,7 @@
         >
           <div class="row g-4">
             <!-- Card item START -->
-            <div class="col-6 col-lg-4 col-xl-3" routerLink="/available artisan">
+            <div class="col-6 col-lg-4 col-xl-3 cursor" #Electrician name="Electrician" id="Electrician" (click)="getArtisan(Electrician.id)" routerLink="/available artisan">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -181,7 +174,7 @@
                 <div class="card-body pb-0">
                   <!-- Title -->
                   <h5 class="card-title fw-normal">
-                    <a class="text-decoration-none text-info"> ELECTRICIAN</a>
+                    <a class="text-decoration-none text-info"> Electrical</a>
                   </h5>
                   <p class="mb-2 text-truncate-2">
                     Get all you electrical issue fixed
@@ -221,7 +214,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/available artisan">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor" #Electrician name="Electrician" id="Electrician" (click)="clickMe(Electrician.id)" (click)="clickMe(Electrician.id)" (click)="updateText(Electrician.id)">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -272,7 +265,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-6 col-sm-6 col-lg-4 col-xl-3" routerLink="/available artisan">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor" routerLink="/available artisan" #Carpenter name="Carpenter" id="Carpenter" (click)="clickMe(Carpenter.id)" (click)="updateText(Carpenter.id)">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -323,7 +316,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class=" col-6 col-sm-6 col-lg-4 col-xl-3" >
+            <div class=" col-6 col-sm-6 col-lg-4 col-xl-3 cursor" >
               <div class="card shadow h-100" routerLink="/available artisan">
                 <!-- Image -->
                 <img
@@ -596,44 +589,31 @@
         ></button>
       </div>
       <div class="modal-body">
-        <div class="d-flex">
-          <div class="form-group form-outline mb-4">
+     <form action="" [formGroup]="searchForm" (ngSubmit)="onLocationFilter()">
+      <div class="d-flex flex-grow-1">
+
+      <div class="form-group form-outline mb-4">
                    
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="State"
-              [(ngModel)]="selectedCountry.name"
-              (change)="onSelect($event.target)"
-            >
-              <option selected value="" >select location</option>
-              <option class="form-control form-control-lg mb-1"
-                *ngFor="let country of countries"
-                value="{{ countries.indexOf(country) }}"
-              >
-                {{ country.name }}
-              </option>
-            </select>
-           <div> <label for="country" class="form-label">Select Location</label></div>
-          </div>
-
-          <div class="form-group form-outline mb-4">
-
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="City"
-              [(ngModel)]="location"
-            >
-              <option selected value="">select location</option>
-              <option *ngFor="let state of states" value="cities">
-                {{ state }}
-              </option>
-            </select>
-            <label for="country" class="form-label">Select Location</label>
-          </div>
-          <button type="button" class="btn btn-info h-50 ms-2" (click)="onLocationFilter()">search</button>
+        <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+          <option value="" selected disabled>Select State</option>
+          <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
+          
+        </select>
+        <div>  <label class="form-label mt-2" for="">State Location</label></div>
         </div>
+
+        <div class="form-group input-group-lg form-outline mb-4"   >
+          <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+            <option selected value="">Select LGA</option>
+            <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+            
+          </select>
+          <div>  <label class="form-label mt-2" for="">LGA Location</label></div>
+          </div>
+      <button type="submit" class="btn btn-info h-50 ms-2" >search</button>
+    </div>
+
+     </form>
         
       </div>
       <div class="modal-footer">

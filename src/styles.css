@@ -60,7 +60,9 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-
+.cursor{
+cursor: pointer;
+}
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;

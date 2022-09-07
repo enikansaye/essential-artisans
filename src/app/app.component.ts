@@ -106,7 +106,9 @@ console.log(row);
   // }
 
   logout() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
     localStorage.removeItem('accesstoken')
     return localStorage.removeItem('token');
   }

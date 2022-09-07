@@ -129,7 +129,7 @@
                   <div class="form-group input-group-lg form-outline mb-4">
                   <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
                     <option value="" selected disabled>Select State</option>
-                    <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
+                    <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                     
                   </select>
 
@@ -163,6 +163,16 @@
                     </span>
                    <div> <label for="country" class="form-label">Address</label></div>
                   </div>
+
+                  <div class="form-group input-group-lg form-outline mb-4">
+                    <select class="form-select" aria-label="Default select example" formControlName="categoryId" >
+                      <option value="" s selected disabled>Select Service category</option>
+                      <option *ngFor="let service of serviceData" [ngValue]="service.categoryId">{{service.name}}</option>
+                      
+                    </select>
+  
+                    <div> <label for="country" class="form- mt-2">service category</label></div>
+                    </div>
 
                   <mat-form-field appearance="outline" class="w-100">
                     <!-- <mat-label>Enter your password</mat-label> -->
@@ -200,9 +210,9 @@
                   </div>
 
                   
-                  <p class="mb-5 pb-lg-2" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
-                  <a href="#!" class="small text-muted">Terms of use.</a>
-                  <a href="#!" class="small text-muted">Privacy policy</a>
+                  <p class="mb-5 pb-lg-2 cursor" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
+                  <a href="#!" class="small text-muted cursor">Terms of use.</a>
+                  <a href="#!" class="small text-muted cursor">Privacy policy</a>
                 </form>
 
               </div>

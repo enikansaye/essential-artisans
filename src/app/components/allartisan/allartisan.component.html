@@ -4,15 +4,15 @@
 
     <div class="cards-6 section-gray">
       <div class="container-fluid w-100">
-        <div class="h4">Availabe Artisans within your location</div>
+        <div class="h4">Availabe Artisans within your location</div>{{text}}
 
-<div class="w-50 mb-5">
+<div class="w-50 mt-2 mb-5">
   <input class="form-control" type="text" placeholder="State and LGA Search" name="location" [(ngModel)]="location" (ngModelChange)="Search()" />
 
 </div>
      
        
-        <div class="row mt-3">
+        <div class="row mt-3 cursor">
           <div
             class="col-md-4"
             data-bs-toggle="modal"
@@ -80,7 +80,9 @@
           </div>
         </div>
 
-        <div *ngIf="location">asdfghjkl</div>
+        <div *ngIf="artisanData?.length == 0">
+          no artisan within you
+        </div>
       </div>
     </div>
   </div>
@@ -111,7 +113,7 @@
       <div class="modal-body">
         <!-- modal form -->
         <form
-          [formGroup]="formValue" (ngSubmit)="submitCheck(this.formValue.value)"
+          [formGroup]="formValue" (ngSubmit)="onSubmitCheck(this.formValue.value)"
          
          
         >
@@ -119,7 +121,7 @@
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
-              formControlName="name"
+              formControlName="Name"
               type="text"
               class="form-control"
               id="exampleInputText"
@@ -132,7 +134,7 @@
               >Address</label
             >
             <input
-              formControlName="propertyAddress"
+              formControlName="PropertyAddress"
               type="text"
               class="form-control"
               id="exampleInputPassword1"
@@ -172,7 +174,7 @@
               >Description</label
             >
             <input
-              formControlName="issue"
+              formControlName="Issue"
               type="textarea"
               class="form-control"
               id="exampleInputPassword1"
@@ -191,23 +193,13 @@
             />
           </div>
     
-         <div class="mb-1">
-          <input type="file" name="profile" (change)="onFileSelect($event)" formControlName="file" />
-         </div>
 
-         <div class="form-group">
-          <label for="file">File</label>
-          <input 
-              formControlName="files"
-              id="file" 
-              type="file" 
-              multiple
-              class="form-control"
-              (change)="onFileChange($event)">
-          <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
-              <div *ngIf="f.file.errors && f.file.errors.required">File is required.</div>
-          </div> -->
-      </div>
+          <div>
+            <app-offline formControlName="Files"></app-offline>
+            <!-- <input type="file" (change)="onSelectedFile($event)" formControlName="Files" name="file"/> -->
+
+
+          </div>
 
 
 <button class="btn btn-info" type="submit">Send</button>

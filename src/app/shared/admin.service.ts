@@ -9,7 +9,7 @@ import { ApiService } from '../service/api.service';
 export class AdminService {
 
   constructor(private http:HttpClient, private apiUrl: ApiService) { }
-
+// get All userss
   getUser() {
     return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/customers').pipe(
       map((res: any) => {
@@ -17,9 +17,16 @@ export class AdminService {
       })
     );
   }
-
+// get all artisans
   getArtisan() {
     return this.http.get<any>(this.apiUrl.baseUrl +'/api/App/artisans').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+  getPendingArtisan() {
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/Artisans/pending/all').pipe(
       map((res: any) => {
         return res;
       })
@@ -33,30 +40,9 @@ export class AdminService {
       })
     );
   }
-  // deleteArtisan(id:number) {
-  //   return this.http.get<any>('https://randomuser.me/api/?results=5000'+id).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
-  // getOthers() {
-  //   return this.http.get<any>('https://jsonplaceholder.typicode.com/posts').pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
-  // getOthersById(id:number) {
-  //   return this.http.get<any>('https://jsonplaceholder.typicode.com/posts'+id).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
 
 
-
+// Service category section
   postServiceCategory(data: any) {
     return this.http.post<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceCategory/create', data).pipe(
       map((res: any) => {
@@ -88,7 +74,7 @@ export class AdminService {
       })
     );
   }
-
+// get all orders
   getOrder(){
     return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/orders').pipe(
       map((res: any) => {
@@ -96,7 +82,7 @@ export class AdminService {
       })
     );
   }
-
+// approve order
   aproveOrderUrl(data:any,  ){
     return this.http.put<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceOrder/approve', data).pipe(
       map((res: any) => {
@@ -104,4 +90,79 @@ export class AdminService {
       })
     );
   }
-}
+
+  // Reject Order
+  rejectOrderUrl(data:any,){
+    return this.http.put<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceOrder/reject', data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getRejectedOrder(){
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceOrder/reject').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+  getPendingOrder(){
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceOrder/pending/all').pipe(
+      map((res: any) => {
+        return res
+      })
+    );
+  }
+
+  getQoute(){
+    return this.http.get<any>(this.apiUrl.baseUrl + '/api/Admin/invoices').pipe(
+      map((res:any) =>{
+        return res;
+      })
+    )
+  };
+
+  getPendingQuote(){
+    return this.http.get<any>(this.apiUrl.baseUrl + '/api/Admin/invoices/pending').pipe(
+      map((res:any) =>{
+        return res;
+      })
+    ) 
+  }
+
+  // approve Quote
+  aproveQuoteUrl(data:any, id:string){
+    return this.http.put<any>(this.apiUrl.baseUrl +'/api/Admin/invoice/approve/' + id, data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  // approve pending artisan
+  aproveArtisanUrl(data:any, id:string){
+    return this.http.put<any>(this.apiUrl.baseUrl +'/api/Admin/Artisan/approve/' + id, data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  // update or edit invoice by admin
+
+  editQuoteUrl(data:any){
+    return this.http.put<any>(this.apiUrl.baseUrl +'/api/Admin/invoice/edit', data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getCompletedOrder(){
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceOrder/completed/all').pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
+} 

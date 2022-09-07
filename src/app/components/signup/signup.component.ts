@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'ngx-alerts';
 import { ApiService } from 'src/app/service/api.service';
+import { AuthService } from 'src/app/service/auth.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { UserModel } from 'src/app/shared/models/user.model';
 
@@ -40,7 +41,8 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private alertService: AlertService,
-    private adminApi: AdminService
+    private adminApi: AdminService,
+    private authApi: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class SignupComponent implements OnInit {
       city: ['',Validators.required],
       address: ['',Validators.required],
       service: ['',Validators.required],
+      categoryId:['',Validators.required]
 
     });
   }
@@ -115,7 +118,7 @@ onSelectCities(data: any) {
       },
     };
 
-    this.api.signupArtisan(this.signupForm.value).subscribe(registerObserver);
+    this.authApi.signupArtisan(this.signupForm.value).subscribe(registerObserver);
   }
 
 
@@ -129,7 +132,10 @@ onSelectCities(data: any) {
   }
 
   getState(){
+    
     this.api.getLocation().subscribe((data:any)=>{
+      this.signupForm.controls['service'].value
+
       this.state2= data
       console.log( this.state2);
       

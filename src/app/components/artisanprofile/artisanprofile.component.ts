@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
+import { ArtisansService } from 'src/app/service/artisans.service';
+// import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
 
@@ -120,10 +122,15 @@ export class ArtisanprofileComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private artisanurl: ArtisansService,
+
+    // private dataApi: DataService
   ) {}
 
   ngOnInit(): void {
+
+    
 
     this.getState()
     this.getAllServiceCategory();
@@ -142,6 +149,7 @@ export class ArtisanprofileComponent implements OnInit {
       ]),
     });
 
+    
 
 
     
@@ -256,7 +264,7 @@ this.city=data.value
       // console.log(this.api.loggedinUser.id);
       
     } else {
-      // this.updateForm.disable();
+      this.updateForm.disable();
     }
   }
 
@@ -356,7 +364,7 @@ this.city=data.value
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     
-    this.http.post('https://lyticalartisanapi.azurewebsites.net/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
+    this.http.post('https://localhost:7130/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
       .subscribe({
         next: (event:any) => {
         if (event.type === HttpEventType.UploadProgress)
@@ -406,7 +414,7 @@ this.city=data.value
     this.artisanProfileModelObj.phoneNumber = this.updateForm.value.PhoneNumber;
     this.artisanProfileModelObj.service = this.updateForm.value.service;
 
-    this.api.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
+    this.artisanurl.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
       console.log(res);
       this.toastr.success('Profile updated');
       this.isEditMode = this.isEditMode;
@@ -452,7 +460,7 @@ this.city=data.value
   // }
 
   getOrder() {
-    this.api.getArtisanOrder().subscribe((data: any) => {
+    this.artisanurl.getArtisanOrder().subscribe((data: any) => {
       this.orderData = data
       console.log(this.statelga);
     });

@@ -1,11 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  private subject = new Subject<void>();
+  private content = new BehaviorSubject<string>('')
+  public share = this.content.asObservable();
+// service=''
+  sendClickEvent(text:any){
+    this.subject.next(text);
+  }
+  update(text:any){
+    this.content.next(text)
 
-  constructor() { }
+  }
+
+  getClickEvent():Observable<any>{
+    return this.subject.asObservable();
+
+  }
+
+  constructor() {}
+
+  
 }

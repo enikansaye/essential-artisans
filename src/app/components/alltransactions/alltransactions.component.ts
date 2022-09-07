@@ -16,6 +16,7 @@ export class AlltransactionsComponent implements OnInit {
   signupForm!: FormGroup;
   service = 'completed';
   othersData: any;
+  totalLength: any;
 
   totalRecord: any;
   page: number = 1;
@@ -24,6 +25,11 @@ export class AlltransactionsComponent implements OnInit {
   pageIndex = 1;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
+  pending: any;
+  pendingOrderError: any;
+  pendingLength: any;
+  completedOrder: any;
+  completedOrderLength: any;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -37,9 +43,13 @@ export class AlltransactionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllOrder();
+    this.pendingOrder();
+    this.getAllCompletedOrder();
+    
 
     this.signupForm = this.formBuilder.group({
       orderId: 0,
+
     });
   }
   clickEvent() {
@@ -49,7 +59,7 @@ export class AlltransactionsComponent implements OnInit {
   getAllOrder() {
     this.adminApi.getOrder().subscribe((res: any) => {
       console.log(res);
-
+      this.totalLength = res.length;
       this.AllOrderData = res;
       console.log(this.AllOrderData);
     });
@@ -57,6 +67,8 @@ export class AlltransactionsComponent implements OnInit {
 
   aproveOrder(row: any) {
     console.log(row.id);
+    console.log(row);
+    
     this.signupForm.value.orderId = row.id;
 
     this.adminApi
@@ -69,4 +81,52 @@ export class AlltransactionsComponent implements OnInit {
 
     console.log(row);
   }
+
+
+  rejectOrder(row: any) {
+    console.log(row.id);
+    this.signupForm.value.orderId = row.id;
+
+    this.adminApi
+      .rejectOrderUrl(this.signupForm.value)
+      .subscribe((res: any) => {
+        
+        // console.log(this.reject);
+        
+        console.log(res);
+        // this.getAllOrder()
+      });
+
+    console.log(row);
+  }
+pendingOrder(){
+  const registerObserver = {
+    next: (res: any) => {
+      console.log(res);
+      this.pending =res
+      this.pendingLength =res.length
+      
+      console.log('this is for pending order',this.pending);
+    },
+    error: (err: any) => {
+      console.log(err.error);
+      return this.pendingOrderError =err.error
+
+     
+    },
+  };
+
+  return this.adminApi.getPendingOrder().subscribe(registerObserver)
+  
+}
+
+getAllCompletedOrder(){
+  this.adminApi.getCompletedOrder().subscribe((data:any)=>{
+    this.completedOrder =data
+    this.completedOrderLength =data.length
+    console.log("all completed data", data);
+    
+  })
+}
+ 
 }

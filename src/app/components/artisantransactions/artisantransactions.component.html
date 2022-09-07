@@ -1,568 +1,652 @@
-<div class="container-fluid ">
-    <section class="row pt-2 ">
-        <div class="row d-flex  justify-content-around">
-        
-          <div class="row text-light">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-6 justify-content-center">
-              <!-- Card -->
-              <div class="card mb-4">
-                <!-- Card body -->
-                <div class="card-body col1 rounded justify-content-center">
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+<div class="container-fluid">
+  <section class="row pt-2">
+    <div class="row d-flex justify-content-around">
+      <div class="row text-light">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-6 justify-content-center">
+          <!-- Card -->
+          <div class="card mb-4">
+            <!-- Card body -->
+            <div class="card-body col1 rounded justify-content-center">
+              <div
+                class="d-flex align-items-center justify-content-between mb-3 lh-1"
+              >
+                <div>
+                  <span class="fs-6 text-uppercase fw-semi-bold"
+                    >Transactions</span
                   >
-                    <div>
-                      <span class="fs-6 text-uppercase fw-semi-bold"
-                        >Transactions</span
-                      >
-                      <!-- <i class="fa-solid fa-eye"></i>
+                  <!-- <i class="fa-solid fa-eye"></i>
                       <i class="fa-duotone fa-eye"></i> -->
+                </div>
+                <div>
+                  <span class="bi bi-shopping-bag fs-3 text-primary"></span>
+                </div>
+              </div>
+              <h2 class="fw-bold mb-1">{{ totalLength }}</h2>
+              <h2 class="fw-bold mb-1" *ngIf="!AllOrderData ">0</h2>
 
-                    </div>
-                    <div>
-                      <span class="bi bi-shopping-bag fs-3 text-primary"></span>
-                    </div>
-                  </div>
-                  <h2 class="fw-bold mb-1">{{totalLength}}</h2>
-
-
-                  <span class="text-danger fw-semi-bold">2+</span>
-                  <span class="ms-1 fw-medium">Pending</span>
-
-                 
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+          <!-- Card -->
+          <div class="card mb-4">
+            <!-- Card body -->
+            <div class="card-body rounded col2">
+              <div
+                class="d-flex align-items-center justify-content-between mb-3 lh-1"
+              >
+                <div>
+                  <!-- <i class="fa-solid fa-face-smile"></i> -->
+                  <span class="fs-6 text-uppercase fw-semi-bold">Pending</span>
+                </div>
+                <div>
+                  <!-- <span class="bi bi-book-open fs-3 text-primary"></span> -->
+                </div>
+                
+              </div>
+              <h2 class="fw-bold mb-1">{{AllpendingLength}}</h2>
+              <h2 class="fw-bold mb-1" *ngIf="!AllpendingData">0</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+          <!-- Card -->
+          <div class="card mb-4">
+            <!-- Card body -->
+            <div class="card-body col3 rounded">
+              <div
+                class="d-flex align-items-center justify-content-between mb-3 lh-1"
+              >
+                <div>
+                  <!-- <i class="fa-solid fa-heart"></i> -->
+                  <span class="fs-6 text-uppercase fw-semi-bold"
+                    >Completed</span
+                  >
                 </div>
               
               </div>
-
-             
-
+              <h2 class="fw-bold mb-1">{{completeOrderLength}}</h2>
+              <h2 class="fw-bold mb-1" *ngIf="!completeOrderData">0</h2>
+              
             </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-              <!-- Card -->
-              <div class="card mb-4">
-                <!-- Card body -->
-                <div class="card-body rounded col2" >
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
-                  >
-                    <div>
-                      <!-- <i class="fa-solid fa-face-smile"></i> -->
-                      <span class="fs-6 text-uppercase fw-semi-bold"
-                        >Pending</span
-                      >
-                    </div>
-                    <div>
-                      <!-- <span class="bi bi-book-open fs-3 text-primary"></span> -->
-                    </div>
-                  </div>
-                  <h2 class="fw-bold mb-1"> 6</h2>
-                  <span class="text-success fw-semi-bold"
-                  ><i class="bi bi-trending-up me-1"></i>+2;</span
-                >
-                <span class="ms-1 fw-medium">Pending Orders</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-              <!-- Card -->
-              <div class="card mb-4">
-                <!-- Card body -->
-                <div class="card-body col3 rounded">
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
-                  >
-                    <div>
-                      <!-- <i class="fa-solid fa-heart"></i> -->
-                      <span class="fs-6 text-uppercase fw-semi-bold"
-                        >Completed</span
-                      >
-                    </div>
-                    <div>
-                      <!-- <span class="bi bi-users fs-3 text-primary"></span> -->
-                    </div>
-                  </div>
-                  <h2 class="fw-bold mb-1">100</h2>
-                  <span class="text-success fw-semi-bold"
-                    ><i class="bi bi-trending-up me-1"></i>+2</span
-                  >
-                  <span class="ms-1 fw-medium">Completed</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
-              <!-- Card -->
-              <div class="card mb-4">
-                <!-- Card body -->
-                <div class="card-body col4 rounded">
-                  <div
-                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
-                  >
-                    <div>
-                      <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
-                      <span class="fs-6 text-uppercase fw-semi-bold"
-                        >Canceled</span
-                      >
-                    </div>
-                    <div>
-                      <span class="bi bi-users fs-3 text-primary"></span>
-                    </div>
-                  </div>
-                  <h2 class="fw-bold mb-1">4</h2>
-                  <span class="text-success fw-semi-bold"
-                    ><i class="bi bi-trending-up me-1"></i>+1</span
-                  >
-                  <span class="ms-1 fw-medium">Canceled</span>
-                </div>
-              </div>
-            </div>
-           
           </div>
-    
         </div>
-      </section>
-    
-      <nav class="navbar navbar-light bg-light ">
-        <mat-toolbar class="w-100 ">
-          <input class="form-control" type="text" placeholder="name Search" name="issue" [(ngModel)]="issue" (ngModelChange)="Search()" />
-           </mat-toolbar>
-        <div class="container-fluid ">
-          <div class="navbar-brand w-100" href="#">
-            <div class="w-100 d-flex w-100 justify-content-between ">
-              <div [class.active]="service == 'completed'" class="mat cursor d-none d-lg-block p-2" (click)="service = 'completed'">All Transactions({{totalLength}})</div>
-              <div [class.active]="service == 'completed1'"  class="mat cursor d-none d-lg-block p-2 " (click)="service = 'completed1'">Pending Orders(8)</div>
-              <div [class.active]="service == 'completed2'" class="mat cursor d-none d-lg-block p-2" (click)="service = 'completed2'">Completed Orders(12)</div>
-              <div [class.active]="service == 'completed3'" class="mat cursor d-none d-lg-block p-2 " (click)="service = 'completed3'">Cancel Orders(5)</div>
-    
+        <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+          <!-- Card -->
+          <div class="card mb-4">
+            <!-- Card body -->
+            <div class="card-body col4 rounded">
+              <div
+                class="d-flex align-items-center justify-content-between mb-3 lh-1"
+              >
+                <div>
+                  <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
+                  <span class="fs-6 text-uppercase fw-semi-bold">Canceled</span>
+                </div>
+                <div>
+                  <span class="bi bi-users fs-3 text-primary"></span>
+                </div>
+              </div>
+              <h2 class="fw-bold mb-1">0</h2>
+             
             </div>
           </div>
-          <div class="navbar-toggler d-lg-none " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" ardiva-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-          
-          </div> <h4 class="d-lg-none">SERVICES</h4>
-          <div class="offcanvas offcanvas-end pt-5" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SERVICES</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="navbar navbar-light bg-light">
+    <mat-toolbar class="w-100">
+      <input
+        class="form-control"
+        type="text"
+        placeholder="name Search"
+        name="issue"
+        [(ngModel)]="issue"
+        (ngModelChange)="Search()"
+      />
+    </mat-toolbar>
+    <div class="container-fluid">
+      <div class="navbar-brand w-100" href="#">
+        <div class="w-100 d-flex w-100 justify-content-between">
+          <div
+            [class.active]="service == 'completed'"
+            class="mat cursor d-none d-lg-block p-2"
+            (click)="service = 'completed'"
+          >
+            All Transactions
+          </div>
+          <div
+            [class.active]="service == 'completed1'"
+            class="mat cursor d-none d-lg-block p-2"
+            (click)="service = 'completed1'"
+            (click)="getPendingOrder()"
+          >
+            Pending Orders
+          </div>
+          <div
+            [class.active]="service == 'completed2'"
+            class="mat cursor d-none d-lg-block p-2"
+            (click)="service = 'completed2'"
+          >
+            Completed Orders
+          </div>
+          <div
+            [class.active]="service == 'completed3'"
+            class="mat cursor d-none d-lg-block p-2"
+            (click)="service = 'completed3'"
+          >
+            Cancel Orders
+          </div>
+        </div>
+      </div>
+      <div
+        class="navbar-toggler d-lg-none"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        ardiva-controls="offcanvasNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </div>
+      <h4 class="d-lg-none">SERVICES</h4>
+      <div
+        class="offcanvas offcanvas-end pt-5"
+        tabindex="-1"
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SERVICES</h5>
+          <button
+            type="button"
+            class="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li
+              [class.active]="service == 'completed'"
+              class="mat cursor"
+              (click)="service = 'completed'"
+            >
+              All Transactions(10)
+            </li>
+            <li
+              [class.active]="service == 'completed1'"
+              class="mat cursor"
+              (click)="service = 'completed1'"
+            >
+              Pending Orders(8)
+            </li>
+            <li
+              [class.active]="service == 'completed2'"
+              class="mat cursor"
+              (click)="service = 'completed2'"
+            >
+              Completed Orders(12)
+            </li>
+            <li
+              [class.active]="service == 'completed3'"
+              class="mat cursor"
+              (click)="service = 'completed3'"
+            >
+              Cancel Orders(5)
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section>
+    <div [ngSwitch]="service">
+      <!-- all transaction -->
+      <div *ngSwitchCase="'completed'" id="no-tables">
+        <div *ngIf="AllOrderData">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th>Inspection Date</th>
+                <th>Completion Date</th>
+                <th scope="col" (click)="sort('id')">
+                  Order ID&nbsp;<i class="fa fa-sort"></i>
+                </th>
+                <th scope="col">Issue</th>
+
+                <th scope="col">Status</th>
+
+                <th scope="col">Location</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="!AllOrderData.isApproved === true">
+              <tr
+                *ngFor="
+                  let data of AllOrderData
+                    | orderBy: key:reverse
+                    | paginate: { itemsPerPage: 5, currentPage: p }
+                "
+              >
+                <td data-title="Date">{{ data.date }}</td>
+                <td data-title="inspection Date">{{ data.inspectionTime }}</td>
+                <td data-title="Completion Date"></td>
+                <td data-title="Order ID">{{ data.id }}</td>
+                <td data-title="Issue">{{ data.issue }}</td>
+                <td data-title="Status" *ngIf="data.action === 1">Pending</td>
+                <td data-title="Status" *ngIf="data.action === 4">Completed</td>
+
+                <td data-title="Location">{{ data.propertyAddress }}</td>
+                <!-- <td data-title="Artisan's Name">{{data.artisanName}}</td> -->
+                <td data-title="Action">
+                  <!-- <button (click)="onEditOrder(data)" class="btn btn-info me-2" *ngIf="!data.isApproved" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      Edit
+                    </button> -->
+                  <button
+                    class="btn btn-info"
+                    *ngIf="!data.isApproved && data.action === 1"
+                    (click)="artisanAcceptOrders(data)"
+                  >
+                    Pending
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-info"
+                    (click)="openModal(template)"
+                    (click)="onEdit(data)"
+                    *ngIf="!data.isApproved && data.action === 2"
+                  >
+                    Create Invoice
+                  </button>
+
+                  <button *ngIf="data.isApproved">Awaiting Quote</button>
+                  <!-- <button (click)="completeOrder(data)">complete order</button> -->
+                  <div (click)="completeOrder(data)" *ngIf="data.action === 4">
+                    <i class="bi bi-check-all text-success fa-3x"> </i>
+                  </div>
+                </td>
+
+                <td data-title=""></td>
+                <td data-title="Artisan's Name">
+                  <!-- <button class="btn btn-info"  (click)="aproveOrder(data)" *ngIf="!data.isApproved">Waiting Approval</button> -->
+                  <button class="btn btn-success" *ngIf="data.isApproved">
+                    Approved
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="AllOrderData.length == 0">
+                no order
+              </tr>
+            </tbody>
+          </table>
+
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+
+        <div *ngIf="!AllOrderData">
+          <app-emptycart></app-emptycart>
+        </div>
+      </div>
+
+      <!-- pending transaction -->
+      <div *ngSwitchCase="'completed1'" id="no-tables">
+        <div >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Location</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+                <th scope="col">Artisan's Name</th>
+                <!-- <th scope="col">Action</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let data of AllpendingData">
+                <td data-title="Date">{{ data.date }}</td>
+                <td data-title="inspection Date">{{ data.inspectionTime }}</td>
+                <td data-title="Completion Date"></td>
+                <td data-title="Order ID">{{ data.id }}</td>
+                <td data-title="Issue">{{ data.issue }}</td>
+
+                <td data-title="Location">{{ data.propertyAddress }}</td>
+                <td data-title="Action">
                 
-                  <li [class.active]="service == 'completed'" class="mat  cursor " (click)="service = 'completed'">All Transactions(10)</li>
-                  <li [class.active]="service == 'completed1'"  class="mat  cursor  " (click)="service = 'completed1'">Pending Orders(8)</li>
-                  <li [class.active]="service == 'completed2'" class="mat  cursor  " (click)="service = 'completed2'">Completed Orders(12)</li>
-                  <li [class.active]="service == 'completed3'" class="mat  cursor  " (click)="service = 'completed3'">Cancel Orders(5)</li>
-    
-              </ul>
-             
-            </div>
+                  <button class="btn btn-info" *ngIf="!data.isApproved">
+                    Pending
+                  </button>
+                  <button *ngIf="data.isApproved">Awaiting Quote</button>
+                </td>
+
+                <td data-title="">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="openModal(template)"
+                    (click)="onEdit(data)"
+                  >
+                    Create Invoice
+                  </button>
+                </td>
+                <td data-title="Artisan's Name">
+                  <!-- <button class="btn btn-info"  (click)="aproveOrder(data)" *ngIf="!data.isApproved">Waiting Approval</button> -->
+                  <button class="btn btn-success" *ngIf="data.isApproved">
+                    Approved
+                  </button>
+                </td>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+              </tr>
+
+              
+            </tbody>
+          </table>
+          <div *ngIf="!AllpendingData">
+            <div class="h1  d-flex align-items-center justify-content-center text-muted" style="height: 400px;">{{pendingOrderError}}</div>
           </div>
         </div>
-      </nav>
 
-      <section> 
-        <div [ngSwitch]="service">
-          <!-- all transaction -->
-          <div *ngSwitchCase="'completed'" id="no-tables" >
-          <div *ngIf="AllOrderData ">
-            <table class="table table-striped" >
+      </div>
+
+      <!-- completed Transactions -->
+      <div *ngSwitchCase="'completed2'" id="no-tables" id="no-tables">
+        <table class="table" >
+          <div >
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">Date</th>
                   <th>Inspection Date</th>
                   <th>Completion Date</th>
-                  <th scope="col" (click)="sort('id')" >Order ID&nbsp;<i class="fa fa-sort"></i> </th>
+                  <th scope="col" (click)="sort('id')">
+                    Order ID&nbsp;<i class="fa fa-sort"></i>
+                  </th>
                   <th scope="col">Issue</th>
-
+  
                   <th scope="col">Status</th>
-
-                  
-                  <!-- <th scope="col">User's Name</th> -->
+  
                   <th scope="col">Location</th>
-                  <!-- <th scope="col">Inspection Date</th> -->
-                  
-                
-                
                 </tr>
               </thead>
-              <tbody  *ngIf="!AllOrderData.isApproved">
-                <tr *ngFor="let data of AllOrderData | orderBy: key : reverse | paginate: { itemsPerPage:5, currentPage:p};" >
-        
-          <td data-title="Order ID" >{{data.id}}</td>
-          <td data-title="Date">{{data.date }}</td>
-          <td data-title="User's Name">{{data.name}}</td>
-          <td data-title="issue">{{data.issue}}</td>
-          <td data-title="Location">{{data.propertyAddress}}</td>
-          <td data-title="Inspection Date">{{data.inspectionDate}}</td>
-        
-          <td data-title="User's Name">{{data.title}}</td>
-          <td data-title="Artisan's Name"  >
-            <!-- <button class="btn btn-info" (click)="onEdit(data)">Create Qoute</button> -->
-            <!-- <div [class.active]="service == 'completed6'" class="mat btn btn-info p-2 " routerLink="service = 'completed6'"> <div (click)="onEdit(data)">Create Quote </div> </div> -->
-            
-            <!-- <button type="button" class="btn btn-primary" (click)="onEdit(data)" >Create Quote</button> -->
- 
-            <button type="button" class="btn btn-primary" (click)="openModal(template)" (click)="onEdit(data)">Open modal</button>
-
- 
-
-           
-            
-          </td>
-          <td data-title="Artisan's Name">
-            <!-- <button class="btn btn-info"  (click)="aproveOrder(data)" *ngIf="!data.isApproved">Waiting Approval</button> -->
-            <button class="btn btn-success"  *ngIf="data.isApproved">Approved</button>
-            
-          </td>
-      
+              <tbody >
+                <tr
+                  *ngFor="
+                    let data of completeOrderData
+                  "
+                >
+                  <td data-title="Date">{{ data.date }}</td>
+                  <td data-title="inspection Date">{{ data.inspectionTime }}</td>
+                  <td data-title="Completion Date"></td>
+                  <td data-title="Order ID">{{ data.id }}</td>
+                  <td data-title="Issue">{{ data.issue }}</td>
                   
+  
+                  <td data-title="Location">{{ data.propertyAddress }}</td>
+                  <!-- <td data-title="Artisan's Name">{{data.artisanName}}</td> -->
+                  <td data-title="Action">
+                    
+                   
+                  
+  
+                   
+                  </td>
+  
+                  <td data-title=""></td>
+                  <td data-title="Artisan's Name">
+                  
+                  </td>
                 </tr>
-              
-              
+  
+                <tr *ngIf="completeOrderData.length == 0">
+                  no order
+                </tr>
               </tbody>
-              
-              <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
             </table>
-            <!-- <mat-paginator
-            (page)="handlePageEvent($event)"
-            [length]="length"
-            [pageSize]="pageSize"
-            [showFirstLastButtons]="showFirstLastButtons"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="pageIndex"
-            aria-label="Select page">
-        </mat-paginator> -->
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      
-      </div>
+  
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+  
+        </table>
 
         <div *ngIf="!AllOrderData">
           <app-emptycart></app-emptycart>
         </div>
-        
-    
-        
-    
-    
       </div>
 
-            
-            <!-- pending transaction -->
-          <div *ngSwitchCase="'completed1'" id="no-tables"  >
-            <table class="table" *ngIf="AllOrderData">
-              <thead>
-                <tr>
-                  <th scope="col">Order ID</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Artisan's Name</th>
-                  <!-- <th scope="col">Action</th> -->
-                
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">pending</td>
-                  <td data-title="Artisan's Name">hope</td>
-                  <td data-title="Action">
-                    <button class=" btn btn-success me-4" (ngClass)="clickEvent()" >Accept</button>
-                    <button class=" btn btn-success me-4" *ngIf="clickEvent()">gi</button>
-                    <button class=" btn btn-danger">Decline</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">pending</td>
-                  <td data-title="Artisan's Name">grace</td>
-                  <td data-title="Action">
-                    <button class=" btn btn-success me-4">Accept</button>
-                    <button class=" btn btn-danger">Decline</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">pending</td>
-                  <td data-title="Artisan's Name">grace</td>
-                  <td data-title="Action">
-                    <button class=" btn btn-success me-4">Accept</button>
-                    <button class=" btn btn-danger">Decline</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">pending</td>
-                  <td data-title="Artisan's Name">hope</td>
-                  <td data-title="Action">
-                    <button class=" btn btn-success me-4">Accept</button>
-                    <button class=" btn btn-danger">Decline</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">pending</td>
-                  <td data-title="Artisan's Name">precious</td>
-                  <td data-title="Action">
-                    <button class=" btn btn-success me-4">Accept</button>
-                    <button class=" btn btn-danger">Decline</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">pending</td>
-                  <td data-title="Artisan's Name">favor</td>
+      <!-- cancel orders -->
+      <div *ngSwitchCase="'completed3'" id="no-tables" id="no-tables">
+        <app-emptycart></app-emptycart>
 
-                </tr>
-              
-              </tbody>
-            </table>
-            
-            <div *ngIf="!AllOrderData">
-              <app-emptycart></app-emptycart>
-            </div>
-            </div>
-            <!-- completed Transactions -->
-          <div *ngSwitchCase="'completed2'" id="no-tables" id="no-tables"  >
-            <table class="table"  *ngIf="AllOrderData">
-              <thead>
-                <tr>
-                  <th scope="col">Order ID</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Artisan's Name</th>
-                
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed <i class="bi bi-check-lg text-success text-bold"></i></td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed <i class="bi bi-check-lg text-success text-bold"></i></td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed <i class="bi bi-check-lg text-success text-bold"></i></td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed <i class="bi bi-check-lg text-success text-bold"></i></td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed <i class="bi bi-check-lg text-success text-bold"></i></td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed <i class="bi bi-check-lg text-success text-bold"></i></td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-              
-              </tbody>
-            </table>
+      </div>
 
-            <div *ngIf="!AllOrderData">
-              <app-emptycart></app-emptycart>
-            </div>
-            </div>
-  
-            <!-- cancel orders -->
-          <div *ngSwitchCase="'completed3'" id="no-tables" id="no-tables"  >
-            <table class="table" *ngIf="AllOrderData">
-              <thead>
-                <tr>
-                  <th scope="col">Order ID</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Artisan's Name</th>
-                
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-              
-              </tbody>
-            </table>
-            </div>
-
-<!-- involve creation -->
-            <div *ngSwitchCase="'completed6'"   >
-             <!-- <app-invoice [check]="check"></app-invoice> -->
-
-        </div>
-            </div>
-       
-      </section>
+      <!-- involve creation -->
+      <div *ngSwitchCase="'completed6'">
+        <!-- <app-invoice [check]="check"></app-invoice> -->
+      </div>
+    </div>
+  </section>
 </div>
-
 
 <!-- modal for invoice -->
 <ng-template #template>
   <div class="modal-header">
-    <!-- <h4 class="modal-title pull-left">First modal</h4> -->
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+    <h4 class="modal-title pull-left">Creata Quote</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    This is a first modal
-    
-    <div    >
-      <!-- <app-invoice [check]="check"></app-invoice> -->
+    <div
+      class="container-fluid pt-2"
+      style="margin-bottom: 250px"
+      *ngFor="let data of InvoiceObject.items"
+    >
+      <form
+        action=""
+        #invoiceBody="ngForm"
+        (ngSubmit)="addInvoiceBody(this.invoiceBody.value)"
+      >
+        <div class="card border-secondary">
+          <div class="card-body">
+            <h4 class="card-title">Invoice Details</h4>
 
-    
-    <form  [formGroup]="invoiceForm" (submit)="onSubmitData(this.invoiceForm)"> 
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label for="name">Person Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="personName"
+                    id="name"
+                    [(ngModel)]="data.name"
+                    #personName="ngModel"
+                    required
+                  />
 
-      <div class="mb-1">
-        <label for="exampleInputEmail1" class="form-label">Full Name</label>
-        <input
-          formControlName="description"
-          type="text"
-          class="form-control"
-          id="exampleInputText"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div class="mb-1">
-        <label for="exampleInputEmail1" class="form-label">Full Name</label>
-        <input
-          formControlName="price"
-          type="number"
-          class="form-control"
-          id="exampleInputText"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div class="mb-1">
-        <label for="exampleInputEmail1" class="form-label">Full Name</label>
-        <input
-          formControlName="quantity"
-          type="number"
-          class="form-control"
-          id="exampleInputText"
-          aria-describedby="emailHelp"
-        />
-      </div>
-      <div class="mb-1">
-        <label for="exampleInputEmail1" class="form-label">item</label>
-        <input
-          formControlName="items"
-          type="text"
-          class="form-control"
-          id="exampleInputText"
-          aria-describedby="emailHelp"
-        />
-      </div>
+                  <div class="alert alert-danger" *ngIf="!personName.valid">
+                    <!-- <span *ngIf="personName?.errors?.required">This field is required</span> -->
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="date">Invoice Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="invoiceDate"
+                    id="date"
+                    [(ngModel)]="data.invoiceDate"
+                    #invoiceNo="ngModel"
+                    invoiceNo="ngModel"
+                    required
+                  />
+
+                  <div class="alert alert-danger" *ngIf="!invoiceNo.valid">
+                    <!-- <span *ngIf="invoiceNo
+    invoiceNo?.errors?.required">This field is required</span> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="invoiceNo">Invoice No</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="invoiceNo"
+                    id="invoiceNo"
+                    [(ngModel)]="data.invoiceNo"
+                    #invoiceNo="ngModel"
+                    required
+                  />
+
+                  <div class="alert alert-danger" *ngIf="!invoiceNo.valid">
+                    <!-- <span *ngIf="invoiceNo?.errors?.required">This field is required</span> -->
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="TAmount">Total Amount</label>
+
+                  <input
+                    disabled
+                    type="text"
+                    class="form-control"
+                    name="totalAmount"
+                    #totalAmount="ngModel"
+                    id="totalAmount"
+                    value="acc"
+                    [value]="data.totalAmount"
+                    [(ngModel)]="data.totalAmount"
+                    [ngModel]="getInvoiceTotalAmount()"
+                    (ngModelChange)="(data.totalAmount)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card border-secondary mt-2 mb-5">
+          <div class="card-body">
+            <h4 class="card-title d-flex justify-content-between">
+              Items Details
+              <button type="button" class="btn btn-primary" (click)="addRow()">
+                +
+              </button>
+            </h4>
+
+            <div *ngFor="let obj of itemsArray; let i = index">
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Item Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="itemName{{ i }}"
+                     [(ngModel)]="data.itemName" #itemName="ngModel"
+                    required
+                  />
+
+                  <div class="alert alert-danger" *ngIf="!itemName.valid">
+                    <!-- <span *ngIf="name3?.errors?.required">This field is required</span> -->
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label>Unit Price</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="unitPrice{{ i }}"
+                    [(ngModel)]="obj.unitPrice"
+                    (ngModelChange)="data.price = $event"
+                    #unitPrice="ngModel"
+                    required
+                  />
+
+                  <div class="alert alert-danger" *ngIf="!unitPrice.valid">
+                    <!-- <span *ngIf="name4?.errors?.required">This field is required</span> -->
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label>Quantity</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="quantity{{ i }}"
+                    [(ngModel)]="obj.quantity"
+                    (ngModelChange)="data.quantity = $event"
+                    #quantity="ngModel"
+                    required
+                  />
+
+                  <div class="alert alert-danger" *ngIf="!quantity.valid">
+                    <!-- <span *ngIf="name5?.errors?.required">This field is required</span> -->
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <label>Total</label><br />
+                  <input
+                    type="number"
+                    class="form-control"
+                    #total
+                    name="total{{ i }}" [(ngModel)]="obj.total" [value]="hope" (input)="hope"
 
 
+                    
+                  />
+                </div>
 
-      <button class="btn btn-info" type="submit">send invoice</button>
+                <div class="col-md-1" *ngIf="i != 0">
+                  <button
+                    class="btn btn-danger"
+                    style="margin-top: 30px"
+                    (click)="removeRow(i)"
+                  >
+                    
+                  </button>
+                </div>
+              </div>
+            </div>
 
-    </form>
-
-
-
+            <div class="form-floating">
+              <textarea
+                class="form-control"
+                placeholder="Leave a comment here"
+                id="floatingTextarea"
+                name="description"
+                [(ngModel)]="data.description"
+                #description="ngModel"
+                required
+              ></textarea>
+              <label for="floatingTextarea"
+                >Description of Job to be done</label
+              >
+            </div>
+          </div>
+        </div>
+       <div class="d-flex">
+        <button type="submit" name="" class="btn btn-primary me-2 ">
+          SEND
+        </button>
+        <button type="button" class="btn btn-danger" (click)="closeModal()">
+          Cancel
+        </button>
        </div>
-    
-    
-    <br />
-    <!-- <button type="button" class="btn btn-primary" (click)="openModal2(templateNested)">Open second modal</button> -->
-    <button type="button" class="btn btn-primary" (click)="closeModal(1)">Close self</button>
-    <button type="button" class="btn btn-primary" (click)="closeModal()">Close all modal</button>
+      </form>
+    </div>
+
+   
   </div>
 </ng-template>

@@ -22,8 +22,9 @@
 <ngx-avatar *ngIf="!artisanData.profileImage " size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar>
 
   <h4 class="mt-2 mt-md-4">{{artisanData.firstName}} {{artisanData.lastName}}</h4>
-  <h4>{{artisanData.service}}</h4>
   <h4>{{artisanData.email}}</h4>
+  <h4>{{artisanData.profession}}</h4>
+
 
   <h4>
     Rank :
@@ -32,7 +33,8 @@
       <i class="bi bi-star-fill text-warning"></i>
       <i class="bi bi-star-fill text-warning"></i>
       <i class="bi bi-star-fill text-warning"></i>
-      <i class="bi bi-star text-warning"></i>
+      <i class="bi bi-star-fill text-warning"></i>
+      <!-- <i class="bi bi-star text-warning"></i> -->
     </strong>
   </h4>
  </div>
@@ -262,8 +264,8 @@
                     >
                    
                       <select class="form-select " formControlName="service" aria-label="Default select example">
-                        <option selected value="" >select Service</option>
-                        <option *ngFor="let data of serviceCategory" selected>{{ data.name }}</option>
+                        <option selected value="">{{artisanData.profession}}</option>
+                        <option *ngFor="let data of serviceCategory" >{{ data.name }}</option>
                       </select>
                     
                   </div>
@@ -312,7 +314,7 @@
                   >
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
                       <option value="" selected disabled>{{artisanData.location}}</option>
-                      <option *ngFor="let data of state2" [ngValue]="data.name">{{data.name}}</option>
+                      <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                       
                     </select>
                     </div>
@@ -337,7 +339,6 @@
                      update profile
                     </button> -->
                     <button class="btn btn-info me-2" type="submit"  *ngIf="isEditMode">Save Profile</button>
-                    <!-- <button class="btn btnPrimary" type="submit" *ngIf="isEditMode">Save Profile</button> -->
                     <button class="btn btn-danger "(click)="toggleEditMode()" *ngIf="isEditMode">Cancel</button>
                     <!-- <button class="btn btn-outline-danger mx-1">
                       Delete Account

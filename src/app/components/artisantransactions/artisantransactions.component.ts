@@ -1,5 +1,12 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -14,16 +21,20 @@ import {
   MatDialogConfig,
 } from '@angular/material/dialog';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ArtisansService } from 'src/app/service/artisans.service';
+import { ToastrService } from 'ngx-toastr';
 
 const htmlToPdfmake = require('html-to-pdfmake');
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-class Product {
-  name!: string;
-  price!: number;
-  qty!: number;
-  total!: number;
-  orderId!: number;
+
+class itemObject {
+  itemName!:string;
+  unitPrice!:number;
+  quantity!:number;
+  total!:number;
+  
+
 }
 
 @Component({
@@ -32,6 +43,36 @@ class Product {
   styleUrls: ['./artisantransactions.component.css'],
 })
 export class ArtisantransactionsComponent implements OnInit {
+  @Output() newItemEvent = new EventEmitter<string>();
+  InvoiceObject = {
+    items: [
+      {
+        description: '',
+        quantity: '',
+        price: '',
+        name: '',
+        invoiceDate: '',
+        invoiceNo: '',
+        itemNo: '',
+        totalAmount: '',
+        total: '',
+        itemName: '',
+      },
+    ],
+    orderId: 0,
+  };
+
+  // itemObject=new itemObject()
+  itemsArray: Array<itemObject> = [
+    {
+      itemName: '',
+      unitPrice: 0,
+      quantity: 0,
+      total: 0,
+    },
+  ];
+
+
   modalRef?: BsModalRef | null;
   modalRef2?: BsModalRef;
   //  lastName!:string;
@@ -52,93 +93,64 @@ export class ArtisantransactionsComponent implements OnInit {
   pageIndex = 1;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
-  invoiceForm!: FormGroup;
+  // invoiceForm!: FormGroup;
   totalLength: any;
+  serviceOrdeIdForm!: FormGroup;
   issue: any; //string for search of data
   p: number = 1; //pagination
-
-  invoice: any = {
-    customerName: [],
-    address: [],
-    contactNo: [],
-    email: [],
-    id: 0,
-    orderId: [],
-    total: 0,
-    products: [],
-
-    // products:  typeof Product[],
-
-    additionalDetails: [],
-    // submitted = false
-    constructor() {
-      // Initially one empty product row we will show
-      this.products.push(new Product());
-    },
-  };
+  completeOrderData:any
+  completeOrderLength:any
+  AllpendingLength: any;
+  completeOrderError: any;
+  pendingOrderError: any;
 
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
   }
+  AllpendingData: any;
   AllOrderData: any;
   constructor(
     private adminApi: AdminService,
     public api: ApiService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private artisanurl: ArtisansService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.invoiceForm = this.formBuilder.group({
-      description: [''],
-      quantity: [],
-      price: [],
-      orderId: 1,
-      items: '',
-    });
-
     // this.onEdit(this.check)
+    this.getCompletedOrder();
+    this.getPendingOrder();
     this.getAllOrder();
 
     this.signupForm = this.formBuilder.group({
       orderId: 0,
     });
-  }
-  clickEvent() {
-    this.accept = !this.accept;
+    this.serviceOrdeIdForm = this.formBuilder.group({
+      serviceOrdeId: 0,
+    });
   }
 
-  openDialog() {
-    // const dialogRef = this.dialog.open(DialogContentExampleDialog);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.data = {};
-    // this.dialog.open(DialogContentExampleDialog, dialogConfig);
-  }
+  
+
+  openDialog() {}
 
   onEdit(row: any) {
     console.log(row);
-    console.log(row.id);
-    // this.userprofileModelObj.orderId = row.id;
-    // this.invoice.setValue(row.id);
-    // this.invoice.patchValue(row.id)
-    // console.log(this.invoice.setValue(row.id));
-    // console.log(this.invoice.patchValue(row.id));
-    this.invoice.id = row.id;
-    console.log(this.invoice.id);
-
-    // this.invoice.controls['orderId'].setValue(row.id);
+    // console.log(row.id);
+    this.InvoiceObject.orderId = row.id;
+    // this.invoice.id = row.id;
+    // console.log(this.invoice.id);
   }
 
   getAllOrder() {
-    this.api.getArtisanOrder().subscribe((res: any) => {
+    this.artisanurl.getArtisanOrder().subscribe((res: any) => {
       this.AllOrderData = res;
-      console.log(this.AllOrderData);
+      console.log('this is total order for artisan',this.AllOrderData);
       this.totalLength = res.length;
       console.log(this.totalLength);
 
@@ -152,7 +164,7 @@ export class ArtisantransactionsComponent implements OnInit {
     } else {
       this.AllOrderData = this.AllOrderData.filter((res: any) => {
         console.log(res);
-        
+
         return res.issue
           .toLocaleLowerCase()
           .match(this.issue.toLocaleLowerCase());
@@ -168,312 +180,140 @@ export class ArtisantransactionsComponent implements OnInit {
 
   // generate invoice section
 
-  generatePDF(action = 'open') {
-    let docDefinition = {
-      content: [
-        {
-          text: 'ELECTRONIC SHOP',
-          fontSize: 16,
-          alignment: 'center' as const,
-          color: '#047886',
-        },
-        {
-          text: 'INVOICE',
-          fontSize: 20,
-          bold: true,
-          alignment: 'center' as const,
-          decoration: 'underline' as const,
-          color: 'skyblue',
-        },
-        {
-          text: 'Customer Details',
-          style: 'sectionHeader',
-        },
-        {
-          columns: [
-            [
-              {
-                text: this.invoice.customerName,
-                bold: true,
-              },
-              { text: this.invoice.address },
-              { text: this.invoice.email },
-              { text: this.invoice.contactNo },
-            ],
-            [
-              {
-                text: `Date: ${new Date().toLocaleString()}`,
-                alignment: 'right' as const,
-              },
-              {
-                text: `Bill No : ${(Math.random() * 1000).toFixed(0)}`,
-                alignment: 'right' as const,
-              },
-            ],
-          ],
-        },
-        {
-          text: 'Order Details',
-          style: 'sectionHeader',
-        },
-        {
-          table: {
-            headerRows: 1,
-            widths: ['*', 'auto', 'auto', 'auto'],
-            body: [
-              ['Product', 'Price', 'Quantity', 'Amount'],
-              ...this.invoice.products.map((p: any) => [
-                p.name,
-                p.price,
-                p.qty,
-                (p.price * p.qty).toFixed(2),
-              ]),
-              [
-                { text: 'Total Amount', colSpan: 3 },
-                {},
-                {},
-                this.invoice.products
-                  .reduce((sum: any, p: any) => sum + p.qty * p.price, 0)
-                  .toFixed(2),
-              ],
-            ],
-          },
-        },
-        {
-          text: 'Additional Details',
-          style: 'sectionHeader',
-        },
-        {
-          text: this.invoice.additionalDetails,
-          // margin: [0, 0 ,0, 15]
-        },
-        {
-          columns: [
-            [
-              {
-                qr: `${this.invoice.customerName}`,
-                //  fit: '50' as const
-              },
-            ],
-            [{ text: 'Signature', alignment: 'right' as const, italics: true }],
-          ],
-        },
-        {
-          text: 'Terms and Conditions',
-          style: 'sectionHeader',
-        },
-        {
-          ul: [
-            'Order can be return in max 10 days.',
-            'Warrenty of the product will be subject to the manufacturer terms and conditions.',
-            'This is system generated invoice.',
-          ],
-        },
-      ],
-      styles: {
-        sectionHeader: {
-          bold: true,
-          decoration: 'underline' as const,
-          fontSize: 14,
-          // margin: [0, 15, 0, 15] as const,
-        },
-      },
-    };
-
-    if (action === 'download') {
-      pdfMake.createPdf(docDefinition).download();
-    } else if (action === 'print') {
-      pdfMake.createPdf(docDefinition).print();
-    } else {
-      pdfMake.createPdf(docDefinition).open();
-    }
-
-    console.log(docDefinition.content);
-  }
-  addProduct() {
-    this.invoice.products.push(new Product());
-  }
-  onSubmitData(data: any) {
-    console.log(data.value);
-    console.log(this.invoice.value);
-
-    // this.userprofileModelObj.orderId = this.invoice.orderId;
-
-    // this.invoice.value.id = data.id;
-    this.api
-      .generateInvoice(this.invoiceForm.getRawValue())
-      .subscribe((res: any) => {
-        console.log(res);
-        console.log('successful');
-      });
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.invoiceForm.getRawValue()));
-  }
-
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {
       id: 1,
       class: 'modal-lg',
     });
   }
-  openModal2(template: TemplateRef<any>) {
-    this.modalRef2 = this.modalService.show(template, {
-      id: 2,
-      class: 'second',
-    });
-  }
-  closeFirstModal() {
-    if (!this.modalRef) {
-      return;
-    }
 
-    this.modalRef.hide();
-    this.modalRef = null;
-  }
   closeModal(modalId?: number) {
     this.modalService.hide(modalId);
   }
+
+  getPendingOrder() {
+    const registerObserver = {
+      next: (res: any) => {
+        console.log(res.length);
+        this.AllpendingData = res;
+        this.AllpendingLength = res.length;
+  
+        console.log('this is pending order ',this.AllpendingData);
+      },
+      error: (err: any) => {
+        console.log(err.error);
+        return this.pendingOrderError =err.error
+
+       
+      },
+    };
+
+    return this.artisanurl.artisanGetPendingOrders().subscribe(registerObserver);
+  }
+
+
+
+  artisanAcceptOrders(row: any) {
+    console.log(row.id);
+    this.serviceOrdeIdForm.value.serviceOrdeId = row.id;
+
+    this.artisanurl
+      .artisanAcceptOrdersUrl(this.serviceOrdeIdForm.value)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.getAllOrder();
+      });
+
+    console.log(row);
+  }
+  
+  completeOrder(row: any) {
+    console.log(row.id);
+    console.log(row);
+
+    this.serviceOrdeIdForm.value.serviceOrdeId = row.id;
+
+    this.artisanurl
+      .artisanCompleteOrder(this.serviceOrdeIdForm.value)
+      .subscribe((res: any) => {
+       
+        // this.isAprove = !this.isAprove;
+        console.log('this is artisan complete order',res);
+        // this.getAllOrder();
+      });
+
+    console.log(row);
+  }
+
+  getCompletedOrder() {
+
+    const registerObserver = {
+      next: (res: any) => {
+        console.log(res);
+
+        this.completeOrderData =res
+      this.completeOrderLength =res.length
+      console.log('this is from get complete order by artisan', res);
+      },
+      error: (err: any) => {
+        console.log(err.error);
+        return this.completeOrderError =err.error
+
+       
+      },
+    };
+    this.artisanurl.artisanGetCompletedOrder().subscribe(registerObserver)
+
+  }
+
+  // invoive modal section
+  addInvoiceBody(data: any) {
+    console.log(data);
+
+    this.artisanurl
+      .generateInvoice(this.InvoiceObject)
+      .subscribe((res: any) => {
+        this.toastr.success('invoice successfully sent');
+        // form.reset()
+        console.log(res);
+      });
+  }
+
+  addRow() {
+    this.itemsArray.push(new itemObject());
+  }
+
+  removeRow(i: any) {
+    this.itemsArray.splice(i);
+  }
+
+  chenk: number = 0;
+  getInvoiceTotalAmount() {
+    return this.itemsArray.reduce((acc, item) => {
+      acc += this.updateTotalInItemsArray(item);
+      console.log(item);
+
+      console.log(acc);
+      this.chenk = acc;
+      return this.chenk;
+    }, 0);
+  }
+  getValue(event: Event): string {
+    return (event.target as HTMLInputElement).value;
+  }
+  hope:any;
+
+  updateTotalInItemsArray(item: itemObject) {
+    item.total =
+      item.quantity && item.unitPrice ? item.quantity * item.unitPrice : 0;
+    this.hope = item.total;
+    
+
+    // this.InvoiceObject.items.total
+
+    return this.hope;
+  } 
+  checkoption(event: Event){
+    return (event.target as HTMLInputElement).value;
+  }
 }
-// @Component({
-//   selector: 'dialog-content-example-dialog',
-//   templateUrl: 'dialog-content-example-dialog.html',
-// })
-// class Product {
-//   name!: string;
-//   price!: number;
-//   qty!: number;
-//   total!: number;
-// }
-// export class DialogContentExampleDialog {
-//   invoice:any= {
-//     customerName:[],
-//     address:[],
-//     contactNo:[],
-//     email:[],
-//      ID:[''],
-//      orderId:[''],
-//     products:  [],
-//     // products:  typeof Product[],
-
-//     additionalDetails:[],
-//     // submitted = false
-//     constructor() {
-//           // Initially one empty product row we will show
-//           this.products.push(new Product());
-//         }
-//   }
-
-//   generatePDF(action = 'open') {
-
-//     let docDefinition = {
-//       content: [
-//         {
-//           text: 'ELECTRONIC SHOP',
-//           fontSize: 16,
-//           alignment: 'center' as const,
-//           color: '#047886'
-//         },
-//         {
-//           text: 'INVOICE',
-//           fontSize: 20,
-//           bold: true,
-//           alignment: 'center'as const,
-//           decoration: 'underline' as const,
-//           color: 'skyblue'
-//         },
-//         {
-//           text: 'Customer Details',
-//           style: 'sectionHeader'
-//       },
-//       {
-//         columns: [
-//           [
-//             {
-//               text: this.invoice.customerName,
-//               bold:true
-//             },
-//             { text: this.invoice.address },
-//             { text: this.invoice.email },
-//             { text: this.invoice.contactNo },
-//         ],
-//         [
-//           {
-//             text: `Date: ${new Date().toLocaleString()}`,
-//             alignment: 'right' as const
-//           },
-//           {
-//             text: `Bill No : ${((Math.random() *1000).toFixed(0))}`,
-//             alignment: 'right' as const
-//           }
-//         ]
-//       ]
-//       },
-//       {
-//         text: 'Order Details',
-//         style: 'sectionHeader'
-//       },
-//       {
-//         table: {
-//           headerRows: 1,
-//           widths: ['*', 'auto', 'auto', 'auto'],
-//           body: [
-//             ['Product', 'Price', 'Quantity', 'Amount'],
-//             ...this.invoice.products.map((p:any) => ([p.name, p.price, p.qty, (p.price*p.qty).toFixed(2)])),
-//             [{text: 'Total Amount', colSpan: 3}, {}, {}, this.invoice.products.reduce((sum:any, p:any)=> sum + (p.qty * p.price), 0).toFixed(2)]
-//           ]
-//         }
-//       },
-//       {
-//         text: 'Additional Details',
-//         style: 'sectionHeader',
-//       },
-//       {
-//         text: this.invoice.additionalDetails,
-//         // margin: [0, 0 ,0, 15]
-//       },
-//       {
-//         columns: [
-//           [{
-//             qr: `${this.invoice.customerName}`,
-//           //  fit: '50' as const
-//           }],
-//           [{ text: 'Signature', alignment: 'right' as const, italics: true}],
-//         ]
-//       },
-//       {
-//         text: 'Terms and Conditions',
-//         style: 'sectionHeader'
-//       },
-//       {
-//         ul: [
-//           'Order can be return in max 10 days.',
-//           'Warrenty of the product will be subject to the manufacturer terms and conditions.',
-//           'This is system generated invoice.',
-//         ],
-//     }
-
-//       ],
-//       styles: {
-//         sectionHeader: {
-//             bold: true,
-//             decoration: 'underline' as const,
-//             fontSize: 14,
-//             // margin: [0, 15, 0, 15] as const,
-//         }
-//     }
-//       }
-
-//     if(action==='download'){
-//       pdfMake.createPdf(docDefinition).download();
-//     }else if(action === 'print'){
-//       pdfMake.createPdf(docDefinition).print();
-//     }else{
-//       pdfMake.createPdf(docDefinition).open();
-//     }
-
-//     console.log(docDefinition.content);
-
-//   }
-//   addProduct(){
-//     this.invoice.products.push(new Product());
-//   }
-// }

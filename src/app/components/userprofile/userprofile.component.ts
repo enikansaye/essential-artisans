@@ -1,5 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEventType,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -8,6 +13,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from './userprofile.model';
 import { ToastrService } from 'ngx-toastr';
+// import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-userprofile',
@@ -51,12 +57,20 @@ export class UserprofileComponent implements OnInit {
 
   updateOrder!: FormGroup;
   deleteForm!: FormGroup;
+  getInvoiceByIdForm!: FormGroup;
   min: any = '';
+  p: number = 1; //pagination
   value: any;
   formSubmitted: boolean = false;
   public form!: FormGroup;
   rating3: number = 0;
+
+  invoiceId:number=0;
   orderData: any;
+  pending: any;
+  getInvoice: any;
+  cancelQuote: any;
+  getInvoiceId:any; 
 
   constructor(
     private observer: BreakpointObserver,
@@ -64,7 +78,7 @@ export class UserprofileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService // private dataApi:DataService
   ) {}
 
   ngOnInit(): void {
@@ -78,12 +92,24 @@ export class UserprofileComponent implements OnInit {
       phoneNumber: [''],
       userId: [0],
     });
+    this.formValue.disable();
+
     this.deleteForm = this.formBuilder.group({
       orderId: 0,
+    });
+
+    this.getInvoiceByIdForm = this.formBuilder.group({
+      invoiceId: 0,
+      // userId: 0,
+      
+
     });
     this.getUser();
     this.showAll();
     this.getOrder();
+    this.getPendingOrder();
+    this.getQoute();
+    this.getCompletedOrder();
 
     this.updateOrder = this.formBuilder.group({
       name: [''],
@@ -103,12 +129,12 @@ export class UserprofileComponent implements OnInit {
     });
 
     this.pastDateTime();
-    
+
     this.form = this.formBuilder.group({
       rating: ['', Validators.required],
       comment: [''],
       artisanId: 0,
-      orderId: 0
+      orderId: 0,
     });
   }
 
@@ -133,8 +159,6 @@ export class UserprofileComponent implements OnInit {
       error: (err: any) => {
         console.log(err);
         console.log(this.form.value);
-
-        
       },
     };
 
@@ -264,6 +288,11 @@ export class UserprofileComponent implements OnInit {
 
   // on click to update userprofile
   onEdit() {
+    this.showUpdate = !this.showUpdate;
+
+    if (this.showUpdate) {
+      this.formValue.enable();
+
     this.formValue.controls['userId'].setValue(this.api.loggedinUser.id);
     this.formValue.controls['firstName'].setValue(
       this.api.loggedinUser.firstName
@@ -278,9 +307,11 @@ export class UserprofileComponent implements OnInit {
     this.formValue.controls['phoneNumber'].setValue(
       this.api.loggedinUser.phoneNumber
     );
-
-    this.showAddEmployee = false;
-    this.showUpdate = true;
+    }else {
+      this.formValue.disable();
+    }
+    // this.showAddEmployee = false;
+    // this.showUpdate = true;
   }
 
   // updating user profile
@@ -373,30 +404,6 @@ export class UserprofileComponent implements OnInit {
     this.updateOrder.controls['issue'].setValue(row.inspectionDate);
   }
 
-  updateServiceOrder() {
-    // console.log(row);
-    // console.log(row.id);
-
-    this.userprofileModelObj.userId = this.updateOrder.value.userId;
-    this.userprofileModelObj.firstName = this.updateOrder.value.firstName;
-    this.userprofileModelObj.lastName = this.updateOrder.value.lastName;
-    this.userprofileModelObj.propertyAddress =
-      this.updateOrder.value.propertyAddress;
-    this.userprofileModelObj.city = this.updateOrder.value.city;
-    this.userprofileModelObj.state = this.updateOrder.value.state;
-    this.userprofileModelObj.phoneNumber = this.updateOrder.value.PhoneNumber;
-    this.userprofileModelObj.artisanId = this.updateOrder.value.artisanId;
-
-    this.api.updateService(this.updateOrder.value).subscribe((res: any) => {
-      console.log(res);
-      this.toastr.success('Profile updated');
-
-      //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
-      //   // ref?.click();
-
-      // this.getUserserInfo() //this is to refresh and get the resent data
-    });
-  }
   getUser() {
     this.api.getUserinfo(this.api.loggedinUser.id).subscribe((res: any) => {
       console.log(res);
@@ -404,5 +411,70 @@ export class UserprofileComponent implements OnInit {
       this.userData = res;
       console.log(this.userData);
     });
+  }
+
+  key: string = 'id';
+  reverse: boolean = false;
+  sort(key: any) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  getPendingOrder() {
+    return this.api.userGetPendingOrders().subscribe((res: any) => {
+      console.log(res);
+      this.pending = res;
+
+      console.log(this.pending);
+    });
+  }
+
+  getQoute() {
+    this.api.userGetInvoice().subscribe((data: any) => {
+      this.getInvoice = data;
+      console.log(data);
+
+      console.log(this.getInvoice);
+    });
+  }
+  
+  userAprroveQuote(data: any) {
+    console.log(this.getInvoiceId);
+    data=this.getInvoiceId
+    this.invoiceId =data.invoiceId
+    this.api.customerApproveInvoice(this.invoiceId, data.invoiceId).subscribe((res: any) => {
+      this.cancelQuote = res;
+      console.log(this.cancelQuote);
+    });
+  }
+  userCancelQuote(data: any) {
+    console.log(this.getInvoiceId);
+    data=this.getInvoiceId
+    this.invoiceId = data.invoiceId
+    this.api.customerCancelInvoice(data, data.invoiceId).subscribe((res: any) => {
+      this.cancelQuote = res;
+      console.log(this.cancelQuote);
+    });
+  }
+
+  // this get invoice by id
+  onClickInvoce(data:any){
+    console.log(data);
+    this.invoiceId = data.invoiceId,
+    
+    
+    this.api.getInvoiveById(this.getInvoiceByIdForm.value ,data.invoiceId).subscribe((data: any) => {
+      // this.getInvoiceByIdForm.controls['invoiceId'].setValue( data.invoiceId),
+      this.getInvoiceId = data;
+      console.log(data);
+
+    });
+
+  }
+  getCompletedOrder(){
+    this.api.userCompletedOrder().subscribe((data:any)=>{
+      console.log('this is rest for completed order from user', data);
+      
+    })
   }
 }

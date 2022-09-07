@@ -12,8 +12,11 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { orderModel } from './allartisanmodel';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 import { FileToUpload } from '../../file-upload/file-to-upload';
+import { toFormData } from './toFormData';
+import { UserService } from 'src/app/service/user.service';
+
 // import { ToastrService } from 'ngx-toastr';
 
 // Maximum file size allowed to be uploaded = 1MB
@@ -25,6 +28,7 @@ const MAX_SIZE: number = 1048576;
   styleUrls: ['./allartisan.component.css'],
 })
 export class AllartisanComponent implements OnInit {
+  clickEventSubscription : Subscription;
   @Output() public onUploadFinished = new EventEmitter();
 
   myimage!: Observable<any>;
@@ -69,31 +73,61 @@ export class AllartisanComponent implements OnInit {
     private router: Router,
     private adminApi: AdminService,
     private http: HttpClient,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,private data: UserService
+  ) {
+    this.clickEventSubscription = this.data.getClickEvent().subscribe(()=>{
+
+      this.checkData();
+    });
+
+  }
+  text: any;
+// count:number=0
+  checkData(){
+    this.text =  this.data.update(this.text)
+
+    console.log(this.text);
+    this.data.share.subscribe(x=>this.text = x)
+
+    this.api.getArtisanByService(this.text).subscribe((res:any) =>{
+      console.log(res);
+      
+    })
+
+  }
+  getArtisan(name:any){
+    this.api.getArtisanByService(name).subscribe((res:any) =>{
+      console.log(res);
+      
+    })
+
+  }
 
   ngOnInit(): void {
     this.getAllArtisan();
     // this.showAll();
     this.getState();
-    this.sortArtisan();
+
+console.log(this.text);
+
+    
 
     this.formValue = this.formBuilder.group({
       id: this.api.loggedinUser.id,
-      name: [''],
-      artisanId: 0,
-      propertyAddress: [''],
-      inspectionDate: ['2022-06-30T10:58:37.452Z'],
-      inspectionTime: ['2022-06-30T10:58:37.452Z'],
+      Name: [''],
+      ArtisanId: 2,
+      PropertyAddress: [''],
+      inspectionDate: [''],
+      inspectionTime: [''],
       mobilenumber: [''],
       AltNumber: [''],
       issue: [''],
       profile: [''],
-      files: [''],
-      issueImage: [''],
+      Files: [''],
+      // issueImage: [''],
       artisanEmail: [],
       orderId: [],
-      fileSource: [''],
+      // fileNames: [''],
     });
 
     this.search = this.formBuilder.group({
@@ -167,31 +201,35 @@ export class AllartisanComponent implements OnInit {
     console.log(this.orderModelObj.id);
     console.log(row);
 
-    this.formValue.controls['artisanId'].setValue(row.id);
+    this.formValue.controls['ArtisanId'].setValue(row.id);
   }
 
-  createnewService(data: any) {
-    console.log(data);
-    console.log(data.artisanId);
-    // this.orderModelObj.artisanId = data.artisanId;
-    // this.formValue.artisanId = data.artisanId
-    const formData = new FormData();
-    formData.append('file', this.formValue.controls['files'].value);
+  // createnewService(data: any) {
+  //   console.log(data);
+  //   console.log(data.artisanId);
+  //   // this.orderModelObj.artisanId = data.artisanId;
+  //   // this.formValue.artisanId = data.artisanId
+  //   // const formData = new FormData();
+  //   // formData.append('file', this.formValue.controls['files'].value);
+  //   this.formValue.value.artisanId = data.artisanId;
 
-    this.api.createService(formData).subscribe((res) => {
-      this.formValue.controls['artisanId'].setValue(data.artisanId);
-      this.formValue.value.artisanId = data.artisanId;
-      console.log(data.artisanId);
 
-      this.toastr.success('Order successfully sent!!!');
-      console.log(this.orderModelObj.id);
-      console.log(res);
+  //   this.api.createService(this.formValue.value).subscribe((res) => {
+  //     this.formValue.controls['artisanId'].setValue(data.artisanId);
+  //     this.formValue.value.artisanId = data.artisanId;
+  //     console.log(data.artisanId);
 
-      // alert('fill request form');
-    });
+  //     this.toastr.success('Order successfully sent!!!');
+  //     console.log(this.orderModelObj.id);
+  //     console.log(res);
 
-    // console.log(this.orderModelObj);
-  }
+  //     // alert('fill request form');
+  //   });
+
+  //   // console.log(this.orderModelObj);
+  // }
+
+  
 
   submitCheck(data: any) {
     const formData = new FormData();
@@ -203,24 +241,80 @@ export class AllartisanComponent implements OnInit {
     }
 
     this.http
-      .post('https://localhost:7130/api/Customer/ServiceOrder/upload', formData)
+      .post('https://localhost:7130/api/Customer/ServiceOrder/create', this.formValue.value)
       .subscribe((res) => {
         console.log(res);
         alert('Uploaded Successfully.');
       });
   }
+ selectedFile: File | any= null;
+onSelectedFile(e: any){
+    this.selectedFile = e.target.files[0];
+}
+  
+  onSubmitCheck(data:any){
 
-  onFileSelect(event: any) {
-    // if (event.target.files.length > 0) {
-    //   const file = event.target.files[0];
-    //   this.formValue.controls['files'].setValue(file);
-    // }
-    this.selectedFiles = event.target.files;
+    console.log(this.formValue.value);
+        this.orderModelObj.artisanId = data.ArtisanId;
+        console.log(data.ArtisanId);
+        
+  //   // this.formValue.artisanId = data.artisanId
+
+        // this.formValue.artisanId = data.artisanId
+
+
+        // this.formValue.value.controls['ArtisanId'].setValue(data.ArtisanId);
+        this.formValue.value.ArtisanId = data.ArtisanId;
+
+        // const formData = new FormData();
+        // formData.append('file', this.formValue.controls['files'].value);
+        // this.formValue.controls['ArtisanId']= data.ArtisanId;
+        // this.artisanProfileModelObj.userId = this.updateForm.value.userId;
+        
+this.formValue=data
+console.log(this.formValue);
+
+console.log(data);
+
+const formdata = new FormData();
+
+formdata.append("ArtisanId", data.ArtisanId);
+formdata.append("Name", data.Name);
+formdata.append("Issue", data.Issue);
+formdata.append("PropertyAddress", data.PropertyAddress);
+    // formdata.append("file", this.selectedFile, this.selectedFile.name)
+
+formdata.append("Files", data.Files);
+
+   this.http
+       .post('https://localhost:7130/api/Customer/ServiceOrder/create',formdata, {
+        observe: 'events'
+       }).subscribe((res:any)=>{
+        // this.f.reset();
+
+        // this.formValue.controls['ArtisanId']= data.ArtisanId;
+
+              // this.formValue.controls['ArtisanId'].setValue(data.ArtisanId);
+                    // this.formValue.value.ArtisanId = data.ArtisanId;
+
+
+        console.log(res);
+        
+       })
+   
   }
 
-  onFileChange(event: any) {
-    for (var i = 0; i < event.target.files.length; i++) {
-      this.myFiles.push(event.target.files[i]);
+
+    
+  
+
+  onFileChange(event:any) {
+  
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.formValue.patchValue({
+        fileName: file
+      });
     }
   }
 
@@ -234,13 +328,13 @@ export class AllartisanComponent implements OnInit {
       console.log(this.artisanData);
     });
   }
-
-  onLocationFilter() {
-    // this.searchLocation = this.location;
-    this.api.sortArtisanLocation().subscribe((res: any) => {
-      console.log(res);
-    });
-  }
+// location filter section
+  // onLocationFilter() {
+  //   // this.searchLocation = this.location;
+  //   this.api.sortArtisanLocation().subscribe((res: any) => {
+  //     console.log(res);
+  //   });
+  // }
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -325,18 +419,18 @@ export class AllartisanComponent implements OnInit {
   }
 
   sortArtisan() {
-    this.api.sortArtisanLocation().subscribe((data: any) => {
-      const result = Object.entries(data);
-      console.log(data.state);
-
-      // this.countries = data;
-    });
-
-    // this.api.getAll().subscribe((data: any, i: any) => {
+    // this.api.sortArtisanLocation().subscribe((data: any) => {
     //   const result = Object.entries(data);
+    //   console.log(data.state);
 
-    //   this.countries = data;
+    //   // this.countries = data;
     // });
+
+    // // this.api.getAll().subscribe((data: any, i: any) => {
+    // //   const result = Object.entries(data);
+
+    // //   this.countries = data;
+    // // });
   }
 
   uploadedImage!: File;
@@ -380,7 +474,7 @@ export class AllartisanComponent implements OnInit {
 
   onSubmit() {
     const formData = new FormData();
-    formData.append('file', this.formValue.controls['profile'].value);
+    formData.append('file', this.formValue.controls['files'].value);
 
     this.http
       .post<any>(
