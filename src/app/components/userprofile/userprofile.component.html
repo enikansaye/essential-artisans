@@ -340,7 +340,11 @@
                     <td data-title="Completion Date">{{data.inspectionTime}}</td>
                     <td data-title="Order ID">{{data.id}}</td>
                     <td data-title="Issue" class="hovertext" data-hover="data.issue">{{data.issue}}</td>
+<td>
+  <!-- <div class="hovertext" [data-hover]="{{data.issue}}"></div> -->
+  <!-- <a mdbTooltip="{{data.issue}}" placement="top">Hover Here</a> -->
 
+</td>
                     <td data-title="Location">{{data.propertyAddress}}</td>
                     <td data-title="status" *ngIf="!data.isCancelled && data.action === 0">Awaiting Approval</td>
                     <td data-title="status" *ngIf="!data.isCancelled && data.action === 1">Awaiting Quote</td>
