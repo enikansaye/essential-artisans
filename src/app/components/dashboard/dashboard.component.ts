@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ApiService } from 'src/app/service/api.service';
 import { UserService } from 'src/app/service/user.service';
@@ -23,7 +24,7 @@ searchForm!: FormGroup
   state2: any;
   city2: any;
 
-  constructor(private api: ApiService, private adminApi:AdminService,private data: UserService,private formBuilder: FormBuilder,
+  constructor(private api: ApiService, private adminApi:AdminService,public data: UserService,private formBuilder: FormBuilder,private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -45,11 +46,6 @@ text =''
     this.text =data
     console.log(data);
     
-  }
-  updateText(data:any){
-    console.log(data);
-    
-    this.data.update(this.text)
   }
 
  
@@ -99,6 +95,17 @@ return this.searchForm.controls['city'].value
       
     })
 
+  }
+  hope3:any
+  onChangeService(event:any){
+    console.log(`ID is: ${event.value}`);
+    this.hope3 = `${event.value}`
+    console.log(this.hope3);
+    // this.router.navigate(['/available artisan']);
+
+    
+    
+  
   }
 
 }

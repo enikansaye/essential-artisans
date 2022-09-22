@@ -1,11 +1,12 @@
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpEvent,
   HttpEventType,
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +17,9 @@ import { Observable, Subscriber, Subscription } from 'rxjs';
 import { FileToUpload } from '../../file-upload/file-to-upload';
 import { toFormData } from './toFormData';
 import { UserService } from 'src/app/service/user.service';
+
+import { LoginService } from 'src/app/service/login.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 // import { ToastrService } from 'ngx-toastr';
 
@@ -28,7 +32,7 @@ const MAX_SIZE: number = 1048576;
   styleUrls: ['./allartisan.component.css'],
 })
 export class AllartisanComponent implements OnInit {
-  clickEventSubscription : Subscription;
+  // clickEventSubscription !: Subscription;
   @Output() public onUploadFinished = new EventEmitter();
 
   myimage!: Observable<any>;
@@ -67,34 +71,40 @@ export class AllartisanComponent implements OnInit {
   myFiles: string[] = [];
   issue!: string;
 
+  modalRef?: BsModalRef | null;
+  modalRef2?: BsModalRef;
+
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
     private router: Router,
     private adminApi: AdminService,
     private http: HttpClient,
+    private login : LoginService,
+    private modalService: BsModalService,
     private toastr: ToastrService,private data: UserService
   ) {
-    this.clickEventSubscription = this.data.getClickEvent().subscribe(()=>{
 
-      this.checkData();
+    this.formValue = this.formBuilder.group({
+      id: this.login.loggedinUser.id,
+      Name: [''],
+      ArtisanId: 2,
+      PropertyAddress: [''],
+      InspectionDateAndTime: [''],
+      // InspectionTime: [''],
+      PhoneNumber: [''],
+      AlternateNumber: [''],
+      Issue: [''],
+      profile: [''],
+      Files: [''],
+      artisanEmail: [],
+      orderId: [],
     });
 
+ 
   }
   text: any;
-// count:number=0
-  checkData(){
-    this.text =  this.data.update(this.text)
 
-    console.log(this.text);
-    this.data.share.subscribe(x=>this.text = x)
-
-    this.api.getArtisanByService(this.text).subscribe((res:any) =>{
-      console.log(res);
-      
-    })
-
-  }
   getArtisan(name:any){
     this.api.getArtisanByService(name).subscribe((res:any) =>{
       console.log(res);
@@ -104,32 +114,17 @@ export class AllartisanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllArtisan();
+    // this.getAllArtisan();
     // this.showAll();
     this.getState();
-
-console.log(this.text);
+    
+  this.update()
+    
+// console.log(this.data.checkArtisan);
 
     
 
-    this.formValue = this.formBuilder.group({
-      id: this.api.loggedinUser.id,
-      Name: [''],
-      ArtisanId: 2,
-      PropertyAddress: [''],
-      inspectionDate: [''],
-      inspectionTime: [''],
-      mobilenumber: [''],
-      AltNumber: [''],
-      issue: [''],
-      profile: [''],
-      Files: [''],
-      // issueImage: [''],
-      artisanEmail: [],
-      orderId: [],
-      // fileNames: [''],
-    });
-
+   
     this.search = this.formBuilder.group({
       state: [''],
       city: [''],
@@ -241,7 +236,7 @@ console.log(this.text);
     }
 
     this.http
-      .post('https://localhost:7130/api/Customer/ServiceOrder/create', this.formValue.value)
+      .post(this.api.baseUrl +'/api/Customer/ServiceOrder/create', this.formValue.value)
       .subscribe((res) => {
         console.log(res);
         alert('Uploaded Successfully.');
@@ -281,15 +276,23 @@ const formdata = new FormData();
 formdata.append("ArtisanId", data.ArtisanId);
 formdata.append("Name", data.Name);
 formdata.append("Issue", data.Issue);
+formdata.append("InspectionDateAndTime", data.InspectionDateAndTime);
+// formdata.append("InspectionTime", data.InspectionTime);
+formdata.append("AlternateNumber", data.AlternateNumber);
+formdata.append("PhoneNumber", data.PhoneNumber);
 formdata.append("PropertyAddress", data.PropertyAddress);
-    // formdata.append("file", this.selectedFile, this.selectedFile.name)
+    // formdata.append("Files", this.selectedFile)
 
 formdata.append("Files", data.Files);
+
 
    this.http
        .post('https://localhost:7130/api/Customer/ServiceOrder/create',formdata, {
         observe: 'events'
        }).subscribe((res:any)=>{
+        this.modalRef?.hide()
+              this.toastr.success('Order successfully sent!!!');
+
         // this.f.reset();
 
         // this.formValue.controls['ArtisanId']= data.ArtisanId;
@@ -390,33 +393,7 @@ formdata.append("Files", data.Files);
     }
   }
 
-  uploadFile(files: any) {
-    if (files.length === 0) {
-      return;
-    }
-    let fileToUpload = <File>files[0];
-    const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-
-    this.http
-      .post(
-        'https://localhost:7130/api/Customer/ServiceOrder/upload',
-        formData,
-        { reportProgress: true, observe: 'events' }
-      )
-      .subscribe({
-        next: (event: any) => {
-          if (event.type === HttpEventType.UploadProgress)
-            this.progress = Math.round((100 * event.loaded) / event.total);
-          else if (event.type === HttpEventType.Response) {
-            this.message = 'Upload success.';
-            this.onUploadFinished.emit(event.body);
-          }
-          // this.getArtisan()
-        },
-        error: (err: HttpErrorResponse) => console.log(err),
-      });
-  }
+  
 
   sortArtisan() {
     // this.api.sortArtisanLocation().subscribe((data: any) => {
@@ -472,20 +449,7 @@ formdata.append("Files", data.Files);
     }
   }
 
-  onSubmit() {
-    const formData = new FormData();
-    formData.append('file', this.formValue.controls['files'].value);
-
-    this.http
-      .post<any>(
-        'https://lyticalartisanapi.azurewebsites.net/api/Customer/ServiceOrder/upload',
-        formData
-      )
-      .subscribe(
-        (res) => console.log(res),
-        (err) => console.log(err)
-      );
-  }
+ 
 
   getState() {
     this.api.getLocation().subscribe((data: any) => {
@@ -523,4 +487,67 @@ hope!:any
     }
 return this.hope;
   }
+
+  update(){
+    this.artisanData = this.data.getClickEvent().subscribe((data:any)=>{
+      if(data != ''){
+        this.api.getArtisanByService(data).subscribe((res:any) =>{
+          console.log(res);
+          this.artisanData =res
+        })
+      }
+      console.log(data);
+      console.log(this.data.checkData);
+      
+      
+            // this.checkData();
+          });
+  }
+
+  uploadfile(event:any){
+const file = event?.target.files? event.target.files[0]:''
+// console.log(file);
+this.formValue.patchValue({
+  Files:file
+})
+this.formValue.get('image')?.updateValueAndValidity()
+
+  }
+  // onSubmitCheck2(){
+  //   this.api.uploadCheck(
+  //    this.formValue.value.id = this.login.loggedinUser.id,
+  //    this.formValue.value.Name,
+  //    this.formValue.value.ArtisanId,
+  //    this.formValue.value.PropertyAddress,
+  //   //  this.formValue.value.inspectionDate,
+  //   //  this.formValue.value.inspectionTime,
+  //    this.formValue.value.PhoneNumber,
+  //    this.formValue.value.AlternateNumber,
+  //    this.formValue.value.Issue,
+  //    this.formValue.value.profile,
+  //    this.formValue.value.Files,
+  //    this.formValue.value.artisanEmail,
+  //    this.formValue.value.orderId,
+  //   ).subscribe((event:HttpEvent<any>)=>{
+  //     switch(event.type){
+  //       case HttpEventType.Response:
+  //         console.log(event.body);
+          
+  //       event.body
+
+  //     }
+     
+  //   })
+  // }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {
+      id: 1,
+      class: 'modal-lg',
+    });
+  }
+
+  closeModal(modalId?: number) {
+    this.modalService.hide(modalId);
+  }
+
 }

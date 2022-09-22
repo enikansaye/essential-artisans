@@ -4,7 +4,7 @@
 
     <div class="cards-6 section-gray">
       <div class="container-fluid w-100">
-        <div class="h4">Availabe Artisans within your location</div>{{text}}
+        <div class="h4">Availabe Artisans within your location</div>
 
 <div class="w-50 mt-2 mb-5">
   <input class="form-control" type="text" placeholder="State and LGA Search" name="location" [(ngModel)]="location" (ngModelChange)="Search()" />
@@ -15,8 +15,7 @@
         <div class="row mt-3 cursor">
           <div
             class="col-md-4"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            (click)="openModal(template)"
             *ngFor="
               let data of artisanData
                 | paginate
@@ -30,9 +29,9 @@
             "
           >
             <div class="card card-profile  " (click)="onEdit(data)">
-              <div class="card-avatar  ">
+              <div class="card-avatar " >
                 <a>
-                  <img class="img-fluid  " size="110" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
+                  <img class="img-fluid  " style="width: 200px; height: 200px; object-fit:fill;" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
                  <div class="img " *ngIf="!data.profileImage "><ngx-avatar size="130" name="{{data.firstName}} {{data.lastName}}"></ngx-avatar></div>
                   <!-- <img class="img img-fluid " *ngIf="!data.profileImage" src="/assets/images/avatar1.webp" /> -->
                 </a>
@@ -117,7 +116,6 @@
          
          
         >
-        <!-- (ngSubmit)="createnewService(this.formValue.value)" -->
           <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Full Name</label>
             <input
@@ -148,28 +146,28 @@
               >Whatsapp Number</label
             >
             <input
-              formControlName="mobilenumber"
+              formControlName="PhoneNumber"
               type="number"
               class="form-control"
             />
           </div>
-          <div class="mb-1">
+          <!-- <div class="mb-1">
             <label for="exampleInputPassword1" class="form-label"
               >Alternative Number</label
             >
             <input
-              formControlName="mobilenumber"
+              formControlName="AlternateNumber"
               type="number"
               class="form-control"
             />
-          </div>
+          </div> -->
        
 
       <div>
           <output *ngIf=successResponse class="success"><b>{{successResponse}}</b></output>
       </div>
           
-  <div class="mb-1">
+  <div class="my-2">
             <label for="exampleInputPassword1" class="form-label"
               >Description</label
             >
@@ -180,38 +178,33 @@
               id="exampleInputPassword1"
             />
           </div>
-          <div class="mb-1">
+          <div class="my-2">
             <label for="exampleInputPassword1" class="form-label"
               >Inspection Date and Time</label
             >
             <input
-              formControlName="inspectionDate"
+              formControlName="InspectionDateAndTime"
               type="datetime-local"
               [(ngModel)]="value"
               #input
               (change)="onChange(input.value)"
             />
+           
           </div>
     
+        
 
-          <div>
-            <app-offline formControlName="Files"></app-offline>
-            <!-- <input type="file" (change)="onSelectedFile($event)" formControlName="Files" name="file"/> -->
+        <div class="mt-4">
+          <input type="file" formControlName="Files" (change)="uploadfile($event)">
+        </div>
+<div></div>
 
-
-          </div>
-
-
-<button class="btn btn-info" type="submit">Send</button>
+<button class="btn btn-info mt-3" id='ModelId'    type="submit">Send</button>
         </form>
       </div>
       <div class="modal-footer">
-        <!-- <button  (click)="createnewService(this.formValue.value)" class="btn btn-info" data-bs-dismiss="modal">
-          Send
-        </button> -->
+       
       
-        <!-- <button *ngIf="showAddEmployee" type="button" (click)="postEmployeeDetails()" class="btn btn-primary">Add Employee</button> -->
-        <!-- <button *ngIf="showUpdate" type="button" (click)="updateEmployeeDetails()" class="btn btn-primary">Update</button> -->
       </div>
 
 
@@ -221,3 +214,112 @@
     </div>
   </div>
 </div>
+<!-- modal for invoice -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Creata Quote</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <!-- modal form -->
+    <form
+      [formGroup]="formValue" (ngSubmit)="onSubmitCheck(this.formValue.value)"
+     
+     
+    >
+      <div class="mb-1">
+        <label for="exampleInputEmail1" class="form-label">Full Name</label>
+        <input
+          formControlName="Name"
+          type="text"
+          class="form-control"
+          id="exampleInputText"
+          aria-describedby="emailHelp"
+        />
+      </div>
+
+      <div class="mb-1">
+        <label for="exampleInputPassword1" class="form-label"
+          >Address</label
+        >
+        <input
+          formControlName="PropertyAddress"
+          type="text"
+          class="form-control"
+          id="exampleInputPassword1"
+        />
+      </div>
+    
+
+     
+      <div class="mb-1">
+        <label for="exampleInputPassword1" class="form-label"
+          >Whatsapp Number</label
+        >
+        <input
+          formControlName="PhoneNumber"
+          type="number"
+          class="form-control"
+        />
+      </div>
+      <!-- <div class="mb-1">
+        <label for="exampleInputPassword1" class="form-label"
+          >Alternative Number</label
+        >
+        <input
+          formControlName="AlternateNumber"
+          type="number"
+          class="form-control"
+        />
+      </div> -->
+   
+
+  <div>
+      <output *ngIf=successResponse class="success"><b>{{successResponse}}</b></output>
+  </div>
+      
+<div class="my-2">
+        <label for="exampleInputPassword1" class="form-label"
+          >Description</label
+        >
+        <input
+          formControlName="Issue"
+          type="textarea"
+          class="form-control"
+          id="exampleInputPassword1"
+        />
+      </div>
+      <div class="mt-4">
+        <label for="exampleInputPassword1" class="form-label"
+          >Inspection Date and Time</label
+        >
+        <input
+          formControlName="InspectionDateAndTime"
+          type="datetime-local"
+          [(ngModel)]="value"
+          #input
+          (change)="onChange(input.value)"
+        />
+       
+      </div>
+
+    
+
+    <div class="mt-4">
+      <input type="file" formControlName="Files" (change)="uploadfile($event)">
+    </div>
+<div></div>
+
+<button class="btn btn-info mt-3" id='ModelId'    type="submit">Send</button>
+    </form>
+  </div>
+  
+</ng-template>

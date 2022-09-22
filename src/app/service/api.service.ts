@@ -6,8 +6,8 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { UserModel } from '../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AllurlService } from './allurl.service';
@@ -58,14 +58,14 @@ export class ApiService implements OnInit {
   ) {}
   ngOnInit(): void {
     // this.loggedIn()
-    this.getUserToken();
-    if (this.finaldata.role === '2') {
-      this.router.navigate(['/admin']);
-    } else if (this.finaldata.role === 'ARTISAN') {
-      this.router.navigate(['/']);
-    } else if (this.finaldata.role === '0') {
-      this.router.navigate(['/userprofile']);
-    }
+    // this.getUserToken();
+    // if (this.finaldata.role === '2') {
+    //   this.router.navigate(['/admin']);
+    // } else if (this.finaldata.role === 'ARTISAN') {
+    //   this.router.navigate(['/']);
+    // } else if (this.finaldata.role === '0') {
+    //   this.router.navigate(['/userprofile']);
+    // }
   }
 
   // user signup
@@ -74,6 +74,13 @@ export class ApiService implements OnInit {
       this.baseUrl + '/api/Auth/register/customer',
       model,
       httpOptions
+    );
+  }
+
+  // resend Email
+  ResendEmail(model: any) {
+    return this.http.get(
+      this.baseUrl + '/api/Auth/resend/'+ model
     );
   }
 
@@ -86,73 +93,61 @@ export class ApiService implements OnInit {
     );
   }
   // refresh token
-  refreshToken(token: string) {
-    return this.http.post(
-      this.baseUrl + '/api/Auth/refresh-token',
-      {
-        refreshToken: token,
-      },
-      httpOptions
-    );
-  }
+  // refreshToken(token: string) {
+  //   return this.http.post(
+  //     this.baseUrl + '/api/Auth/refresh-token',
+  //     {
+  //       refreshToken: "good",
+  //     },
+  //     httpOptions
+  //   );
+  // }
 
-  // login user
-  loginUser(usercard: any) {
-    return this.http.post(
-      this.baseUrl + '/api/Auth/login',
-      usercard
-      // {withCredentials:true}
-    );
-  }
-  getUserinfo(id: string) {
+
+  getUserinfo() {
     return this.http.get(this.baseUrl + '/api/Customer/');
   }
   getArtisaninfo() {
     return this.http.get(this.baseUrl + '/api/Artisan/');
   }
 
-  isUserLoggedIn() {
-    return localStorage.getItem('token') != null;
-  }
+  // isUserLoggedIn() {
+  //   return localStorage.getItem('token') != null;
+  // }
 
-  getUserToken() {
-    return localStorage.getItem('accesstoken');
-  }
-  getRefresToken() {
-    console.log('hello');
-    return localStorage.getItem('accessToken') || '';
-  }
+  // getUserToken() {
+  //   return localStorage.getItem('accesstoken');
+  // }
+  // getRefresToken() {
+  //   console.log('hello');
+  //   return localStorage.getItem('accessToken') || '';
+  // }
 
-  GenerateRefreshToken() {
-    let input = {
-      refreshToken: this.getRefresToken(),
-    };
-    return this.http.post(this.baseUrl + '/api/Auth/refresh-token', input);
-  }
+ 
   // saveToken(token: any) {
   //   localStorage.setItem('accesstoken', token.accessToken);
   //   localStorage.setItem('token', token.accessToken);
   //   console.log('hello');
   // }
-  SaveTokens(tokendata: any) {
-    localStorage.setItem('token', tokendata.jwtToken);
-    localStorage.setItem('refreshtoken', tokendata.refreshToken);
-  }
+  // SaveTokens(tokendata: any) {
+  //   localStorage.setItem('token', tokendata.jwtToken);
+  //   localStorage.setItem('refreshtoken', tokendata.refreshToken);
+  // }
 
-  haveaccess(token: any) {
-    const loggedinUser = localStorage.getItem('accesstoken') || '';
-    const extracted = loggedinUser.split('.')[1];
-    const _atobdata = atob(extracted);
-    this.finaldata = JSON.parse(_atobdata);
-    console.log(this.finaldata);
-    return this.finaldata.role;
-  }
+  // haveaccess(token: any) {
+  //   const loggedinUser = localStorage.getItem('accesstoken') || '';
+  //   const extracted = loggedinUser.split('.')[1];
+  //   const _atobdata = atob(extracted);
+  //   this.finaldata = JSON.parse(_atobdata);
+  //   console.log(this.finaldata);
+  //   return this.finaldata.role;
+  // }
 
-  getToken() {
-    console.log('hello');
-    return localStorage.getItem('accessToken');
-    // return window.sessionStorage.getItem(TOKEN_KEY)
-  }
+  // getToken() {
+  //   console.log('hello');
+  //   return localStorage.getItem('accessToken');
+  //   // return window.sessionStorage.getItem(TOKEN_KEY)
+  // }
 
   // saveUserToLocalStorage(data: UserModel) {
   //   this.userProfile.next(data);
@@ -181,10 +176,10 @@ export class ApiService implements OnInit {
   }
 
   // checking if user is logged in
-  loggedIn() {
-    this.loggedinUser = localStorage.getItem('token');
-    return (this.loggedinUser = JSON.parse(this.loggedinUser));
-  }
+  // loggedIn() {
+  //   this.loggedinUser = localStorage.getItem('token');
+  //   return (this.loggedinUser = JSON.parse(this.loggedinUser));
+  // }
   selectFile(event: any): void {
     this.selectedFiles = event.target.files[0];
     console.log(event);
@@ -297,14 +292,7 @@ export class ApiService implements OnInit {
       .post<any>(this.baseUrl + '/api/Customer/ServiceOrder/create', data)
       .pipe();
   }
-  // fake api
-  // createService2(data:any, id:number) {
-  //   return this.http.put<any>(this.url.createService + id , data).pipe(
-  //     map((res: any) => {
-  //       return res;
-  //     })
-  //   );
-  // }
+
 
   //  create invoice by artisans
   createInvoice(data: any) {
@@ -351,12 +339,12 @@ export class ApiService implements OnInit {
     return this.http.request(req);
   }
 
-  // checking with refresh token
-  Logout() {
-    alert('Your session expired, kindly login');
-    localStorage.clear();
-    this.router.navigateByUrl('signin');
-  }
+  // // checking with refresh token
+  // Logout() {
+  //   alert('Your session expired, kindly login');
+  //   localStorage.clear();
+  //   this.router.navigateByUrl('signin');
+  // }
 
   // this is is to get a default artisans
   getAll(): any {
@@ -424,6 +412,16 @@ export class ApiService implements OnInit {
         })
       );
   }
+  userGetApprovedInvoice() {
+    return this.http
+      .get<any>(this.baseUrl + '/api/Customer/customer/approved/invoices')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+
   userGetInvoice() {
     return this.http
       .get<any>(this.baseUrl + '/api/Customer/customer/invoices')
@@ -442,10 +440,10 @@ export class ApiService implements OnInit {
         })
       );
   }
-  customerApproveInvoice( id: number,data:any) {
+  customerApproveInvoice( data:any, id:number) {
    
     return this.http
-      .put<any>(this.baseUrl + '/api/Customer/invoice/accept/'+id,data)
+      .put<any>(this.baseUrl + '/api/Customer/invoice/accept/'+id, data)
       .pipe(
         map((res: any) => {
           return res;
@@ -471,4 +469,52 @@ export class ApiService implements OnInit {
       })
     )
   }
+
+
+  // uploadCheck(
+  //   id: any,
+  //   Name: string,
+  //   ArtisanId: any,
+  //   PropertyAddress: string,
+  //   // InspectionDate: string,
+  //   // InspectionTime: string,
+  //   PhoneNumber: any,
+  //   AlternateNumber: any,
+  //   Issue: string,
+  //   profile: string,
+  //   Files: string,
+  //   ArtisanEmail: string,
+  //   OrderId: any,
+  // ): Observable<any> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('id',id),
+  //   formData.append("Name", Name),
+  //     formData.append("ArtisanId", ArtisanId),
+  //       formData.append("PropertyAddress", PropertyAddress),
+  //         // formData.append("InspectionDate", InspectionDate),
+  //           // formData.append("InspectionTime",InspectionTime),
+  //             formData.append(" PhoneNumber", PhoneNumber),
+  //               formData.append(" AlternateNumber", AlternateNumber),
+  //                 formData.append("Issue", Issue),
+  //                   // formData.append("profile", string),
+  //                     formData.append(" Files", Files),
+  //                       formData.append(" ArtisanEmail", ArtisanEmail),
+  //                         formData.append(" OrderId",OrderId );
+
+  //   return this.http.post(this.baseUrl +'/api/Customer/ServiceOrder/create', formData, {
+  //     reportProgress: true,
+  //     responseType: 'json',
+  //     observe:'events'
+  //   }).pipe(
+  //     catchError((err:any)=>{
+  //       alert(err.message);
+  //       return throwError(err.message)
+  //     })
+  //   );
+
+  // }
+
+  // checkCheck(data:any){
+  //   return this.http.post(this.baseUrl +'/api/Customer/ServiceOrder/create',data)
+  // }
 }

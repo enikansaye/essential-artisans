@@ -1,5 +1,5 @@
 <!-- <div> -->
-<div class="" >
+<div class="mt-5" >
   <mat-sidenav-container>
     <mat-sidenav
       #sidenav="matSidenav"
@@ -7,7 +7,7 @@
       opened
       class="col-6 col-md-3"
     >
-      <mat-toolbar class="w-100 d-flex justify-content-end">
+      <mat-toolbar class="w-100 d-flex justify-content-end ">
         <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
           <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'over'" class="d-flex justify-content-end"
             >close</mat-icon
@@ -43,7 +43,7 @@
         <span
           class="cursor p-3 "
           [class.active]="expression == 'match1'"
-          (click)="expression = 'match1'"
+          (click)="expression = 'match1'" 
           ><i class="bi bi-grid-3x3-gap"></i> My Profile</span
         >
        <span
@@ -51,6 +51,12 @@
           [class.active]="expression == 'match3'"
           (click)="expression = 'match3'"
           ><i class="bi bi-gear"> </i> My Orders</span
+        >
+       <span
+          class="cursor p-3"
+          [class.active]="expression == 'match4'"
+          (click)="expression = 'match4'" 
+          ><i class="bi bi-gear"> </i> Quote</span
         >
     
         <!-- <hr class="divided" /> -->
@@ -101,10 +107,10 @@
             </div>
           </div> -->
         </mat-toolbar>
-        <div [ngSwitch]="expression">
+        <div [ngSwitch]="expression" >
           <div *ngSwitchCase="'match1'">
             <section
-              class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
+              class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5 " 
             >
               <div class="h5 text-dark">EDIT INFORMATION</div>
 
@@ -136,64 +142,8 @@
                 </div>
 
 
-                <!-- <div class="align-text-bottom">
-                  <label class="btn btn-default p-0">
-                    <input type="file" (change)="selectFile($event)" />
-                  </label>
-  
-                 <button  (click)="upload()" class="btn btn-success">upload picture</button> -->
-                 <!-- <div class="info-wrapper">
-                  <div class="info-img m-auto">  
-                      <img [src]="userPhoto? userPhoto : '../../../../assets/images/avartar.png'" class="img-fluid" alt="personal photo">
-                      <label  class="imgB1" (click)="acivateClick(photoField)" (click)="toggleIcon()">    
-                        <span   class="iconify"  data-icon="ant-design:camera-filled" style="color: #34a853;; "data-width="20" ></span>         
-                    </label> 
-                    <div class="text-center">
-                      <input class="form-control" type="file" 
-                              (input)="onChange($event)" hidden #photoField>
-                              <label class="myDIV" class="imgB11" (click)="toggleIcon()" *ngIf="userPhoto"  >
-                                <span id="hover-div" class="iconify" data-icon="fluent:delete-dismiss-28-filled" style="color: #f82929;"></span>
-                                
-                              </label>
-                  </div>
-                  </div>
-                  </div> -->
-                 
-  
-                 <!-- <div *ngIf="currentFile" class="progress my-3">
-                  <div
-                    class="progress-bar progress-bar-info progress-bar-striped"
-                    role="progressbar"
-                    attr.aria-valuenow="{{ progress }}"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    [ngStyle]="{ width: progress + '%' }"
-                  >
-                    {{ progress }}%
-                  </div>
-                </div> -->
-
-
-                <!-- <div class="container text-center jumbotron"
-    *ngIf="shortLink">
-    <h2> Visit Here</h2>
-    <a href="{{shortLink}}">{{shortLink}}</a>
-</div>
-   -->
-<!--Flag variable is used here-->
-<!-- <div class="container" *ngIf="loading">
-    <h3>Loading ...</h3>
-</div> -->
-                  <!-- <h4 class="d-none d-lg-block pt-2">
-                    Acceptable format, jpg, png only<br /><span>
-                      Max file size is 100kb and min size 70kb</span
-                    >
-                  </h4>
-              <div>    {{api.loggedinUser.email}}</div> -->
                 </div>
-              <!-- </div> -->
             </section>
-            <!-- <mat-divider></mat-divider> -->
 
             <section class="w-100  ps-md-5">
               <div>
@@ -461,240 +411,56 @@
             <app-artisantransactions></app-artisantransactions>
           </div>
 
+
+
+          <!-- invoice/Quote section -->
           <div *ngSwitchCase="'match4'" class="p-3">
-            <section>
-              <div class="section1">
-                <div class="section1a">
-                  <div><h4>US Foods</h4></div>
-                  <button class="btn btn-primary">Edit</button>
-                </div>
-                <div class="section1b">
-                  <div class="sectionbar">
-                    <div class="bar">
-                      <p>Recieve Date</p>
-                      <p><strong>03/23/2022</strong></p>
-                    </div>
-                    <div class="bar">
-                      <p>Recieve Date</p>
-                      <p><strong>03/23/2022</strong></p>
-                    </div>
-                  </div>
-                  <div class="sectionbar">
-                    <div class="bar">
-                      <p>Recieve Date</p>
-                      <p><strong>03/23/2022</strong></p>
-                    </div>
-                    <div class="bar">
-                      <p>Recieve Date</p>
-                      <p><strong>03/23/2022</strong></p>
-                    </div>
-                  </div>
-                  <div class="sectionbar">
-                    <div class="bar">
-                      <p>Recieve Date</p>
-                      <p><strong>03/23/2022</strong></p>
-                    </div>
-                    <div class="bar">
-                      <p>Recieve Date</p>
-                      <p><strong>03/23/2022</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="section2">
-                <table class="table caption-top mt-2" id="no-tables">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">SKU</th>
-                      <th scope="col">ITEMS</th>
-                      <th scope="col">QUANTITY</th>
-                      <th scope="col">PRICE</th>
-                      <th scope="col">AMOUNT</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>01</td>
-                      <td>-</td>
-                      <td><span>electrical repair</span> sdfghjkl;</td>
-                      <td>sdfghjkl;</td>
-                      <td>5000</td>
-                      <td>qwertyui</td>
+            <div >
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Order ID/Invoice ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">User's Name</th>
+                    <th scope="col">Location</th>
 
-                      <td>
-                        <button class="btn btn-danger me-2">
-                          <i class="bi bi-trash"></i>
-                        </button>
-                        <button
-                          type="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          class="btn btn-success"
-                        >
-                          <i class="bi bi-pencil-square"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>01</td>
-                      <td>-</td>
-                      <td><span>electrical repair</span> sdfghjkl;</td>
-                      <td>sdfghjkl;</td>
-                      <td>5000</td>
-                      <td>qwertyui</td>
-
-                      <td>
-                        <button class="btn btn-danger me-2">
-                          <i class="bi bi-trash"></i>
-                        </button>
-                        <button
-                          type="button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          class="btn btn-success"
-                        >
-                          <i class="bi bi-pencil-square"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="section3">
-                  <button class="btn btn-outline-primary">Add Items</button>
-                  <button class="btn btn-outline-success">
-                    Add Non Inventory Item
-                  </button>
-                  <button class="btn btn-outline-danger">Add Charge</button>
-                  <button class="btn btn-outline-primary">
-                    Add Credit Card
-                  </button>
-                  <div>
-                    <p>Sub-Total <span> 65000</span></p>
-                    <p>Sub-Total <span> 65000</span></p>
-                  </div>
-                </div>
-                <div class="section4">
-                  <button class="btn btn-outline-danger">Delete Invoice</button>
-                  <button class="btn btn-outline-success">
-                    Approve Invoice
-                  </button>
-                  <button class="btn btn-outline-primary">
-                    Approve Invoice & Next
-                  </button>
-                </div>
-              </div>
-            </section>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Status</th>
+                    <!-- <th scope="col">Action</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let data of invoiceData ">
+                    <td data-title="Order ID/Invoice ID">{{data.serviceOrderId}}/{{data.invoiceId}}</td>
+                    <td data-title=" Date">{{ data.date }}</td>
+                    <td data-title=" User's Name">{{ data.customerInfo.name}}</td>
+                    <td data-title="Location">{{data.serviceOrderAddress}}</td>
+                    <td data-title="Total Amount">{{ data.invoiceTotal}}</td>
+                    <td data-title="Status" *ngIf="data.action === 3">Approved</td>
+                    <td data-title="Status" *ngIf="data.action === 2">Pending</td>
+    
+                    <td data-title="Action">
+                    
+                      <!-- <button class="btn btn-info" *ngIf="!data.isApproved">
+                        Pending
+                      </button> -->
+                      <button class="btn btn-success" *ngIf="data.action === 3"> Approved</button>
+                      <button class="btn btn-info" *ngIf="data.action === 2">Awaiting Approval</button>
+                    </td>
+                    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+    
+                  </tr>
+    
+                  
+                </tbody>
+              </table>
+              <!-- <div *ngIf="!AllpendingData">
+                <div class="h1  d-flex align-items-center justify-content-center text-muted" style="height: 400px;">{{pendingOrderError}}</div>
+              </div> -->
+            </div>
           </div>
-          <div *ngSwitchCase="'match5'" class="p-3" id="no-tables">
-          <!-- <app-invoice></app-invoice> -->
-
-            <!-- <section class="">
-              <div class="row mb-4">
-                <div class="col-6 ">
-                  <div>TO</div>
-                  <div>Name: <span>Mayowa</span></div>
-                  <div>Location: <span>Ajah</span></div>
-                </div>
-                <div class="col-6 ">
-                  <div>FROM</div>
-                  <div>Name: <span>Mayowa</span></div>
-                  <div>Location: <span>Ajah</span></div>
-                </div>
-                
-              </div>
-              <hr class="divided" />
-
-              <div class="row">
-                <form [formGroup]="usersForm" (ngSubmit)="onSubmit()">
-                  <div formArrayName="users">
-                    <table class="table caption-top mt-2">
-                      <thead>
-                        <tr>
-                          <th scope="col-6">DESCRIPTION</th>
-                          <th scope="col">QTY</th>
-                          <th scope="col">PRICE</th>
-                          <th scope="col">TOTAL</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          *ngFor="
-                            let userFormGroup of userFormGroups.controls;
-                            let i = index
-                          "
-                          [formGroupName]="i"
-                        >
-                          <td data-title="DESCRIPTION">
-                            
-                            <input type="text" formControlName="gHService"/>
-                          </td>
-                          <td data-title="QTY">
-                            
-                            <input type="text" formControlName="quantity" [(ngModel)]="num1" />
-                          </td>
-                          <td data-title="PRICE">
-                         
-                            <input type="text" formControlName="startTime" [(ngModel)]="num2" />
-                          </td>
-                          <td data-title="TOTAL" class="h5">
-                         
-                         <input type="text" formControlName="total" [(ngModel)]="result">
-                          
-                          </td>
-                          <td>
-                            
-                            <button class="btn btn-primary d-none " (click)="celltotal()">submit</button>
-                            <button class="btn btn-primary " (keyup.enter)="onEnter()"></button>
-                          
-                          </td>
-                          <td >
-                          
-                            <i (click)="removeFormControl(i)" class="text-danger bi bi-trash-fill me-3 h4 d-none d-lg-block">
-                             
-                             </i>
-                            <button (click)="removeFormControl(i)" class="text-danger btn btn-outline-danger me-3 d-lg-none">
-                             Remove Row
-                            </button>
-                         
-                            </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </form>
-                
-                
-               <div>
-
-                <button class="btn btn-primary  " (click)="grandtotal()">sum</button>
-                <button class="btn btn-success me-3" (click)="addFormControl()">
-                  Add new 
-                </button>
-               
-                <button  class="btn btn-primary" >
-                  Submit Quote
-                </button>
-                <div class="row py-4 text-center float-end me-3">
-                  <div class="col-4" >
-                    <div class="h5">TOTAL</div>
-                    <div class="h4">{{alltotal}}</div>
-                  </div>
-                  </div>
-               </div>
-              
-              </div>
-             
-              
-              <div class="py-4">
-                <div>BANK DETAILS</div>
-                <div class="pt-2">Bank Name: <span>Zenith</span></div>
-                <div>Swift Code: <span>KFSFUYB</span></div>
-                <div>Account Holder: <span>Essential Artisans</span></div>
-                <div>Account Number: <span>3084491289</span></div>
-              </div>
-            </section> -->
-          </div>
+          
         </div>
       </div>
     </mat-sidenav-content>

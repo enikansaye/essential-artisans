@@ -95,6 +95,7 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "joyhouse:build"
+
           }
         },
         "test": {

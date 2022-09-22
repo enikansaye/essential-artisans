@@ -1,5 +1,5 @@
 <mat-sidenav-container class="">
-    <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3  ">
+    <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3  mt-5 pt-5 ">
         <mat-toolbar class="w-100 d-flex justify-content-end">
           <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
                    
@@ -15,7 +15,7 @@
     
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column mx-5 px-3 ">
-          <li class="nav-item cursor ">
+          <li class="nav-item cursor "  >
             <a
               class="nav-link text-dark "
               [class.active]="expression == 'page1'"
@@ -25,12 +25,13 @@
               data-bs-target="#navDashboard"
               aria-expanded="false"
               aria-controls="navDashboard"
+              
             >
               <i class="nav-icon bi bi-house-door me-2"></i> Dashboard
             </a>
           </li>
           <li
-            class="nav-item cursor"
+            class="nav-item cursor"  
             [class.active]="expression == 'page2'"
             toggle
             (click)="expression = 'page2'"
@@ -46,7 +47,7 @@
             </a>
           </li>
           <!-- Nav item -->
-          <li class="nav-item cursor">
+          <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed text-dark"
               [class.active]="expression == 'page3'"
@@ -57,7 +58,7 @@
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> User
             </a>
           </li>
-          <li class="nav-item cursor">
+          <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed"
               [class.active]="expression == 'page4'"
@@ -67,7 +68,7 @@
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> 0rders
             </a>
           </li>
-          <li class="nav-item cursor">
+          <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed"
               [class.active]="expression == 'page5'"
@@ -78,7 +79,7 @@
             </a>
           </li>
 
-          <li class="nav-item cursor">
+          <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed"
               [class.active]="expression == 'page6'"
@@ -96,7 +97,7 @@
   <mat-sidenav-content opened>
    
 
-    <div class="ms-3" [ngSwitch]="expression">
+    <div class="ms-3 mt-5 pt-5" [ngSwitch]="expression">
       <div>
         <mat-toolbar>
             <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
@@ -502,7 +503,7 @@
                       <span class="bi bi-shopping-bag fs-3 text-primary"></span>
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1">0</h2>
+                  <h2 class="fw-bold mb-1">{{totalLength}}</h2>
 
 
 
@@ -531,7 +532,8 @@
                       <span class="bi bi-book-open fs-3 text-primary"></span>
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1"> &#8358; 1,110,800</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="totalSales"> &#8358; {{totalSales.totalAmount}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!totalSales"> &#8358; 0</h2>
                   
                 </div>
               </div>
@@ -567,16 +569,17 @@
                     class="d-flex align-items-center justify-content-between mb-3 lh-1"
                   >
                     <div>
-                      <i class="fa-solid fa-users-viewfinder"></i>
+                      <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
                       <span class="fs-6 text-uppercase fw-semi-bold"
                         >artisans</span
                       >
                     </div>
                     <div>
-                      <span class="bi bi-users fs-3 text-primary"></span>
+                      <!-- <span class="bi bi-users fs-3 text-primary"></span> -->
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1">{{artisanLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="artisanData">{{artisanLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!artisanData">0</h2>
                   
                 </div>
               </div>
@@ -824,7 +827,7 @@
       <div class="pt-5" *ngSwitchCase="'page2'" id="no-tables" >
         <div>
           <button
-          class="nav-link collapsed btn btn-info text-light float-end"
+          class="nav-link collapsed btn btn-info text-light float-end mb-3"
           [class.active]="expression == 'page7'"
           toggle
           (click)="expression = 'page7'"
@@ -855,26 +858,13 @@
                   <!-- <td data-title="Location">{{data.location.state}}, {{data.location.country}}</td> -->
                   <!-- <td data-title="Number">{{data.phone}}</td> -->
                   <td data-title="Status">Suspended</td>
-                  <td data-title="Action" class="">
-                   
-                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
-                    <i class="bi bi-pencil-square me-4 h5" ></i>
-                    <i class="bi bi-trash text-danger h5" (click)="deleteArtisan(data)"></i>
-                  </td>
+             
                 </tr>
             
               
               </tbody>
             </table>
-            <mat-paginator
-            (page)="handlePageEvent($event)"
-            [length]="length"
-            [pageSize]="pageSize"
-            [showFirstLastButtons]="showFirstLastButtons"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="pageIndex"
-            aria-label="Select page">
-        </mat-paginator>
+        
 
         </div>
       </div>
@@ -932,6 +922,24 @@
 <!-- Quote section -->
       <div class="pt-5" *ngSwitchCase="'page6'" id="no-tables" >
         <div>
+          <div class="nav-item cursor btn btn-info float-end mb-3"
+          [class.active]="expression == 'page8'"
+          toggle
+          (click)="expression = 'page8'"
+        >
+          <a
+            class="nav-link collapsed "
+            style="color: white;"
+            data-bs-toggle="collapse"
+            data-bs-target="#navCourses"
+            aria-expanded="false"
+            aria-controls="navCourses"
+          >
+            <i class="nav-icon bi bi-book me-2"></i> Pending Qoute
+          </a>
+        </div>
+        
+
            <table class="table">
               <thead>
                 <tr>
@@ -940,6 +948,7 @@
                   <th scope="col">Client Number</th>
                   <th scope="col">Order Categories</th>
                   <th scope="col">Location</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Total Amount</th>
                 
                 </tr>
@@ -951,13 +960,20 @@
                   <td data-title="Client Number">{{data.customerInfo.phoneNumber}}</td>
                   <td data-title="Order Categories">{{data.artisanInfo.profession}}</td>
                   <td data-title="Location">{{data.serviceOrderAddress}}</td>
-                  <td data-title="Total Amount">{{data.serviceItems.total}}</td>
+                  <td data-title="Status" *ngIf="data.action === 1">Pending</td>
+                  <td data-title="Status" *ngIf="data.action === 2">Admin Approved</td>
+                  <td data-title="Status" *ngIf="data.action ===4">Customer Canceled</td>
+                  <td data-title="Status" *ngIf="data.action ===5">Payment Confirmed</td>
+                  <td data-title="Status" *ngIf="data.action ===3"> Customer Approved</td>
+                  <td data-title="Total Amount">{{data.invoiceTotal}}</td>
                   <td>
-                    <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="onClickViewInvoce(data)">
+                    <button type="button" class="btn btn-info me-2" (click)="openModal(template)" (click)="onClickViewInvoce(data)">
                       View Quote
                     </button>
                     <button class="btn btn-inline-info me-2" (click)="approveQoute(data)" *ngIf="data.action === 1">Approve</button>
-                    <button class="btn btn-success me-2" *ngIf="data.action === 0">Approved</button>
+                    <button class="btn btn-success me-2" *ngIf="data.action === 2">Approved</button>
+                    <button class="btn btn-success me-2" (click)="confirmPayment(data)" *ngIf="data.action ===3">Confirm Payment</button>
+                    <button class="btn btn-success me-2"  *ngIf="data.action ===5"> Payment Confirmed</button>
                   </td>
                  
                 </tr>
@@ -967,6 +983,58 @@
             </table>
         </div>
       </div>
+
+      <!-- Pending Quote section -->
+      <div class="pt-5" *ngSwitchCase="'page8'" id="no-tables" >
+        <div>
+
+           <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">  Artisan's Name</th>
+                  <th scope="col">Client Name</th>
+                  <th scope="col">Client Number</th>
+                  <th scope="col">Order Categories</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Total Amount</th>
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of viewPendingQoute | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr class="align-center justify-content-center">
+                  <td data-title="Artisan's Name" scope="row">{{data.artisanInfo.name}}</td>
+                  <td data-title="Client Name">{{data.customerInfo.name}}</td>
+                  <td data-title="Client Number">{{data.customerInfo.phoneNumber}}</td>
+                  <td data-title="Order Categories">{{data.artisanInfo.profession}}</td>
+                  <td data-title="Location">{{data.serviceOrderAddress}}</td>
+                  <td data-title="Status" *ngIf="data.action === 1">Pending</td>
+                  <td data-title="Status" *ngIf="data.action === 2">Admin Approved</td>
+                  <td data-title="Status" *ngIf="data.action ===4">Customer Canceled</td>
+                  <td data-title="Status" *ngIf="data.action ===5">Payment Confirmed</td>
+                  <td data-title="Status" *ngIf="data.action ===3"> Customer Approved</td>
+                  <td data-title="Total Amount">{{data.invoiceTotal}}</td>
+                  <td>
+                    <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="onClickViewInvoce(data)">
+                      View Quote
+                    </button>
+                    <button class="btn btn-inline-info me-2" (click)="approveQoute(data)" *ngIf="data.action === 1">Approve</button>
+                    <!-- <button class="btn btn-success me-2" *ngIf="data.action === 2">Approved</button> -->
+                    <!-- <button class="btn btn-success me-2" (click)="confirmPayment(data)" *ngIf="data.action ===3">Confirm Payment</button> -->
+                    <!-- <button class="btn btn-success me-2"  *ngIf="data.action ===5"> Payment Confirmed</button> -->
+                  </td>
+                 
+                </tr>
+             
+              
+              </tbody>
+            </table>
+            <div class="h3 d-flex h justify-content-center align-items-center text-muted" style="height: 450px" *ngIf="!viewPendingQoute">
+{{quotePendingError}}
+            </div>
+        </div>
+      </div>
+
 
 
       <!-- pending Artisan Section -->
@@ -996,6 +1064,8 @@
                  <td>
                    <button class="btn btn-info me-2">View Artisan</button>
                    <button class="btn btn-inline-info me-2" (click)="approveArtisan(data)">Approve</button>
+                   <button class="btn btn-inline-info me-2" (click)="suspendArtisan(data)">Suspend</button>
+                   <button class="btn btn-inline-info me-2" (click)="deleteArtisan(data)">Delete</button>
                  </td>
                
                </tr>
@@ -1037,55 +1107,90 @@
 
             <h5>Email: <span>{{userEmail}}</span></h5>
           <h5> PhoneNumber: <span>{{userPhoneNumber}}</span> </h5>
+          <h5> Total Amount: <span>{{allTotal}}</span> </h5>
  
           </div>
         </div>
        
-          <form [formGroup]="invoiceForm" (ngSubmit)="submitEditedQuote(this.invoiceForm.value)">
-            <table border=1>
-              <thead>
-                <th>Id</th>
-                <th>Item Name</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-              </thead>
-              <tbody formArrayName="serviceItems" >
-                <tr 
->
-                  <!-- <td>{{i+1}}</td> -->
-                  <!-- <td>hello</td> -->
-                  <td>
-                    <input formControlName="description" class="form-control" placeholder="" > 
-                  </td>
-                  <td>
-                    <input formControlName="price" class="form-control" value="{{serviceItemsDetails}}">
-                  </td>
-                  <td>
-                    <input formControlName="quantity" class="form-control">
-                  </td>
-                  <td>
-                    <input formControlName="total" class="form-control">
-                  </td>
-                  <td>
-                  </td>
-                </tr>
+        <div class="card border-secondary mt-2 mb-5">
+          <div class="card-body">
+            <!-- <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4> -->
+  
+  
+            <form action="" #invoiceBody="ngForm">
+              <div *ngFor="let obj of serviceItemsDetails;let i=index">
+            <div class="row" >
+  
+              <div class="col-md-3">
+                <label>Item Name</label>
+                <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
+                  <span *ngIf="name3?.errors?.required">This field is required</span>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <label>Unit Price</label>
+                <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
+                  <span *ngIf="name4?.errors?.required">This field is required</span>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <label>Quantity</label>
+                <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
+                  <span *ngIf="name5?.errors?.required">This field is required</span>
+                </div> -->
+  
+              </div>
+              <div class="col-md-2">
+                <label>Total</label><br>
+                <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" >
+  
+              </div>
+  
+              <div class="col-md-1" *ngIf="i!=0">
+                <!-- <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button> -->
+              </div>
+  
+  
+  
+             </div>
+  
+            </div>
+  
+            <div class="form-floating mt-2">
+              <textarea class="form-control" 
+               required >{{jobDescription}}</textarea>
+              <!-- <label for="floatingTextarea">Description of Job to be done</label> -->
+            </div>
 
-              </tbody>
-            </table>
+            <div>
+              <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required value="{{artisanCharge}}">
+            </div>
+            </form>
+  
+  
+            </div>
+  
+          </div>
+  
             <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
             <span>ACCOUNT NUMBER: {{accountNumber}}</span><br/>
             <span>ACCOUNT NAME: {{bankName}}</span>
 
             <div class="mt-2">
-              <button class="btn btn-info " (click)="onEditForm()" *ngIf="!isEditMode">Edit</button>
-              <button class="btn btn-danger me-2"(click)="onEditForm()" *ngIf="isEditMode">Cancel</button>
-              <button class="btn btn-info" type="submit" *ngIf="isEditMode"> Update Invoice</button>
+              <button class="btn btn-info " (click)="onEditForm()" >Edit</button>
+              <button class="btn btn-danger me-2"(click)="onEditForm()" >Cancel</button>
+              <button class="btn btn-info" type="submit"  (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
     
     
             </div>
 
-          </form>
+          <!-- </form> -->
         
 
     
@@ -1096,3 +1201,124 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Creata Quote</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4>Artisan Details</h4>
+        <h5>Name: <span>{{artisanName}}</span></h5>
+        <h5>Email: <span>{{artisanEmail}}</span></h5>
+        
+      <h5> PhoneNumber: <span>{{artisanPhoneNumber}}</span></h5>
+    <h5> Profession: <span>{{artisanProfession}}</span></h5>
+      </div>
+      <div>
+        <h4>User Details</h4>
+        <h5>Name: <span>{{userName}}</span></h5>
+
+        <h5>Email: <span>{{userEmail}}</span></h5>
+      <h5> PhoneNumber: <span>{{userPhoneNumber}}</span> </h5>
+      <h5> Total Amount: <span>{{allTotal}}</span> </h5>
+
+      </div>
+    </div>
+   
+    <div class="card border-secondary mt-2 mb-5">
+      <div class="card-body">
+        <!-- <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4> -->
+
+
+        <form action="" #invoiceBody="ngForm">
+          <div *ngFor="let obj of serviceItemsDetails;let i=index">
+        <div class="row" >
+
+          <div class="col-md-3">
+            <label>Item Name</label>
+            <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+
+            <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
+              <span *ngIf="name3?.errors?.required">This field is required</span>
+            </div> -->
+          </div>
+          <div class="col-md-3">
+            <label>Unit Price</label>
+            <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+
+            <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
+              <span *ngIf="name4?.errors?.required">This field is required</span>
+            </div> -->
+          </div>
+          <div class="col-md-3">
+            <label>Quantity</label>
+            <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+
+            <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
+              <span *ngIf="name5?.errors?.required">This field is required</span>
+            </div> -->
+
+          </div>
+          <div class="col-md-2">
+            <label>Total</label><br>
+            <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" >
+
+          </div>
+
+          <div class="col-md-1" *ngIf="i!=0">
+            <!-- <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button> -->
+          </div>
+
+
+
+         </div>
+
+        </div>
+
+        <div class="form-floating mt-2">
+          <textarea class="form-control" 
+           required >{{jobDescription}}</textarea>
+          <!-- <label for="floatingTextarea">Description of Job to be done</label> -->
+        </div>
+
+        <div>
+          <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required value="{{artisanCharge}}">
+        </div>
+        </form>
+
+
+        </div>
+
+      </div>
+
+        <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
+        <span>ACCOUNT NUMBER: {{accountNumber}}</span><br/>
+        <span>ACCOUNT NAME: {{bankName}}</span>
+
+        <div class="mt-2">
+          <button class="btn btn-info " (click)="onEditForm()" >Edit</button>
+          <button class="btn btn-danger me-2"(click)="onEditForm()" >Cancel</button>
+          <button class="btn btn-info" type="submit"  (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
+
+
+        </div>
+
+      <!-- </form> -->
+    
+
+
+  </div>
+  
+</ng-template>

@@ -43,6 +43,13 @@ export class ArtisansService {
       })
     );
   }
+  artisanCancelOrderUrl(data:any){
+    return this.http.put<any>(this.api.baseUrl +'/api/Artisan/order/cancel',data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
   artisanCompleteOrder(id:number){
     return this.http.put<any>(this.api.baseUrl +'/api/Artisan/order/complete',id).pipe(
       map((res: any) => {
@@ -52,6 +59,20 @@ export class ArtisansService {
   }
   artisanGetCompletedOrder(){
     return this.http.get<any>(this.api.baseUrl +'/api/Artisan/ServiceOrder/completed').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+  artisanGetAllInvoices(){
+    return this.http.get<any>(this.api.baseUrl +'/api/Artisan/invoices').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+  artisanGetCancedOrder(){
+    return this.http.get<any>(this.api.baseUrl +'/api/Artisan/orders/cancelled').pipe(
       map((res: any) => {
         return res;
       })

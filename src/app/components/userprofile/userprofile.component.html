@@ -4,8 +4,8 @@
     
     <mat-sidenav-container >
       
-      <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3">
-        <mat-toolbar class="w-100 d-flex justify-content-end">
+      <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3" >
+        <mat-toolbar class="w-100 d-flex justify-content-end pt-5 mt-5">
           <!-- <div *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
                    
             <mat-icon *ngIf="sidenav.opened && sidenav.mode === 'over'" (click)="sidenav.toggle()" class="d-flex justify-content-end">close</mat-icon>
@@ -31,18 +31,14 @@
        
         <h4></h4>
        <hr class="divider">
-        <div class="icons py-2 py-md-5">
-          <span class="pb-3 cursor" [class.active]="expression == 'match1'" (click)="expression = 'match1'"
-            ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span
+        <div class=" icons w-100 p-4">
+          <div  class="p-3 cursor" [class.active]="expression == 'match1'" (click)="expression = 'match1'"
+            ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</div
           >
-          <!-- <span class="pb-3" ><i class="bi bi-grid-3x3-gap" ></i> DASHBOARD</span> -->
-          <!-- <span class="pb-3"><i class="bi bi-person"> </i> INFORMATION</span> -->
-          <span class="pb-3 cursor" [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="bi bi-gear"> </i> MY ORDERS</span>
-          <span class="pb-3 cursor" [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="bi bi-gear"> </i> QUOTE</span>
-          <!-- <span class="pb-3"><i class="bi bi-arrow-down"></i> MY REVIEWS</span> -->
-          <!-- <span class="pb-3"><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</span> -->
-        
-          <hr class="divided">
+         
+          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="bi bi-gear"> </i> MY ORDERS</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="bi bi-gear"> </i> QUOTE</div>
+          
 
           
           
@@ -59,7 +55,7 @@
  
         
         
-        <div class="content mat-elevation-z4 flex-column ms-3; ms-lg-4">
+        <div class="content mat-elevation-z4 flex-column ms-3; ms-lg-4 mt-5 pt-5 ">
           <!-- <div *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
             <mat-icon *ngIf="!sidenav.opened && sidenav.mode === 'over'" (click)="sidenav.toggle()">label_important</mat-icon>
             <!-- <i class="bi bi-arrow-right-circle" *ngIf="!sidenav.opened"></i> -->
@@ -72,7 +68,7 @@
       <div *ngSwitchCase="'match1'" >
         <form [formGroup]="formValue" (ngSubmit)="updateUserDetails(this.formValue.value)">
           <section
-            class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5"
+            class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5  "
           >
          
           
@@ -85,33 +81,7 @@
               </div>
              
 
-              <!-- <div class="align-text-bottom ">
              
-                <label class="btn btn-default mt-2 p-0">
-                  <input type="file" (change)="selectFile($event)" />
-                </label>
-
-               <button  (click)="upload()" class="btn btn-success mt-2">upload picture</button>
-
-               <div *ngIf="currentFile" class="progress my-3">
-                <div
-                  class="progress-bar progress-bar-info progress-bar-striped"
-                  role="progressbar"
-                  attr.aria-valuenow="{{ progress }}"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  [ngStyle]="{ width: progress + '%' }"
-                >
-                  {{ progress }}%
-                </div>
-              </div>
-
-                <h4 class="d-none d-lg-block pt-2">
-                  Acceptable format, jpg, png only<br /><span>
-                    Max file size is 100kb and min size 70kb</span
-                  >
-                </h4>
-              </div> -->
             </div>
           </section>
           <!-- <mat-divider></mat-divider> -->
@@ -128,8 +98,10 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="inputFirstName"
+                      id="inputfirstName"
                       formControlName="firstName" 
+                      [(ngModel)]="userData.firstName"
+                      
                     />
                   </div>
                 </div>
@@ -143,6 +115,7 @@
                       class="form-control"
                       id="inputlastName"
                       formControlName="lastName" 
+                      [(ngModel)]="userData.lastName"
                     />
                   </div>
                 </div>
@@ -154,8 +127,9 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="inputlastName"
+                      id="inputstate"
                       formControlName="state" 
+                      [(ngModel)]="userData.state"
                     />
                   </div>
                 </div>
@@ -167,11 +141,33 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="inputlastName"
+                      id="inputcity"
                       formControlName="city" 
+                      [(ngModel)]="userData.city"
                     />
                   </div>
                 </div>
+                <div class="form-group form-outline mb-4 d-flex">
+                  <label for="inputtext" class="col-sm-2 col-form-label"
+                  >STATE</label
+                >
+                  <select class="form-select " style="width: 32%;" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+                    <option value="" selected disabled>{{userData.location}}</option>
+                    <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
+                    
+                  </select>
+                  </div>
+
+                  <div class="form-group form-outline mb-4 d-flex"   >
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                    >LGA</label
+                  >
+                    <select class="form-select" style="width: 32%;" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+                      <option selected value="">{{userData.city}}</option>
+                      <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                      
+                    </select>
+                    </div>
                 <div class="mb-3 row">
                   <label for="inputPassword" class="col-sm-2 col-form-label"
                     >Address</label
@@ -182,21 +178,11 @@
                       class="form-control"
                       id="inputlastName"
                       formControlName="Address" 
+                      [(ngModel)]="userData.address"
                     />
                   </div>
                 </div>
-                <!-- <div class="mb-3 row">
-                  <label for="inputPassword" class="col-sm-2 col-form-label"
-                    >E-mail</label
-                  >
-                  <div class="col-sm-4">
-                    <input
-                     formControlName="email" type="text" class="form-control"
-                      class="form-control"
-                      id="inputEmail"
-                    />
-                  </div>
-                </div> -->
+              
                 <div class="mb-3 row">
                   <label for="inputPassword" class="col-sm-2 col-form-label"
                     >mobile number</label
@@ -207,6 +193,7 @@
                       class="form-control"
                       id="input"
                       formControlName="phoneNumber"
+                      [(ngModel)]="userData.phoneNumber"
                     />
                   </div>
                 </div>
@@ -214,12 +201,19 @@
               </div>
             </div>
           </section>
+          <span class="hovertext" data-hover="Hello, this is the tooltip">
+            Try hover over me
+          </span>
           <button class="btn btn-outline-success mx-1 mb-4" *ngIf="!showUpdate" (click)="onEdit()">edit profile</button>
 
           <button *ngIf="showUpdate" type="submit"  class="btn btn-outline-info mb-4 me-2">Update Profile</button>
           <button *ngIf="showUpdate" (click)="onEdit()" class="btn btn-outline-danger mb-4">Cancel</button>
 
           </form>
+
+          <div class="tooltip">Hover over me
+            <span class="tooltiptext">Tooltip text</span>
+          </div>
           
 
           <!-- <section class="p-2 mb-5 ps-md-5 butt">
@@ -291,26 +285,29 @@
 
 
           <div *ngSwitchCase="'match2'" class="p-3">
-          <section>
+            <div class="mt-3">
+              <h3>All Transactions</h3>
+            </div>
+          <!-- <section>
             <div class="col d-flex  justify-content-around">
               <div class="col-3 col1 d-flex flex-column p-3 ">
                 <span>Total bill</span>
                 <strong># 20,000</strong>
-                <!-- <a href="">sdfghjk</a> -->
+                <a href="">sdfghjk</a> 
               </div>
               <div class="col-3 col2 d-flex flex-column p-3">
                 <span>Total order</span>
                 <strong>10</strong>
-                <!-- <a href="">sdfghjk</a> -->
+                <a href="">sdfghjk</a> 
               </div>
               <div class="col-3 col3 d-flex flex-column p-3 ">
                 <span>Total bill</span>
                 <strong># 20,000</strong>
-                <!-- <a href="">sdfghjk</a> -->
+                <a href="">sdfghjk</a> 
               </div>
 
             </div>
-          </section>
+          </section> -->
           <section>
             <mat-toolbar class="text-success w-100 justify-content-between m-3">
               <div>Job History</div>
@@ -330,6 +327,7 @@
                     <th scope="col">Location</th>
   
                     <th scope="col">Status</th>
+                    <th scope="col">Action</th>
   
                     
                     
@@ -338,30 +336,37 @@
                 <tbody *ngFor="let data of orderData | orderBy: key : reverse | paginate: { itemsPerPage:5, currentPage:p}; ">
                   <tr>
                     <td  data-title="Date">{{data.date}}</td>
-                    <td data-title="inspection Date">{{data.inspectionTime}}</td>
+                    <td data-title="inspection Date">{{data.inspectionDate}}</td>
                     <td data-title="Completion Date">{{data.inspectionTime}}</td>
                     <td data-title="Order ID">{{data.id}}</td>
-                    <td data-title="Issue">{{data.issue}}</td>
+                    <td data-title="Issue" class="hovertext" data-hover="data.issue">{{data.issue}}</td>
 
                     <td data-title="Location">{{data.propertyAddress}}</td>
+                    <td data-title="status" *ngIf="!data.isCancelled && data.action === 0">Awaiting Approval</td>
+                    <td data-title="status" *ngIf="!data.isCancelled && data.action === 1">Awaiting Quote</td>
+                    <td data-title="status" *ngIf=" data.action === 2">Awaiting approve</td>
+                    <td data-title="status" *ngIf="data.action === 4">Completed</td>
+
                     <!-- <td data-title="Artisan's Name">{{data.artisanName}}</td> -->
                     <td data-title="Action">
                       <!-- <button (click)="onEditOrder(data)" class="btn btn-info me-2" *ngIf="!data.isApproved" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Edit
                       </button> -->
+                      <button class="btn btn-info" *ngIf="!data.isCancelled && data.action === 1">Awaiting  Approval</button>
                       <button class="btn btn-info" *ngIf="!data.isCancelled && data.action === 0">Awaiting  Approval</button>
                       <button class="btn btn-warning" *ngIf="!data.isCancelled && data.action === 2">Awaiting Quote</button>
-                      <button class="btn btn-success" *ngIf="!data.isCancelled && data.action === 4">Completed</button>
+                      <button class="btn btn-success me-2" *ngIf="!data.isCancelled && data.action === 4">Completed</button>
                       
                       <button class="btn btn-success me-2" (click)="toggleEditMode()" *ngIf="data.isApproved">Processing</button>
                       <button class="btn btn-dark me-2 "   data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
-                      data-bs-whatever="@mdo"  (click)=" onClickRating(data)" >Rate</button>
+                      data-bs-whatever="@mdo"  (click)=" onClickRating(data)"*ngIf="data.action === 4" >Rate</button>
                    
                       <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)=" onEditOrder(row)" >Update</button> -->
                    
                       <!-- <button class="btn btn-danger " *ngIf="!data.isApproved"  (click)="deleteOrder(data)">Delete</button> -->
                     </td>
+                    
                   </tr>
                 
                 </tbody>
@@ -392,30 +397,35 @@
               <table class="table table-striped" *ngIf="getInvoice">
                 <thead>
                   <tr>
-                    <th scope="col">Date</th>
-                    <th>Inspection Date</th>
-                    <th>Completion Date</th>
-                    <th scope="col" (click)="sort('id')" >Order ID&nbsp;<i class="fa fa-sort"></i></th>
+                    <td scope="col">Date</td>
+                    <th scope="col">  Invoice ID</th>
+                    <th scope="col">  Artisan's Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Order Categories</th>
                     <th scope="col">Issue</th>
-
                     <th scope="col">Location</th>
-  
                     <th scope="col">Status</th>
-  
-                    
-                    
-                </tr>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Action</th>
+                  
+                  </tr>
                 </thead>
+             
                 <tbody *ngFor="let i=index,let data of getInvoice | orderBy: key : reverse | paginate: { itemsPerPage:5, currentPage:p}; ">
                   <tr>
                     <td  data-title="Date">{{data.date}}</td>
-                    <td data-title="inspection Date">{{data.inspectionTime}}</td>
-                    <td data-title="Completion Date">{{data.inspectionTime}}</td>
-                    <td data-title="Order ID">{{data.id}}</td>
-                    <td data-title="Issue">{{data.serviceItems[i].price}}</td>
+                    <td  data-title="Invoice ID">{{data.invoiceId}}</td>
+                    <td data-title="Artisan's Name">{{data.artisanInfo.name}}</td>
+                    <td data-title="Phone Number">{{data.customerInfo.phoneNumber}}</td>
+                    <td data-title="Order Categories">{{data.artisanInfo.profession}}</td>
+                    <td data-title="Issue">{{data.jobDescription}}</td>
 
-                    <td data-title="Location">{{data.serviceItems[i].quantity}}</td>
-                    <td data-title="Location">{{data.serviceItems[i].total}}</td>
+                    <td data-title="Location">{{data.serviceOrderAddress}}</td>
+                    <td data-title="Status" *ngIf="data.action ===5 ">You Canceled this Quote</td>
+                    <td data-title="Status" *ngIf="data.action ===3 ">You Approved this Quote</td>
+                    <td data-title="Status" *ngIf="data.action ===2 ">Pending</td>
+                    <td data-title="Status" *ngIf="data.action ===4 ">Paid</td>
+                    <td data-title="Total Amount">{{data.invoiceTotal}}</td>
                     <!-- <td data-title="Artisan's Name">{{data.artisanName}}</td> -->
                     <td data-title="Action">
                       <!-- <button (click)="onEditOrder(data)" class="btn btn-info me-2" *ngIf="!data.isApproved" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -454,49 +464,109 @@
 </div>
 
 <!-- modal to view invoice -->
-<!-- modal to update form -->
+
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <!-- <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5> -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- modal form -->
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Unit No</th>
-              <th scope="col">Items Name</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Unit Price</th>
-              <th scope="col">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let i=index,let data of getInvoice ">
-              <th scope="row">{{data.serviceItems[i].serviceItemId}}</th>
-              <td>{{data.serviceItems[i].description}}</td>
-              <td>{{data.serviceItems[i].quantity}}</td>
-              <td>{{data.serviceItems[i].price}}</td>
-              <td>{{data.serviceItems[i].total}}</td>
-              <!-- <span><h6>ACCOUNT NAME</h6> {{getInvoice.accountName}}</span> -->
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>Artisan Details</h4>
+            <h5>Name: <span>{{artisanName}}</span></h5>
+            <h5>Email: <span>{{artisanEmail}}</span></h5>
+            
+          <h5> PhoneNumber: <span>{{artisanPhoneNumber}}</span></h5>
+        <h5> Profession: <span>{{artisanProfession}}</span></h5>
+          </div>
+          <div>
+            <h4>User Details</h4>
+            <h5>Name: <span>{{userName}}</span></h5>
 
-            </tr>
-        <!-- <div>Total Amount {{getInvoice.id}}</div> -->
-          </tbody>
+            <h5>Email: <span>{{userEmail}}</span></h5>
+          <h5> PhoneNumber: <span>{{userPhoneNumber}}</span> </h5>
+          <h5> Total: <span>{{allTotal}}</span> </h5>
+ 
+          </div>
+        </div>
+       
+        <div class="card border-secondary mt-2 mb-5">
+          <div class="card-body">
+            <!-- <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4> -->
+  
+  
+            <form action="" #invoiceBody="ngForm">
+              <div *ngFor="let obj of serviceItemsDetails;let i=index">
+            <div class="row" >
+  
+              <div class="col-md-3">
+                <label>Item Name</label>
+                <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel" disabled  required >
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
+                  <span *ngIf="name3?.errors?.required">This field is required</span>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <label>Unit Price</label>
+                <input type="number" class="form-control" name="p rice{{i}}" [(ngModel)]="obj.price" #name4="ngModel" disabled  required>
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
+                  <span *ngIf="name4?.errors?.required">This field is required</span>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <label>Quantity</label>
+                <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel" disabled  required>
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
+                  <span *ngIf="name5?.errors?.required">This field is required</span>
+                </div> -->
+  
+              </div>
+              <div class="col-md-2">
+                <label>Total</label><br>
+                <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" disabled>
+  
+              </div>
+  
+              <div class="col-md-1" *ngIf="i!=0">
+                <!-- <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button> -->
+              </div>
+  
+  
+  
+             </div>
+  
+            </div>
+  
+            <div class="form-floating mt-2">
+              <textarea class="form-control" 
+               required disabled>{{jobDescription}}</textarea>
+              <!-- <label for="floatingTextarea">Description of Job to be done</label> -->
+            </div>
 
-         
-        </table>
-        <!-- <span><h6>ACCOUNT NAME</h6> {{getInvoice.accountName}}</span>
-        <span><h6>ACCOUNT NUMBER</h6> {{getInvoice.accountNumber}}</span>
-        <span><h6>ACCOUNT NAME</h6> {{getInvoice.bankName}}</span> -->
-      </div>
+            <div>
+              <h4>Service Charge:</h4><input type="text" name="artisanCharge"  required="" [(ngModel)]="artisanCharge" disabled>
+            </div>
+
+            </form>
+  
+  
+            </div>
+  
+          </div>
+  
+            <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
+            <span>ACCOUNT NUMBER: {{accountNumber}}</span><br/>
+            <span>ACCOUNT NAME: {{bankName}}</span>
       <div class="modal-footer">
 
-        <button class="btn btn-danger me-2" (click)="userCancelQuote(getInvoice.id)" >Cancel Quote</button>
-        <button class="btn btn-info" (click)="userAprroveQuote(getInvoice.id)">Approve Quote</button>
+        <button class="btn btn-danger me-2" (click)="userCancelQuote(getInvoice)" *ngIf="invoiceAction=== 2">Cancel Quote</button>
+        <button class="btn btn-info" (click)="userAprroveQuote(getInvoice.invoiceId)" *ngIf="invoiceAction=== 2">Approve Quote</button>
         <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-info">Update</button> -->
       </div>

@@ -6,6 +6,7 @@ import { userProfileModel } from './components/userprofile/userprofile.model';
 import { ApiService } from './service/api.service';
 import { EventBusService } from './service/event-bus.service';
 import { LoaderService } from './service/loader.service';
+import { LoginService } from './service/login.service';
 import { StorageService } from './service/storage.service';
 
 import { UserModel } from './shared/models/user.model';
@@ -41,8 +42,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     public loader: LoaderService,
     private modalService: BsModalService,
-    private updateService: UpdateService
-    
+    private updateService: UpdateService,
+    public loginApi: LoginService,
   ) {updateService.checkForUpdate()}
 
   loading$ = this.loader.loading$;
@@ -55,11 +56,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.roleDisplay();
-    this.api.loggedIn()
+    this.loginApi.loggedIn()
     this.onClick(this.userProfileModelObj.id)
     
-    this.api.getToken()
-    this.api.getUserToken();
+    this.loginApi.getToken()
+    this.loginApi.getToken();
 
     this.onNetwortStatusChange();
     window.addEventListener('online', this.onNetwortStatusChange.bind(this))
@@ -84,8 +85,8 @@ console.log(row);
 }
 
   roleDisplay() {
-    if (this.api.getUserToken()!='') {
-      this.currentRole = this.api.haveaccess(this.api.getUserToken());
+    if (this.loginApi.getToken()!='') {
+      this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
 
       console.log(this.currentRole);
 
@@ -98,7 +99,7 @@ console.log(row);
       this.displayAdmin = this.currentRole === 'ADMIN';
       console.log(this.displayAdmin);
     }
-  this.api.loggedIn()
+  this.loginApi.loggedIn()
   }
   // openMenu() {
   //   this.menuVariable =! this.menuVariable;

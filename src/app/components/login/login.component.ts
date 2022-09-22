@@ -11,6 +11,7 @@ import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
 import { ToastrService } from 'ngx-toastr';
 // import { DataService } from 'src/app/service/data.service';
 import { AuthService } from 'src/app/service/auth.service';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
     private api: ApiService,
     private alertService: AlertService,
     private toastr: ToastrService,
-    private authApi: AuthService
+    private authApi: AuthService,
+    private loginApi: LoginService,
   ) {}
   submitted = false;
   ngOnInit(): void {
@@ -54,8 +56,8 @@ export class LoginComponent implements OnInit {
   }
 
   roleDisplay() {
-    if (this.api.getUserToken() != '') {
-      this.currentRole = this.api.haveaccess(this.api.getUserToken());
+    if (this.loginApi.getToken() != '') {
+      this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
 
       console.log(this.currentRole);
 
@@ -68,7 +70,7 @@ export class LoginComponent implements OnInit {
       this.displayAdmin = this.currentRole === 'ADMIN';
       console.log(this.displayAdmin);
     }
-    this.api.loggedIn();
+    this.loginApi.loggedIn();
   }
 
   login() {
@@ -120,12 +122,16 @@ export class LoginComponent implements OnInit {
     //   },
     // };
 
-    this.api.loginUser(this.signinForm.value).subscribe((res: any) => {
+    this.loginApi.loginUser(this.signinForm.value).subscribe((res: any) => {
       this.responsedata = res;
 
       localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
+      localStorage.setItem('refreshtoken', this.responsedata.data.refreshToken);
       localStorage.setItem('token', JSON.stringify(this.responsedata.data));
+      console.log(this.responsedata);
+      
       this.roleDisplay();
+      
       // this.reloadPage();
 
       if (this.displayArtisan) {

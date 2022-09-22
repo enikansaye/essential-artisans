@@ -29,13 +29,14 @@ const htmlToPdfmake = require('html-to-pdfmake');
 
 
 class itemObject {
-  itemName!:string;
-  unitPrice!:number;
+  name!:string;
+  price!:number;
   quantity!:number;
   total!:number;
   
 
 }
+
 
 @Component({
   selector: 'app-artisantransactions',
@@ -44,33 +45,60 @@ class itemObject {
 })
 export class ArtisantransactionsComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<string>();
-  InvoiceObject = {
-    items: [
-      {
-        description: '',
-        quantity: '',
-        price: '',
-        name: '',
-        invoiceDate: '',
-        invoiceNo: '',
-        itemNo: '',
-        totalAmount: '',
-        total: '',
-        itemName: '',
-      },
-    ],
-    orderId: 0,
-  };
+  // InvoiceObject = {
+  //   items: [
+  //     {
+  //       description: '',
+  //       quantity: '',
+  //       price: '',
+  //       name: '',
+  //       invoiceDate: '',
+  //       invoiceNo: '',
+  //       itemNo: '',
+  //       totalAmount: '',
+        
+  //       itemName: '',
 
-  // itemObject=new itemObject()
-  itemsArray: Array<itemObject> = [
+  //     },
+  //   ],
+  //   total: '',
+  //   artisanCharge:5000,
+  //   orderId: 0,
+  // };
+
+  // // itemObject=new itemObject()
+  // itemsArray: Array<itemObject> = [
+  //   {
+  //     itemName: '',
+  //     unitPrice: 0,
+  //     quantity: 0,
+  //     total: 0,
+  //   },
+  // ];
+  itemObject=new itemObject()
+  itemsArray:Array<itemObject>=[
     {
-      itemName: '',
-      unitPrice: 0,
-      quantity: 0,
-      total: 0,
-    },
-  ];
+      name:"",
+      price:0,
+      quantity:0,
+      total:0
+  
+    }
+  ]
+  InvoiceObject={
+    personName:"",
+    invoiceDate:"",
+    invoiceNo:"",
+    invoiceTotal:0,
+    orderId:0,
+    jobDescription:'',
+    artisanCharge:0,
+   items: this.itemsArray =[]
+  }
+  // products: Product[] = []
+  
+
+  
 
 
   modalRef?: BsModalRef | null;
@@ -103,7 +131,10 @@ export class ArtisantransactionsComponent implements OnInit {
   AllpendingLength: any;
   completeOrderError: any;
   pendingOrderError: any;
-
+  cancelOrderError: any;
+  cancelOrderData: any;
+  cancelOrderLength: any;
+hope:any
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -126,6 +157,7 @@ export class ArtisantransactionsComponent implements OnInit {
     this.getCompletedOrder();
     this.getPendingOrder();
     this.getAllOrder();
+    this.getCancelOrder();
 
     this.signupForm = this.formBuilder.group({
       orderId: 0,
@@ -146,6 +178,8 @@ export class ArtisantransactionsComponent implements OnInit {
     // this.invoice.id = row.id;
     // console.log(this.invoice.id);
   }
+  
+  
 
   getAllOrder() {
     this.artisanurl.getArtisanOrder().subscribe((res: any) => {
@@ -220,8 +254,25 @@ export class ArtisantransactionsComponent implements OnInit {
     this.artisanurl
       .artisanAcceptOrdersUrl(this.serviceOrdeIdForm.value)
       .subscribe((res: any) => {
+        this.toastr.success('Order Approve Successfully!!');
+
         console.log(res);
-        this.getAllOrder();
+        this.getAllOrder()
+        // this.getAllOrder();
+      });
+
+    console.log(row);
+  }
+  artisanCancelOrders(row: any) {
+    console.log(row.id);
+    this.serviceOrdeIdForm.value.serviceOrdeId = row.id;
+
+    this.artisanurl
+      .artisanCancelOrderUrl(this.serviceOrdeIdForm.value)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.getAllOrder()
+        // this.getAllOrder();
       });
 
     console.log(row);
@@ -236,7 +287,8 @@ export class ArtisantransactionsComponent implements OnInit {
     this.artisanurl
       .artisanCompleteOrder(this.serviceOrdeIdForm.value)
       .subscribe((res: any) => {
-       
+        this.toastr.success('Order Approve Successfully!!');
+
         // this.isAprove = !this.isAprove;
         console.log('this is artisan complete order',res);
         // this.getAllOrder();
@@ -254,6 +306,7 @@ export class ArtisantransactionsComponent implements OnInit {
         this.completeOrderData =res
       this.completeOrderLength =res.length
       console.log('this is from get complete order by artisan', res);
+      return this.completeOrderData.reverse()
       },
       error: (err: any) => {
         console.log(err.error);
@@ -265,55 +318,151 @@ export class ArtisantransactionsComponent implements OnInit {
     this.artisanurl.artisanGetCompletedOrder().subscribe(registerObserver)
 
   }
+  getCancelOrder() {
 
-  // invoive modal section
-  addInvoiceBody(data: any) {
-    console.log(data);
-
-    this.artisanurl
-      .generateInvoice(this.InvoiceObject)
-      .subscribe((res: any) => {
-        this.toastr.success('invoice successfully sent');
-        // form.reset()
+    const registerObserver = {
+      next: (res: any) => {
         console.log(res);
-      });
+
+        this.cancelOrderData =res
+      this.cancelOrderLength =res.length
+      console.log('this is from get complete order by artisan', res);
+      return this.completeOrderData.reverse()
+      },
+      error: (err: any) => {
+        console.log(err.error);
+        return this.cancelOrderError =err.error
+
+       
+      },
+    };
+    this.artisanurl.artisanGetCancedOrder().subscribe(registerObserver)
+
   }
 
-  addRow() {
-    this.itemsArray.push(new itemObject());
-  }
+//   // invoive modal section
+//   addInvoiceBody(data: any) {
+//     console.log(data);
+    
+//     // Object.keys(this.InvoiceObject.items).forEach(key => {
+//     //   console.log(key); // 👉️ "name", "country"
+//     //   // console.log(this.InvoiceObject.items[key:number]); // 👉️ "Tom", "Chile"
+      
+//     // });
+// this.InvoiceObject.total = this.hope
+//    return this.artisanurl
+//       .generateInvoice(this.InvoiceObject)
+//       .subscribe((res: any, ) => {
+        
+//         this.toastr.success('invoice successfully sent');
 
-  removeRow(i: any) {
-    this.itemsArray.splice(i);
-  }
+//         // form.reset()
+//         console.log(res);
+//       });
+//   }
 
-  chenk: number = 0;
-  getInvoiceTotalAmount() {
-    return this.itemsArray.reduce((acc, item) => {
-      acc += this.updateTotalInItemsArray(item);
-      console.log(item);
+//   addRow() {
+//     this.itemsArray.push(new itemObject());
+//   }
 
-      console.log(acc);
-      this.chenk = acc;
-      return this.chenk;
-    }, 0);
-  }
-  getValue(event: Event): string {
-    return (event.target as HTMLInputElement).value;
-  }
-  hope:any;
+//   removeRow(i: any) {
+//     this.itemsArray.splice(i);
+//   }
 
-  updateTotalInItemsArray(item: itemObject) {
-    item.total =
-      item.quantity && item.unitPrice ? item.quantity * item.unitPrice : 0;
-    this.hope = item.total;
+//   chenk: number = 0;
+//   getInvoiceTotalAmount() {
+//     return this.itemsArray.reduce((acc, item) => {
+//       console.log("this is item from data adding",item);
+      
+//       acc += this.updateTotalInItemsArray(item) + this.InvoiceObject.artisanCharge;
+//       console.log(item);
+
+//       console.log(acc);
+//       this.chenk = acc;
+//       return this.chenk;
+//     }, 0);
+//   }
+//   getValue(event: Event): string {
+//     return (event.target as HTMLInputElement).value;
+//   }
+//   hope:any;
+
+//   updateTotalInItemsArray(item: itemObject) {
+//     item.total =
+//       item.quantity && item.unitPrice ? item.quantity * item.unitPrice : 0;
+//     this.hope = item.total;
     
 
-    // this.InvoiceObject.items.total
+//     // this.InvoiceObject.items.total
 
-    return this.hope;
-  } 
-  checkoption(event: Event){
-    return (event.target as HTMLInputElement).value;
-  }
+//     return this.hope;
+//   } 
+//   checkoption(event: Event){
+//     return (event.target as HTMLInputElement).value;
+//   }
+
+submitQuote() {
+this.InvoiceObject.invoiceTotal = this.grandtotal
+// let index = this.serviceItemsDetails.findIndex((x:any)=> {
+
+// });
+
+let itemsDto = []
+
+for (let index = 0; index < this.InvoiceObject.items.length; index++) {      
+  // itemsDto.push(data[index])
+  // this.InvoiceObject.items[0].total =
+  this.itemsArray[index].total = this.hope
+
+}
+
+
+  console.log(this.InvoiceObject)
+  this.artisanurl.generateInvoice(this.InvoiceObject).subscribe(result=>{
+    this.toastr.success('invoice created successfully')
+    this.modalRef?.hide()
+     console.log(result)
+})
+
+}
+
+// addInvoiceBody() {
+// console.log(this.itemsArray)
+// this.artisanurl.generateInvoice(this.itemsArray).subscribe(result=>{
+// console.log(result)
+// })
+
+
+// }
+
+addRow() {
+this.itemsArray.push(new itemObject())
+
+
+}
+
+removeRow(i: number) {
+this.itemsArray.splice(i)
+
+}
+
+grandtotal:number =0
+getInvoiceTotalAmount() {
+return this.itemsArray.reduce((acc, item) => {
+acc += this.updateTotalInItemsArray(item) 
+this.grandtotal =acc;
+console.log(this.grandtotal);
+
+return acc;
+}, 0)
+ 
+}
+
+
+updateTotalInItemsArray(item: itemObject) {
+item.total =(item.quantity && item.price) ? item.quantity * item.price:0;
+return item.total
+}
+
+
 }

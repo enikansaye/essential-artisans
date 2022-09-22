@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from './userprofile.model';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from 'src/app/service/login.service';
 // import { DataService } from 'src/app/service/data.service';
 
 @Component({
@@ -71,6 +72,26 @@ export class UserprofileComponent implements OnInit {
   getInvoice: any;
   cancelQuote: any;
   getInvoiceId:any; 
+  artisanName: any;
+  artisanEmail: any;
+  artisanProfession: any;
+  artisanPhoneNumber: any;
+  userName: any;
+  userEmail: any;
+  userPhoneNumber: any;
+  accountName: any;
+  accountNumber: any;
+  bankName: any;
+  serviceItemsDetails: any;
+  invoiceUserDetails: any;
+  approveQuote: any;
+  serviceItemsDescription: any;
+  allTotal: any;
+  invoiceAction: any;
+  artisanCharge: any;
+  state2: any;
+  city2: any;
+  jobDescription: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -78,6 +99,7 @@ export class UserprofileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private http: HttpClient,
+    private login:LoginService,
     private toastr: ToastrService // private dataApi:DataService
   ) {}
 
@@ -105,7 +127,8 @@ export class UserprofileComponent implements OnInit {
 
     });
     this.getUser();
-    this.showAll();
+    // this.showAll()
+    this.getState();
     this.getOrder();
     this.getPendingOrder();
     this.getQoute();
@@ -190,41 +213,42 @@ export class UserprofileComponent implements OnInit {
   }
 
   // selecting location section
-  showAll() {
-    this.api.getAll().subscribe((data: any, i: any) => {
-      const result = Object.entries(data);
+  // showAll() {
+  //   this.api.getAll().subscribe((data: any, i: any) => {
+  //     const result = Object.entries(data);
 
-      this.state = data;
-    });
-  }
+  //     this.state = data;
+  //   });
+  // }
 
-  onSelect(data: any) {
-    let result = Object.entries(this.state);
-    console.log(data.value);
+  // onSelect(data: any) {
+  //   let result = Object.entries(this.state);
+  //   console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+  //   const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.city = (statesList as any)['cities'];
+  //   console.log((statesList as any)['cities']);
+  //   this.city = (statesList as any)['cities'];
 
-    console.log(this.city);
-  }
+  //   console.log(this.city);
+  // }
 
-  onSelectCities(data: any) {
-    let result = Object.entries(this.state);
-    console.log(data.value);
+  // onSelectCities(data: any) {
+  //   let result = Object.entries(this.state);
+  //   console.log(data.value);
 
-    const statesList = Object.values(result[data.value])[1];
+  //   const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
-    this.city = (statesList as any)['cities'];
+  //   console.log((statesList as any)['cities']);
+  //   this.city = (statesList as any)['cities'];
 
-    console.log(this.city);
-  }
+  //   console.log(this.city);
+  // }
   getOrder() {
     this.api.getUserOrder().subscribe((data: any) => {
       this.orderData = data;
       console.log(this.orderData);
+      return this.orderData.reverse()
     });
   }
 
@@ -256,36 +280,7 @@ export class UserprofileComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  upload(): void {
-    this.progress = 0;
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-      if (file) {
-        this.currentFile = file;
-        this.api.upload(this.currentFile).subscribe({
-          next: (event: any) => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.progress = Math.round((100 * event.loaded) / event.total);
-            } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
-            }
-          },
-          error: (err: any) => {
-            console.log(err);
-            this.progress = 0;
-            if (err.error && err.error.message) {
-              this.message = err.error.message;
-            } else {
-              this.message = 'Could not upload the file!';
-            }
-            this.currentFile = undefined;
-          },
-        });
-      }
-      this.selectedFiles = undefined;
-    }
-  }
-
+  
   // on click to update userprofile
   onEdit() {
     this.showUpdate = !this.showUpdate;
@@ -293,19 +288,19 @@ export class UserprofileComponent implements OnInit {
     if (this.showUpdate) {
       this.formValue.enable();
 
-    this.formValue.controls['userId'].setValue(this.api.loggedinUser.id);
+    this.formValue.controls['userId'].setValue(this.login.loggedinUser.id);
     this.formValue.controls['firstName'].setValue(
-      this.api.loggedinUser.firstName
+      this.login.loggedinUser.firstName
     );
     this.formValue.controls['lastName'].setValue(
-      this.api.loggedinUser.lastName
+      this.login.loggedinUser.lastName
     );
-    this.formValue.controls['Address'].setValue(this.api.loggedinUser.Address);
-    this.formValue.controls['city'].setValue(this.api.loggedinUser.city);
-    this.formValue.controls['state'].setValue(this.api.loggedinUser.state);
+    this.formValue.controls['Address'].setValue(this.login.loggedinUser.Address);
+    this.formValue.controls['city'].setValue(this.login.loggedinUser.city);
+    this.formValue.controls['state'].setValue(this.login.loggedinUser.state);
 
     this.formValue.controls['phoneNumber'].setValue(
-      this.api.loggedinUser.phoneNumber
+      this.login.loggedinUser.phoneNumber
     );
     }else {
       this.formValue.disable();
@@ -330,6 +325,8 @@ export class UserprofileComponent implements OnInit {
     this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
       console.log(res);
       this.toastr.success('Profile updated');
+      this.showUpdate = !this.showUpdate;
+
       //   alert('employee updated sucessfully');
 
       //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
@@ -344,21 +341,8 @@ export class UserprofileComponent implements OnInit {
     this.showAddEmployee = false;
     this.showUpdate = false;
   }
-  onFileChange(e: any) {
-    // this.model.file = e.target.files[0];
-    if (e.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (data: any) => {
-        this.profileimageUrl = data.target.result;
-        localStorage.setItem('url', data);
-      };
-    }
-  }
-  onFileSelected(e: any) {
-    this.selectedFile = e.target.files[0];
-    // this.selectedFile = File.item(0);
-  }
+
+
 
   onSubmit() {
     // this.alertService.info("Updating Account");
@@ -405,7 +389,7 @@ export class UserprofileComponent implements OnInit {
   }
 
   getUser() {
-    this.api.getUserinfo(this.api.loggedinUser.id).subscribe((res: any) => {
+    this.api.getUserinfo().subscribe((res: any) => {
       console.log(res);
 
       this.userData = res;
@@ -419,6 +403,26 @@ export class UserprofileComponent implements OnInit {
     this.key = key;
     this.reverse = !this.reverse;
   }
+  getState(){
+    this.api.getLocation().subscribe((data:any)=>{
+      this.state2= data
+      console.log( this.state2);
+      
+    })
+  }
+  onChangeState(event:any){
+    let userProfile =this.updateOrder.controls['state'].value
+    if(userProfile){
+      this.api.getLocation2(userProfile).subscribe((data:any)=>{
+        this. city2= data
+        console.log( this.city2);
+    })
+  }
+}
+onChangeCity(event:any){
+return this.updateOrder.controls['city'].value
+  
+}
 
   getPendingOrder() {
     return this.api.userGetPendingOrders().subscribe((res: any) => {
@@ -439,19 +443,21 @@ export class UserprofileComponent implements OnInit {
   }
   
   userAprroveQuote(data: any) {
-    console.log(this.getInvoiceId);
+    console.log(this.getInvoiceId.invoiceId);
     data=this.getInvoiceId
-    this.invoiceId =data.invoiceId
-    this.api.customerApproveInvoice(this.invoiceId, data.invoiceId).subscribe((res: any) => {
-      this.cancelQuote = res;
-      console.log(this.cancelQuote);
+    console.log(data.invoiceId);
+    
+    this.getInvoiceByIdForm.value.invoiceId =data.invoiceId
+    this.api.customerApproveInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
+      this.approveQuote = res;
+      console.log(this.approveQuote);
     });
   }
   userCancelQuote(data: any) {
     console.log(this.getInvoiceId);
     data=this.getInvoiceId
-    this.invoiceId = data.invoiceId
-    this.api.customerCancelInvoice(data, data.invoiceId).subscribe((res: any) => {
+    this.getInvoiceByIdForm.value.invoiceId = data.invoiceId
+    this.api.customerCancelInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
       this.cancelQuote = res;
       console.log(this.cancelQuote);
     });
@@ -461,12 +467,38 @@ export class UserprofileComponent implements OnInit {
   onClickInvoce(data:any){
     console.log(data);
     this.invoiceId = data.invoiceId,
+    this.getInvoiceId = data;
+    console.log(this.getInvoiceId);
     
     
     this.api.getInvoiveById(this.getInvoiceByIdForm.value ,data.invoiceId).subscribe((data: any) => {
       // this.getInvoiceByIdForm.controls['invoiceId'].setValue( data.invoiceId),
       this.getInvoiceId = data;
-      console.log(data);
+      this.artisanName =this.getInvoiceId.artisanInfo.name
+      this.artisanEmail =this.getInvoiceId.artisanInfo.email
+      this.artisanProfession =this.getInvoiceId.artisanInfo.profession
+      this.artisanPhoneNumber =this.getInvoiceId.artisanInfo.phoneNumber
+
+     //  user
+      this.userName =this.getInvoiceId.customerInfo.name
+      this.userEmail =this.getInvoiceId.customerInfo.email
+      this.userPhoneNumber =this.getInvoiceId.customerInfo.phoneNumber
+
+      this.accountName = this.getInvoiceId.accountName
+      this.accountNumber = this.getInvoiceId.accountNumber
+      this.bankName = this.getInvoiceId.bankName
+      this.jobDescription = this.getInvoiceId.jobDescription
+
+this.allTotal = this.getInvoiceId.invoiceTotal
+this.artisanCharge = this.getInvoiceId.artisanCharge
+this.serviceItemsDescription = this.getInvoiceId.description
+this.serviceItemsDetails = this.getInvoiceId.serviceItems
+      console.log(this.serviceItemsDetails);
+      
+      this.invoiceUserDetails =this.getInvoiceId.customerInfo
+     console.log(data);
+     console.log(this.getInvoiceId.action );
+     this.invoiceAction=this.getInvoiceId.action
 
     });
 
@@ -474,6 +506,12 @@ export class UserprofileComponent implements OnInit {
   getCompletedOrder(){
     this.api.userCompletedOrder().subscribe((data:any)=>{
       console.log('this is rest for completed order from user', data);
+      
+    })
+  }
+  getAprovedInvoice(){
+    this.api.userGetApprovedInvoice().subscribe((data:any)=>{
+      console.log('this is response form approved invoice', data);
       
     })
   }

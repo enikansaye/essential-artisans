@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminService } from 'src/app/shared/admin.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-alltransactions',
@@ -13,7 +14,8 @@ export class AlltransactionsComponent implements OnInit {
   // isAprove: boolean = false;
   process: boolean = false;
   // orderId: string = '';
-  signupForm!: FormGroup;
+  orderForm!: FormGroup;
+  reassignForm!: FormGroup;
   service = 'completed';
   othersData: any;
   totalLength: any;
@@ -30,6 +32,9 @@ export class AlltransactionsComponent implements OnInit {
   pendingLength: any;
   completedOrder: any;
   completedOrderLength: any;
+  canceledOrder: any;
+  canceledOrderLength: any;
+  assignArtisan: any;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -38,17 +43,24 @@ export class AlltransactionsComponent implements OnInit {
   AllOrderData: any;
   constructor(
     private adminApi: AdminService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
     this.getAllOrder();
     this.pendingOrder();
     this.getAllCompletedOrder();
+    this.getAllCanceledOrder();
     
 
-    this.signupForm = this.formBuilder.group({
+    this.orderForm = this.formBuilder.group({
       orderId: 0,
+
+    });
+    this.reassignForm = this.formBuilder.group({
+      orderId: 0,
+      artisanId:0
 
     });
   }
@@ -62,6 +74,7 @@ export class AlltransactionsComponent implements OnInit {
       this.totalLength = res.length;
       this.AllOrderData = res;
       console.log(this.AllOrderData);
+      return this.AllOrderData.reverse();
     });
   }
 
@@ -69,12 +82,13 @@ export class AlltransactionsComponent implements OnInit {
     console.log(row.id);
     console.log(row);
     
-    this.signupForm.value.orderId = row.id;
+    this.orderForm.value.orderId = row.id;
 
     this.adminApi
-      .aproveOrderUrl(this.signupForm.value)
+      .aproveOrderUrl(this.orderForm.value)
       .subscribe((res: any) => {
-        // this.isAprove = !this.isAprove;
+              this.toastr.success('Order Approve Successfully!!');
+
         console.log(res);
         this.getAllOrder()
       });
@@ -85,16 +99,18 @@ export class AlltransactionsComponent implements OnInit {
 
   rejectOrder(row: any) {
     console.log(row.id);
-    this.signupForm.value.orderId = row.id;
+    this.orderForm.value.orderId = row.id;
 
     this.adminApi
-      .rejectOrderUrl(this.signupForm.value)
+      .rejectOrderUrl(this.orderForm.value)
       .subscribe((res: any) => {
         
         // console.log(this.reject);
-        
+        this.toastr.success('Order Rejected!!');
+
         console.log(res);
-        // this.getAllOrder()
+        this.getAllOrder()
+        
       });
 
     console.log(row);
@@ -126,6 +142,58 @@ getAllCompletedOrder(){
     this.completedOrderLength =data.length
     console.log("all completed data", data);
     
+  })
+}
+getAllCanceledOrder(){
+  this.adminApi.getCanceledOrder().subscribe((data:any)=>{
+    this.canceledOrder =data
+    this.canceledOrderLength =data.length
+    console.log("all canceled data", data);
+    
+  })
+}
+hope:any
+hope2:any
+getArtisanToReassign(data:any){
+  console.log(data);
+  this.hope=data
+  
+  this.orderForm.value.orderId = data.id;
+  this.adminApi.reassignArtisan1(this.orderForm.value, data.id).subscribe((data:any)=>{
+    this.assignArtisan =data
+    console.log(this.hope );
+    this.hope2 = data
+    console.log(this.hope2);
+    
+    // this.completedOrderLength =data.length
+    console.log("all ARTISAN to re-assign data", data);
+    
+  })
+}
+hope3:any
+onChangeArtisan(event:any){
+  console.log(`ID is: ${event.value}`);
+  this.hope3 = `${event.value}`
+  console.log(this.hope3);
+  
+  
+
+}
+
+reassignArtisan(data:any){
+
+  data=this.hope2
+  console.log(data.name);
+  
+  
+  this.reassignForm.value.orderId = this.hope.id
+  this.reassignForm.value.artisanId = this.hope3
+  console.log(this.hope2.id);
+  
+  this.adminApi.reassignArtisan2(this.reassignForm.value).subscribe((data:any)=>{
+  
+    console.log("this is from reassign");
+  
   })
 }
  

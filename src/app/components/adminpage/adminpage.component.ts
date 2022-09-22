@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { PageEvent } from '@angular/material/paginator';
 import { ThemeOption } from 'ngx-echarts';
@@ -8,32 +8,48 @@ import { EChartsOption } from 'echarts';
 import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
+
+class itemObject {
+  itemName!:string;
+  price!:number;
+  quantity!:number;
+  total!:number;
+  
+
+}
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
   styleUrls: ['./adminpage.component.css'],
 })
+
+
 export class AdminpageComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
-  InvoiceObject={
+  itemObject=new itemObject()
+  itemsArray:Array<itemObject>=[
+    {
+      itemName:"",
+      price:0,
+      quantity:0,
+      total:0
   
-    serviceItems:[
-      {
-        description:'',
-        quantity:'',
-        unitPrice:'',
-       
-        totalAmount:'',
-        total:'',
-        serviceItemId: 0,
-      
-       
-      }
-    ],
-    invoiceId:0
-    
+    }
+  ]
+  InvoiceObject={
+    personName:"",
+    invoiceDate:"",
+    invoiceNo:"",
+    invoiceTotal:0,
+    orderId:0,
+    invoiceId:0,
+    jobDescription:'',
+    artisanCharge:0,
+    serviceItemsDto: this.itemsArray =[]
   }
 
   userData: any;
@@ -63,23 +79,37 @@ export class AdminpageComponent implements OnInit {
   quoteErrorMessage: any;
   artisanId: number = 0;
   isEditMode: boolean = false;
+  totalLength: any;
+  allTotal: any;
+  totalSales: any;
+  viewPendingQoute: any;
+  quotePendingError: any;
+  serviceItemsDetailsiId: any;
+  jobDescription: any;
+  artisanCharge: any;
+  modalRef?: BsModalRef | null;
+  modalRef2?: BsModalRef;
 
   constructor(
     private observer: BreakpointObserver,
     private api: ApiService,
     private adminApi: AdminService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private modalService: BsModalService,
+
+
   ) {}
 
   ngOnInit(): void {
 
-    this.invoiceForm = this.formBuilder.group({
-      invoiceId:0,      
-      serviceItems: this.formBuilder.array([this.initRows()])
-    });
-    this.formControls = this.invoiceForm.controls;
+    // this.invoiceForm = this.formBuilder.group({
+    //   invoiceId:0,      
+    //   serviceItemsDto: this.formBuilder.array([this.initRows()])
+    // });
+    // this.formControls = this.invoiceForm.controls;
 
-    this.invoiceForm.disable();
+    // this.invoiceForm.disable();
 
     this.getAllUser();
     this.getAllArtisan();
@@ -87,6 +117,8 @@ export class AdminpageComponent implements OnInit {
 
     this.getQouteByAdmin();
     this.getAllPendingQuote();
+    this.getAllOrder();
+    this.getAllTotalSales();
     // this.getAllCompletedOrder();
 
     // this.getAllUser()
@@ -215,35 +247,9 @@ export class AdminpageComponent implements OnInit {
       }
     });
   }
-  get formArr() {
-    return this.invoiceForm.get("serviceItems") as FormArray;
+  
 
-  }
-
-  initRows() {
-
-    return this.formBuilder.group({
-      invoiceId: 0,
-      description: [""],
-      price:[''],
-      quantity:[''],
-      total:[]
-    });
-  }
-
-  // consuming api section
-  // getAllUser() {
-  //   this.api.getUser().subscribe((res: any) => {
-  //     this.userData = res;
-  //     console.log(this.userData)
-  //     console.log(res)
-  //   });
-  // }
-  // getAllArtisan() {
-  //   this.api.getArtisan().subscribe((res: any) => {
-  //     this.userData = res;
-  //   });
-  // }
+ 
 
   getAllUser() {
     this.adminApi.getUser().subscribe((res: any) => {
@@ -288,13 +294,6 @@ export class AdminpageComponent implements OnInit {
     // });
   }
 
-  deleteArtisan(id: number) {
-    // this.adminApi.deleteArtisan(id).subscribe((res:any)=>{
-    //   alert('artisan deleted')
-    //  this.getAllArtisan();
-    // })
-  }
-
   getArtisanById(id: string) {
     this.adminApi.getArtisanbyid(id).subscribe((res: any) => {
       this.artisanData = res;
@@ -310,11 +309,22 @@ export class AdminpageComponent implements OnInit {
   }
 
   getAllPendingQuote() {
-    this.adminApi.getPendingQuote().subscribe((res: any) => {
-      console.log(res);
-      this.viewQoute = res;
-      return this.viewQoute;
-    });
+
+    const registerObserver = {
+      next: (res: any) => {
+        console.log("this is from pending quote",res);
+        this.viewPendingQoute = res;
+        return this.viewPendingQoute;
+      },
+      error: (err: any) => {
+        console.log(err.error);
+        return (this.quotePendingError = err.error);
+        // this.alertService.danger('signup failed');
+      },
+    };
+
+    this.adminApi.getPendingQuote().subscribe(registerObserver)
+    
   }
 
   approveQoute(row: any) {
@@ -325,6 +335,9 @@ export class AdminpageComponent implements OnInit {
     this.adminApi
       .aproveQuoteUrl(this.approveForm.value, row.invoiceId)
       .subscribe((res: any) => {
+        this.getAllPendingQuote();
+        this.toastr.success('invoice created successfully')
+
         // this.isAprove = !this.isAprove;
         console.log(res);
         // this.getQouteByAdmin()
@@ -340,9 +353,7 @@ export class AdminpageComponent implements OnInit {
     this.adminApi
       .aproveArtisanUrl(this.artisanId, row.id)
       .subscribe((res: any) => {
-        // this.isAprove = !this.isAprove;
         console.log(res);
-        // this.getQouteByAdmin()
       });
     this.artisanErrorMessage;
     console.log(row);
@@ -367,7 +378,7 @@ export class AdminpageComponent implements OnInit {
     
     
     this.api.getInvoiveById(this.getInvoiceByIdForm.value ,data.invoiceId).subscribe((data: any[]) => {
-
+      this.getInvoiceByIdForm.disable()
       this.getInvoiceId = data;
       // artisan
        this.artisanName =this.getInvoiceId.artisanInfo.name
@@ -384,43 +395,148 @@ export class AdminpageComponent implements OnInit {
        this.accountNumber = this.getInvoiceId.accountNumber
        this.bankName = this.getInvoiceId.bankName
 
-this.serviceItemsDetails = this.getInvoiceId.serviceItems.price
+this.artisanCharge = this.getInvoiceId.artisanCharge
+this.jobDescription = this.getInvoiceId.jobDescription
+this.allTotal = this.getInvoiceId.invoiceTotal
+this.serviceItemsDetails = this.getInvoiceId.serviceItems
        console.log(this.serviceItemsDetails);
        
        this.invoiceUserDetails =this.getInvoiceId.customerInfo
       console.log(data);
       console.log(this.getInvoiceId.action );
 
+      return this.getInvoiceId
+
     });
+    
 
   }
   onEditForm(): void {
-    this.isEditMode = !this.isEditMode;
-
-    if (this.isEditMode) {
-      this.invoiceForm.enable();
-      // this.formControls['firstName'].enable();
+    this.isEditMode = true;
+// this.serviceItemsDetails = this.itemsArray
+// const control = this.serviceItemsDetails;
+// control.controls =[];
+//     if (this.isEditMode) {
+//       // this.invoiceForm.enable();
+//       // this.formControls['firstName'].enable();
 
       
-    }
+//     }
   }
  
   submitEditedQuote(data:any){
     
+    data = this.serviceItemsDetails
     console.log(data);
-    this.invoiceForm.value.invoiceId  =  this.getInvoiceId.invoiceId
-    this.invoiceForm.value.serviceOrderId  = this.getInvoiceId.serviceOrderId 
-    
-    this.adminApi.editQuoteUrl(this.invoiceForm.value).subscribe((data: any[]) => {
+    this.serviceItemsDetailsiId = this.serviceItemsDetails.serviceItemId
 
-      // this.dateCommoditie = this.granosHistorical.data.date
+    // this.serviceItemsDetailsiId = this.serviceItemsDetails[i]['this.serviceItemsDetails.serviceItemId']
+    // this.serviceItemsDetailsiId = data[i]['serviceItemsDetails ']
+    console.log(this.serviceItemsDetailsiId);
+    let index = this.serviceItemsDetails.findIndex((x:any)=> {
+
+    });
+  
+    let itemsDto = []
+
+    for (let index = 0; index < data.length; index++) {      
+      itemsDto.push(data[index])
+    }
+    
+
+    let invoiceEdit = {
+      "invoiceId": this.getInvoiceId.invoiceId,
+      "serviceItemsDto": itemsDto
+    } 
+
+    console.log(invoiceEdit);
+    
+    this.InvoiceObject.invoiceId  =  this.getInvoiceId.invoiceId
+    // console.log(this.getInvoiceId.invoiceId);
+    
+   
+    
+    
+    this.adminApi.editQuoteUrl(invoiceEdit).subscribe((data: any[]) => {
+     
       this.getInvoiceId = data;
-      
+      this.modalRef?.hide()
+
       console.log(data);
       console.log(this.getInvoiceId.action );
 
     });
 
+  }
+  suspendArtisan(row: any) {
+    console.log(row.id);
+    this.artisanId = row.id;
+    console.log(row);
+
+    this.adminApi
+      .suspendArtisanUrl(this.artisanId, row.id)
+      .subscribe((res: any) => {
+        console.log("this is a respond from suspend artisan",res);
+      });
+    // this.artisanErrorMessage;
+    console.log(row);
+  }
+  deleteArtisan(row: any) {
+    console.log(row.id);
+    this.artisanId = row.id;
+    console.log(row);
+
+    this.adminApi
+      .deleteArtisanUrl(this.artisanId, row.id)
+      .subscribe((res: any) => {
+        console.log("this is a respond from delete artisan", res);
+      });
+    // this.artisanErrorMessage;
+    console.log(row);
+  }
+
+  confirmPayment(row: any) {
+    console.log(row.invoiceId );
+    this.approveForm.value.invoiceId = row.invoiceId;
+    console.log(row);
+
+    this.adminApi
+      .confirmPaymentUrl(this.approveForm.value, row.invoiceId)
+      .subscribe((res: any) => {
+        console.log("this is a respond from confirm payment",res);
+      });
+    // this.artisanErrorMessage;
+    console.log(row);
+  }
+
+  getAllOrder() {
+    this.adminApi.getOrder().subscribe((res: any) => {
+      console.log(res);
+      this.totalLength = res.length;
+      // this.AllOrderData = res;
+      // console.log(this.AllOrderData);
+      // return this.AllOrderData.reverse();
+    });
+  }
+  getAllTotalSales() {
+    this.adminApi.getTotalSales().subscribe((res: any) => {
+      console.log('this is total sales',res);
+      this.totalSales = res;
+      // this.AllOrderData = res;
+      // console.log(this.AllOrderData);
+      // return this.AllOrderData.reverse();
+    });
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {
+      id: 1,
+      class: 'modal-lg',
+    });
+  }
+
+  closeModal(modalId?: number) {
+    this.modalService.hide(modalId);
   }
 
 }

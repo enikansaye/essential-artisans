@@ -87,7 +87,8 @@
                   <span class="bi bi-users fs-3 text-primary"></span>
                 </div>
               </div>
-              <h2 class="fw-bold mb-1">0</h2>
+              <h2 class="fw-bold mb-1">{{cancelOrderLength}}</h2>
+              <h2 class="fw-bold mb-1" *ngIf="!cancelOrderData">0</h2>
              
             </div>
           </div>
@@ -236,8 +237,9 @@
                 <td data-title="Completion Date"></td>
                 <td data-title="Order ID">{{ data.id }}</td>
                 <td data-title="Issue">{{ data.issue }}</td>
-                <td data-title="Status" *ngIf="data.action === 1">Pending</td>
+                <td data-title="Status" *ngIf="data.action === 2">Pending</td>
                 <td data-title="Status" *ngIf="data.action === 4">Completed</td>
+                <td data-title="Status" *ngIf="data.action === 5">Canceled</td>
 
                 <td data-title="Location">{{ data.propertyAddress }}</td>
                 <!-- <td data-title="Artisan's Name">{{data.artisanName}}</td> -->
@@ -250,21 +252,34 @@
                     *ngIf="!data.isApproved && data.action === 1"
                     (click)="artisanAcceptOrders(data)"
                   >
-                    Pending
+                    Accept Order
+                  </button>
+                  <button
+                    class="btn btn-cancel"
+                    *ngIf="!data.isApproved && data.action === 1"
+                    (click)="artisanCancelOrders(data)"
+                  >
+                    Reject Order
                   </button>
                   <button
                     type="button"
                     class="btn btn-info"
                     (click)="openModal(template)"
                     (click)="onEdit(data)"
-                    *ngIf="!data.isApproved && data.action === 2"
+                    *ngIf="data.action === 2 && !data.hasInvoice
+                    " 
                   >
                     Create Invoice
                   </button>
+                  <button class="btn btn-info" *ngIf="data.action === 2 && data.hasInvoice"> Invoice Awaiting Approval</button>
 
-                  <button *ngIf="data.isApproved">Awaiting Quote</button>
+                  <!-- <button *ngIf="data.isApproved">Awaiting Quote</button> -->
+                  <button class="btn btn-danger" *ngIf="data.action === 5">Canceled</button>
+                  <button class="btn btn-danger" *ngIf="data.action === 3">Canceled</button>
+                  <button class="btn btn-success" *ngIf="data.invoiceId && data.action === 5">Invoice Created</button>
+                  <button class="btn btn-success" (click)="completeOrder(data)" *ngIf="data.invoiceId ">Complete Job</button>
                   <!-- <button (click)="completeOrder(data)">complete order</button> -->
-                  <div (click)="completeOrder(data)" *ngIf="data.action === 4">
+                  <div  *ngIf="data.action === 4">
                     <i class="bi bi-check-all text-success fa-3x"> </i>
                   </div>
                 </td>
@@ -426,7 +441,7 @@
 
       </div>
 
-      <!-- involve creation -->
+      <!-- invoice creation -->
       <div *ngSwitchCase="'completed6'">
         <!-- <app-invoice [check]="check"></app-invoice> -->
       </div>
@@ -448,204 +463,135 @@
     </button>
   </div>
   <div class="modal-body">
-    <div
-      class="container-fluid pt-2"
-      style="margin-bottom: 250px"
-      *ngFor="let data of InvoiceObject.items"
-    >
-      <form
-        action=""
-        #invoiceBody="ngForm"
-        (ngSubmit)="addInvoiceBody(this.invoiceBody.value)"
-      >
-        <div class="card border-secondary">
-          <div class="card-body">
-            <h4 class="card-title">Invoice Details</h4>
-
-            <div class="row">
-              <div class="col-md-8">
-                <div class="form-group">
-                  <label for="name">Person Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="personName"
-                    id="name"
-                    [(ngModel)]="data.name"
-                    #personName="ngModel"
-                    required
-                  />
-
-                  <div class="alert alert-danger" *ngIf="!personName.valid">
-                    <!-- <span *ngIf="personName?.errors?.required">This field is required</span> -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+      <a class="navbar-brand" >INVOICE</a>
+    </nav>
+    
+    <div class="container-fluid pt-2" style="margin-bottom: 250px">
+    
+          <div class="card border-secondary">
+            <div class="card-body">
+              <h4 class="card-title">Invoice Details</h4>
+              <form #invoiceinformation="ngForm" >
+              <div class="row">
+    
+                <div class="col-md-8">
+                  <!-- <div class="form-group">
+                    <label for="name">Issued Person Name</label>
+                    <input type="text" class="form-control" name="personName" id="name" [(ngModel)]="InvoiceObject.personName" #name="ngModel" required>
+     -->
+                    <!-- <div class="alert alert-danger" *ngIf="!name.valid">
+                      <span *ngIf="name?.errors?.required">This field is required</span>
+                    </div> -->
+    
+    
+                  <!-- </div> -->
+                  <div class="form-group">
+                    <label for="date">Invoice Date</label>
+                    <input type="date" class="form-control" name="invoiceDate" id="date" [(ngModel)]="InvoiceObject.invoiceDate"  #name1="ngModel"   required>
+    
+                    <!-- <div class="alert alert-danger" *ngIf="!name1.valid">
+                      <span *ngIf="name1?.errors?.required">This field is required</span>
+                    </div> -->
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="date">Invoice Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    name="invoiceDate"
-                    id="date"
-                    [(ngModel)]="data.invoiceDate"
-                    #invoiceNo="ngModel"
-                    invoiceNo="ngModel"
-                    required
-                  />
-
-                  <div class="alert alert-danger" *ngIf="!invoiceNo.valid">
-                    <!-- <span *ngIf="invoiceNo
-    invoiceNo?.errors?.required">This field is required</span> -->
+                <div class="col-md-4">
+                  <!-- <div class="form-group">
+                    <label for="invoiceNo">Invoice No</label>
+                    <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" [(ngModel)]="InvoiceObject.invoiceNo"  #name2="ngModel" required>
+     -->
+                    <!-- <div class="alert alert-danger" *ngIf="!name2.valid">
+                      <span *ngIf="name2?.errors?.required">This field is required</span>
+                    </div> -->
+                  <!-- </div> -->
+    
+                  <div class="form-group">
+                    <label for="TAmount">Total Amount</label>
+    
+    
+                    <input  type="text" class="form-control"[(ngModel)]="InvoiceObject.invoiceTotal" name="invoiceTotal" id="invoiceTotal" [ngModel]="getInvoiceTotalAmount()" disabled >
+    
                   </div>
                 </div>
+    
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="invoiceNo">Invoice No</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="invoiceNo"
-                    id="invoiceNo"
-                    [(ngModel)]="data.invoiceNo"
-                    #invoiceNo="ngModel"
-                    required
-                  />
-
-                  <div class="alert alert-danger" *ngIf="!invoiceNo.valid">
-                    <!-- <span *ngIf="invoiceNo?.errors?.required">This field is required</span> -->
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="TAmount">Total Amount</label>
-
-                  <input
-                    disabled
-                    type="text"
-                    class="form-control"
-                    name="totalAmount"
-                    #totalAmount="ngModel"
-                    id="totalAmount"
-                    value="acc"
-                    [value]="data.totalAmount"
-                    [(ngModel)]="data.totalAmount"
-                    [ngModel]="getInvoiceTotalAmount()"
-                    (ngModelChange)="(data.totalAmount)"
-                  />
-                </div>
-              </div>
+              </form>
             </div>
           </div>
-        </div>
-        <div class="card border-secondary mt-2 mb-5">
-          <div class="card-body">
-            <h4 class="card-title d-flex justify-content-between">
-              Items Details
-              <button type="button" class="btn btn-primary" (click)="addRow()">
-                +
-              </button>
-            </h4>
-
-            <div *ngFor="let obj of itemsArray; let i = index">
-              <div class="row">
+          <div class="card border-secondary mt-2 mb-5">
+            <div class="card-body">
+              <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-info" (click)="addRow()">Add Input</button></h4>
+    
+    
+              <form action="" #invoiceBody="ngForm">
+                <div *ngFor="let obj of itemsArray;let i=index">
+              <div class="row" >
+    
                 <div class="col-md-3">
                   <label>Item Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="itemName{{ i }}"
-                     [(ngModel)]="data.itemName" #itemName="ngModel"
-                    required
-                  />
-
-                  <div class="alert alert-danger" *ngIf="!itemName.valid">
-                    <!-- <span *ngIf="name3?.errors?.required">This field is required</span> -->
-                  </div>
+                  <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+    
+                  <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
+                    <span *ngIf="name3?.errors?.required">This field is required</span>
+                  </div> -->
                 </div>
                 <div class="col-md-3">
                   <label>Unit Price</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="unitPrice{{ i }}"
-                    [(ngModel)]="obj.unitPrice"
-                    (ngModelChange)="data.price = $event"
-                    #unitPrice="ngModel"
-                    required
-                  />
-
-                  <div class="alert alert-danger" *ngIf="!unitPrice.valid">
-                    <!-- <span *ngIf="name4?.errors?.required">This field is required</span> -->
-                  </div>
+                  <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+    
+                  <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
+                    <span *ngIf="name4?.errors?.required">This field is required</span>
+                  </div> -->
                 </div>
                 <div class="col-md-3">
                   <label>Quantity</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="quantity{{ i }}"
-                    [(ngModel)]="obj.quantity"
-                    (ngModelChange)="data.quantity = $event"
-                    #quantity="ngModel"
-                    required
-                  />
-
-                  <div class="alert alert-danger" *ngIf="!quantity.valid">
-                    <!-- <span *ngIf="name5?.errors?.required">This field is required</span> -->
-                  </div>
+                  <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+    
+                  <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
+                    <span *ngIf="name5?.errors?.required">This field is required</span>
+                  </div> -->
+    
                 </div>
                 <div class="col-md-2">
-                  <label>Total</label><br />
-                  <input
-                    type="number"
-                    class="form-control"
-                    #total
-                    name="total{{ i }}" [(ngModel)]="obj.total" [value]="hope" (input)="hope"
-
-
-                    
-                  />
+                  <label>Total</label><br>
+                  <input type="number" class="form-control" name="total{{i}}"  [ngModel]="updateTotalInItemsArray(obj)">
+    
                 </div>
-
-                <div class="col-md-1" *ngIf="i != 0">
-                  <button
-                    class="btn btn-danger"
-                    style="margin-top: 30px"
-                    (click)="removeRow(i)"
-                  >
-                    
-                  </button>
+    
+                <div class="col-md-1" *ngIf="i!=0">
+                  <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
                 </div>
+    
+    
+    
+               </div>
+    
               </div>
-            </div>
+    
+              <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="jobDescription" [(ngModel)]="InvoiceObject.jobDescription" #jobDescription="ngModel"   required ></textarea>
+                <label for="floatingTextarea">Description of Job to be done</label>
+              </div>
 
-            <div class="form-floating">
-              <textarea
-                class="form-control"
-                placeholder="Leave a comment here"
-                id="floatingTextarea"
-                name="description"
-                [(ngModel)]="data.description"
-                #description="ngModel"
-                required
-              ></textarea>
-              <label for="floatingTextarea"
-                >Description of Job to be done</label
-              >
+              <div>
+                <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required="">
+              </div>
+              </form>
+    
+    
+              </div>
+    
             </div>
-          </div>
-        </div>
-       <div class="d-flex">
-        <button type="submit" name="" class="btn btn-primary me-2 ">
-          SEND
-        </button>
-        <button type="button" class="btn btn-danger" (click)="closeModal()">
-          Cancel
-        </button>
-       </div>
-      </form>
+    
+    
+    <!--  [hidden]="!invoiceinformation.valid" [disabled]="!invoiceBody.valid"-->
+    
+          <button type="button" name="" class="btn btn-primary btn-lg" (click)="submitQuote()"   >Send Quote</button>
+    
+    
+    
     </div>
+    my h
 
    
   </div>

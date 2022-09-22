@@ -113,6 +113,7 @@ export class ArtisanprofileComponent implements OnInit {
   };
   state2: any;
   city2: any;
+  invoiceData: any;
 
 
   constructor(
@@ -169,7 +170,8 @@ export class ArtisanprofileComponent implements OnInit {
     this.formControls = this.updateForm.controls;
 
     this.getArtisan();
-    this.getOrder()
+    this.getOrder();
+    this.getAllInvoices();
   }
 
   getArtisan() {
@@ -364,7 +366,7 @@ this.city=data.value
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     
-    this.http.post('https://localhost:7130/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
+    this.http.post(this.api.baseUrl + '/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
       .subscribe({
         next: (event:any) => {
         if (event.type === HttpEventType.UploadProgress)
@@ -373,6 +375,10 @@ this.city=data.value
           this.message = 'Upload success.';
           this.onUploadFinished.emit(event.body);
         }
+        setTimeout(() => {
+          this.progress =0;
+          this.message= '';
+        }, 1500);
         this.getArtisan()
       },
       error: (err: HttpErrorResponse) => console.log(err)
@@ -470,6 +476,13 @@ this.city=data.value
     this.adminApi.getServiceCategory().subscribe((data:any)=>{
       this.serviceCategory = data
       console.log(this.serviceCategory);
+      
+    })
+  }
+  getAllInvoices(){
+    this.artisanurl.artisanGetAllInvoices().subscribe((data:any)=>{
+      this.invoiceData = data
+      console.log("this is response from all response of get invoices", data);
       
     })
   }

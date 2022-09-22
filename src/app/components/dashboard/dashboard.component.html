@@ -26,12 +26,25 @@
         </div>
         <!-- <div class="card col-4  d-flex p-3 bg-light bg-opacity-50 "> -->
         <div class="dropdown card col-6 col-md-4 d-flex p-1 bg-light bg-opacity-50 pe-4">
-          <div class="mb-2 h4">Service</div>
-          <select class="form-select" aria-label="Default select example" >
+
+          <div class="mb-2 h4">Services</div>
+
+
+            <div class="btn btn-secondary dropdown-toggle d-flex flex-start"  data-bs-toggle="dropdown" aria-expanded="false">
+              Available Services
+            </div>
+            <ul class="dropdown-menu w-100">
+              <li><a class="dropdown-item" #Acrepair name="Acrepair" id="Acrepair" (click)="this.data.sendClickEvent(Acrepair.id)" routerLink="/available artisan">AC Technician</a></li>
+              <li><a class="dropdown-item" #Carpenter name="Carpenter" id="Carpenter" routerLink="/available artisan" (click)="this.data.sendClickEvent(Carpenter.id)">Carpenter</a></li>
+              <li><a class="dropdown-item" #Electrician name="Electrician" id="Electrician" (click)="this.data.sendClickEvent(Electrician.id)" routerLink="/available artisan">Electrician</a></li>
+              <li><a class="dropdown-item" #Plumbing name="Plumbing" routerLink="/available artisan" id="Plumbing" (click)="this.data.sendClickEvent(Plumbing.id)">Plumbing</a></li>
+            </ul>
+         
+          <!-- <select class="form-select" aria-label="Default select example" (change)="onChangeService($event.target)" >
             <option selected>Select Service</option>
-            <option value="" *ngFor="let data of serviceData " routerLink="/available artisan">{{data.name}}</option>
+            <option  *ngFor="let data of serviceData " value="{{ data.name }}" ()="this.data.sendClickEvent(hope3)" routerLink="/available artisan">{{data.name}}</option>
            
-          </select>
+          </select>  -->
 
          
         </div>
@@ -162,7 +175,7 @@
         >
           <div class="row g-4">
             <!-- Card item START -->
-            <div class="col-6 col-lg-4 col-xl-3 cursor" #Electrician name="Electrician" id="Electrician" (click)="getArtisan(Electrician.id)" routerLink="/available artisan">
+            <div class="col-6 col-lg-4 col-xl-3 cursor" #Electrician name="Electrician" id="Electrician" (click)="this.data.sendClickEvent(Electrician.id)" routerLink="/available artisan">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -214,7 +227,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor" #Electrician name="Electrician" id="Electrician" (click)="clickMe(Electrician.id)" (click)="clickMe(Electrician.id)" (click)="updateText(Electrician.id)">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor" #Acrepair name="Acrepair" id="Acrepair" (click)="this.data.sendClickEvent(Acrepair.id)" routerLink="/available artisan" >
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -265,7 +278,7 @@
             <!-- Card item END -->
 
             <!-- Card item START -->
-            <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor" routerLink="/available artisan" #Carpenter name="Carpenter" id="Carpenter" (click)="clickMe(Carpenter.id)" (click)="updateText(Carpenter.id)">
+            <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor"  #Carpenter name="Carpenter" id="Carpenter" routerLink="/available artisan" (click)="this.data.sendClickEvent(Carpenter.id)">
               <div class="card shadow h-100">
                 <!-- Image -->
                 <img
@@ -317,7 +330,7 @@
 
             <!-- Card item START -->
             <div class=" col-6 col-sm-6 col-lg-4 col-xl-3 cursor" >
-              <div class="card shadow h-100" routerLink="/available artisan">
+              <div class="card shadow h-100" #Plumbing name="Plumbing" routerLink="/available artisan" id="Plumbing" (click)="this.data.sendClickEvent(Plumbing.id)">
                 <!-- Image -->
                 <img
                   src="assets/images/plumbing.png"

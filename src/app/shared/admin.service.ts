@@ -164,5 +164,51 @@ export class AdminService {
       return res;
     }))
   }
-
+  getCanceledOrder(){
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/Admin/orders/cancelled').pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+ suspendArtisanUrl(data:any, id: number){
+  return this.http.put<any>(this.apiUrl.baseUrl + '/api/Admin/artisan/suspend/' + id, data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
+ deleteArtisanUrl(data:any, id: number){
+  return this.http.put<any>(this.apiUrl.baseUrl + '/api/Admin/artisan/delete/' + id, data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
+ confirmPaymentUrl(data:any, id: number){
+ return this.http.put<any>(this.apiUrl.baseUrl + '/api/Admin/invoice/confirmpayment/' + id, data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
+ reassignArtisan1(data:any, id: number){
+ return this.http.get<any>(this.apiUrl.baseUrl + '/api/Admin/category/artisans/' + id, data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
+ getTotalSales(){
+ return this.http.get<any>(this.apiUrl.baseUrl + '/api/Admin/totalsales').pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
+ reassignArtisan2(data:any,){
+ return this.http.put<any>(this.apiUrl.baseUrl + '/api/Admin/order/reassign', data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
 } 

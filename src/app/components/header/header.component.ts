@@ -3,6 +3,7 @@ import { Component, HostListener, OnChanges, OnInit, SimpleChanges} from '@angul
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
+import { LoginService } from 'src/app/service/login.service';
 import { Emitters } from 'src/emitters/emitters';
 import { userProfileModel } from '../userprofile/userprofile.model';
 // import { MenuItem } from './menu-item';
@@ -40,10 +41,10 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,public api: ApiService,
-    private http : HttpClient,private route: ActivatedRoute, private router: Router) { }
+    private http : HttpClient,private route: ActivatedRoute, private router: Router, public loginApi:LoginService) { }
   ngOnInit(): void {
     this.roleDisplay();
-    this.api.loggedIn()
+    this.loginApi.loggedIn()
     this.onClick(this.userProfileModelObj.id)
     
     
@@ -61,8 +62,8 @@ export class HeaderComponent implements OnInit {
       }
 
       roleDisplay(){
-        if (this.api.getUserToken()!='') {
-          this.currentRole = this.api.haveaccess(this.api.getUserToken());
+        if (this.loginApi.getToken()!='') {
+          this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
     
           console.log(this.currentRole);
     
@@ -75,7 +76,7 @@ export class HeaderComponent implements OnInit {
           this.displayAdmin = this.currentRole === 'ADMIN';
           console.log(this.displayAdmin);
         }
-      this.api.loggedIn()
+      this.loginApi.loggedIn()
       }
 
       logout() {

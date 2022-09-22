@@ -31,7 +31,7 @@
 <mat-toolbar fxLayout="row" color="primary">
   <span fxFlex>essential</span>
   <div *ngFor="let item of menuItems">
-    <button mat-button  [routerLink]="[item.routeLink]" *ngIf="api.loggedIn()" (click)="logout()" 
+    <button mat-button  [routerLink]="[item.routeLink]" *ngIf="loginApi.loggedIn()" (click)="logout()" 
       [fxShow]="item.showOnDesktop" 
       [fxShow.xs]="item.showOnMobile"
       [fxShow.sm]="item.showOnTablet">
@@ -42,7 +42,7 @@
      
       <!-- {{element.source == 1 ? 'upwork' : (element.source == 2 ? 'refer from friend' : '')}} -->
   </button>
-    <button mat-button  [routerLink]="[item.routeLink]" *ngIf="!api.loggedIn()"  
+    <button mat-button  [routerLink]="[item.routeLink]" *ngIf="!loginApi.loggedIn()"  
       [fxShow]="item.showOnDesktop" 
       [fxShow.xs]="item.showOnMobile"
       [fxShow.sm]="item.showOnTablet">

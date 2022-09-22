@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+[x: string]: any;
 
   hide = true;
   signupForm!: FormGroup;
@@ -61,10 +62,18 @@ export class RegisterComponent implements OnInit {
   onSubmit(data:any) {
     this.submitted = false;
     this.alertService.info('Working on creating new account');
+    localStorage.setItem('email', data.email);
+
 
     const registerObserver = {
       next: (res: any) => {
+        // localStorage.setItem('email', res.data.email);
+
+        // localStorage.setItem('emails', data.email);
+        // localStorage.setItem('email', this.signupForm.value.email);
+
         this.router.navigate(['/checkemail']);
+
       },
       error: (err: any) => {
         console.log(err);
@@ -78,7 +87,21 @@ export class RegisterComponent implements OnInit {
     this.authApi.registerUser(this.signupForm.value).subscribe(registerObserver);
   }
 
- 
+  hope:any
+ resendEmail(){
+  // console.log(data);
+  
+  this.hope = localStorage.getItem('email');
+
+  console.log(this.hope);
+  this.signupForm.value.email =this.hope
+  
+
+  this.api.ResendEmail(this.hope).subscribe((res:any)=>{
+console.log(res);
+
+  })
+ }
 
 
   getState(){

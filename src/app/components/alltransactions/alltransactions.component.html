@@ -25,6 +25,7 @@
                     </div>
                   </div>
                   <h2 class="fw-bold mb-1">{{totalLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!AllOrderData">0</h2>
 
 
 
@@ -103,7 +104,8 @@
                       <span class="bi bi-users fs-3 text-primary"></span>
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1">4</h2>
+                  <h2 class="fw-bold mb-1">{{canceledOrderLength}}</h2>
+                  <h2 class="fw-bold mb-1"  *ngIf="!completedOrder">0</h2>
                  
                 </div>
               </div>
@@ -197,7 +199,16 @@
                   <button class="btn btn-success me-2"  *ngIf="data.isApproved">Approved</button>
 
                   <button class="btn btn-danger me-2"  (click)="rejectOrder(data)" *ngIf="!data.isCancelled && !data.isApproved">Reject Order</button>
-                  <button class="btn btn-danger" *ngIf="data.isCancelled"  > Order Rejected</button>
+                  <button class="btn btn-danger me-2" *ngIf="data.isCancelled"  > Order Rejected</button>
+                  <button class="btn btn-danger" (click)="getArtisanToReassign(data) " *ngIf="data.action === 3" > Re-Assign Artisan</button>
+                  <div class="btn btn-danger"  *ngIf="assignArtisan && data.action === 3" > 
+                    <select class="form-select" aria-label="Default select example"  (change)="onChangeArtisan($event.target)">
+                      <option value="" selected disabled>Select State</option>
+                      <!-- <option *ngFor="let data of assignArtisan"  [ngValue]="data">{{data.firstName}}</option> -->
+                      <option *ngFor="let artisan of assignArtisan" value="{{ artisan.id }}">{{artisan.firstName}}</option>
+                    </select>
+                  </div>
+                  <button class="btn btn-primary" (click)="reassignArtisan(data)">submit</button>
 
 
 

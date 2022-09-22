@@ -1,7 +1,11 @@
-<div >
-  <nav class="navbar navbar-expand-lg bg-light">
+<div class="">
+  <nav class="navbar navbar-expand-lg bg-light fixed-top ">
     <div class="container-fluid text-dark">
-      <a class="navbar-brand cursor" routerLink="/"
+      <a class="navbar-brand cursor" routerLink="/" data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
         ><img src="/assets/images/logos.png" style="width: 200px" alt=""
       /></a>
       <button
@@ -17,35 +21,59 @@
       </button>
       <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
         <ul class="navbar-nav ms-auto mb-4 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-info my-2 my-lg-0 me-4 cursor"  routerLink="/signup" style="font-size: 20px; font-weight: 400;"
+          <li class="hover nav-item"   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+            <a class="hover nav-link text-info my-2 my-lg-0 me-4 cursor"  routerLink="/signup" style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-circle-question me-2"></i>EARN</a
             >
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark my-2 my-lg-0 me-4 cursor"  routerLink="/helpcenter" style="font-size: 20px; font-weight: 400;"
-              ><i class="fa-solid fa-circle-question me-2"></i>Help</a
+          <li class=" hover nav-item "   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+            <a class="  nav-link text-dark my-2 my-lg-0 me-4 cursor"  routerLink="/helpcenter" style="font-size: 20px; font-weight: 400;"
+              ><i class=" fa-solid fa-circle-question me-2"></i>Help</a
             >
           </li>
-          <li class="nav-item my-2 my-lg-0">
-            <a class="nav-link text-dark me-4 cursor" routerLink="/aboutus" style="font-size: 20px; font-weight: 400;"
+          <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+            <a class=" nav-link text-dark me-4 cursor" routerLink="/aboutus" style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-address-card"></i> About</a
             >
           </li>
-          <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayAdmin" routerLink="/admin">
+          <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayAdmin" routerLink="/admin">
             <a class="nav-link text-dark me-4 cursor"  style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-user"></i> My Profile</a
             >
           </li>
-          <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayUser "  routerLink="/userprofile"
-          (click)="onClick(api.loggedinUser.id)">
+          <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayUser "  routerLink="/userprofile"
+          (click)="onClick(loginApi.loggedinUser.id)">
             <a class="nav-link text-dark me-4 cursor"  style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-user"></i> My Profile</a
             >
           </li>
-          <li class="nav-item my-2 my-lg-0" *ngIf="api.loggedIn() && this.displayArtisan"  
+          <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayArtisan"  
           routerLink="/artisanprofile"
-          (click)="onClick(api.loggedinUser.id)">
+          (click)="onClick(loginApi.loggedinUser.id)">
             <a class="nav-link text-dark me-4 cursor"  style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-user"></i> My Profile</a
             >
@@ -55,15 +83,20 @@
             <div
               class=" nav-link d-flex justify-content-center text-white cursor"
               style="
-                background-color: #42aae7;
+                background-color: #033d94;
                 width: 120px;
                 height: 40px;
                 border: none;
                 border-radius: 7px;
                 font-size: 20px;
               "
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
               routerLink="/signin"
-              *ngIf="!api.loggedIn()"
+              *ngIf="!loginApi.loggedIn()"
             >
               Sign In
             </div>
@@ -73,14 +106,19 @@
             <div
               class="nav-link d-flex justify-content-center text-white cursor"
               style="
-                background-color: #42aae7;
+                background-color:#033d94;
                 width: 120px;
                 height: 40px;
                 border: none;
                 border-radius: 7px;
                 font-size: 20px;
               "
-              *ngIf="api.loggedIn()"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              *ngIf="loginApi.loggedIn()"
               (click)="logout()"
             >
               Log Out
