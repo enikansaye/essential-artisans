@@ -95,6 +95,24 @@ transition: 0.4s ease-in-out;
 .cursor{
   cursor: pointer;
 }
+.navItem{
+  font-size: 30px; 
+  font-weight: 400;
+  color:black;
+  transition: all 0.5s;
+}
+.navItem:hover{
+  transform: translate(20px,10px);
+
+  /* transform: scale(1.5); */
+  /* transform: skewX(-20deg); */
+  color: white;
+ 
+                border-radius: 7px;
+                
+  /* height: 20px; */
+  background-color: #033d94;
+}
 
 
 

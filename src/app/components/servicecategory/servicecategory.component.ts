@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup,  FormBuilder } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/shared/admin.service';
 import { servicecategoryModel } from './servicecategory.model';
 
@@ -11,10 +13,13 @@ import { servicecategoryModel } from './servicecategory.model';
 export class ServicecategoryComponent implements OnInit {
   serviceData: any;
   showAddService!: boolean;
+  feeForm!: FormGroup;
   showUpdate!: boolean;
+  modalRef?: BsModalRef | null;
+  modalRef2?: BsModalRef;
   servicecategoryModelObj: servicecategoryModel = new servicecategoryModel();
 
-  constructor( private adminApi:AdminService, private formBuilder: FormBuilder) { }
+  constructor( private adminApi:AdminService, private formBuilder: FormBuilder,  private modalService: BsModalService,private toastr: ToastrService,) { }
   formValue !: FormGroup;
   updateFormValue !: FormGroup;
   ngOnInit(): void {
@@ -31,6 +36,10 @@ export class ServicecategoryComponent implements OnInit {
       newName:['']
     
     })  
+    this.feeForm = this.formBuilder.group({
+      inspectionFee: 0
+
+    });
 
     this.getAllServiceCategory();
   }
@@ -42,7 +51,10 @@ export class ServicecategoryComponent implements OnInit {
     if (this.formValue.valid) {
       this.adminApi.postServiceCategory(this.formValue.value).subscribe((result) => {
         console.log(result);
-        alert('ServiceCategory added sucessfully');
+        // this.toastr.success('artisan Approved')
+
+        this.toastr.success('ServiceCategory added sucessfully');
+        this.modalRef?.hide()
 
         let ref = document.getElementById('cancel'); //this is to close the modal form automatically
         ref?.click();
@@ -51,7 +63,7 @@ export class ServicecategoryComponent implements OnInit {
         this.getAllServiceCategory();
       },
       (err: any) => {
-        alert('something went wrong');
+        this.toastr.warning('something went wrong');
       }
     );
      }
@@ -68,7 +80,7 @@ export class ServicecategoryComponent implements OnInit {
     this.adminApi.deleteServiceCategory(row.name).subscribe((res) => {
       console.log(res);
       
-      alert('service category deleted');
+      this.toastr.success('service category deleted');
       this.getAllServiceCategory(); //this is to automatically refresh the page
     });
     console.log(row);
@@ -91,18 +103,18 @@ export class ServicecategoryComponent implements OnInit {
     
   }
   
-  updateData(value: any) {
-    let body = {
-      name: value.name,
-      // age: value.age
-    }
+  // updateData(value: any) {
+  //   let body = {
+  //     name: value.name,
+  //     // age: value.age
+  //   }
 
-    this.adminApi
-    .updateServiceCategory(body)
-      .subscribe(response => {
-        console.log(response)
-      })
-  }
+  //   this.adminApi
+  //   .updateServiceCategory(body)
+  //     .subscribe(response => {
+  //       console.log(response)
+  //     })
+  // }
 
 
   updateServiceCategory(data:any) {
@@ -117,8 +129,8 @@ export class ServicecategoryComponent implements OnInit {
       .updateServiceCategory(this.updateFormValue.value)
       .subscribe((res: any) => {
         console.log(res);
-        alert('ServiceCategory updated sucessfully');
-
+        this.toastr.success('ServiceCategory updated sucessfully');
+        this.modalRef?.hide()
         let ref = document.getElementById('cancel'); //this is to close the modal form automatically
         ref?.click();
 
@@ -127,26 +139,57 @@ export class ServicecategoryComponent implements OnInit {
       });
   }
 
-  aproveOrder() {
-    console.log( this.updateFormValue.value);
+  // aproveOrder() {
+  //   console.log( this.updateFormValue.value);
    
 
-    this.adminApi
-      .updateServiceCategory( this.updateFormValue.value)
-      .subscribe((res: any) => {
-        // this.isAprove = !this.isAprove;
-        console.log(res);
-        // this.getAllOrder()
-      });
+  //   this.adminApi
+  //     .updateServiceCategory( this.updateFormValue.value)
+  //     .subscribe((res: any) => {
+  //       // this.isAprove = !this.isAprove;
+  //       console.log(res);
+  //       // this.getAllOrder()
+  //     });
 
-    // console.log(row);
+  //   // console.log(row);
+  // }
+  hidden:boolean = false;
+
+  changeFee(){
+      this.hidden = !this.hidden;
   }
+  changeInspectionFee(){
+    const inspectionObserver = {
+      next: (res: any) => {
 
-  
+        this.toastr.success('Inspection Fee Sucessfully Updated!!');
+        this.feeForm.reset()
+        this.hidden = !this.hidden
+
+  console.log(res);
+      },
+       err:(err:any)=>{
+        this.toastr.warning('Something Went wrong!!');
+
+      }
+
+    
+    }
+    this.adminApi
+      .inspectionFee(this.feeForm.value)
+      .subscribe(inspectionObserver)
+  }
 
   clickAddServiceCategory(){
 this.formValue.reset();
 this.showAddService = true;
 this.showUpdate = false;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {
+      id: 1,
+      class: 'modal-lg',
+    });
   }
 }

@@ -7,7 +7,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'ngx-alerts';
+import { ToastrService } from 'ngx-toastr';
+// import { AlertService } from 'ngx-alerts';
 import { of } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
@@ -35,8 +36,8 @@ export class RegisterComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private api: ApiService,
-    private alertService: AlertService,
-    private authApi: AuthService
+    private toastr: ToastrService,
+        private authApi: AuthService
   ) {}
   submitted = false;
   ngOnInit(): void {
@@ -61,18 +62,21 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(data:any) {
     this.submitted = false;
-    this.alertService.info('Working on creating new account');
     localStorage.setItem('email', data.email);
 
 
     const registerObserver = {
       next: (res: any) => {
+        // this.toastr.success('artisan Suspended')
+        this.toastr.info('Working on creating new account');
+
         // localStorage.setItem('email', res.data.email);
 
         // localStorage.setItem('emails', data.email);
         // localStorage.setItem('email', this.signupForm.value.email);
 
         this.router.navigate(['/checkemail']);
+
 
       },
       error: (err: any) => {

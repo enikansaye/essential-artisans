@@ -17,7 +17,7 @@
  <div class="w-100 d-flex flex-column align-items-center ">
   <img  *ngIf="artisanData.profileImage"
   src="data:image/png;base64,{{artisanData.profileImage}}" alt=""
-  class="img-fluid bg-success rounded-circle w-50"
+  class="img-fluid bg-success rounded-circle w-75"
 />
 <ngx-avatar *ngIf="!artisanData.profileImage " size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar>
 
@@ -25,44 +25,74 @@
   <h4>{{artisanData.email}}</h4>
   <h4>{{artisanData.profession}}</h4>
 
+  <div class=" start">
+  <ngx-star-rating [id]="artisanData.rating" [(ngModel)]="artisanData.rating" [disabled]="true"></ngx-star-rating>
+    <h4>
+Ratings: {{artisanData.rating}}
 
-  <h4>
-    Rank :
-    <strong>
-      <i class="bi bi-star-fill text-warning"></i>
-      <i class="bi bi-star-fill text-warning"></i>
-      <i class="bi bi-star-fill text-warning"></i>
-      <i class="bi bi-star-fill text-warning"></i>
-      <i class="bi bi-star-fill text-warning"></i>
-      <!-- <i class="bi bi-star text-warning"></i> -->
-    </strong>
   </h4>
+  </div>
  </div>
       <hr class="divider" />
-      <div class="icons d-flex flex-column ">
-        <span
-          class="cursor p-3 "
-          [class.active]="expression == 'match1'"
-          (click)="expression = 'match1'" 
-          ><i class="bi bi-grid-3x3-gap"></i> My Profile</span
-        >
-       <span
-          class="cursor p-3"
-          [class.active]="expression == 'match3'"
-          (click)="expression = 'match3'"
-          ><i class="bi bi-gear"> </i> My Orders</span
-        >
-       <span
-          class="cursor p-3"
-          [class.active]="expression == 'match4'"
-          (click)="expression = 'match4'" 
-          ><i class="bi bi-gear"> </i> Quote</span
-        >
-    
-        <!-- <hr class="divided" /> -->
-      </div>
+     
 
-      <hr class="divided" />
+      <!-- Navbar nav -->
+      <ul class="navbar-nav flex-column mx-5 px-3 ">
+        <li class="nav-item cursor   align-text-center"  style="width: 200px;" >
+          <a
+            class="nav-link p-2 "
+            [class.active]="expression == 'match1'"
+            toggle
+            (click)="expression = 'match1' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+            data-bs-toggle="collapse"
+            data-bs-target="#navDashboard"
+            aria-expanded="false"
+            aria-controls="navDashboard"
+            
+          >
+            <i class="nav-icon bi bi-house-door me-2"></i> PROFILE
+          </a>
+        </li>
+
+        <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+          <a
+            class="nav-link p-2 "
+            [class.active]="expression == 'match3'"
+            toggle
+            (click)="expression = 'match3' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+            data-bs-toggle="collapse"
+            data-bs-target="#navDashboard"
+            aria-expanded="false"
+            aria-controls="navDashboard"
+            
+          >
+          <i class="fa-solid fa-cart-shopping me-2"></i>ORDERS
+          </a>
+        </li>
+      
+        <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+          <a
+            class="nav-link p-2 "
+            [class.active]="expression == 'match4'"
+            toggle
+            (click)="expression = 'match4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+            data-bs-toggle="collapse"
+            data-bs-target="#navDashboard"
+            aria-expanded="false"
+            aria-controls="navDashboard"
+            
+          >
+          <i class="fa-solid fa-briefcase me-2"></i>QUOTE
+          </a>
+      
+          
+
+     
+
+      
+
+      
+      </ul> 
 
       
 
@@ -145,13 +175,13 @@
                 </div>
             </section>
 
-            <section class="w-100  ps-md-5">
+            <section class="w-100 ms-3  ps-md-5">
               <div>
                 <div class="h5">ACCOUNT INFORMATION</div>
                 <form [formGroup]="updateForm" (ngSubmit)=" updateUserDetails(this.updateForm.value)">
                   <div class="mb-3 row">
                     <label for="inputtext" class="col-sm-2 col-form-label "
-                      >First Name</label
+                      >FIRST NAME</label
                     >
                     <div class="col-sm-4">
                       <input
@@ -166,7 +196,7 @@
                   </div>
                   <div class="mb-3 row">
                     <label for="inputtext" class="col-sm-2 col-form-label"
-                      >Last Name</label
+                      >LAST NAME</label
                     >
                     <div class="col-sm-4">
                       <input
@@ -196,7 +226,7 @@
                   </div>
                   <div class="mb-3 row">
                     <label for="inputtext" class="col-sm-2 col-form-label"
-                      >ADRESS</label
+                      >ADDRESS</label
                     >
                     <div class="col-sm-4">
                       <input
@@ -209,7 +239,7 @@
                     </div>
                   </div>
                   <div class="mb-3 d-flex">
-                    <label for="inputtext" class="col-sm-2 col-form-label"
+                    <label for="inputtext" class="col-sm-2 col-form-label me-2"
                       >SERVICE</label
                     >
                    
@@ -259,7 +289,7 @@
                  
 
                   <div class="form-group form-outline mb-4 d-flex">
-                    <label for="inputtext" class="col-sm-2 col-form-label"
+                    <label for="inputtext" class="col-sm-2 col-form-label me-2"
                     >STATE</label
                   >
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
@@ -269,8 +299,8 @@
                     </select>
                     </div>
   
-                    <div class="form-group form-outline mb-4 d-flex"   >
-                      <label for="inputtext" class="col-sm-2 col-form-label"
+                    <div class="form-group form-outline mb-4 d-flex "   >
+                      <label for="inputtext" class="col-sm-2 col-form-label me-2"
                       >LGA</label
                     >
                       <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
@@ -366,6 +396,8 @@
                 </div>
               </div>
             </section>
+
+
             <section>
               <mat-toolbar class="w-100 justify-content-between m-3">
                 <div>Billing History</div>
@@ -415,6 +447,18 @@
 
           <!-- invoice/Quote section -->
           <div *ngSwitchCase="'match4'" class="p-3">
+            <mat-toolbar class="w-100 d-flex justify-content-between" >
+              <div>
+                <input type="date" [(ngModel)]="fromDate1" class="me-2" >
+              <input type="date" [(ngModel)]="toDate1" class="me-2" >
+              <button class="btn btn-danger" (click)="filterByDate()">Search</button>
+              </div>
+            <div>  
+              <input type="text" placeholder="Name Search"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+
+            </div>
+            </mat-toolbar>
+
             <div >
               <table class="table">
                 <thead>
@@ -431,14 +475,16 @@
                 </thead>
                 <tbody>
                   <tr
-                    *ngFor="let data of invoiceData ">
+                    *ngFor="let data of invoiceData | paginate: { itemsPerPage:10, currentPage:quotePage}; ">
                     <td data-title="Order ID/Invoice ID">{{data.serviceOrderId}}/{{data.invoiceId}}</td>
                     <td data-title=" Date">{{ data.date }}</td>
                     <td data-title=" User's Name">{{ data.customerInfo.name}}</td>
                     <td data-title="Location">{{data.serviceOrderAddress}}</td>
                     <td data-title="Total Amount">{{ data.invoiceTotal}}</td>
                     <td data-title="Status" *ngIf="data.action === 3">Approved</td>
-                    <td data-title="Status" *ngIf="data.action === 2">Pending</td>
+                    <td data-title="Status" *ngIf="data.action === 2">Approved</td>
+                    <td data-title="Status" *ngIf="data.action === 5">Paid</td>
+                    <td data-title="Status" *ngIf="data.action === 1">Awaiting Approval</td>
     
                     <td data-title="Action">
                     
@@ -446,7 +492,9 @@
                         Pending
                       </button> -->
                       <button class="btn btn-success" *ngIf="data.action === 3"> Approved</button>
-                      <button class="btn btn-info" *ngIf="data.action === 2">Awaiting Approval</button>
+                      <button class="btn btn-info" *ngIf="data.action === 2"> Approved</button>
+                      <button class="btn btn-info" *ngIf="data.action === 5">Payment made</button>
+                      <button class="btn btn-info" *ngIf="data.action === 1">Awaiting Approval</button>
                     </td>
                     <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
     
@@ -455,6 +503,8 @@
                   
                 </tbody>
               </table>
+              <pagination-controls (pageChange)="quotePage = $event"></pagination-controls>
+
               <!-- <div *ngIf="!AllpendingData">
                 <div class="h1  d-flex align-items-center justify-content-center text-muted" style="height: 400px;">{{pendingOrderError}}</div>
               </div> -->

@@ -31,6 +31,7 @@ import {MatSnackBarModule} from  '@angular/material/snack-bar'
 
 
 
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -51,6 +52,7 @@ import { CapentaryComponent } from './components/capentary/capentary.component';
 import { RegisterComponent } from './components/register/register.component';
 import {
   ErrorStateMatcher,
+  MatNativeDateModule,
   ShowOnDirtyErrorStateMatcher,
 } from '@angular/material/core';
 
@@ -75,7 +77,7 @@ import { OfflineComponent } from './components/offline/offline.component';
 // import { authInterceptorProviders } from '../_helpers/auth.interceptor';
 
 // import { AuthGuard } from './service/auth-guard';
-import { AuthInterceptor, } from 'src/_helpers/auth.interceptor';
+import { AuthInterceptor} from 'src/_helpers/auth.interceptor';
 import { AuthGuard } from './shared/auth.guard';
 import { RoleGuard } from './shared/role.guard';
 import { InvoiceComponent } from './components/invoice/invoice.component';
@@ -95,6 +97,13 @@ import { AppRoutingModule } from './app-routing.module';
 import {MatListModule} from '@angular/material/list'
 import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+// import { DatePipe } from './pipes/date.pipe';
+import { SessionRecoveryInterceptor } from 'src/_helpers/SessionRecoveryInterceptor';
+import { PaymentComponent } from './components/payment/payment.component';
+// import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
+
+
 
 
 @NgModule({
@@ -143,6 +152,8 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     EmptycartComponent,
     HelpComponent,
     ArtisantransactionsComponent,
+    // DatePipe,
+    PaymentComponent,
     
   
   ],
@@ -177,6 +188,9 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     MatListModule,
     MatDialogModule,
     Ng2OrderModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+
     // MatDialogModule,
     // MatDividerModule,
     ModalModule.forRoot(),
@@ -239,6 +253,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
         { path: 'invoice', component: InvoiceComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
         { path: 'privacy', component: PrivacyComponent },
+        { path: 'payment', component: PaymentComponent },
         { path: '**', component: PagenotfoundComponent },
 
        
@@ -254,7 +269,13 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
     })
   ],
   providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthTokenInterceptors,
+    //   multi: true
+    // },
     { provide: HTTP_INTERCEPTORS,  useClass: AuthInterceptor, multi:true },
+    // { provide: HTTP_INTERCEPTORS,  useClass: SessionRecoveryInterceptor, multi:true },
     { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
     // authInterceptorProviders
     // , useClass: ShowOnDirtyErrorStateMatcher

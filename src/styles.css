@@ -68,12 +68,17 @@ cursor: pointer;
   text-overflow: unset;
   max-width: 100%;
 } */
-.hover :hover{
-  background-color: #033d94;
-  color: white;
-  transform: scale();
-  transition: calc();
+
+input.star:checked ~label.star:before{
+
 }
+label.star:before{
+  font-size: 1rem;
+}
+div.stars{
+  width: auto !important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;

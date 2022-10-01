@@ -197,6 +197,13 @@ export class AdminService {
     })
   );
  }
+ getOrderById(data:any, id: number){
+ return this.http.get<any>(this.apiUrl.baseUrl + '/api/Admin/getorder/' + id, data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
  getTotalSales(){
  return this.http.get<any>(this.apiUrl.baseUrl + '/api/Admin/totalsales').pipe(
     map((res: any) => {
@@ -206,6 +213,13 @@ export class AdminService {
  }
  reassignArtisan2(data:any,){
  return this.http.put<any>(this.apiUrl.baseUrl + '/api/Admin/order/reassign', data).pipe(
+    map((res: any) => {
+      return res;
+    })
+  );
+ }
+ inspectionFee(data:any,){
+ return this.http.put<any>(this.apiUrl.baseUrl + '/api/Admin/inspectionFee/change', data).pipe(
     map((res: any) => {
       return res;
     })

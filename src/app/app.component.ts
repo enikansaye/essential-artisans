@@ -106,13 +106,7 @@ console.log(row);
   //   this.menu_icon_variable =! this.menu_icon_variable;
   // }
 
-  logout() {
-    this.router.navigate(['/']).then(() => {
-      window.location.reload();
-    });
-    localStorage.removeItem('accesstoken')
-    return localStorage.removeItem('token');
-  }
+ 
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, { id: 1, class: 'modal-lg' });

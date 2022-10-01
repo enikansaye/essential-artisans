@@ -1,6 +1,18 @@
 
-  <div class="m-3">
-    <button  type="button" (click)=" clickAddServiceCategory()" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Add service category</button>
+  <div class="m-3 d-flex justify-content-between">
+    <!-- <button  type="button" (click)=" clickAddServiceCategory()" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Add service category</button> -->
+    <button type="button" class="btn btn-info me-2" (click)="openModal(template); clickAddServiceCategory()">
+      Add Service Categories
+    </button>
+
+<div class="d-flex">
+  <input type="text" class="me-3" *ngIf="hidden" [(ngModel)]="this.feeForm.value.inspectionFee">
+
+  <button class="btn btn-success me-2" *ngIf="!hidden" (click)="changeFee()">Change Inspection Fee</button>
+  <button class="btn btn-danger me-2" *ngIf="hidden" (click)="changeFee()">Cancel</button>
+  <button class="btn btn-info me-2" *ngIf="hidden" (click)="changeInspectionFee()"  >Change Fee</button>
+
+</div>  
 </div>
 
 <table class="table ">
@@ -19,7 +31,7 @@
         <!-- <th scope="row">3</th> -->
         <td colspan="2">{{row.name}}</td>
         <td>
-          <button (click)="onEdit(row)" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success me-2">Update</button>
+          <button  type="button"   class="btn btn-success me-2" (click)="openModal(template);onEdit(row)">Update</button>
 
   <button (click)="deleteServiceCategory(row)" class="btn btn-danger"> Delete</button>
       </td>
@@ -79,6 +91,55 @@
         </div>
       </div>
     </div>
+  </div> 
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Service Category Details</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <!-- modal form -->
+<div *ngIf="showAddService">
+<form [formGroup]="formValue"  >
+<div class="mb-3" >
+  <label for="exampleInputEmail1" class="form-label">Service category Name</label>
+  <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+  <!-- <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+  
+</div>
+</form>
+</div>
+          <div *ngIf="showUpdate">
+            <form  [formGroup]="updateFormValue" (ngSubmit)="updateServiceCategory(this.updateFormValue.value)">
+              <div class="mb-3" >
+                <label for="exampleInputText" class="form-label">Old Service category Name</label>
+                <input formControlName="oldName" type="text" class="form-control" id="exampleInputText" [(ngModel)]="this.servicecategoryModelObj.name"/>
+                <!-- <input formControloldName="oldName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                
+              </div>
+              <div class="mb-3" >
+                <label for="exampleInputText" class="form-label"> New Service category Name</label>
+                <input formControlName="newName" type="text" class="form-control" id="exampleInputText"/>
+                <!-- <input formControlnewName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                
+              </div>
+              <button     type="submit"  class="btn btn-info">Update</button>
+            </form>
+          </div>
+
+
   </div>
+  <div class="modal-footer">
+    <button type="button" id ="cancel" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
+    <button *ngIf="showAddService" type="button" (click)="postServiceCategory()" class="btn btn-info">Add Category</button>
+    <!-- <button *ngIf="showUpdate"    type="button" (click)="updateServiceCategory(this.updateFormValue.value)" class="btn btn-primary">Update</button> -->
+    <!-- <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button> -->
+  </div>
+    
+  </ng-template>
 
   

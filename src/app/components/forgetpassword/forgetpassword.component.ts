@@ -23,7 +23,7 @@ Form !: FormGroup;
     private http: HttpClient,
     private router: Router,
     private api: ApiService,
-    private alertService: AlertService) { }
+    ) { }
 
   ngOnInit(): void {
     this.Form = this.formBuilder.group({
@@ -32,12 +32,12 @@ Form !: FormGroup;
     })
   }
   onSubmit(){
-    this.alertService.info('Working on sending email');
+    // this.alertService.info('Working on sending email');
     
     const forgetPasswordObserver = {
       next: (res:any) => {
        
-        this.alertService.success('Check email to change password');
+        // this.alertService.success('Check email to change password');
         console.log('Check email to change password');
    
         // this.router.navigate(['/dashboard']);
@@ -45,7 +45,7 @@ Form !: FormGroup;
       error: (err:any) => {
      
         console.log(err);
-        this.alertService.danger('Unable to send email');
+        // this.alertService.danger('Unable to send email');
       }
     };
     this.api.forgetPassword(this.Form.value).subscribe(forgetPasswordObserver);

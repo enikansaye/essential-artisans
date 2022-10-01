@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { ArtisansService } from 'src/app/service/artisans.service';
+import { LoginService } from 'src/app/service/login.service';
 // import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
@@ -30,7 +31,8 @@ declare let alertify: any;
 export class ArtisanprofileComponent implements OnInit {
 
   
-
+  rating3: number = 0;
+  quotePage:number = 1;
   progress=0;
   message='';
   @Output() public onUploadFinished = new EventEmitter();
@@ -106,6 +108,9 @@ export class ArtisanprofileComponent implements OnInit {
   serviceCategory: any;
   state: any;
   city: any;
+  fromDate1=''
+  toDate1=''
+
   selectedCountry: any = {
     id: 0,
     name: '',
@@ -114,6 +119,8 @@ export class ArtisanprofileComponent implements OnInit {
   state2: any;
   city2: any;
   invoiceData: any;
+  filteredOrderData: any;
+  value: any;
 
 
   constructor(
@@ -125,6 +132,7 @@ export class ArtisanprofileComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private artisanurl: ArtisansService,
+    private loginApi: LoginService,
 
     // private dataApi: DataService
   ) {}
@@ -251,7 +259,7 @@ this.city=data.value
         this.artisanData.phoneNumber
       );
       this.updateForm.controls['userId'].setValue(this.artisanData.id);
-      console.log(this.api.loggedinUser.id);
+      console.log(this.loginApi.loggedinUser.id);
       
       this.updateForm.controls['Address'].setValue(this.artisanData.location);
       // console.log(this.api.loggedinUser.id);
@@ -506,5 +514,44 @@ this.city=data.value
 onChangeCity(event:any){
 return this.updateForm.controls['city'].value
   
+}
+filterByDate(){
+  let k = 0
+  var ivTemp = this.orderData
+ 
+  this.filteredOrderData = [...this.orderData];
+
+  if(this.filteredOrderData! == ''){
+    ivTemp = this.filteredOrderData
+  }
+  console.log(ivTemp.length);
+  
+  console.log(this.fromDate1, this.toDate1);
+
+  const isInRange = (element: any) => { 
+    const fDate = new Date(this.fromDate1);
+    const tDate = new Date(this.toDate1);
+    const elementFDate = new Date(element['date']);
+
+    return (elementFDate > fDate && elementFDate < tDate);
+  }
+  const result = Object.values(ivTemp).filter(isInRange);
+  return this.filteredOrderData =result
+  
+}
+Search(event:any) {
+  if (this.value == '') {
+    console.log(this.value);
+    
+    this.getOrder();
+  } else {
+    this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
+      console.log(res);
+      
+      return res.name.toLocaleLowerCase()
+        .match(this.value.toLocaleLowerCase());
+    });
+  }
+// return this.hope;
 }
 }

@@ -114,30 +114,28 @@ mat-divider{
   }
 
 }
-.hovertext {
-  position: relative;
-  border-bottom: 1px dotted black;
+.butt{
+  content: attr(title);
+
+  /* position: relative; */
 }
-
-.hovertext:before {
-  content: attr(data-hover);
-  visibility: hidden;
-  opacity: 0;
-  width: 140px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  padding: 5px 0;
-  transition: opacity 1s ease-in-out;
-
+.butt::after{
+  content: attr(title);
   position: absolute;
-  z-index: 1;
+  background: #444;
+  color: #fff;
   left: 0;
-  top: 110%;
+  top: 100%;
+  font-size: 12px;
+  width: 100px;
+  padding: 5px;
+  border-radius: 4px;
+  transition: 300ms;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(15px);
 }
-
-.hovertext:hover:before {
+.butt:hover::after{
   opacity: 1;
-  visibility: visible;
+  transform: translateY(5px);
 }

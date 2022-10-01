@@ -25,17 +25,26 @@ export class LoginService {
         user
       );
     }
+logoutUser(){
+  return this.http.delete(
+    this.api.baseUrl + '/api/Auth/logout',
+    
+  ); 
+}
+    GenerateRefreshToken(payload:any) {
+      let input = {
+        // "accessToken": this.getToken(),
+        "refreshToken": this.getRefreshToken()
+        // refreshToken: this.getRefresToken(),
+        // refreshToken: localStorage.getItem('refreshToken') || '',
+      };
+    //  let input =localStorage.getItem('refreshToken');
+     console.log(input);
+     let value =input.refreshToken
 
-    GenerateRefreshToken() {
-      // let input = {
-      //   "accessToken": this.getToken(),
-      //   "refreshToken": this.getRefreshToken()
-      //   // refreshToken: this.getRefresToken(),
-      //   // refreshToken: localStorage.getItem('refreshToken') || '',
-      // };
-      localStorage.getItem('accesstoken');
+     
 
-      return this.http.get(this.api.baseUrl + '/api/Auth/refresh-token');
+      return this.http.post(this.api.baseUrl + '/api/Auth/refresh-token/'  + value ,payload);
     }
 
     isUserLoggedIn() {
@@ -47,7 +56,7 @@ export class LoginService {
     }
     getRefreshToken() {
       console.log('hello');
-      return localStorage.getItem('accesstoken') || '';
+      return localStorage.getItem('refreshtoken') ;
     }
 
     SaveTokens(tokendata: any) {
@@ -65,16 +74,28 @@ export class LoginService {
   }
 
       // checking with refresh token
-  Logout() {
-    alert('Your session expired, kindly login');
-    localStorage.clear();
-    this.router.navigateByUrl('/signin');
-  }
+      logout() {
+
+    
+        localStorage.clear();
+        localStorage.removeItem('expiration');
+        localStorage.removeItem('refreshtoken');
+        this.router.navigateByUrl('/signin');
+      
+      this.router.navigate(['/']).then(() => {
+        window.location.reload();
+      });
+      localStorage.removeItem('accesstoken')
+      return localStorage.removeItem('token');
+    }
 
   haveaccess(token:any){
     let _token =token.split('.')[1];
     this.tokenresp = JSON.parse(atob(_token))
     console.log(this.tokenresp.role);
+    console.log(this.tokenresp);
+    localStorage.setItem('expiration', this.tokenresp.exp);
+
     
     return this.tokenresp.role
   }

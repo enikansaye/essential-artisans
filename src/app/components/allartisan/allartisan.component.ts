@@ -56,7 +56,7 @@ export class AllartisanComponent implements OnInit {
 
   totalRecord: any;
   page: number = 1;
-
+  rating3:number= 0;
   // location = '';
   searchLocation = '';
   selectedFiles: any;
@@ -281,13 +281,13 @@ formdata.append("InspectionDateAndTime", data.InspectionDateAndTime);
 formdata.append("AlternateNumber", data.AlternateNumber);
 formdata.append("PhoneNumber", data.PhoneNumber);
 formdata.append("PropertyAddress", data.PropertyAddress);
-    // formdata.append("Files", this.selectedFile)
+    formdata.append("Files", this.selectedFile)
 
-formdata.append("Files", data.Files);
+formdata.append("Files", data.fileName);
 
 
    this.http
-       .post('https://localhost:7130/api/Customer/ServiceOrder/create',formdata, {
+       .post(this.api.baseUrl + 'pi/Customer/ServiceOrder/create',formdata, {
         observe: 'events'
        }).subscribe((res:any)=>{
         this.modalRef?.hide()

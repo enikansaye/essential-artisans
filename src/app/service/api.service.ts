@@ -28,7 +28,7 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
-  public baseUrl: string = 'https://localhost:7130';
+  public baseUrl: string = "https://lyticalartisanapi.azurewebsites.net/";
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -469,6 +469,13 @@ export class ApiService implements OnInit {
       })
     )
   }
+  getOrderById(data:any, id: number){
+    return this.http.get<any>(this.baseUrl + '/api/Customer/getorder/' + id, data).pipe(
+       map((res: any) => {
+         return res;
+       })
+     );
+    }
 
 
   // uploadCheck(

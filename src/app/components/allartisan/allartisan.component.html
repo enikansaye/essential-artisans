@@ -1,18 +1,15 @@
-<div class="d-flex">
+<div class="d-flex mt-5 pt-4">
   <div class="container-fluid">
     <!-- PROFILE CARDS 1 -->
 
     <div class="cards-6 section-gray">
       <div class="container-fluid w-100">
-        <div class="h4">Availabe Artisans within your location</div>
+        <div class="5">Availabe Artisans within your Selected category</div>
 
-<div class="w-50 mt-2 mb-5">
-  <input class="form-control" type="text" placeholder="State and LGA Search" name="location" [(ngModel)]="location" (ngModelChange)="Search()" />
 
-</div>
      
        
-        <div class="row mt-3 cursor">
+        <div class="row mt-4 cursor">
           <div
             class="col-md-4"
             (click)="openModal(template)"
@@ -51,28 +48,10 @@
                   <div class="list-inline-item mt-2 small">
                     <i class="bi bi-geo-alt-fill"></i>{{ data.location }}
                   </div>
-                  <div>
-                    <ul class="">
-                      <li class="list-inline-item me-0 small">
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </li>
-                      <li class="list-inline-item me-0 small">
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </li>
-                      <li class="list-inline-item me-0 small">
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </li>
-                      <li class="list-inline-item me-0 small">
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </li>
-                      <li class="list-inline-item me-0 small">
-                        <i class="far fa-star-fill text-warning"></i>
-                      </li>
-                      <li class="list-inline-item ms-2 h6 fw-light mb-0">
-                        4.0/5.0
-                      </li>
-                    </ul>
-                  </div>
+                  <div class="stars">
+                    <ngx-star-rating [id]="artisanData.rating" [(ngModel)]="artisanData.rating" [disabled]="true"></ngx-star-rating>
+                    
+                </div>
                 </div>
               </div>
             </div>
@@ -195,7 +174,7 @@
         
 
         <div class="mt-4">
-          <input type="file" formControlName="Files" (change)="uploadfile($event)">
+          <input type="file" formControlName="Files" value="FileName" (change)="uploadfile($event.target)">
         </div>
 <div></div>
 
@@ -262,7 +241,7 @@
      
       <div class="mb-1">
         <label for="exampleInputPassword1" class="form-label"
-          >Whatsapp Number</label
+          >Phone Number</label
         >
         <input
           formControlName="PhoneNumber"
@@ -298,7 +277,7 @@
         />
       </div>
       <div class="mt-4">
-        <label for="exampleInputPassword1" class="form-label"
+        <label for="exampleInputPassword1" class="form-label me-2"
           >Inspection Date and Time</label
         >
         <input
@@ -314,7 +293,7 @@
     
 
     <div class="mt-4">
-      <input type="file" formControlName="Files" (change)="uploadfile($event)">
+      <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple>
     </div>
 <div></div>
 

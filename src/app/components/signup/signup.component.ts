@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'ngx-alerts';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { AdminService } from 'src/app/shared/admin.service';
@@ -40,8 +40,8 @@ export class SignupComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private api: ApiService,
-    private alertService: AlertService,
-    private adminApi: AdminService,
+    private toastr: ToastrService,
+        private adminApi: AdminService,
     private authApi: AuthService
   ) {}
 
@@ -103,7 +103,7 @@ onSelectCities(data: any) {
   console.log(this.city);
 }
   onSubmit() {
-    this.alertService.info('Working on creating new account');
+    this.toastr.info('Working on creating new account');
 
     const registerObserver = {
       next: (res: any) => {

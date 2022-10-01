@@ -62,6 +62,8 @@ export class AdminpageComponent implements OnInit {
   service = 'completed';
   totalRecord: any;
   page: number = 1;
+  userPage: number = 1;
+  artisanPage: number = 1;
   artisanData: any;
   othersData: any;
   AllOrderData: any;
@@ -89,6 +91,8 @@ export class AdminpageComponent implements OnInit {
   artisanCharge: any;
   modalRef?: BsModalRef | null;
   modalRef2?: BsModalRef;
+  inspectionFee: any;
+  Action: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -189,14 +193,14 @@ export class AdminpageComponent implements OnInit {
         x: 'center',
         y: 'bottom',
         data: [
-          'rose1',
-          'rose2',
-          'rose3',
-          'rose4',
-          'rose5',
-          'rose6',
-          'rose7',
-          'rose8',
+          'Artisans',
+          'Users',
+          'Sales',
+          'Orders',
+          // '',
+          // 'rose6',
+          // 'rose7',
+          // 'rose8',
         ],
       },
       calculable: true,
@@ -259,6 +263,7 @@ export class AdminpageComponent implements OnInit {
       this.totalRecord = res.length;
       this.userLength = res.length;
       console.log(this.totalRecord);
+      return this.userData.reverse()
     });
   }
   getAllArtisan() {
@@ -268,6 +273,7 @@ export class AdminpageComponent implements OnInit {
       this.totalRecord = res.length;
       this.artisanLength = res.length;
       console.log(this.totalRecord);
+      return this.artisanData.reverse()
     });
   }
   getAllPendingArtisan() {
@@ -287,12 +293,12 @@ export class AdminpageComponent implements OnInit {
     };
     this.adminApi.getPendingArtisan().subscribe(registerObserver);
   }
-  getAllOthers() {
-    // this.adminApi.getOthers().subscribe((res: any) => {
-    //   this.othersData = res;
-    //   console.log(this.othersData)
-    // });
-  }
+  // getAllOthers() {
+  //   // this.adminApi.getOthers().subscribe((res: any) => {
+  //   //   this.othersData = res;
+  //   //   console.log(this.othersData)
+  //   // });
+  // }
 
   getArtisanById(id: string) {
     this.adminApi.getArtisanbyid(id).subscribe((res: any) => {
@@ -335,7 +341,8 @@ export class AdminpageComponent implements OnInit {
     this.adminApi
       .aproveQuoteUrl(this.approveForm.value, row.invoiceId)
       .subscribe((res: any) => {
-        this.getAllPendingQuote();
+        this.getQouteByAdmin();
+
         this.toastr.success('invoice created successfully')
 
         // this.isAprove = !this.isAprove;
@@ -354,6 +361,11 @@ export class AdminpageComponent implements OnInit {
       .aproveArtisanUrl(this.artisanId, row.id)
       .subscribe((res: any) => {
         console.log(res);
+        this.toastr.success('artisan Approved')
+        this.getAllPendingArtisan()
+         this.getAllArtisan() 
+         
+
       });
     this.artisanErrorMessage;
     console.log(row);
@@ -395,6 +407,7 @@ export class AdminpageComponent implements OnInit {
        this.accountNumber = this.getInvoiceId.accountNumber
        this.bankName = this.getInvoiceId.bankName
 
+this.inspectionFee = this.getInvoiceId.inspectionFee
 this.artisanCharge = this.getInvoiceId.artisanCharge
 this.jobDescription = this.getInvoiceId.jobDescription
 this.allTotal = this.getInvoiceId.invoiceTotal
@@ -403,7 +416,7 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
        
        this.invoiceUserDetails =this.getInvoiceId.customerInfo
       console.log(data);
-      console.log(this.getInvoiceId.action );
+     this.Action =this.getInvoiceId.action ;
 
       return this.getInvoiceId
 
@@ -460,6 +473,8 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     this.adminApi.editQuoteUrl(invoiceEdit).subscribe((data: any[]) => {
      
       this.getInvoiceId = data;
+      this.toastr.success('Quote Successfully Updated')
+
       this.modalRef?.hide()
 
       console.log(data);
@@ -476,10 +491,13 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     this.adminApi
       .suspendArtisanUrl(this.artisanId, row.id)
       .subscribe((res: any) => {
+        this.toastr.success('artisan Suspended')
+        this.getAllArtisan()
+
         console.log("this is a respond from suspend artisan",res);
       });
     // this.artisanErrorMessage;
-    console.log(row);
+    this.toastr.warning('Something went wrong!!!')
   }
   deleteArtisan(row: any) {
     console.log(row.id);
@@ -489,10 +507,13 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     this.adminApi
       .deleteArtisanUrl(this.artisanId, row.id)
       .subscribe((res: any) => {
+        this.toastr.success('artisan Deleted')
+        this.getAllArtisan()
+
         console.log("this is a respond from delete artisan", res);
       });
     // this.artisanErrorMessage;
-    console.log(row);
+    this.toastr.warning('Something went wrong!!!')
   }
 
   confirmPayment(row: any) {
@@ -538,5 +559,6 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
   closeModal(modalId?: number) {
     this.modalService.hide(modalId);
   }
+
 
 }

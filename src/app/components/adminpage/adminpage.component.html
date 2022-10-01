@@ -15,29 +15,45 @@
     
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column mx-5 px-3 ">
-          <li class="nav-item cursor "  >
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
             <a
-              class="nav-link text-dark "
+              class="nav-link p-2 "
               [class.active]="expression == 'page1'"
               toggle
-              (click)="expression = 'page1'"
+              (click)="expression = 'page1' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
               data-bs-toggle="collapse"
               data-bs-target="#navDashboard"
               aria-expanded="false"
               aria-controls="navDashboard"
               
             >
-              <i class="nav-icon bi bi-house-door me-2"></i> Dashboard
+              <i class="nav-icon bi bi-house-door me-2"></i> DASHBOARD
             </a>
           </li>
-          <li
-            class="nav-item cursor"  
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page9'"
+              toggle
+              (click)="expression = 'page9' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> ARTISANS
+            </a>
+          </li>
+          <!-- <li
+            class="nav-item cursor align-text-center"  style="width: 200px;" 
             [class.active]="expression == 'page2'"
             toggle
             (click)="expression = 'page2'"
           >
             <a
-              class="nav-link collapsed text-dark"
+              class="nav-link p-3"
               data-bs-toggle="collapse"
               data-bs-target="#navCourses"
               aria-expanded="false"
@@ -45,9 +61,9 @@
             >
               <i class="nav-icon bi bi-book me-2"></i> Artisans
             </a>
-          </li>
+          </li> -->
           <!-- Nav item -->
-          <li class="nav-item cursor"  >
+          <!-- <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed text-dark"
               [class.active]="expression == 'page3'"
@@ -57,7 +73,22 @@
             >
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> User
             </a>
-          </li>
+          </li> -->
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page3'"
+              toggle
+              (click)="expression = 'page3' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> USERS
+            </a>
+          <!-- </li>
           <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed"
@@ -67,8 +98,40 @@
             >
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> 0rders
             </a>
+          </li> -->
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page4'"
+              toggle
+              (click)="expression = 'page4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> ORDERS
+            </a>
           </li>
-          <li class="nav-item cursor"  >
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page6'"
+              toggle
+              (click)="expression = 'page6' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> QUOTE
+            </a>
+          </li>
+          <!-- <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed"
               [class.active]="expression == 'page5'"
@@ -77,9 +140,25 @@
             >
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> Service
             </a>
+          </li> -->
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page5'"
+              toggle
+              (click)="expression = 'page5' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> SERVICES
+            </a>
           </li>
 
-          <li class="nav-item cursor"  >
+          <!-- <li class="nav-item cursor"  >
             <a
               class="nav-link collapsed"
               [class.active]="expression == 'page6'"
@@ -88,10 +167,10 @@
             >
               <i class="nav-icon bi bi-person-lines-fill me-2"></i> Quote
             </a>
-          </li>
+          </li>-->
 
         
-        </ul>
+        </ul> 
   
   </mat-sidenav>
   <mat-sidenav-content opened>
@@ -466,19 +545,8 @@
                   <h1 class="mb-0 h2 fw-bold">Dashboard</h1>
                 </div>
                 <div class="d-flex">
-                  <div class="input-group me-3">
-                    <input
-                      class="form-control flatpickr"
-                      type="text"
-                      placeholder="Select Date"
-                      aria-describedby="basic-addon2"
-                    />
-
-                    <span class="input-group-text text-muted" id="basic-addon2"
-                      ><i class="bi bi-calendar"></i
-                    ></span>
-                  </div>
-                  <a href="#" class="btn btn-info">Setting</a>
+                 
+                  
                 </div>
               </div>
             </div>
@@ -657,7 +725,7 @@
                   class="card-header d-flex align-items-center justify-content-between card-header-height"
                 >
                   <h4 class="mb-0">All Artisans</h4>
-                  <div routerLink="'page2'" [class.active]="expression == 'page2'"
+                  <div  [class.active]="expression == 'page2'"
                   toggle
                   (click)="expression = 'page2'" class="btn btn-outline-white btn-sm" >View all</div>
                   
@@ -665,27 +733,20 @@
                 <!-- Card body -->
                 <div class="card-body ">
                   <!-- List group -->
-                  <ul class="list-group list-group-flush" *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 5, currentPage: page, totalItems: totalRecord}">
+                  <ul class="list-group list-group-flush" *ngFor="let data of artisanData">
                     <li class="list-group-item px-0 pt-0">
                       <div class="row ">
                         <div class="col-auto d-flex text-center w-100">
-                          <div
-                            class="avatar avatar-md avatar-indicators avatar-offline me-2 "
-                          >
-                            <img
-                            
-                              src="{{data.ProfileImage}}"
-                              class="rounded-circle img-fluid  "
-                            />
-                          </div>
+                        
                           <div class="d-flex justify-content-between w-100">
                             <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
                           <div>
-                           <h4> {{data.email}}</h4>
+                           <h4> {{data.firstName}} {{data.lastName}}</h4>
+                           <h4> {{data.profession}}</h4>
                            <span>{{data.email}}</span>
 
                           </div>
-                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location.city}}</div>
+                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location}}</div>
                           </div>
                         
                         </div>
@@ -702,9 +763,9 @@
               </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
-              <!-- Card -->
+        
               <div class="card h-100">
-                <!-- Card header -->
+              
                 <div
                   class="card-header d-flex align-items-center justify-content-between card-header-height"
                 >
@@ -716,27 +777,19 @@
                 <!-- Card body -->
                 <div class="card-body">
                   <!-- List group flush -->
-                  <ul class="list-group list-group-flush" *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 5, currentPage: page, totalItems: totalRecord}">
+                  <ul class="list-group list-group-flush" *ngFor="let data of userData">
                     <li class="list-group-item px-0 pt-0">
                       <div class="row ">
                         <div class="col-auto d-flex text-center w-100">
-                          <div
-                            class="avatar avatar-md avatar-indicators avatar-offline me-2 "
-                          >
-                            <img
-                            
-                              src="{{data.ProfileImage}}"
-                              class="rounded-circle img-fluid  "
-                            />
-                          </div>
+                         
                           <div class="d-flex justify-content-between w-100">
                             <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
                           <div>
-                           <h4> {{data.email}}</h4>
+                           <h4> {{data.firstName}} {{data.lastName}}</h4>
                            <span>{{data.email}}</span>
 
                           </div>
-                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location.city}}</div>
+                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.address}}</div>
                           </div>
                         
                         </div>
@@ -752,18 +805,14 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-12 col-md-12 col-12 mb-4">
-              <!-- Card -->
+            <!-- <div class="col-xl-4 col-lg-12 col-md-12 col-12 mb-4">
               <div class="card h-100">
-                <!-- Card header -->
                 <div
                   class="card-header card-header-height d-flex align-items-center"
                 >
                   <h4 class="mb-0">Activity</h4>
                 </div>
-                <!-- Card body -->
                 <div class="card-body">
-                  <!-- List group -->
                   <ul
                     class="list-group list-group-flush list-timeline-activity"
                   >
@@ -779,7 +828,6 @@
                       </div>
                   </li>
                 
-                    <!-- List group -->
                     <li>
                       <div class="d-flex justify-content-between w-100">
                   
@@ -791,7 +839,6 @@
                         <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> lekki</div>
                         </div>
                     </li>
-                    <!-- List group -->
                     <li>
                       <div class="d-flex justify-content-between w-100">
                   
@@ -803,7 +850,6 @@
                         <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> lekki</div>
                         </div>
                     </li>
-                    <!-- List group -->
                     <li>
                       <div class="d-flex justify-content-between w-100">
                   
@@ -818,16 +864,20 @@
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
 
      <!--Artisan section  -->
-      <div class="pt-5" *ngSwitchCase="'page2'" id="no-tables" >
-        <div>
-          <button
-          class="nav-link collapsed btn btn-info text-light float-end mb-3"
+      <div class="pt-5" *ngSwitchCase="'page9'" id="no-tables" >
+
+        <div class=" w-100 d-flex align-center justify-content-between">
+
+          <div class="h4 me-2">ARTISANS SECTION</div>
+          <div>
+            <button
+          class="nav-link  btn btn-info text-light float-end mb-3"
           [class.active]="expression == 'page7'"
           toggle
           (click)="expression = 'page7'"
@@ -836,34 +886,49 @@
           New Artisan
           
       </button> 
-                  <table class="table">
+          </div>
+        </div>
+        <div>
+         
+                  <table class="table table-striped" >
               <thead>
                 <tr>
-                  <th scope="col">Email Adress</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Number</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action</th>
+                  <th >Artisan ID </th>
+                  <th >Email Address</th>
+                  <th >Name</th>
+                  <th >Status</th>
+                  <th >Location</th>
+                  <th >Number</th>
+
+                  <th >Action</th>
                 
                 </tr>
               </thead>
-              <tbody *ngFor="let data of artisanData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}" onclick="getArtisanById()">
+              <tbody *ngFor="let data of artisanData">
                 <tr class="align-center justify-content-center" routerLink="/artisanbyid">
-                  <td data-title="Email Address" scope="row">{{data.email}}</td>
-                  <td data-title="Name">{{data.firstName}} {{data.lastName}}  <td>
-                  <td data-title="Location">{{data.address}}  <td>
-                  <td data-title="Number">{{data.phoneNumber}}  <td>
-                  <!-- <td data-title="status">{{}}  <td> -->
-                  <!-- <td data-title="Location">{{data.location.state}}, {{data.location.country}}</td> -->
-                  <!-- <td data-title="Number">{{data.phone}}</td> -->
-                  <td data-title="Status">Suspended</td>
+                  <td data-title="Artisan ID">{{data.id}} </td>
+                  <td data-title="Email Address">{{data.email}}</td>
+                  <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
+                  <td >Active</td>
+                  <!-- <td *ngIf="data.action === 3">Suspended</td> -->
+                  <td data-title="Location">{{data.location}} </td>
+                  <td data-title="Number">{{data.phoneNumber}} </td>
+
+                  <td data-title="Action" >
+                  <button class="btn btn-info me-2" (click)="suspendArtisan(data)">Suspend</button>
+                  <button class="btn btn-inline-info me-2" (click)="approveArtisan(data)">Activate Artisan</button>
+                  <button class="btn btn-danger" (click)="deleteArtisan(data)">Delete</button>
+                </td>
+                  
              
-                </tr>
+                </tr> 
+               
             
               
               </tbody>
             </table>
+            <pagination-controls (pageChange)="artisanPage = $event"></pagination-controls>
+
         
 
         </div>
@@ -871,25 +936,29 @@
 
       <!-- user section -->
       <div class="pt-5" *ngSwitchCase="'page3'" id="no-tables" >
+
+       <div class="h4 mb-3"> USERS SECTION</div> 
         <div>
            <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Email Adress</th>
+                  <th>User ID</th>
+                  <th scope="col">Email Address</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Location</th>
+                  <!-- <th scope="col">Location</th> -->
                   <th scope="col">Number</th>
                   <!-- <th scope="col">Status</th> -->
                   <!-- <th scope="col">Action</th> -->
                 
                 </tr>
               </thead>
-              <tbody *ngFor="let data of userData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+              <tbody *ngFor="let data of userData ">
                 <tr class="align-center justify-content-center">
-                  <td data-title="Email Adress" scope="row">{{data.email}}</td>
-                  <td data-title="Name">{{invoiceName}}</td>
-                  <td data-title="Location">{{data.title}}</td>
-                  <td data-title="Number">{{data.title}}</td>
+                  <td data-title="User ID" scope="row">{{data.id}}</td>
+                  <td data-title="Email Address" scope="row">{{data.email}}</td>
+                  <td data-title="Name">{{data.firstName}} {{data.lastName}}</td>
+                  <!-- <td data-title="Location">{{data.title}}</td> -->
+                  <td data-title="Number">{{data.phoneNumber}}</td>
                   <!-- <td data-title="Status">Suspended</td> -->
                   <!-- <td data-title="Action" class="">
                    
@@ -902,6 +971,8 @@
               
               </tbody>
             </table>
+            <pagination-controls (pageChange)="userPage = $event"></pagination-controls>
+
         </div>
       </div>
 
@@ -973,7 +1044,7 @@
                     <button class="btn btn-inline-info me-2" (click)="approveQoute(data)" *ngIf="data.action === 1">Approve</button>
                     <button class="btn btn-success me-2" *ngIf="data.action === 2">Approved</button>
                     <button class="btn btn-success me-2" (click)="confirmPayment(data)" *ngIf="data.action ===3">Confirm Payment</button>
-                    <button class="btn btn-success me-2"  *ngIf="data.action ===5"> Payment Confirmed</button>
+                    <button class="btn btn-success me-2"  *ngIf="data.action === 5"> Payment Confirmed</button>
                   </td>
                  
                 </tr>
@@ -1064,7 +1135,7 @@
                  <td>
                    <button class="btn btn-info me-2">View Artisan</button>
                    <button class="btn btn-inline-info me-2" (click)="approveArtisan(data)">Approve</button>
-                   <button class="btn btn-inline-info me-2" (click)="suspendArtisan(data)">Suspend</button>
+                   <!-- <button class="btn btn-inline-info me-2" (click)="suspendArtisan(data)">Suspend</button> -->
                    <button class="btn btn-inline-info me-2" (click)="deleteArtisan(data)">Delete</button>
                  </td>
                
@@ -1167,9 +1238,15 @@
                required >{{jobDescription}}</textarea>
               <!-- <label for="floatingTextarea">Description of Job to be done</label> -->
             </div>
+            
 
             <div>
-              <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required value="{{artisanCharge}}">
+              <div class="d-flex mt-3">
+                <div class="me-4">Service Charge : <input type="text" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}" disabled></div>
+                <div>Inspection Fee : <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}" disabled>  </div>
+              </div>            </div>
+            <div>
+              <!-- <h4>Inspection Fee</h4><input type="text" name="inspectionFee" [(ngModel)]="inspectionFee" #inspectionFee="ngModel" required value="{{artisanCharge}}"> -->
             </div>
             </form>
   
@@ -1178,12 +1255,12 @@
   
           </div>
   
-            <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
+            <!-- <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
             <span>ACCOUNT NUMBER: {{accountNumber}}</span><br/>
-            <span>ACCOUNT NAME: {{bankName}}</span>
+            <span>ACCOUNT NAME: {{bankName}}</span> -->
 
             <div class="mt-2">
-              <button class="btn btn-info " (click)="onEditForm()" >Edit</button>
+              <button class="btn btn-info " (click)="onEditForm()" >EditTTTTT</button>
               <button class="btn btn-danger me-2"(click)="onEditForm()" >Cancel</button>
               <button class="btn btn-info" type="submit"  (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
     
@@ -1286,6 +1363,10 @@
          </div>
 
         </div>
+        <div class="d-flex mt-3">
+          <div class="me-4">Service Charge : <input type="text" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}" disabled></div>
+          <div>Inspection Fee : <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}" disabled>  </div>
+        </div>
 
         <div class="form-floating mt-2">
           <textarea class="form-control" 
@@ -1294,7 +1375,7 @@
         </div>
 
         <div>
-          <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required value="{{artisanCharge}}">
+          <!-- <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required value="{{artisanCharge}}"> -->
         </div>
         </form>
 
@@ -1303,14 +1384,10 @@
 
       </div>
 
-        <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
-        <span>ACCOUNT NUMBER: {{accountNumber}}</span><br/>
-        <span>ACCOUNT NAME: {{bankName}}</span>
-
         <div class="mt-2">
-          <button class="btn btn-info " (click)="onEditForm()" >Edit</button>
-          <button class="btn btn-danger me-2"(click)="onEditForm()" >Cancel</button>
-          <button class="btn btn-info" type="submit"  (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
+          <button class="btn btn-info me-2" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="onEditForm()" >Edit</button>
+          <button class="btn btn-danger me-2" (click)="modalRef?.hide()">Cancel</button>
+          <button class="btn btn-info" type="submit" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
 
 
         </div>

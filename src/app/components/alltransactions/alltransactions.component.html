@@ -118,8 +118,8 @@
     
       <nav class="navbar navbar-light bg-light " *ngIf="AllOrderData">
         <div class="container-fluid ">
-          <div class="navbar-brand w-100" href="#">
-            <div class="w-100 d-flex w-100 justify-content-between ">
+          <div class="navbar-brand w-100" >
+            <div class="w-100 d-flex justify-content-between ">
               <div [class.active]="service == 'completed'" class="mat d-none d-lg-block p-2 cursor" (click)="service = 'completed'">All Transactions</div>
               <div [class.active]="service == 'completed1'"  class="mat d-none d-lg-block p-2 cursor" (click)="service = 'completed1'">Pending Orders</div>
               <div [class.active]="service == 'completed2'" class="mat d-none d-lg-block p-2 cursor" (click)="service = 'completed2'">Completed Orders</div>
@@ -153,52 +153,80 @@
         </div>
       </nav>
 
-      <mat-toolbar class="w-100 d-flex justify-content-end">
+        
+
               
-                       
-        asdfghjkl          
-                    
-                    </mat-toolbar>
+         
 
       <section > 
         <div [ngSwitch]="service" *ngIf="AllOrderData">
+
+          <div class="row d-flex col-12 " >
+            <div class="d-flex">
+              <div class="me-2" >
+                <input type="date" style="width: 80px;"  [(ngModel)]="fromDate1" class="me-2" >
+    
+              </div>
+              <div class="col-3 me-2">
+                <input type="date" style="width: 60px; margin-right: 3px;" [(ngModel)]="toDate1" class="me-2" >
+    
+              </div>
+              <div class="col-3">
+                <button class="btn btn-danger h-75 d-flex align-center" (click)="filterByDate()">Search</button>
+    
+              </div>
+            </div>
+          <div>  
+    <div class="col-12 mb-3">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+    </div>
+          </div>
+        </div>
+
           <!-- all transaction -->
           <div *ngSwitchCase="'completed'" id="no-tables" >
          <div >
+         
+
+
           <table class="table table-striped" >
             <thead>
               <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Date</th>
                 <th>Inspection Date</th>
                 <th>Completion Date</th>
                 <!-- <th scope="col" (click)="sort('id')" >Order ID&nbsp;<i class="fa fa-sort"></i> </th> -->
                 <th scope="col">Issue</th>
+                <th scope="col">Location</th>
+                <th scope="col">Artisan's Name</th>
 
                 <th scope="col">Status</th>
-
-                
-                <th scope="col">Location</th>
-                
-                
-              
-              
+                <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let data of AllOrderData | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+            <tbody class="">
+              <tr class="align-center justify-content-center w-100" *ngFor="let data of filteredOrderData | paginate: { itemsPerPage:5, currentPage:allPage}; ">
                 <td data-title="Order ID" >{{data.id}}</td>
-                <td data-title="Order ID" >{{data.date}}</td>
-                <td data-title="Date">{{data.artisanEmail}}</td>
-                <td data-title="Location">{{data.issue}}</td>
-                <td data-title="Amount">{{data.title}}</td>
-                <td data-title="Status" *ngIf="data.isCancelled && data.action === 5">Cancel</td>
-                <td data-title="Status" *ngIf=" !data.isCancelled && data.action === 4 ">Completed</td>
+                <td data-title=" Date" >{{data.date}}</td>
+                <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+                <td data-title="Inspection Date">{{data.inspectionDate}}</td>
+                <td data-title="Completion Date"></td>
+                <td data-title="Issue"   data-title="{{data.issue}}" class="butt" >{{(data.issue.length>6)? (data.issue | slice:0:10)+'...':(data.issue)}}</td>
+                <td data-title="Location">{{data.propertyAddress}}</td>
+                <!-- <td data-title="Amount">{{data.title}}</td> -->
                 <td data-title="Artisan's Name">{{data.artisanName}}</td>
-                <td data-title="Artisan's Name">
-                  <button class="btn btn-info me-2"  (click)="aproveOrder(data)" *ngIf="!data.isApproved && !data.isCancelled">Awaiting Approval</button>
+
+                <td data-title="Status" *ngIf="data.isCancelled && data.action === 5">Cancel</td>
+                <td data-title="Status" *ngIf=" data.action === 0">Pending</td>
+                <td data-title="Status" *ngIf=" data.action === 2">Approved</td>
+                <td data-title="Status" *ngIf=" data.action === 1">Approved</td>
+                <td data-title="Status" *ngIf=" !data.isCancelled && data.action === 4 ">Completed</td>
+                <td data-title="Action" >
+                  <button class="btn btn-info me-2" (click)="onClickVieworder(data); openModal(template)">View Order</button>
+                  <button class="btn btn-info me-2"  (click)="aproveOrder(data)" *ngIf="data.action == 0 ">Awaiting Approval</button>
                   <button class="btn btn-success me-2"  *ngIf="data.isApproved">Approved</button>
 
-                  <button class="btn btn-danger me-2"  (click)="rejectOrder(data)" *ngIf="!data.isCancelled && !data.isApproved">Reject Order</button>
+                  <button class="btn btn-danger me-2"  (click)="rejectOrder(data)" *ngIf="data.action === 5">Reject Order</button>
                   <button class="btn btn-danger me-2" *ngIf="data.isCancelled"  > Order Rejected</button>
                   <button class="btn btn-danger" (click)="getArtisanToReassign(data) " *ngIf="data.action === 3" > Re-Assign Artisan</button>
                   <div class="btn btn-danger"  *ngIf="assignArtisan && data.action === 3" > 
@@ -208,7 +236,7 @@
                       <option *ngFor="let artisan of assignArtisan" value="{{ artisan.id }}">{{artisan.firstName}}</option>
                     </select>
                   </div>
-                  <button class="btn btn-primary" (click)="reassignArtisan(data)">submit</button>
+                  <!-- <button class="btn btn-primary" (click)="reassignArtisan(data)">submit</button> -->
 
 
 
@@ -222,15 +250,8 @@
             
             <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
           </table>
-          <mat-paginator
-          (page)="handlePageEvent($event)"
-          [length]="length"
-          [pageSize]="pageSize"
-          [showFirstLastButtons]="showFirstLastButtons"
-          [pageSizeOptions]="pageSizeOptions"
-          [pageIndex]="pageIndex"
-          aria-label="Select page">
-      </mat-paginator>
+          <pagination-controls (pageChange)="allPage = $event"></pagination-controls>
+
          </div>
             </div>
 
@@ -238,35 +259,51 @@
             <!-- pending transaction -->
           <div *ngSwitchCase="'completed1'" id="no-tables"  >
             <div  >
-              <table class="table" *ngIf="pending" >
+
+              <table class="table table-striped" >
                 <thead>
                   <tr>
-                    <th scope="col">Order ID</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Date</th>
+                    <th>Inspection Date</th>
+                    <th>Completion Date</th>
+                    <!-- <th scope="col" (click)="sort('id')" >Order ID&nbsp;<i class="fa fa-sort"></i> </th> -->
+                    <th scope="col">Issue</th>
                     <th scope="col">Location</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Artisan's Name</th>
-                    <!-- <th scope="col">Action</th> -->
-                  
+    
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let data of pending | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tbody class="">
+                  <tr class="align-center justify-content-center w-100" *ngFor="let data of pending ">
                     <td data-title="Order ID" >{{data.id}}</td>
-                    <td data-title="Order ID" >{{data.date}}</td>
-                    <td data-title="Date">{{data.artisanEmail}}</td>
-                    <td data-title="Location">{{data.issue}}</td>
-                    <td data-title="Amount">{{data.title}}</td>
-                    <td data-title="Status" *ngIf="data.isCancelled && data.action === 5">Cancel</td>
-                    <td data-title="Status" *ngIf=" !data.isCancelled && data.action === 4 ">Completed</td>
+                    <td data-title=" Date" >{{data.date}}</td>
+                    <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+                    <td data-title="Inspection Date">{{data.inspectionDate}}</td>
+                    <td data-title="Completion Date"></td>
+                    <td data-title="Issue"   data-title="{{data.issue}}" class="butt" >{{(data.issue.length>6)? (data.issue | slice:0:10)+'...':(data.issue)}}</td>
+                    <td data-title="Location">{{data.propertyAddress}}</td>
+                    <!-- <td data-title="Amount">{{data.title}}</td> -->
                     <td data-title="Artisan's Name">{{data.artisanName}}</td>
-                    <td data-title="Artisan's Name">
+    
+                    <!-- <td data-title="Status" *ngIf="data.isCancelled && data.action === 5">Cancel</td> -->
+                    <td data-title="Status" *ngIf=" data.action === 0">Pending</td>
+                    <!-- <td data-title="Status" *ngIf=" data.action === 2">Approved</td> -->
+                    <!-- <td data-title="Status" *ngIf=" data.action === 1">Approved</td> -->
+                    <!-- <td data-title="Status" *ngIf=" !data.isCancelled && data.action === 4 ">Completed</td> -->
+                    <td data-title="Action" >
+                      <button class="btn btn-info me-2" (click)="onClickVieworder(data); openModal(template)">View Order</button>
+
                       <button class="btn btn-info me-2"  (click)="aproveOrder(data)" *ngIf="!data.isApproved && !data.isCancelled">Awaiting Approval</button>
                       <button class="btn btn-success me-2"  *ngIf="data.isApproved">Approved</button>
     
                       <button class="btn btn-danger me-2"  (click)="rejectOrder(data)" *ngIf="!data.isCancelled && !data.isApproved">Reject Order</button>
                       <button class="btn btn-danger" *ngIf="data.isCancelled"  > Order Rejected</button>
+    
+    
+    
     
     
     
@@ -277,7 +314,11 @@
                 
                 
                 </tbody>
+                
               </table>
+            
+              <pagination-controls (pageChange)="pendingPage = $event"></pagination-controls>
+
 <div *ngIf="!pending">
   <div class="h1  d-flex align-items-center justify-content-center text-muted" style="height: 300px;">
     {{pendingOrderError}}
@@ -290,35 +331,56 @@
             <!-- completed Transactions -->
           <div *ngSwitchCase="'completed2'" id="no-tables" id="no-tables"  >
            <div >
-            <table class="table">
+            <table class="table table-striped" >
               <thead>
                 <tr>
-                  <th scope="col">Order ID</th>
+                  <th scope="col">ID</th>
                   <th scope="col">Date</th>
+                  <th>Inspection Date</th>
+                  <th>Completion Date</th>
+                  <!-- <th scope="col" (click)="sort('id')" >Order ID&nbsp;<i class="fa fa-sort"></i> </th> -->
+                  <th scope="col">Issue</th>
                   <th scope="col">Location</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
                   <th scope="col">Artisan's Name</th>
-                  <!-- <th scope="col">Action</th> -->
-                
+  
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let data of completedOrder| paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+              <tbody class="">
+                <tr class="align-center justify-content-center w-100" *ngFor="let data of completedOrder ">
                   <td data-title="Order ID" >{{data.id}}</td>
-                  <td data-title="Order ID" >{{data.date}}</td>
-                  <td data-title="Date">{{data.artisanEmail}}</td>
-                  <td data-title="Location">{{data.issue}}</td>
-                  <td data-title="Amount">{{data.title}}</td>
-                  <td data-title="Status" >Completed</td>
+                  <td data-title=" Date" >{{data.date}}</td>
+                  <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+                  <td data-title="Inspection Date">{{data.inspectionDate}}</td>
+                  <td data-title="Completion Date"></td>
+                  <td data-title="Issue"   data-title="{{data.issue}}" class="butt" >{{(data.issue.length>6)? (data.issue | slice:0:10)+'...':(data.issue)}}</td>
+                  <td data-title="Location">{{data.propertyAddress}}</td>
+                  <!-- <td data-title="Amount">{{data.title}}</td> -->
                   <td data-title="Artisan's Name">{{data.artisanName}}</td>
-                 
+  
+                  <td data-title="Status" *ngIf=" data.action === 4 ">Completed</td>
+                  <td data-title="Action" >
+                   
+                      
+                    
+                    <!-- <button class="btn btn-primary" (click)="reassignArtisan(data)">submit</button> -->
+  
+  
+  
+                    
+                  </td>
                   
                 </tr>
               
               
               </tbody>
+              
+              <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
             </table>
+
+            <pagination-controls (pageChange)="completePage = $event"></pagination-controls>
+
            </div>
 
             </div>
@@ -328,68 +390,31 @@
           <div >
             <table class="table">
               <thead>
-                <tr>
+                <tr >
                   <th scope="col">Order ID</th>
                   <th scope="col">Date</th>
                   <th scope="col">Location</th>
-                  <th scope="col">Amount</th>
+                  <!-- <th scope="col">Amount</th> -->
                   <th scope="col">Status</th>
                   <th scope="col">Artisan's Name</th>
                 
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
+                <tr *ngFor="let data of canceledOrder">
+                  <td data-title="Order ID" scope="row">{{data.id}}</td>
+                  <td data-title="Date">{{data.date}}</td>
+                  <td data-title="Location">{{data.propertyAddress}}</td>
+                  <!-- <td data-title="Amount">@mdo</td> -->
+                  <td data-title="Status">Canceled</td>
+                  <td data-title="Artisan's Name">{{data.artisanName}}</td>
                 </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
-                <tr>
-                  <td data-title="Order ID" scope="row">enikansaye13@gmail.com</td>
-                  <td data-title="Date">Mark</td>
-                  <td data-title="Location">Otto</td>
-                  <td data-title="Amount">@mdo</td>
-                  <td data-title="Status">completed</td>
-                  <td data-title="Artisan's Name">hope</td>
-                </tr>
+            
               
               </tbody>
             </table>
+            <pagination-controls (pageChange)="cancelPage = $event"></pagination-controls>
+
           </div>
 
           
@@ -400,3 +425,77 @@
        </div>
       </section>
 </div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">ORDER DETAILS</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" >
+
+    <div><span> Order Date : </span><span class="h6">{{orderById.date}}</span></div>
+
+<!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
+<img src="data:image/png;base64,{{orderById.artisanProfileImage}}" *ngIf="hidden" />
+
+<div><span>Pictures : </span><span class="h6"><button  class="btn btn-info" (click)="imageSource()">View Pictures</button></span></div>
+
+
+
+<div><span>Has Invoice? : </span><span class="h6">{{orderById.hasInvoice}}</span></div>
+
+<div><span> Order ID : </span><span class="h6">{{orderById.id}}</span></div>
+
+<div><span>Inspection Date : </span><span class="h6">{{orderById.inspectionDate}}</span></div>
+
+<div><span>Job Description : </span><span class="h6">{{orderById.issue}}</span></div>
+
+<div><span>Order Name : </span><span class="h6">{{orderById.name}}</span></div>
+
+<div><span>Order Phone Number : </span><span class="h6">{{orderById.orderPhoneNumber}}</span></div>
+
+<div><span>Order Phone Number : </span><span class="h6">{{orderById.phoneNumber}}</span></div>
+
+<div><span> Address : </span><span class="h6">{{orderById.propertyAddress}}</span></div>
+
+
+<div class="mt-3"><span> Customer's Email : </span><span class="h6">{{orderById.customerEmail}}</span></div>
+
+<div><span> Customer's Name : </span><span class="h6">{{orderById.customerName}}</span></div>
+
+<div><span>Customer's Phone Number : </span><span class="h6">{{orderById.customerPhoneNumber}}</span></div>
+
+
+<div class="mt-3"> Artisan Name : <span></span><span class="h6">{{orderById.artisanName}}</span></div>
+
+<div><span>Artisan Email : </span><span class="h6">{{orderById.artisanEmail}}</span></div>
+
+
+<div><span>Artisan ID : </span><span class="h6">{{orderById.artisanId}}</span></div>
+
+<div><span>Artisan Address : </span><span class="h6">{{orderById.artisanLocation}}</span></div>
+
+
+
+<div><span>Artisan Number : </span><span class="h6">{{orderById.artisanPhoneNumber}}</span></div>
+
+
+<!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
+<img src="data:image/png;base64,{{orderById.artisanProfileImage}}" *ngIf="hidden" />
+
+<div><span>Artisan Image : </span><span class="h6"><button  class="btn btn-info" (click)="imageSource()">Display</button></span></div>
+
+<div><span class="mt-3">Artisan Ratings : </span><ngx-star-rating [id]="orderById.artisanRating" [(ngModel)]="orderById.artisanRating" [disabled]="true"></ngx-star-rating>
+</div>
+
+
+
+    
+  </div>
+
+  <button type="button" class="btn btn-danger " aria-label="Close" (click)="modalRef?.hide()">Close</button>
+
+</ng-template>
+
+

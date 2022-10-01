@@ -78,4 +78,12 @@ export class ArtisansService {
       })
     );
   }
+
+  getOrderById(data:any, id: number){
+    return this.http.get<any>(this.api.baseUrl + '/api/Artisan/getorder/' + id, data).pipe(
+       map((res: any) => {
+         return res;
+       })
+     );
+    }
 }

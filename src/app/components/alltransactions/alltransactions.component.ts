@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AdminService } from 'src/app/shared/admin.service';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { DatePipe } from '@angular/common'
+
 
 @Component({
   selector: 'app-alltransactions',
   templateUrl: './alltransactions.component.html',
   styleUrls: ['./alltransactions.component.css'],
+  providers: [DatePipe],
 })
 export class AlltransactionsComponent implements OnInit {
+
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(null),
+  });
+
+  Operations!: any[] // set this however you did before.
+  filteredOperations: any[] = [];
+
+
   accept: boolean = false;
   // isAprove: boolean = false;
   process: boolean = false;
@@ -22,6 +36,10 @@ export class AlltransactionsComponent implements OnInit {
 
   totalRecord: any;
   page: number = 1;
+  cancelPage: number = 1;
+  completePage: number = 1;
+  pendingPage: number = 1;
+  allPage: number = 1;
   length = 10;
   pageSize = 10;
   pageIndex = 1;
@@ -35,6 +53,14 @@ export class AlltransactionsComponent implements OnInit {
   canceledOrder: any;
   canceledOrderLength: any;
   assignArtisan: any;
+  value!: '';
+  modalRef?: BsModalRef;
+  orderById: any;
+  rating4: number = 0;
+  filteredOrderData: any;
+  fromDate1: any;
+  toDate1: any;
+
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -44,7 +70,9 @@ export class AlltransactionsComponent implements OnInit {
   constructor(
     private adminApi: AdminService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService,
+    private toastr: ToastrService,public datepipe: DatePipe,
+    private modalService: BsModalService,//for ngx-bootstrap modal
+
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +102,10 @@ export class AlltransactionsComponent implements OnInit {
       this.totalLength = res.length;
       this.AllOrderData = res;
       console.log(this.AllOrderData);
-      return this.AllOrderData.reverse();
+      // return this.AllOrderData.reverse();
+
+      this.filteredOrderData = [...this.AllOrderData]
+      return this.filteredOrderData.reverse();
     });
   }
 
@@ -196,5 +227,140 @@ reassignArtisan(data:any){
   
   })
 }
- 
+Search(event:any) {
+  if (this.value == '') {
+    console.log(this.value);
+    
+    this.getAllOrder();
+  } else {
+    this.AllOrderData = this.AllOrderData.filter((res: any) => {
+      console.log(res);
+      
+      return res.issue.toLocaleLowerCase()
+        .match(this.value.toLocaleLowerCase());
+    });
+  }
+// return this.hope;
 }
+Search2(event:any) {
+  if (this.value == '') {
+    console.log(this.value);
+    
+    this.getAllOrder();
+  } else {
+    this.AllOrderData = this.AllOrderData.filter((res: any) => {
+      console.log(res);
+      
+      return res.issue.toLocaleLowerCase()
+        .match(this.value.toLocaleLowerCase());
+    });
+  }
+// return this.hope;
+}
+
+onClickVieworder(data:any){
+  console.log(data);
+  this.orderForm.value.invoiceId = data.id,
+  
+  
+  this.adminApi.getOrderById(this.orderForm.value ,data.id).subscribe((data: any) => {
+    this.orderById = data
+    this.rating4 = data.artisanRating;
+
+    console.log(data);
+    
+
+})
+}
+
+openModal(template: TemplateRef<any>) {
+  this.modalRef = this.modalService.show(template);
+}
+start_date = new Date('YYYY-MM-DD')
+end_date = new Date
+public daterange: any = {};
+
+public options: any = {
+  locale: { format: 'YYYY-MM-DD' },
+  alwaysShowCalendars: false,
+};
+
+public selectedDate(value: any, datepicker?: any) {
+  // this is the date  selected
+  console.log(value);
+  console.log(datepicker);
+  
+
+  // any object can be passed to the selected event and it will be passed back here
+  // datepicker.start = this.range.value.start;
+  // datepicker.end = this.range.value.end;
+
+  // // use passed valuable to update state
+  // this.range.value.start = datepicker.start;
+  // this.range.value.end = datepicker.end;
+  // this.daterange.label = value.label;
+  // console.log(this.range.value.start);
+  // console.log(this.range.value.end);
+
+  if (this.range.value == '') {
+    console.log(this.value);
+    
+    this.getAllOrder();
+  } else {
+    // this.AllOrderData = this.AllOrderData.filter((res: any) => {
+    //   console.log(res);
+      
+    this.AllOrderData = this.AllOrderData.filter((e:any)=> {
+      let latest_date =this.datepipe.transform(this.start_date, 'fullDate');
+console.log(latest_date );
+
+    const  data= e.date ===  latest_date 
+    console.log(this.start_date);
+    
+    console.log(data);
+    console.log(e.date);
+     return e.date
+    .match(this.start_date?.toString)
+    
+    });
+// console.log(this.AllOrderData);
+
+      // return res.date.toLocaleLowerCase()
+      //   .match(this.range.value.toLocaleLowerCase());
+    // });
+  }
+  
+}
+filterByDate(){
+  let k = 0
+  var ivTemp = this.AllOrderData
+ 
+  this.filteredOrderData = [...this.AllOrderData];
+
+  if(this.filteredOrderData! == ''){
+    ivTemp = this.filteredOrderData
+  }
+  console.log(ivTemp.length);
+  
+  console.log(this.fromDate1, this.toDate1);
+
+  const isInRange = (element: any) => { 
+    const fDate = new Date(this.fromDate1);
+    const tDate = new Date(this.toDate1);
+    const elementFDate = new Date(element['date']);
+
+    return (elementFDate > fDate && elementFDate < tDate);
+  }
+  const result = Object.values(ivTemp).filter(isInRange);
+  return this.filteredOrderData =result
+  
+}
+
+
+ hidden:boolean = false;
+
+imageSource(){
+    this.hidden = !this.hidden;
+}
+}
+

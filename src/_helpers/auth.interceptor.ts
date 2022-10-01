@@ -42,16 +42,35 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
+    if (request.url.indexOf('/refresh-token') > -1) {
+      return next.handle(request);
+    }
+
+
     let api = this.inject.get(LoginService);
     let authreq = request;
     authreq = this.AddTokenheader(request, api.getToken());
+
+   
+    const access_token = localStorage.getItem('access_token');
+
+
     return next.handle(authreq).pipe(
       catchError(errordata => {
-        if (errordata.status === 401) {
+        if (errordata.status === 401 || access_token) {
+          const expiration = localStorage.getItem('expiration');
+
+          if (Date.now() < Number(expiration) * 1000) {
+            return this.handleRefrehToken(request, next);
+
+          }
+          return this.handleRefrehToken(request, next);
+
           // need to implement logout
           // api.Logout();
           // refresh token logic
-         return this.handleRefrehToken(request, next);
+        //  return this.handleRefrehToken(request, next);
         }
         // const err = new Error('test'); 
         // console.log(err);
@@ -75,16 +94,29 @@ export class AuthInterceptor implements HttpInterceptor {
 
   handleRefrehToken(request: HttpRequest<any>, next: HttpHandler) {
     let api = this.inject.get(LoginService);
-    return api.GenerateRefreshToken().pipe(
+    let input =localStorage.getItem('refreshToken')
+
+   
+
+
+
+
+
+    
+    return api.GenerateRefreshToken(input).pipe(
       switchMap((data: any) => {
-        api.SaveTokens(data);
-        console.log(data);
+        // api.SaveTokens(data);
+        localStorage.setItem('accessToken', data.data.accessToken);
+        // console.log(localStorage.setItem('refrestoken', data.data.accessToken));
         
-        return next.handle(this.AddTokenheader(request,data.accessToken))
+        localStorage.setItem('refreshtoken', data.data.refreshToken);
+        console.log(data.data.refreshToken);
+        
+        return next.handle(this.AddTokenheader(request,data.data.accessToken))
       }),
       catchError(errordata=>{
-        api.Logout();
-        console.log(errordata);
+        api.logout();
+        // console.log(errordata);
         
         // return throwError(errordata)
         const err = new Error('test'); 

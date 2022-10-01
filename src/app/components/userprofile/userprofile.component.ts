@@ -5,8 +5,8 @@ import {
   HttpParams,
   HttpResponse,
 } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,6 +14,14 @@ import { ApiService } from 'src/app/service/api.service';
 import { userProfileModel } from './userprofile.model';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/service/login.service';
+import { DatePipe } from '@angular/common';
+// import { MatTableDataSource } from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
+
+
+
 // import { DataService } from 'src/app/service/data.service';
 
 @Component({
@@ -23,6 +31,11 @@ import { LoginService } from 'src/app/service/login.service';
 })
 export class UserprofileComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  feeForm!: FormGroup;
+  filterForm = new FormGroup({
+    fromDate: new FormControl(),
+    toDate: new FormControl(),
+});
 
   selectedFiles?: FileList;
   currentFile?: File;
@@ -32,6 +45,9 @@ export class UserprofileComponent implements OnInit {
 
   expression = 'match1';
   userProfileModelObj: userProfileModel = new userProfileModel();
+  bsModalRef?: BsModalRef;
+  modalRef?: BsModalRef;
+
 
   userData: any;
   loggedinUser: any;
@@ -61,6 +77,7 @@ export class UserprofileComponent implements OnInit {
   getInvoiceByIdForm!: FormGroup;
   min: any = '';
   p: number = 1; //pagination
+  page: number = 1; //pagination
   value: any;
   formSubmitted: boolean = false;
   public form!: FormGroup;
@@ -68,6 +85,7 @@ export class UserprofileComponent implements OnInit {
 
   invoiceId:number=0;
   orderData: any;
+  filteredOrderData: any;
   pending: any;
   getInvoice: any;
   cancelQuote: any;
@@ -92,6 +110,12 @@ export class UserprofileComponent implements OnInit {
   state2: any;
   city2: any;
   jobDescription: any;
+  dataSource = new MatTableDataSource();
+  pipe: DatePipe;
+  inspectionFee: any;
+  orderById: any;
+  rating4: number = 0;
+
 
   constructor(
     private observer: BreakpointObserver,
@@ -99,21 +123,38 @@ export class UserprofileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private login:LoginService,
+    public login:LoginService,
+    private modalService: BsModalService,//for ngx-bootstrap modal
     private toastr: ToastrService // private dataApi:DataService
-  ) {}
+  ) {
+    
+    this.pipe = new DatePipe('en');
+    this.dataSource.filterPredicate = (data:any, filter) =>{
+      data=this.orderData
+      if (this.fromDate && this.toDate) {
+        return data.date >= this.fromDate && data.date <= this.toDate;
+      }
+      return true;
+    }
+  }
 
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
       firstName: [''],
       lastName: [''],
       // email: [''],
-      Address: [''],
+      address: [''],
       city: [''],
       state: [''],
       phoneNumber: [''],
       userId: [0],
     });
+
+    this.feeForm = this.formBuilder.group({
+      inspectionFee: 0
+
+    });
+    this.feeForm.disable()
     this.formValue.disable();
 
     this.deleteForm = this.formBuilder.group({
@@ -153,8 +194,10 @@ export class UserprofileComponent implements OnInit {
 
     this.pastDateTime();
 
+    this.rating3 = 0;
     this.form = this.formBuilder.group({
       rating: ['', Validators.required],
+      
       comment: [''],
       artisanId: 0,
       orderId: 0,
@@ -167,15 +210,20 @@ export class UserprofileComponent implements OnInit {
     this.userProfileModelObj.orderId = row.id;
     this.form.controls['artisanId'].setValue(row.artisanId);
     this.form.controls['orderId'].setValue(row.id);
+    
+    // this.form.controls['rating'].setValue('')
   }
 
   submitRating(data: any) {
     console.log(data);
-
     const registerObserver = {
       next: (res: any) => {
         this.userProfileModelObj.artisanId = res.id;
         console.log(this.userProfileModelObj.artisanId);
+        this.modalService.hide();
+        this.toastr.success('thanks, for your review');
+
+
         // this.router.navigate(['/checkemail']);
         console.log(res);
       },
@@ -247,8 +295,11 @@ export class UserprofileComponent implements OnInit {
   getOrder() {
     this.api.getUserOrder().subscribe((data: any) => {
       this.orderData = data;
-      console.log(this.orderData);
-      return this.orderData.reverse()
+      console.log("get all order for user", data);
+      
+      this.filteredOrderData = [...this.orderData]
+      return this.filteredOrderData.reverse();
+
     });
   }
 
@@ -295,7 +346,7 @@ export class UserprofileComponent implements OnInit {
     this.formValue.controls['lastName'].setValue(
       this.login.loggedinUser.lastName
     );
-    this.formValue.controls['Address'].setValue(this.login.loggedinUser.Address);
+    this.formValue.controls['Address'].setValue(this.login.loggedinUser.address);
     this.formValue.controls['city'].setValue(this.login.loggedinUser.city);
     this.formValue.controls['state'].setValue(this.login.loggedinUser.state);
 
@@ -324,7 +375,12 @@ export class UserprofileComponent implements OnInit {
 
     this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
       console.log(res);
-      this.toastr.success('Profile updated');
+      // this.toastr.success('Profile updated');
+      this.toastr.success('Profile successfully updated!!!');
+      this.getUser();
+      this.formValue.disable()
+
+
       this.showUpdate = !this.showUpdate;
 
       //   alert('employee updated sucessfully');
@@ -411,7 +467,7 @@ export class UserprofileComponent implements OnInit {
     })
   }
   onChangeState(event:any){
-    let userProfile =this.updateOrder.controls['state'].value
+    let userProfile =this.formValue.controls['state'].value
     if(userProfile){
       this.api.getLocation2(userProfile).subscribe((data:any)=>{
         this. city2= data
@@ -420,7 +476,7 @@ export class UserprofileComponent implements OnInit {
   }
 }
 onChangeCity(event:any){
-return this.updateOrder.controls['city'].value
+return this.formValue.controls['city'].value
   
 }
 
@@ -439,6 +495,7 @@ return this.updateOrder.controls['city'].value
       console.log(data);
 
       console.log(this.getInvoice);
+      return this.getInvoice.reverse()
     });
   }
   
@@ -450,8 +507,15 @@ return this.updateOrder.controls['city'].value
     this.getInvoiceByIdForm.value.invoiceId =data.invoiceId
     this.api.customerApproveInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
       this.approveQuote = res;
+      this.getQoute();
+
+      window.location.href = this.approveQuote.link;
+
       console.log(this.approveQuote);
     });
+    // this.router.navigate(['https://ravemodal-dev.herokuapp.com/v3/hosted/pay']);
+
+
   }
   userCancelQuote(data: any) {
     console.log(this.getInvoiceId);
@@ -499,10 +563,12 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
      console.log(data);
      console.log(this.getInvoiceId.action );
      this.invoiceAction=this.getInvoiceId.action
+     this.inspectionFee=this.getInvoiceId.inspectionFee
 
     });
 
   }
+ 
   getCompletedOrder(){
     this.api.userCompletedOrder().subscribe((data:any)=>{
       console.log('this is rest for completed order from user', data);
@@ -514,5 +580,146 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
       console.log('this is response form approved invoice', data);
       
     })
+  }
+
+  onClickViewOrder(data:any){
+    console.log(data);
+    this.deleteForm.value.invoiceId = data.id,
+    
+    
+    this.api.getOrderById(this.deleteForm.value ,data.id).subscribe((data: any) => {
+      this.orderById = data
+      this.rating4 = data.artisanRating;
+      console.log(this.rating4);
+      
+
+      console.log("onclick order",data);
+      
+  
+  })
+  }
+  Search(event:any) {
+    if (this.value == '') {
+      console.log(this.value);
+      
+      this.getOrder();
+    } else {
+      this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
+        console.log(res);
+        
+        return res.issue.toLocaleLowerCase()
+          .match(this.value.toLocaleLowerCase());
+      });
+    }
+  // return this.hope;
+  }
+
+  desde = new  Date();
+  hasta =  new Date();
+  ver() {
+    this.orderData.data
+    console.log('desde:', this.desde);
+    console.log('hasta:', this.hasta);
+  }
+
+  
+
+
+get fromDate() { return this.filterForm.get('fromDate'); }
+get toDate() { return this.filterForm.get('toDate'); }
+
+ 
+
+  applyFilter() {
+    this.orderData.filter = ''+Math.random();
+    console.log(this.orderData.date);
+    
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  Operations!: any[] // set this however you did before.
+  filteredOperations: any[] = [];
+
+  filterOperations() {
+    // this.filteredOperations = this.Operations.filter();
+  }
+  originalLeaves :any =[]
+  filterLeaves :any =[]
+  fromDate1=''
+  toDate1=''
+
+
+  filterByDate(){
+    let k = 0
+    var ivTemp = this.orderData
+   
+    this.filteredOrderData = [...this.orderData];
+
+    if(this.filteredOrderData! == ''){
+      ivTemp = this.filteredOrderData
+    }
+    console.log(ivTemp.length);
+    
+    console.log(this.fromDate1, this.toDate1);
+
+    const isInRange = (element: any) => { 
+      console.log(isInRange);
+      
+      const fDate = new Date(this.fromDate1);
+      const tDate = new Date(this.toDate1);
+      const elementFDate = new Date(element['date']);
+
+      console.log(elementFDate);
+      
+
+      return (elementFDate > fDate && elementFDate < tDate);
+    }
+    const result = Object.values(ivTemp).filter(isInRange);
+    return this.filteredOrderData =result
+    
+  }
+  search(){
+    if (this.value == '') {
+      console.log(this.value);
+      
+      this.getOrder();
+    } else {
+      this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
+        console.log(res);
+        
+        return res.issue.toLocaleLowerCase()
+          .match(this.value.toLocaleLowerCase());
+      });
+    }
+  }
+
+  hidden:boolean = false;
+
+imageSource(){
+    this.hidden = !this.hidden;
+}
+
+hidden2:boolean = false;
+
+changeFee(){
+    this.hidden2 = !this.hidden2;
+}
+changeInspectionFee(){
+
+  // this.adminApi
+  //   .inspectionFee(this.feeForm.value)
+  //   .subscribe((res: any) => {
+  //           this.toastr.success('Inspection Fee Sucessfully Updated!!');
+  //           this.feeForm.reset()
+  //           this.hidden = !this.hidden
+
+  //     console.log(res);
+      
+  //   });
+
+    this.toastr.warning('Something Went wrong!!');
   }
 }

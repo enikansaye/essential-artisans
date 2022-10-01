@@ -116,6 +116,7 @@ export class ArtisantransactionsComponent implements OnInit {
 
   totalRecord: any;
   page: number = 1;
+  completePage: number = 1;
   length = 10;
   pageSize = 10;
   pageIndex = 1;
@@ -126,6 +127,7 @@ export class ArtisantransactionsComponent implements OnInit {
   serviceOrdeIdForm!: FormGroup;
   issue: any; //string for search of data
   p: number = 1; //pagination
+  pendingPage: number = 1; //pagination
   completeOrderData:any
   completeOrderLength:any
   AllpendingLength: any;
@@ -135,6 +137,11 @@ export class ArtisantransactionsComponent implements OnInit {
   cancelOrderData: any;
   cancelOrderLength: any;
 hope:any
+  orderById: any;
+  value: any;
+  filteredOrderData: any;
+  fromDate1: any;
+  toDate1: any;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -189,22 +196,24 @@ hope:any
       console.log(this.totalLength);
 
       console.log(res.length);
+      this.filteredOrderData = [...this.AllOrderData]
+      return this.filteredOrderData.reverse();
     });
   }
   // method for Search
-  Search() {
-    if (this.issue == '') {
-      this.getAllOrder();
-    } else {
-      this.AllOrderData = this.AllOrderData.filter((res: any) => {
-        console.log(res);
+  // Search(event: Event) {
+  //   if (this.value == '') {
+  //     this.getAllOrder();
+  //   } else {
+  //     this.AllOrderData = this.AllOrderData.filter((res: any) => {
+  //       console.log(res);
 
-        return res.issue
-          .toLocaleLowerCase()
-          .match(this.issue.toLocaleLowerCase());
-      });
-    }
-  }
+  //       return res.issue
+  //         .toLocaleLowerCase()
+  //         .match(this.value.toLocaleLowerCase());
+  //     });
+  //   }
+  // }
   key: string = 'id';
   reverse: boolean = false;
   sort(key: any) {
@@ -291,7 +300,7 @@ hope:any
 
         // this.isAprove = !this.isAprove;
         console.log('this is artisan complete order',res);
-        // this.getAllOrder();
+        this.getAllOrder();
       });
 
     console.log(row);
@@ -326,7 +335,7 @@ hope:any
 
         this.cancelOrderData =res
       this.cancelOrderLength =res.length
-      console.log('this is from get complete order by artisan', res);
+      console.log('this is from get canceled order by artisan', res);
       return this.completeOrderData.reverse()
       },
       error: (err: any) => {
@@ -338,6 +347,18 @@ hope:any
     };
     this.artisanurl.artisanGetCancedOrder().subscribe(registerObserver)
 
+  }
+  onClickViewOrder(data:any){
+    console.log(data);
+    this.signupForm.value.invoiceId = data.id,
+    
+    
+    this.artisanurl.getOrderById(this.signupForm.value ,data.id).subscribe((data: any) => {
+      this.orderById = data
+      console.log(data);
+      
+  
+  })
   }
 
 //   // invoive modal section
@@ -420,11 +441,16 @@ for (let index = 0; index < this.InvoiceObject.items.length; index++) {
   console.log(this.InvoiceObject)
   this.artisanurl.generateInvoice(this.InvoiceObject).subscribe(result=>{
     this.toastr.success('invoice created successfully')
+    this.getAllOrder();
+
     this.modalRef?.hide()
      console.log(result)
 })
 
 }
+
+
+
 
 // addInvoiceBody() {
 // console.log(this.itemsArray)
@@ -462,6 +488,57 @@ return acc;
 updateTotalInItemsArray(item: itemObject) {
 item.total =(item.quantity && item.price) ? item.quantity * item.price:0;
 return item.total
+}
+
+filterByDate(){
+  let k = 0
+  var ivTemp = this.AllOrderData
+ 
+  this.filteredOrderData = [...this.AllOrderData];
+
+  if(this.filteredOrderData! == ''){
+    ivTemp = this.filteredOrderData
+  }
+  console.log(ivTemp.length);
+  
+  console.log(this.fromDate1, this.toDate1);
+
+  const isInRange = (element: any) => { 
+    console.log(isInRange);
+    
+    const fDate = new Date(this.fromDate1);
+    const tDate = new Date(this.toDate1);
+    const elementFDate = new Date(element['date']);
+
+    console.log(elementFDate);
+    
+
+    return (elementFDate > fDate && elementFDate < tDate);
+  }
+  const result = Object.values(ivTemp).filter(isInRange);
+  return this.filteredOrderData =result
+  
+}
+Search(event:any) {
+  if (this.value == '') {
+    console.log(this.value);
+    
+    this.getAllOrder();
+  } else {
+    this.filteredOrderData = this.AllOrderData.filter((res: any) => {
+      console.log(res);
+      
+      return res.issue.toLocaleLowerCase()
+        .match(this.value.toLocaleLowerCase());
+    });
+  }
+// return this.hope;
+}
+
+hidden:boolean = false;
+
+imageSource(){
+    this.hidden = !this.hidden;
 }
 
 
