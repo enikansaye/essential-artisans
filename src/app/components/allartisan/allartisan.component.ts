@@ -510,7 +510,7 @@ const file = event?.target.files? event.target.files[0]:''
 this.formValue.patchValue({
   Files:file
 })
-this.formValue.get('image')?.updateValueAndValidity()
+// this.formValue.get('image')?.updateValueAndValidity()
 
   }
   // onSubmitCheck2(){

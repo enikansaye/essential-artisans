@@ -7,6 +7,7 @@ import { ApiService } from './service/api.service';
 import { EventBusService } from './service/event-bus.service';
 import { LoaderService } from './service/loader.service';
 import { LoginService } from './service/login.service';
+import { SignalrService } from './service/signalr.service';
 import { StorageService } from './service/storage.service';
 
 import { UserModel } from './shared/models/user.model';
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
     private modalService: BsModalService,
     private updateService: UpdateService,
     public loginApi: LoginService,
+    public signalRService: SignalrService,
   ) {updateService.checkForUpdate()}
 
   loading$ = this.loader.loading$;
@@ -61,6 +63,9 @@ export class AppComponent implements OnInit {
     
     this.loginApi.getToken()
     this.loginApi.getToken();
+
+    this.signalRService.startConnection();
+    this.signalRService.addNotificationDataListener();  
 
     this.onNetwortStatusChange();
     window.addEventListener('online', this.onNetwortStatusChange.bind(this))

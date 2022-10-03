@@ -19,7 +19,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { ChartModule } from 'angular-highcharts';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { AlertModule } from 'ngx-alerts';
+// import { AlertModule } from 'ngx-alerts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NetworkInterceptor } from './loader/network.interceptor';
@@ -205,7 +205,7 @@ import { PaymentComponent } from './components/payment/payment.component';
       echarts: () => import('echarts'),
     }),
     
-    AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
+    // AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
 
     RouterModule.forRoot(
       [

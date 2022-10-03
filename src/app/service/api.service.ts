@@ -28,7 +28,7 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
-  public baseUrl: string = "https://lyticalartisanapi.azurewebsites.net/";
+  public baseUrl: string = 'https://localhost:7130';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,

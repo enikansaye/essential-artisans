@@ -26,6 +26,7 @@
     "@angular/router": "~13.3.8",
     "@angular/service-worker": "~13.3.8",
     "@auth0/angular-jwt": "^5.0.2",
+    "@microsoft/signalr": "^6.0.9",
     "@ng-bootstrap/ng-bootstrap": "^11.0.0",
     "alertifyjs": "^1.13.1",
     "angular-highcharts": "^13.0.1",
