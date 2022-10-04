@@ -86,6 +86,7 @@ export class UserprofileComponent implements OnInit {
   invoiceId:number=0;
   orderData: any;
   filteredOrderData: any;
+  filteredQuoteData: any;
   pending: any;
   getInvoice: any;
   cancelQuote: any;
@@ -111,7 +112,6 @@ export class UserprofileComponent implements OnInit {
   city2: any;
   jobDescription: any;
   dataSource = new MatTableDataSource();
-  pipe: DatePipe;
   inspectionFee: any;
   orderById: any;
   rating4: number = 0;
@@ -128,14 +128,7 @@ export class UserprofileComponent implements OnInit {
     private toastr: ToastrService // private dataApi:DataService
   ) {
     
-    this.pipe = new DatePipe('en');
-    this.dataSource.filterPredicate = (data:any, filter) =>{
-      data=this.orderData
-      if (this.fromDate && this.toDate) {
-        return data.date >= this.fromDate && data.date <= this.toDate;
-      }
-      return true;
-    }
+   
   }
 
   ngOnInit(): void {
@@ -151,7 +144,10 @@ export class UserprofileComponent implements OnInit {
     });
 
     this.feeForm = this.formBuilder.group({
-      inspectionFee: 0
+      inspectionFee: 0,
+      inspectionDateAndTime: "",
+orderId: 0
+
 
     });
     this.feeForm.disable()
@@ -495,8 +491,8 @@ return this.formValue.controls['city'].value
       console.log(data);
 
       console.log(this.getInvoice);
-      return this.getInvoice.reverse()
-    });
+      this.filteredQuoteData = [...this.getInvoice]
+      return this.filteredQuoteData.reverse();    });
   }
   
   userAprroveQuote(data: any) {
@@ -613,22 +609,26 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     }
   // return this.hope;
   }
-
-  desde = new  Date();
-  hasta =  new Date();
-  ver() {
-    this.orderData.data
-    console.log('desde:', this.desde);
-    console.log('hasta:', this.hasta);
+  quoteSearch(event:any) {
+    if (this.value == '') {
+      console.log(this.value);
+      
+      this.getOrder();
+    } else {
+      this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
+        console.log(res);
+        
+        return res.issue.toLocaleLowerCase()
+          .match(this.value.toLocaleLowerCase());
+      });
+    }
+  // return this.hope;
   }
 
   
 
 
-get fromDate() { return this.filterForm.get('fromDate'); }
-get toDate() { return this.filterForm.get('toDate'); }
 
- 
 
   applyFilter() {
     this.orderData.filter = ''+Math.random();
@@ -643,9 +643,7 @@ get toDate() { return this.filterForm.get('toDate'); }
   Operations!: any[] // set this however you did before.
   filteredOperations: any[] = [];
 
-  filterOperations() {
-    // this.filteredOperations = this.Operations.filter();
-  }
+
   originalLeaves :any =[]
   filterLeaves :any =[]
   fromDate1=''
@@ -681,6 +679,36 @@ get toDate() { return this.filterForm.get('toDate'); }
     return this.filteredOrderData =result
     
   }
+
+  filterByDate2(){
+    let k = 0
+    var ivTemp = this.getInvoice
+   
+    this.filteredQuoteData = [...this.getInvoice];
+
+    if(this.filteredQuoteData! == ''){
+      ivTemp = this.filteredQuoteData
+    }
+    console.log(ivTemp.length);
+    
+    console.log(this.fromDate1, this.toDate1);
+
+    const isInRange = (element: any) => { 
+      console.log(isInRange);
+      
+      const fDate = new Date(this.fromDate1);
+      const tDate = new Date(this.toDate1);
+      const elementFDate = new Date(element['date']);
+
+      console.log(elementFDate);
+      
+
+      return (elementFDate > fDate && elementFDate < tDate);
+    }
+    const result = Object.values(ivTemp).filter(isInRange);
+    return this.filteredQuoteData =result
+    
+  }
   search(){
     if (this.value == '') {
       console.log(this.value);
@@ -707,18 +735,23 @@ hidden2:boolean = false;
 changeFee(){
     this.hidden2 = !this.hidden2;
 }
-changeInspectionFee(){
+changeInspectionDate(row:any){
+row = this.orderById
+console.log(row.id)
+console.log(row);
+this.feeForm.value.orderId = row.id
 
-  // this.adminApi
-  //   .inspectionFee(this.feeForm.value)
-  //   .subscribe((res: any) => {
-  //           this.toastr.success('Inspection Fee Sucessfully Updated!!');
-  //           this.feeForm.reset()
-  //           this.hidden = !this.hidden
 
-  //     console.log(res);
+  this.api
+    .updateInspectionDate(this.feeForm.value)
+    .subscribe((res: any) => {
+            this.toastr.success('Inspection Fee Sucessfully Updated!!');
+            this.feeForm.reset()
+            this.hidden = !this.hidden
+
+      console.log(res);
       
-  //   });
+    });
 
     this.toastr.warning('Something Went wrong!!');
   }

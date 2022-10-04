@@ -887,9 +887,12 @@
           
       </button> 
           </div>
+          
         </div>
         <div>
-         
+          <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with name"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+
+         </div>
                   <table class="table table-striped" >
               <thead>
                 <tr>
@@ -936,7 +939,9 @@
 
       <!-- user section -->
       <div class="pt-5" *ngSwitchCase="'page3'" id="no-tables" >
+        <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with name"  name="value2" [(ngModel)]="value2" (keyup)="Search2($event.target) " >      
 
+        </div>
        <div class="h4 mb-3"> USERS SECTION</div> 
         <div>
            <table class="table">

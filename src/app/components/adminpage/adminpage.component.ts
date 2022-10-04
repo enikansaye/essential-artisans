@@ -93,6 +93,8 @@ export class AdminpageComponent implements OnInit {
   modalRef2?: BsModalRef;
   inspectionFee: any;
   Action: any;
+  value!: '';
+value2: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -561,4 +563,34 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
   }
 
 
+  Search(event:any) {
+    if (this.value == '') {
+      console.log(this.value);
+      
+      this.getAllArtisan();
+    } else {
+      this.artisanData = this.artisanData.filter((res: any) => {
+        console.log(res);
+        
+        return res.firstName.toLocaleLowerCase()
+          .match(this.value.toLocaleLowerCase());
+      });
+    }
+  // return this.hope;
+  }
+  Search2(event:any) {
+    if (this.value2 == '') {
+      console.log(this.value);
+      
+      this.getAllUser();
+    } else {
+      this.userData = this.userData.filter((res: any) => {
+        console.log(res);
+        
+        return res.firstName.toLocaleLowerCase()
+          .match(this.value.toLocaleLowerCase());
+      });
+    }
+  // return this.hope;
+  }
 }

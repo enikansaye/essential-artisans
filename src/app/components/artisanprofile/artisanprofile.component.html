@@ -376,68 +376,7 @@ Ratings: {{artisanData.rating}}
             </section>
           </div>
 
-          <div *ngSwitchCase="'match2'" class="p-3">
-            <section>
-              <div class="col d-flex justify-content-around">
-                <div class="col-3 col1 d-flex flex-column p-3">
-                  <span>Total bill</span>
-                  <strong># 20,000</strong>
-                  <!-- <a href="">sdfghjk</a> -->
-                </div>
-                <div class="col-3 col2 d-flex flex-column p-3">
-                  <span>Total order</span>
-                  <strong>10</strong>
-                  <!-- <a href="">sdfghjk</a> -->
-                </div>
-                <div class="col-3 col3 d-flex flex-column p-3">
-                  <span>Total bill</span>
-                  <strong># 20,000</strong>
-                  <!-- <a href="">sdfghjk</a> -->
-                </div>
-              </div>
-            </section>
-
-
-            <section>
-              <mat-toolbar class="w-100 justify-content-between m-3">
-                <div>Billing History</div>
-                <button class="btn btn-primary d-flex">Add Order</button>
-              </mat-toolbar>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">20499p</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">30499p</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">40499p</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
-            </section>
-          </div>
+          
           <div *ngSwitchCase="'match3'" class="p-3">
            
             <app-artisantransactions></app-artisantransactions>
@@ -448,18 +387,32 @@ Ratings: {{artisanData.rating}}
           <!-- invoice/Quote section -->
           <div *ngSwitchCase="'match4'" class="p-3">
             <mat-toolbar class="w-100 d-flex justify-content-between" >
-              <div>
-                <input type="date" [(ngModel)]="fromDate1" class="me-2" >
-              <input type="date" [(ngModel)]="toDate1" class="me-2" >
-              <button class="btn btn-danger" (click)="filterByDate()">Search</button>
-              </div>
-            <div>  
-              <input type="text" placeholder="Name Search"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
-
-            </div>
+              
+            Quote History
             </mat-toolbar>
-
-            <div >
+            <div class="row d-flex  " >
+              <div class="d-flex col-6">
+                <div class="col-md-3 " >
+                  <input type="date"   [(ngModel)]="fromDate1" class="me-2" >
+      
+                </div>
+                <div class="col-md-3 ">
+                  <input type="date" style=" margin-right: 3px;" [(ngModel)]="toDate1" >
+      
+                </div>
+                <div class="col-md-2 " >
+                  <button class="btn btn-danger " (click)="filterByDate()">Search</button>
+      
+                </div>
+              </div>
+           
+      <!-- <div class="col-12  col-md-6 mb-3 float-right">   
+             <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+      </div> -->
+      
+           
+          </div>
+            <div id="no-tables">
               <table class="table">
                 <thead>
                   <tr>

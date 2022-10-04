@@ -460,6 +460,16 @@ export class ApiService implements OnInit {
         })
       );
   }
+  updateInspectionDate(data: any) {
+   
+    return this.http
+      .put<any>(this.baseUrl + '/api/Customer/inspection-date/change', data)
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
 
   userCompletedOrder(){
     return this.http.get<any>(this.baseUrl + '/api/Customer/ServiceOrder/completed')

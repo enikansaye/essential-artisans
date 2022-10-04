@@ -196,30 +196,30 @@
 
   <section>
     <div [ngSwitch]="service">
-      <div class="row d-flex col-12 " >
-        <div class="d-flex">
-          <div class="me-2" >
-            <input type="date" style="width: 80px;"  [(ngModel)]="fromDate1" class="me-2" >
-
-          </div>
-          <div class="col-3 me-2">
-            <input type="date" style="width: 60px; margin-right: 3px;" [(ngModel)]="toDate1" class="me-2" >
-
-          </div>
-          <div class="col-3">
-            <button class="btn btn-danger h-75 d-flex align-center" (click)="filterByDate()">Search</button>
-
-          </div>
-        </div>
-      <div>  
-<div class="col-12 mb-3">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
-</div>
-      </div>
-    </div>
+      
 
       <!-- all transaction -->
       <div *ngSwitchCase="'completed'" id="no-tables">
-
+        <div class="row d-flex  " >
+          <div class="d-flex col-6">
+            <div class="col-md-3 " >
+              <input type="date"   [(ngModel)]="fromDate1" class="me-2" >
+  
+            </div>
+            <div class="col-md-3 ">
+              <input type="date" style=" margin-right: 3px;" [(ngModel)]="toDate1" >
+  
+            </div>
+            <div class="col-md-2 h-50" >
+              <button class="btn btn-danger " (click)="filterByDate()">Search</button>
+  
+            </div>
+          </div>
+       
+  <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+  </div>
+       
+      </div>
         <div *ngIf="AllOrderData">
           <table class="table table-striped">
             <thead>

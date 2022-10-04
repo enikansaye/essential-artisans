@@ -287,7 +287,7 @@ formdata.append("Files", data.fileName);
 
 
    this.http
-       .post(this.api.baseUrl + 'pi/Customer/ServiceOrder/create',formdata, {
+       .post(this.api.baseUrl + '/api/Customer/ServiceOrder/create',formdata, {
         observe: 'events'
        }).subscribe((res:any)=>{
         this.modalRef?.hide()

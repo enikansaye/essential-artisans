@@ -36,8 +36,8 @@
             ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</div
           >
          
-          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="bi bi-gear"> </i> MY ORDERS</div>
-          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="bi bi-gear"> </i> QUOTE</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="fa-solid fa-cart-shopping "></i> MY ORDERS</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="fa-solid fa-list"></i> QUOTE</div>
           
 
           
@@ -258,15 +258,26 @@
             <div class="h4">Job History</div>
 
           <section>
-            <mat-toolbar class="text-success w-100 justify-content-between m-3">
-              <div>
-                <input type="date" [(ngModel)]="fromDate1" class="me-2" >
-              <input type="date" [(ngModel)]="toDate1" class="me-2" >
-              <button class="btn btn-danger" (click)="filterByDate()">Search</button>
+            <div class="row d-flex  " >
+              <div class="d-flex col-6">
+                <div class="col-md-3 " >
+                  <input type="date"   [(ngModel)]="fromDate1" class="me-2" >
+      
+                </div>
+                <div class="col-md-3 ">
+                  <input type="date" style=" margin-right: 3px;" [(ngModel)]="toDate1" >
+      
+                </div>
+                <div class="col-md-2 h-50" >
+                  <button class="btn btn-danger " (click)="filterByDate()">Search</button>
+      
+                </div>
               </div>
-
-              <input type="text" placeholder="filter with issue"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
-            </mat-toolbar>
+           
+      <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+      </div>
+           
+          </div>
             <div id="no-tables">
               <table class="table table-striped" *ngIf="orderData">
                 <thead>
@@ -348,10 +359,29 @@
          
           <section>
             <mat-toolbar class="text-success w-100 justify-content-between m-3">
-              <div>Job History</div>
-              <input type="text" placeholder="filter with name"  name="value" [(ngModel)]="value" (ngModelChange)="Search($event.target) " >      
+              <div>Quote History</div>
            
             </mat-toolbar>
+            <div class="row d-flex  " >
+              <div class="d-flex col-6">
+                <div class="col-md-3 " >
+                  <input type="date"   [(ngModel)]="fromDate1" class="me-2" >
+      
+                </div>
+                <div class="col-md-3 ">
+                  <input type="date" style=" margin-right: 3px;" [(ngModel)]="toDate1" >
+      
+                </div>
+                <div class="col-md-2 " >
+                  <button class="btn btn-danger h-75" (click)="filterByDate2()">Search</button>
+      
+                </div>
+              </div>
+           
+      <div class="col-12  col-md-6 mb-3 float-end">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="quoteSearch($event.target) " >      
+      </div>
+           
+          </div>
             <div id="no-tables">
               <table class="table table-striped" *ngIf="getInvoice">
                 <thead>
@@ -370,7 +400,7 @@
                   </tr>
                 </thead>
              
-                <tbody *ngFor="let i=index,let data of getInvoice  | paginate: { itemsPerPage:5, currentPage:page}; ">
+                <tbody *ngFor="let i=index,let data of filteredQuoteData  | paginate: { itemsPerPage:5, currentPage:page}; ">
                   <tr>
                     <td  data-title="Date">{{data.date}}</td>
                     <td  data-title="Invoice ID">{{data.invoiceId}}</td>
@@ -632,12 +662,12 @@
 
 <div><span>Artisan Number : </span><span class="h6">{{orderById.artisanPhoneNumber}}</span></div>
 
-<div class="d-flex my-2">
-  <input type="date" class="me-3" *ngIf="hidden2" [(ngModel)]="this.feeForm.value.inspectionFee">
+<div class="d-flex my-2" *ngIf="!orderById.hasInvoice">
+  <input type="date" class="me-3" *ngIf="hidden2" [(ngModel)]="this.feeForm.value.inspectionDateAndTime">
 
   <button class="btn btn-success me-2" *ngIf="!hidden2" (click)="changeFee()">Change Inspection Date</button>
   <button class="btn btn-danger me-2" *ngIf="hidden2" (click)="changeFee()">Cancel</button>
-  <button class="btn btn-info me-2" *ngIf="hidden2" (click)="changeInspectionFee()"  >Change Date</button>
+  <button class="btn btn-info me-2" *ngIf="hidden2" (click)="changeInspectionDate(orderById)"  >Change Date</button>
 
 </div>  
 <!-- <div><span>Artisan Ratings : </span><span class="h6">{{orderById.artisanRating}}</span></div> -->
