@@ -28,6 +28,7 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
+  // public baseUrl: string = "https://essential-artisans.azurewebsites.net";
   public baseUrl: string = 'https://localhost:7130';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
@@ -199,6 +200,19 @@ export class ApiService implements OnInit {
         responseType: 'json',
       }
     );
+
+    return this.http.request(req);
+  }
+
+  upload3(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', `${this.baseUrl}/api/Customer/ServiceOrder/create`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
 
     return this.http.request(req);
   }

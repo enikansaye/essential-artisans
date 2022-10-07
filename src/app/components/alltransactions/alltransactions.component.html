@@ -440,9 +440,12 @@
 
 <!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
   <!-- !-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> --> 
-  <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{orderById.artisanProfileImage}}" *ngIf="hidden" />
-    
-  <div><span class="me-2">Pictures : </span><span class="h6"><button  class="btn btn-info my-2" (click)="imageSource()">View Pictures</button></span></div>
+<div class="d-flex" *ngFor="let data of orderById.filePaths, let i = index"> 
+  <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{data.filePaths}}" *ngIf="hidden" />
+
+</div>    
+  <div>
+    <span class="me-2">Pictures : </span><span class="h6"><button  class="btn btn-info my-2" (click)="imageSource()">View Pictures</button></span></div>
   
 
 

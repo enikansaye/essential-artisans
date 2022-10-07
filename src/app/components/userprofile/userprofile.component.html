@@ -32,12 +32,12 @@
         <h4></h4>
        <hr class="divider">
         <div class=" icons w-100 p-4">
-          <div  class="p-3 cursor" [class.active]="expression == 'match1'" (click)="expression = 'match1'"
+          <div  class="p-3 cursor" [class.active]="expression == 'match1'" (click)="expression = 'match1' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
             ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</div
           >
          
-          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2'" ><i class="fa-solid fa-cart-shopping "></i> MY ORDERS</div>
-          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3'" ><i class="fa-solid fa-list"></i> QUOTE</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2';sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true" ><i class="fa-solid fa-cart-shopping "></i> MY ORDERS</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3' ;sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"><i class="fa-solid fa-list"></i> QUOTE</div>
           
 
           
@@ -709,8 +709,10 @@
 
 <!-- <div><span>Pictures : </span><button class="h6">View Pictures</button></div> -->
 <!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
-<img src="data:image/png;base64,{{orderById.artisanProfileImage}}" *ngIf="hidden" />
+<div class="d-flex w-100" *ngFor="let data of orderById.filePaths, let i = index"> 
+  <img class="image-fluid mb-1" style="height: 100px; width:100px;" src="data:image/png;base64,{{data.filePaths}}" *ngIf="hidden" />
 
+</div>  
 <div><span>Pictures : </span><span class="h6"><button  class="btn btn-info mt-2" (click)="imageSource()">View Pictures</button></span></div>
 
 

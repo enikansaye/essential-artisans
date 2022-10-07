@@ -484,14 +484,16 @@ return item.total
 
     let invoiceEdit = {
       "invoiceId": this.getInvoiceId.invoiceId,
-      "artisanCharge": "",
+      "artisanCharge": this.artisanCharge ,
       "serviceItemsDto": itemsDto
     } 
 
     console.log(invoiceEdit);
     
     this.InvoiceObject.invoiceId  =  this.getInvoiceId.invoiceId
-    // console.log(this.getInvoiceId.invoiceId);
+    this.InvoiceObject.artisanCharge    =  this.getInvoiceId.artisanCharge
+
+    console.log(this.InvoiceObject.artisanCharge );
     
    
     

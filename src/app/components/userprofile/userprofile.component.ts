@@ -526,6 +526,7 @@ return this.formValue.controls['city'].value
     this.getInvoiceByIdForm.value.invoiceId = data.invoiceId
     this.api.customerCancelInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
       this.cancelQuote = res;
+      this.getQoute();
       console.log(this.cancelQuote);
     });
   }
