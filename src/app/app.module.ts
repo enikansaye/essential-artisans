@@ -24,7 +24,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NetworkInterceptor } from './loader/network.interceptor';
 import {MatMenuModule} from '@angular/material/menu';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatSnackBarModule} from  '@angular/material/snack-bar'
 // import {MatDialogModule} from '@angular/material/dialog';
@@ -98,9 +97,14 @@ import {MatListModule} from '@angular/material/list'
 import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { PopoverModule }
+    from 'ngx-bootstrap/popover';
+    import { TooltipModule  } from 'ngx-bootstrap/tooltip';
+
 // import { DatePipe } from './pipes/date.pipe';
 import { SessionRecoveryInterceptor } from 'src/_helpers/SessionRecoveryInterceptor';
 import { PaymentComponent } from './components/payment/payment.component';
+
 // import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
 
 
@@ -190,6 +194,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     Ng2OrderModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    PopoverModule.forRoot(),
+    TooltipModule.forRoot(),
 
     // MatDialogModule,
     // MatDividerModule,
@@ -252,8 +258,9 @@ import { PaymentComponent } from './components/payment/payment.component';
         { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'invoice', component: InvoiceComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
-        { path: 'privacy', component: PrivacyComponent },
+        { path: 'term of service', component: PrivacyComponent },
         { path: 'payment', component: PaymentComponent },
+        // { path: 'payment', component: PaymentComponent },
         { path: '**', component: PagenotfoundComponent },
 
        

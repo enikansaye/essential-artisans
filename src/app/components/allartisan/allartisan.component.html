@@ -1,4 +1,4 @@
-<div class="d-flex mt-5 pt-4">
+<div class="d-flex dashboard mt-5 pt-4">
   <div class="container-fluid">
     <!-- PROFILE CARDS 1 -->
 
@@ -29,7 +29,8 @@
               <div class="card-avatar " >
                 <a>
                   <img class="img-fluid  " style="width: 200px; height: 200px; object-fit:fill;" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
-                 <div class="img " *ngIf="!data.profileImage "><ngx-avatar size="130" name="{{data.firstName}} {{data.lastName}}"></ngx-avatar></div>
+                 <div class="img " *ngIf="!data.profileImage ">
+                  <ngx-avatar size="130" name="{{data.firstName}} {{data.lastName}}"></ngx-avatar></div>
                   <!-- <img class="img img-fluid " *ngIf="!data.profileImage" src="/assets/images/avatar1.webp" /> -->
                 </a>
               </div>
@@ -40,9 +41,14 @@
                  
                 </h4>
                 <p class="category text-muted h6 pt-3">{{ data.firstName }} {{data.lastName}}</p>
-                <p class="card-description text-center">
-                  15 years working experience.
-                </p>
+
+
+
+                <!-- <p class=" text-center mt-2" >
+                  
+                  {{data.profession}}
+
+                </p> -->
 
                 <div class="d-flex justify-content-between">
                   <div class="list-inline-item mt-2 small">
@@ -50,10 +56,8 @@
                   </div>
                
                 </div>
-                <div class="stars">
-                  <ngx-star-rating [id]="artisanData.rating" [(ngModel)]="artisanData.rating" [disabled]="true"></ngx-star-rating>
-                  
-              </div>
+                <ngx-star-rating [id]="artisanData.rating" [(ngModel)]="artisanData.rating" [disabled]="true"></ngx-star-rating>
+
               </div>
             </div>
           </div>
@@ -71,133 +75,11 @@
   
 </div>
 
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Send Your Request</h3>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <!-- modal form -->
-        <form
-          [formGroup]="formValue" (ngSubmit)="onSubmitCheck(this.formValue.value)"
-         
-         
-        >
-          <div class="mb-1">
-            <label for="exampleInputEmail1" class="form-label">Full Name</label>
-            <input
-              formControlName="Name"
-              type="text"
-              class="form-control"
-              id="exampleInputText"
-              aria-describedby="emailHelp"
-            />
-          </div>
 
-          <div class="mb-1">
-            <label for="exampleInputPassword1" class="form-label"
-              >Address</label
-            >
-            <input
-              formControlName="PropertyAddress"
-              type="text"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div>
-        
-
-         
-          <div class="mb-1">
-            <label for="exampleInputPassword1" class="form-label"
-              >Whatsapp Number</label
-            >
-            <input
-              formControlName="PhoneNumber"
-              type="number"
-              class="form-control"
-            />
-          </div>
-          <!-- <div class="mb-1">
-            <label for="exampleInputPassword1" class="form-label"
-              >Alternative Number</label
-            >
-            <input
-              formControlName="AlternateNumber"
-              type="number"
-              class="form-control"
-            />
-          </div> -->
-       
-
-      <div>
-          <output *ngIf=successResponse class="success"><b>{{successResponse}}</b></output>
-      </div>
-          
-  <div class="my-2">
-            <label for="exampleInputPassword1" class="form-label"
-              >Description</label
-            >
-            <input
-              formControlName="Issue"
-              type="textarea"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div>
-          <div class="my-2">
-            <label for="exampleInputPassword1" class="form-label"
-              >Inspection Date and Time</label
-            >
-            <input
-              formControlName="InspectionDateAndTime"
-              type="datetime-local"
-              [(ngModel)]="value"
-              #input
-              (change)="onChange(input.value)"
-            />
-           
-          </div>
-    
-        
-
-        <div class="mt-4">
-          <input type="file" formControlName="Files" value="FileName" (change)="uploadfile($event.target)">
-        </div>
-<div></div>
-
-<button class="btn btn-info mt-3" id='ModelId'    type="submit">Send</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-       
-      
-      </div>
-
-
-      
-      
-   
-    </div>
-  </div>
-</div>
 <!-- modal for invoice -->
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Creata Quote</h4>
+    <h4 class="modal-title pull-left">Create Order</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -211,7 +93,7 @@
   <div class="modal-body">
     <!-- modal form -->
     <form
-      [formGroup]="formValue" (ngSubmit)="onSubmitCheck(this.formValue.value)"
+      [formGroup]="formValue" (ngSubmit)="submit2()"
      
      
     >
@@ -291,10 +173,21 @@
        
       </div>
 
+      <div class="form-group">
+        <label for="file">File</label>
+        <input 
+            formControlName="Files"
+            id="file" 
+            type="file" 
+            class="form-control"
+            multiple="" 
+            (change)="onFileChange($event)">
+            </div>
+
     
 
     <div class="mt-4">
-      <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple>
+      <!-- <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple> -->
     </div>
 <div></div>
 

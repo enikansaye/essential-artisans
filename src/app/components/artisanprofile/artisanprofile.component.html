@@ -17,7 +17,7 @@
  <div class="w-100 d-flex flex-column align-items-center ">
   <img  *ngIf="artisanData.profileImage"
   src="data:image/png;base64,{{artisanData.profileImage}}" alt=""
-  class="img-fluid bg-success rounded-circle w-75"
+  class="img-fluid bg-success rounded-circle w-50"
 />
 <ngx-avatar *ngIf="!artisanData.profileImage " size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar>
 
@@ -99,11 +99,93 @@ Ratings: {{artisanData.rating}}
       <!-- <mat-divider></mat-divider> -->
     </mat-sidenav>
     <mat-sidenav-content opened>
-      <div class="content mat-elevation-z4 flex-column ms-3 ms-lg-4">
-        <mat-toolbar class="d-lg-none">
-          <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
+      <div class="content mat-elevation-z4 flex-column ms-3 ms-lg-4 mt-5" >
+        <mat-toolbar class="col-12">
+          <div class="d-lg-none">
             <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">label_important</mat-icon>
-          <!-- </button> -->
+          </div>
+
+          <nav class="navbar-default navbar w-100 navbar-expand float-right">
+            <a id="nav-toggle" >
+              <i class="bi bi-menu"></i>
+            </a>
+         
+
+            
+            <!--Navbar nav -->
+            <ul
+              class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap"
+            >
+              <li class="dropdown stopevent">
+                <a
+                  class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted position-relative bg-info"
+                
+                  role="button"
+                  id="dropdownNotification"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-bell"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-danger fs-6" >
+                    {{signalRService.notificationCount}}
+                    </span>
+                </a>
+             <div
+                  class=" dropdown-menu dropdown-menu-end notify"
+                  aria-labelledby="dropdownNotification"
+                >
+                  <div class="">
+                    <div
+                      class="border-bottom px-3 pb-3 d-flex justify-content-between align-items-center"
+                    >
+                      <span class="h4 mb-0">Notifications</span>
+                      <a  class="text-muted">
+                        <span class="align-middle">
+                          <i class="bi bi-settings me-1"></i>
+                        </span>
+                      </a>
+                    </div>
+                    <!-- List group -->
+                    <ul
+                      class="list-group list-group-flush notification-list-scroll"
+                    >
+                      <li class="list-group-item bg-light">
+                        <div class="row">
+                          <div class="col">
+                            <a class="text-body" >
+                             
+                                
+                                <div class="ms-3" *ngFor=" let data of signalRService.notificationText; let i= index">
+                                  <!-- <h5 class="fw-bold mb-1">Kristin Watson:</h5> -->
+                                 <div class="text-wrap"  (click)="onclickNotification(data.notificationId)">
+                                  <span class="me-2" >
+                                    {{i+1 }}
+                                   
+                                  </span>
+                                {{data.notificationText }}
+                                  
+                                 </div>
+                                 
+                                </div>
+                            
+                            </a>
+                          </div>
+                         
+                        </div>
+                      </li>
+                   
+                      
+                     
+                    </ul>
+                    
+                  </div>
+                </div>
+              </li>
+              <!-- List -->
+            
+            </ul>
+          </nav>
 
           <!-- <div class="d-flex justify-content-end w-100">
             <i class="bi bi-heart me-3"></i>
@@ -140,9 +222,9 @@ Ratings: {{artisanData.rating}}
         <div [ngSwitch]="expression" >
           <div *ngSwitchCase="'match1'">
             <section
-              class="col w-100 justify-content-flexstart align-items-center p-2 p-md-5 " 
+              class="col w-100 justify-content-flexstart align-items-center  p-md-5 " 
             >
-              <div class="h5 text-dark">EDIT INFORMATION</div>
+              <!-- <div class="h5 text-dark">EDIT INFORMATION</div> -->
 
               <div class="col-12 align-items-end d-flex">
                 <div class="col-4 col-md-2 rounded-circle me-3">
@@ -216,11 +298,25 @@ Ratings: {{artisanData.rating}}
                     >
                     <div class="col-sm-4">
                       <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         id="inputnumber"
                         placeholder="{{artisanData.phoneNumber}}"
                         formControlName="phoneNumber"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >SERVICE</label
+                    >
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputtext"
+                        placeholder="{{artisanData.profession}}"
+                        disabled
                       />
                     </div>
                   </div>
@@ -238,17 +334,25 @@ Ratings: {{artisanData.rating}}
                       />
                     </div>
                   </div>
-                  <div class="mb-3 d-flex">
-                    <label for="inputtext" class="col-sm-2 col-form-label me-2"
-                      >SERVICE</label
+                  <div class="mb-3 row">
+                    <label for="inputtext" class="col-sm-2 col-form-label"
+                      >Location</label
                     >
-                   
-                      <select class="form-select " formControlName="service" aria-label="Default select example">
-                        <option selected value="">{{artisanData.profession}}</option>
-                        <option *ngFor="let data of serviceCategory" >{{ data.name }}</option>
-                      </select>
-                    
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputtext"
+                        placeholder="{{artisanData.location}}"
+                        disabled
+                      />
+                    </div>
                   </div>
+
+                  
+
+                  
+                
                   <!-- <div class="form-group form-outline mb-4">
                    
                     <select
@@ -293,10 +397,12 @@ Ratings: {{artisanData.rating}}
                     >STATE</label
                   >
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
-                      <option value="" selected disabled>{{artisanData.location}}</option>
+                      <option value="" selected disabled>Select State</option>
                       <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                       
                     </select>
+                    <span>select your state </span>
+
                     </div>
   
                     <div class="form-group form-outline mb-4 d-flex "   >
@@ -304,10 +410,12 @@ Ratings: {{artisanData.rating}}
                       >LGA</label
                     >
                       <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
-                        <option selected value="">{{artisanData.city}}</option>
+                        <option selected value="" disabled>Select LGA</option>
                         <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                         
                       </select>
+                      <span>select your LGA </span>
+
                       </div>
 
                    <div class="d-flex">

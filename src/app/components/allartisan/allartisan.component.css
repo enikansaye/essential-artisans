@@ -8,6 +8,10 @@
    
     
 } */
+.dashboard{
+    min-height: 80vh;
+    height: 100%;
+}
 ul.list{
     list-style-type: none;
     /* margin-bottom: 25px; */

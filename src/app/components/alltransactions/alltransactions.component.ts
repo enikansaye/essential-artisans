@@ -60,6 +60,7 @@ export class AlltransactionsComponent implements OnInit {
   filteredOrderData: any;
   fromDate1: any;
   toDate1: any;
+  hidden2: boolean = false;
 
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
@@ -361,6 +362,9 @@ filterByDate(){
 
 imageSource(){
     this.hidden = !this.hidden;
+}
+imageSource2(){
+    this.hidden2 = !this.hidden2;
 }
 }
 

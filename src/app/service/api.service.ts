@@ -487,6 +487,12 @@ export class ApiService implements OnInit {
      );
     }
 
+  
+    //  read notification api
+    readNotification(data:any){
+      return this.http.put<any>(this.baseUrl + "/api/Notification",data)
+    }
+
 
   // uploadCheck(
   //   id: any,
@@ -534,4 +540,7 @@ export class ApiService implements OnInit {
   // checkCheck(data:any){
   //   return this.http.post(this.baseUrl +'/api/Customer/ServiceOrder/create',data)
   // }
+
+
+  
 }

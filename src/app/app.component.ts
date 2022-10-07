@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
   displayUser: any;
   displayArtisan: any;
   currentRole: any;
+ 
 
   ngOnInit(): void {
     this.roleDisplay();
@@ -65,7 +66,25 @@ export class AppComponent implements OnInit {
     this.loginApi.getToken();
 
     this.signalRService.startConnection();
-    this.signalRService.addNotificationDataListener();  
+    this.signalRService.addNotificationDataListener(); 
+    this.signalRService.getNotification()
+    
+    // this.api.getNotification().subscribe((res:any)=>{
+    //   this.notificationCount = res.countOfNotifications
+    //   localStorage.setItem('notifyCount', this.notificationCount)
+    //   localStorage.setItem('alldatacount', res.userNotifications[0].notificationText);
+
+
+    //   console.log(this.notificationCount);
+      
+    //   console.log(res);
+      
+    // })
+    // this.api.readNotification().subscribe((res:any)=>{
+    //   // this.notificationMessage = res
+    //   console.log(res);
+      
+    // })
 
     this.onNetwortStatusChange();
     window.addEventListener('online', this.onNetwortStatusChange.bind(this))

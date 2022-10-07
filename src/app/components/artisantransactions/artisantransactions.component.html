@@ -249,8 +249,8 @@
               >
                 <td data-title="Date">{{ data.date }}</td>
                 <td data-title="inspection Date">{{ data.inspectionDate }}</td>
-                <td data-title="Completion Date"></td>
-                <td data-title="Order ID">{{ data.id }}</td>
+                <td data-title="Completion Date">{{data.completionDate}}</td>
+                <td data-title="Order ID">{{data.uniqueId}}/td>
                 <td data-title="Issue"  title="{{data.issue}}" class="but" >{{(data.issue.length>6)? (data.issue | slice:0:7)+'...':(data.issue)}}</td>
                 <td data-title="Location">{{ data.propertyAddress }}</td>
                 <td data-title="Customer's Name">{{data.name}}</td>
@@ -357,7 +357,7 @@
                 <td data-title="Order ID">{{ data.id}}</td>
                 <td data-title="Date">{{ data.date }}</td>
                 <td data-title="Inspection Date">{{data.inspectionDate}}td>
-                <!-- <td data-title="Order ID">{{ data.id }}</td> -->
+                <!-- <td data-title="Order ID">{{data.uniqueId}}/td> -->
                 <td data-title="Issue" title="{{data.issue}}" class="but" >{{(data.issue.length>6)? (data.issue | slice:0:7)+'...':(data.issue)}}</td>
 
                 <td data-title="Location">{{ data.propertyAddress }}</td>
@@ -447,7 +447,7 @@
                   <td data-title="Date">{{ data.date }}</td>
                   <!-- <td data-title="inspection Date">{{ data.inspectionDate }}</td> -->
                   <td data-title="Completion Date">{{data.completionDate}}</td>
-                  <td data-title="Order ID">{{ data.id }}</td>
+                  <td data-title="Order ID">{{data.uniqueId}}/td>
                   <td data-title="Issue">{{ data.issue }}</td>
                   
   
@@ -501,7 +501,7 @@
                 <td data-title="Date">{{ data.date }}</td>
                 <td data-title="inspection Date">{{ data.inspectionDate }}</td>
                 <td data-title="Completion Date"></td>
-                <td data-title="Order ID">{{ data.id }}</td>
+                <td data-title="Order ID">{{data.uniqueId}}/td>
                 <td data-title="Issue">{{ data.issue }}</td>
                 
 

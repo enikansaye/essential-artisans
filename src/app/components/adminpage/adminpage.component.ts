@@ -10,6 +10,7 @@ import { AdminService } from 'src/app/shared/admin.service';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { SignalrService } from 'src/app/service/signalr.service';
 
 
 class itemObject {
@@ -95,6 +96,8 @@ export class AdminpageComponent implements OnInit {
   Action: any;
   value!: '';
 value2: any;
+  hope3: any;
+  order: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -103,6 +106,8 @@ value2: any;
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private modalService: BsModalService,
+    public signalRService: SignalrService,
+
 
 
   ) {}
@@ -326,7 +331,7 @@ value2: any;
       },
       error: (err: any) => {
         console.log(err.error);
-        return (this.quotePendingError = err.error);
+        return this.quotePendingError = err.error;
         // this.alertService.danger('signup failed');
       },
     };
@@ -363,7 +368,8 @@ value2: any;
       .aproveArtisanUrl(this.artisanId, row.id)
       .subscribe((res: any) => {
         console.log(res);
-        this.toastr.success('artisan Approved')
+
+        this.toastr.success('Artisan Approved')
         this.getAllPendingArtisan()
          this.getAllArtisan() 
          
@@ -438,6 +444,23 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
       
 //     }
   }
+  grandtotal:number =0
+getInvoiceTotalAmount() {
+return this.itemsArray.reduce((acc, item) => {
+acc += this.updateTotalInItemsArray(item) 
+this.grandtotal =acc;
+console.log(this.grandtotal);
+
+return acc;
+}, 0)
+ 
+}
+
+
+updateTotalInItemsArray(item: itemObject) {
+item.total =(item.quantity && item.price) ? item.quantity * item.price:0;
+return item.total
+}
  
   submitEditedQuote(data:any){
     
@@ -461,6 +484,7 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
 
     let invoiceEdit = {
       "invoiceId": this.getInvoiceId.invoiceId,
+      "artisanCharge": "",
       "serviceItemsDto": itemsDto
     } 
 
@@ -477,6 +501,8 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
       this.getInvoiceId = data;
       this.toastr.success('Quote Successfully Updated')
 
+      this.getQouteByAdmin()
+
       this.modalRef?.hide()
 
       console.log(data);
@@ -486,36 +512,45 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
 
   }
   suspendArtisan(row: any) {
-    console.log(row.id);
     this.artisanId = row.id;
-    console.log(row);
 
-    this.adminApi
-      .suspendArtisanUrl(this.artisanId, row.id)
-      .subscribe((res: any) => {
-        this.toastr.success('artisan Suspended')
+    const registerObserver = {
+      next: (res: any) => {
+        this.toastr.success('Artisan Suspended')
         this.getAllArtisan()
 
         console.log("this is a respond from suspend artisan",res);
-      });
-    // this.artisanErrorMessage;
-    this.toastr.warning('Something went wrong!!!')
-  }
-  deleteArtisan(row: any) {
-    console.log(row.id);
-    this.artisanId = row.id;
-    console.log(row);
+      },
+      error: (err: any) => {
+        this.toastr.warning('Signup failed');
+
+        return this.quotePendingError = err.error;
+      },
+    };
 
     this.adminApi
-      .deleteArtisanUrl(this.artisanId, row.id)
-      .subscribe((res: any) => {
-        this.toastr.success('artisan Deleted')
+      .suspendArtisanUrl(this.artisanId, row.id)
+      .subscribe(registerObserver);
+   
+  }
+  deleteArtisan(row: any) {
+    this.artisanId = row.id;
+    const registerObserver = {
+      next: (res: any) => {
+        this.toastr.success('Artisan Deleted')
         this.getAllArtisan()
 
         console.log("this is a respond from delete artisan", res);
-      });
-    // this.artisanErrorMessage;
-    this.toastr.warning('Something went wrong!!!')
+      },
+      error: (err: any) => {
+        this.toastr.warning('Something went Wrong!!!')
+
+        return this.quotePendingError = err.error;
+      },
+    };
+    this.adminApi
+      .deleteArtisanUrl(this.artisanId, row.id)
+      .subscribe(registerObserver);
   }
 
   confirmPayment(row: any) {
@@ -535,6 +570,7 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
   getAllOrder() {
     this.adminApi.getOrder().subscribe((res: any) => {
       console.log(res);
+      this.order =res
       this.totalLength = res.length;
       // this.AllOrderData = res;
       // console.log(this.AllOrderData);
@@ -593,4 +629,26 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     }
   // return this.hope;
   }
+  onclickNotification(data:any){
+    console.log(data);
+    
+    let i = 0
+    let input ={
+      
+        notificationId :data
+      
+    }
+    this.api.readNotification(input).subscribe((res:any) =>{
+      console.log(res);
+      this.toastr.success('You read this message')
+
+this.signalRService.getNotification()
+      // this.signalRService.notification
+      
+    })
+    console.log(input. notificationId);
+    
+  }
+
+ 
 }

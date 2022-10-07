@@ -3,6 +3,7 @@ import {
   HttpErrorResponse,
   HttpEvent,
   HttpEventType,
+  HttpHeaders,
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
@@ -97,6 +98,7 @@ export class AllartisanComponent implements OnInit {
       Issue: [''],
       profile: [''],
       Files: [''],
+      FileNames: [''],
       artisanEmail: [],
       orderId: [],
     });
@@ -247,49 +249,48 @@ onSelectedFile(e: any){
     this.selectedFile = e.target.files[0];
 }
   
-  onSubmitCheck(data:any){
+  onSubmitCheck(){
 
-    console.log(this.formValue.value);
-        this.orderModelObj.artisanId = data.ArtisanId;
-        console.log(data.ArtisanId);
+//     console.log(this.formValue.value);
+//         this.orderModelObj.artisanId = data.ArtisanId;
+//         console.log(data.ArtisanId);
         
-  //   // this.formValue.artisanId = data.artisanId
+//   //   // this.formValue.artisanId = data.artisanId
 
-        // this.formValue.artisanId = data.artisanId
+//         // this.formValue.artisanId = data.artisanId
 
 
-        // this.formValue.value.controls['ArtisanId'].setValue(data.ArtisanId);
-        this.formValue.value.ArtisanId = data.ArtisanId;
+//         // this.formValue.value.controls['ArtisanId'].setValue(data.ArtisanId);
+//         this.formValue.value.ArtisanId = data.ArtisanId;
 
-        // const formData = new FormData();
-        // formData.append('file', this.formValue.controls['files'].value);
-        // this.formValue.controls['ArtisanId']= data.ArtisanId;
-        // this.artisanProfileModelObj.userId = this.updateForm.value.userId;
+//         // const formData = new FormData();
+//         // formData.append('file', this.formValue.controls['files'].value);
+//         // this.formValue.controls['ArtisanId']= data.ArtisanId;
+//         // this.artisanProfileModelObj.userId = this.updateForm.value.userId;
         
-this.formValue=data
-console.log(this.formValue);
+// this.formValue=data
+// console.log(this.formValue);
 
-console.log(data);
+// console.log(data);
 
-const formdata = new FormData();
+// const formdata = new FormData();
 
-formdata.append("ArtisanId", data.ArtisanId);
-formdata.append("Name", data.Name);
-formdata.append("Issue", data.Issue);
-formdata.append("InspectionDateAndTime", data.InspectionDateAndTime);
-// formdata.append("InspectionTime", data.InspectionTime);
-formdata.append("AlternateNumber", data.AlternateNumber);
-formdata.append("PhoneNumber", data.PhoneNumber);
-formdata.append("PropertyAddress", data.PropertyAddress);
-    formdata.append("Files", this.selectedFile)
+// formdata.append("ArtisanId", data.ArtisanId);
+// formdata.append("Name", data.Name);
+// formdata.append("Issue", data.Issue);
+// formdata.append("InspectionDateAndTime", data.InspectionDateAndTime);
+// // formdata.append("InspectionTime", data.InspectionTime);
+// formdata.append("AlternateNumber", data.AlternateNumber);
+// formdata.append("PhoneNumber", data.PhoneNumber);
+// formdata.append("PropertyAddress", data.PropertyAddress);
+//     formdata.append("Files", data.Files, this.formValue.value.FileNames)
 
-formdata.append("Files", data.fileName);
+// formdata.append("Files", data.fileName);
 
 
    this.http
-       .post(this.api.baseUrl + '/api/Customer/ServiceOrder/create',formdata, {
-        observe: 'events'
-       }).subscribe((res:any)=>{
+       .post(this.api.baseUrl + '/api/Customer/ServiceOrder/create', this.formValue.value
+       ).subscribe((res:any)=>{
         this.modalRef?.hide()
               this.toastr.success('Order successfully sent!!!');
 
@@ -311,16 +312,18 @@ formdata.append("Files", data.fileName);
     
   
 
-  onFileChange(event:any) {
+  // onFileChange(event:any) {
   
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.formValue.patchValue({
-        fileName: file
-      });
-    }
-  }
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     this.formValue.patchValue({
+  //       fileName: file
+  //     });
+  //   }
+  // }
 
+
+  
   // get all available artisans
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
@@ -548,6 +551,40 @@ this.formValue.patchValue({
 
   closeModal(modalId?: number) {
     this.modalService.hide(modalId);
+  }
+
+  images : string[] = [];
+  onFileChange(event:any) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+     
+                reader.onload = (event:any) => {
+                  console.log(event.target.result);
+                   this.images.push(event.target.result); 
+   
+                   this.formValue.patchValue({
+                    FileNames: this.images
+                   });
+                }
+    
+                reader.readAsDataURL(event.target.files[i]);
+        }
+    }
+  }
+ 
+
+  submit2(){
+    console.log(this.formValue.value);
+    const formData = new FormData();
+    formData.append('file', this.formValue.value.Files, this.formValue.value.FileNames);
+    this.http.post("https://localhost:7130/api/Customer/ServiceOrder/create", formData, {reportProgress: true, observe: 'events'})
+   
+      .subscribe(res => {
+        console.log(res);
+        // alert('Uploaded Successfully.');
+      })
   }
 
 }

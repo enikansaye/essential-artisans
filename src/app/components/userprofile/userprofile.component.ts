@@ -18,6 +18,7 @@ import { DatePipe } from '@angular/common';
 // import { MatTableDataSource } from '@angular/material';
 import {MatTableDataSource} from '@angular/material/table';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { SignalrService } from 'src/app/service/signalr.service';
 
 
 
@@ -115,6 +116,8 @@ export class UserprofileComponent implements OnInit {
   inspectionFee: any;
   orderById: any;
   rating4: number = 0;
+  count: any;
+  isFirstTimeCustomer: any;
 
 
   constructor(
@@ -125,7 +128,8 @@ export class UserprofileComponent implements OnInit {
     private http: HttpClient,
     public login:LoginService,
     private modalService: BsModalService,//for ngx-bootstrap modal
-    private toastr: ToastrService // private dataApi:DataService
+    private toastr: ToastrService ,// private dataApi:DataService
+    public signalRService: SignalrService,
   ) {
     
    
@@ -170,6 +174,8 @@ orderId: 0
     this.getPendingOrder();
     this.getQoute();
     this.getCompletedOrder();
+     this.count = localStorage.getItem('notifyCount');
+
 
     this.updateOrder = this.formBuilder.group({
       name: [''],
@@ -217,7 +223,8 @@ orderId: 0
         this.userProfileModelObj.artisanId = res.id;
         console.log(this.userProfileModelObj.artisanId);
         this.modalService.hide();
-        this.toastr.success('thanks, for your review');
+        this.getOrder();
+        this.toastr.success('Thanks, for your review');
 
 
         // this.router.navigate(['/checkemail']);
@@ -560,6 +567,8 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
      console.log(this.getInvoiceId.action );
      this.invoiceAction=this.getInvoiceId.action
      this.inspectionFee=this.getInvoiceId.inspectionFee
+     this.isFirstTimeCustomer =this.getInvoiceId.isFirstTimeCustomer
+
 
     });
 
@@ -754,5 +763,26 @@ this.feeForm.value.orderId = row.id
     });
 
     this.toastr.warning('Something Went wrong!!');
+  }
+
+  onclickNotification(data:any){
+    console.log(data);
+    
+    let i = 0
+    let input ={
+      
+        notificationId :data
+      
+    }
+    this.api.readNotification(input).subscribe((res:any) =>{
+      console.log(res);
+      this.toastr.success('You read this message')
+  
+  this.signalRService.getNotification()
+      // this.signalRService.notification
+      
+    })
+    console.log(input. notificationId);
+    
   }
 }

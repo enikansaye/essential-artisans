@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/service/api.service';
 import { ArtisansService } from 'src/app/service/artisans.service';
 import { LoginService } from 'src/app/service/login.service';
+import { SignalrService } from 'src/app/service/signalr.service';
 // import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../userprofile/userprofile.model';
@@ -133,6 +134,7 @@ export class ArtisanprofileComponent implements OnInit {
     private toastr: ToastrService,
     private artisanurl: ArtisansService,
     private loginApi: LoginService,
+    public signalRService: SignalrService,
 
     // private dataApi: DataService
   ) {}
@@ -261,10 +263,10 @@ this.city=data.value
       this.updateForm.controls['userId'].setValue(this.artisanData.id);
       console.log(this.loginApi.loggedinUser.id);
       
-      this.updateForm.controls['Address'].setValue(this.artisanData.location);
+      this.updateForm.controls['Address'].setValue(this.artisanData.address);
       // console.log(this.api.loggedinUser.id);
       
-      this.updateForm.controls['service'].setValue(this.artisanData.address);
+      this.updateForm.controls['service'].setValue(this.artisanData.service);
       // console.log(this.api.loggedinUser.id);
       
       this.updateForm.controls['state'].setValue(this.artisanData.state);
@@ -554,4 +556,26 @@ Search(event:any) {
   }
 // return this.hope;
 }
+
+onclickNotification(data:any){
+  console.log(data);
+  
+  let i = 0
+  let input ={
+    
+      notificationId :data
+    
+  }
+  this.api.readNotification(input).subscribe((res:any) =>{
+    console.log(res);
+    this.toastr.success('You read this message')
+
+this.signalRService.getNotification()
+    // this.signalRService.notification
+    
+  })
+  console.log(input. notificationId);
+  
+}
+
 }

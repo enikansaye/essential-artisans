@@ -185,31 +185,18 @@
               
           
               <!-- </button> -->
-          <nav class="navbar-default navbar w-100 navbar-expand float-right">
-            <a id="nav-toggle" href="#">
+          <nav class="navbar-default navbar w-100 navbar-expand float-right me-4">
+            <a id="nav-toggle" >
               <i class="bi bi-menu"></i>
             </a>
-            <!-- <div class="ms-lg-3 d-none d-md-none d-lg-block float-right">
-              Form
-              <form class="d-flex align-items-center">
-              
-                <input
-                  type="search"
-                  class="form-control form-control-sm ps-6"
-                  placeholder="Search Entire Dashboard"
-                />
-              </form>
-            </div> -->
-
             
-            <!--Navbar nav -->
             <ul
               class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap"
             >
               <li class="dropdown stopevent">
                 <a
-                  class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted"
-                  href="#"
+                  class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted position-relative bg-info"
+                
                   role="button"
                   id="dropdownNotification"
                   data-bs-toggle="dropdown"
@@ -217,17 +204,20 @@
                   aria-expanded="false"
                 >
                   <i class="bi bi-bell"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge text-danger rounded-pill fs-6" >
+                    {{signalRService.notificationCount}}
+                    </span>
                 </a>
-                <div
-                  class="dropdown-menu dropdown-menu-end dropdown-menu-lg"
+             <div
+                  class=" dropdown-menu dropdown-menu-end  "
                   aria-labelledby="dropdownNotification"
                 >
-                  <div class=" ">
+                  <div class="">
                     <div
                       class="border-bottom px-3 pb-3 d-flex justify-content-between align-items-center"
                     >
                       <span class="h4 mb-0">Notifications</span>
-                      <a href="# " class="text-muted">
+                      <a  class="text-muted">
                         <span class="align-middle">
                           <i class="bi bi-settings me-1"></i>
                         </span>
@@ -240,192 +230,45 @@
                       <li class="list-group-item bg-light">
                         <div class="row">
                           <div class="col">
-                            <a class="text-body" href="#">
-                              <div class="d-flex">
-                                <img
-                                  src="assets/images/mayor.jpg"
-                                  alt="assets/images/mayor.jpg"
-                                  class=" rounded-circle"
-                                />
-                                <div class="ms-3">
-                                  <h5 class="fw-bold mb-1">Kristin Watson:</h5>
-                                  <p class="mb-3">
-                                    Krisitn Watsan like your comment on course
+                            <a class="text-body" >
+                             
+                                
+                                <div class="ms-3" *ngFor=" let data of signalRService.notificationText; let i = index " >
+                                  <!-- <h5 class="fw-bold mb-1">Kristin Watson:</h5> -->
+                                 <div class="d-flex" >
+                                  <span class="me-2" >
+                                    {{i+1}}
                                    
-                                  </p>
-                                  <span class="fs-6 text-muted">
-                                    <span
-                                      ><span
-                                        class="bi bi-thumbs-up text-success me-1"
-                                      ></span
-                                      >2 hours ago,</span
-                                    >
-                                    <span class="ms-1">2:19 PM</span>
                                   </span>
+<p class="me-3">                                {{data.notificationText }}
+</p>
+                                <a class="float-right" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="This top tooltip is themed via CSS variables." (click)="onclickNotification(data.notificationId)"><i class="fa-solid fa-rectangle-xmark"></i></a>
+
+                                  
+                                 </div>
+
+                                
+
+                                 
                                 </div>
-                              </div>
+                            
                             </a>
                           </div>
-                          <div class="col-auto text-center me-2">
-                            <a
-                              href="#"
-                              class="badge-dot bg-info"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Mark as read"
-                            >
-                            </a>
-                            <div>
-                              <a
-                                href="#"
-                                class="bg-transparent"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Remove"
-                              >
-                                <i class="bi bi-x text-muted"></i>
-                              </a>
-                            </div>
-                          </div>
+                         
                         </div>
                       </li>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col">
-                            <a class="text-body" href="#">
-                              <div class="d-flex">
-                                <img
-                                  src="assets/images/mayor.jpg"
-                                  alt=""
-                                  class="avatar-md rounded-circle"
-                                />
-                                <div class="ms-3">
-                                  <h5 class="fw-bold mb-1">Brooklyn Simmons</h5>
-                                  <p class="mb-3">
-                                    Just launched a new Courses React for
-                                    Beginner.
-                                  </p>
-                                  <span class="fs-6 text-muted">
-                                    <span
-                                      ><span
-                                        class="bi bi-thumbs-up text-success me-1"
-                                      ></span
-                                      >Oct 9,</span
-                                    >
-                                    <span class="ms-1">1:20 PM</span>
-                                  </span>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="col-auto text-center me-2">
-                            <a
-                              href="#"
-                              class="badge-dot bg-secondary"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Mark as unread"
-                            >
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col">
-                            <a class="text-body" href="#">
-                              <div class="d-flex">
-                                <img
-                                  src="assets/images/mayor.jpg"
-                                  alt=""
-                                  class="avatar-md rounded-circle"
-                                />
-                                <div class="ms-3">
-                                  <h5 class="fw-bold mb-1">Jenny Wilson</h5>
-                                  <p class="mb-3">
-                                    Krisitn Watsan like your comment on course
-                                    Javascript Introduction!
-                                  </p>
-                                  <span class="fs-6 text-muted">
-                                    <span
-                                      ><span
-                                        class="bi bi-thumbs-up text-info me-1"
-                                      ></span
-                                      >Oct 9,</span
-                                    >
-                                    <span class="ms-1">1:56 PM</span>
-                                  </span>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="col-auto text-center me-2">
-                            <a
-                              href="#"
-                              class="badge-dot bg-secondary"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Mark as unread"
-                            >
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col">
-                            <a class="text-body" href="#">
-                              <div class="d-flex">
-                                <img
-                                  src="assets/images/mayor.jpg"
-                                  alt=""
-                                  class="avatar-md rounded-circle"
-                                />
-                                <div class="ms-3">
-                                  <h5 class="fw-bold mb-1">Sina Ray</h5>
-                                  <p class="mb-3">
-                                    You earn new certificate for complete the
-                                    Javascript Beginner course.
-                                  </p>
-                                  <span class="fs-6 text-muted">
-                                    <span
-                                      ><span
-                                        class="bi bi-award text-warning me-1"
-                                      ></span
-                                      >Oct 9,</span
-                                    >
-                                    <span class="ms-1">1:56 PM</span>
-                                  </span>
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="col-auto text-center me-2">
-                            <a
-                              href="#"
-                              class="badge-dot bg-secondary"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Mark as unread"
-                            >
-                            </a>
-                          </div>
-                        </div>
-                      </li>
+                   
+                      
+                     
                     </ul>
-                    <div class="border-top px-3 pt-3 pb-0">
-                      <a
-                        href="../../pages/notification-history.html"
-                        class="text-link fw-semi-bold"
-                      >
-                        See all Notifications
-                      </a>
-                    </div>
+                    
                   </div>
                 </div>
               </li>
               <!-- List -->
-              <li class="dropdown ms-2">
+              <!-- <li class="dropdown ms-2">
                 <a
                   class="rounded-circle"
                   href="#"
@@ -528,7 +371,7 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </nav>
 
@@ -571,7 +414,8 @@
                       <span class="bi bi-shopping-bag fs-3 text-primary"></span>
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1">{{totalLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="order">{{totalLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!order">0</h2>
 
 
 
@@ -585,7 +429,11 @@
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-6">
               <!-- Card -->
-              <div class="card mb-4">
+              <div class="card mb-4 cursor "  popover="Total Sales : {{totalSales.totalAmount}}, Total ArtisanCharge:
+              {{totalSales.totalArtisanCharge}} , Total InspectionFee: {{totalSales.totalInspectionFee
+              }}
+              "
+              popoverTitle="Break Down Of Income" placement="right" >
                 <!-- Card body -->
                 <div class="card-body rounded col2" >
                   <div
@@ -596,14 +444,13 @@
                         >Total Income</span
                       >
                     </div>
-                    <div>
-                      <span class="bi bi-book-open fs-3 text-primary"></span>
-                    </div>
+                    
                   </div>
                   <h2 class="fw-bold mb-1" *ngIf="totalSales"> &#8358; {{totalSales.totalAmount}}</h2>
                   <h2 class="fw-bold mb-1" *ngIf="!totalSales"> &#8358; 0</h2>
                   
                 </div>
+               
               </div>
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-6">
@@ -623,7 +470,8 @@
                       <span class="bi bi-users fs-3 text-primary"></span>
                     </div>
                   </div>
-                  <h2 class="fw-bold mb-1">{{userLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="userData "> {{userLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!userData ">0</h2>
                 
                 </div>
               </div>
@@ -704,13 +552,7 @@
                 <!-- Card body -->
                 
                 <div class="card-body">
-                  <!-- <div echarts [options]="options" class="demo-chart"></div> -->
-                  <!-- <div class="button-groups">
-                    <button (click)="theme" nz-button nzType="default">default</button>
-                    <button (click)="theme='dark'" nz-button nzType="default">dark</button>
-                    <button (click)="theme='macarons'" nz-button nzType="default">macarons(theme file)</button>
-                    <button (click)="theme=coolTheme" nz-button nzType="default">cool(theme object)</button>
-                  </div> -->
+                
                   <div echarts [options]="options"  [theme]="theme" class="demo-chart" id="chart2"></div>
                 </div>
               </div>
@@ -908,19 +750,19 @@
                 </tr>
               </thead>
               <tbody *ngFor="let data of artisanData">
-                <tr class="align-center justify-content-center" routerLink="/artisanbyid">
+                <tr class="align-center justify-content-center" >
                   <td data-title="Artisan ID">{{data.id}} </td>
                   <td data-title="Email Address">{{data.email}}</td>
                   <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
-                  <td >Active</td>
+                  <td data-title="Status" >{{data.status}}</td>
                   <!-- <td *ngIf="data.action === 3">Suspended</td> -->
                   <td data-title="Location">{{data.location}} </td>
                   <td data-title="Number">{{data.phoneNumber}} </td>
 
                   <td data-title="Action" >
                   <button class="btn btn-info me-2" (click)="suspendArtisan(data)">Suspend</button>
-                  <button class="btn btn-inline-info me-2" (click)="approveArtisan(data)">Activate Artisan</button>
-                  <button class="btn btn-danger" (click)="deleteArtisan(data)">Delete</button>
+                  <button class="btn btn-success me-2" (click)="approveArtisan(data)">Activate Artisan</button>
+                  <!-- <button class="btn btn-danger" (click)="deleteArtisan(data)">Delete</button> -->
                 </td>
                   
              
@@ -950,7 +792,7 @@
                   <th>User ID</th>
                   <th scope="col">Email Address</th>
                   <th scope="col">Name</th>
-                  <!-- <th scope="col">Location</th> -->
+                  <th scope="col">Location</th>
                   <th scope="col">Number</th>
                   <!-- <th scope="col">Status</th> -->
                   <!-- <th scope="col">Action</th> -->
@@ -962,6 +804,7 @@
                   <td data-title="User ID" scope="row">{{data.id}}</td>
                   <td data-title="Email Address" scope="row">{{data.email}}</td>
                   <td data-title="Name">{{data.firstName}} {{data.lastName}}</td>
+                  <td data-title="Location">{{data.address}}</td>
                   <!-- <td data-title="Location">{{data.title}}</td> -->
                   <td data-title="Number">{{data.phoneNumber}}</td>
                   <!-- <td data-title="Status">Suspended</td> -->
@@ -1116,39 +959,50 @@
       <!-- pending Artisan Section -->
       <div class="pt-5 " *ngSwitchCase="'page7'" id="no-tables" >
         <div class="h-100">
-          <table class="table" *ngIf="pendingArtisans ">
-             <thead>
-               <tr>
-                 <th scope="col">  Artisan's Name</th>
-                 <th scope="col">Client Name</th>
-                 <th scope="col">Client Number</th>
-                 <th scope="col">Order Categories</th>
-                 <th scope="col">Location</th>
-                 <th scope="col">Total Amount</th>
-               
-               </tr>
-             </thead>
-             <tbody *ngFor="let data of pendingArtisans | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
-               <tr class="align-center justify-content-center">
-                 <td data-title="Artisan's Name" scope="row">{{data.id}}</td>
-                 <td data-title="Client Name">{{data.firstName}}</td>
-                 <td data-title="Client Number">{{data.lastName}}</td>
-                 <td data-title="Artisan Number">{{data.lastName}}</td>
-                 <td data-title="Order Categories">{{data.phoneNumber}}</td>
-                 <td data-title="Location">{{data.profession}}</td>
-                 <!-- <td data-title="Total Amount">{{data.serviceItems.total}}</td> -->
-                 <td>
-                   <button class="btn btn-info me-2">View Artisan</button>
-                   <button class="btn btn-inline-info me-2" (click)="approveArtisan(data)">Approve</button>
-                   <!-- <button class="btn btn-inline-info me-2" (click)="suspendArtisan(data)">Suspend</button> -->
-                   <button class="btn btn-inline-info me-2" (click)="deleteArtisan(data)">Delete</button>
-                 </td>
-               
-               </tr>
-            
+
+          <table class="table table-striped" *ngIf="pendingArtisans " >
+            <thead>
+              <tr>
+                <th >Artisan ID </th>
+                <th >Email Address</th>
+                <th >Name</th>
+                <th >Status</th>
+                <th >Location</th>
+                <th >Number</th>
+
+                <th >Action</th>
+              
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of pendingArtisans">
+              <tr class="align-center justify-content-center" >
+                <td data-title="Artisan ID">{{data.id}} </td>
+                <td data-title="Email Address">{{data.email}}</td>
+                <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
+                <td >Active</td>
+                <!-- <td *ngIf="data.action === 3">Suspended</td> -->
+                <td data-title="Location">{{data.location}} </td>
+                <td data-title="Number">{{data.phoneNumber}} </td>
+
+                <td>
+                  <!-- <button class="btn btn-info me-2">View Artisan</button> -->
+                  <button class="btn btn-info me-2" (click)="approveArtisan(data)">Approve</button>
+                  <!-- <button class="btn btn-inline-info me-2" (click)="suspendArtisan(data)">Suspend</button> -->
+                  <button class="btn btn-danger me-2" (click)="deleteArtisan(data)">Delete</button>
+                </td>
+                
+           
+              </tr> 
              
-             </tbody>
-           </table>
+          
+            
+            </tbody>
+          </table>
+
+
+
+
+         
            <div *ngIf="!pendingArtisans "  >
             <div class="h1  d-flex align-items-center justify-content-center text-muted" style="height: 500px;">{{artisanErrorMessage}}</div>
 
@@ -1248,7 +1102,7 @@
             <div>
               <div class="d-flex mt-3">
                 <div class="me-4">Service Charge : <input type="text" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}" disabled></div>
-                <div>Inspection Fee : <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}" disabled>  </div>
+                <div>Inspection Fee : <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}">  </div>
               </div>            </div>
             <div>
               <!-- <h4>Inspection Fee</h4><input type="text" name="inspectionFee" [(ngModel)]="inspectionFee" #inspectionFee="ngModel" required value="{{artisanCharge}}"> -->
@@ -1287,7 +1141,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Creata Quote</h4>
+    <h4 class="modal-title pull-left">View Quote</h4>
     <button
       type="button"
       class="btn-close close pull-right"
@@ -1314,7 +1168,7 @@
 
         <h5>Email: <span>{{userEmail}}</span></h5>
       <h5> PhoneNumber: <span>{{userPhoneNumber}}</span> </h5>
-      <h5> Total Amount: <span>{{allTotal}}</span> </h5>
+      <h5 > Total Amount: <span>{{allTotal}}</span> </h5>
 
       </div>
     </div>
@@ -1355,7 +1209,7 @@
           </div>
           <div class="col-md-2">
             <label>Total</label><br>
-            <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" >
+            <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" [ngModel]="updateTotalInItemsArray(obj)" disabled >
 
           </div>
 
@@ -1369,7 +1223,7 @@
 
         </div>
         <div class="d-flex mt-3">
-          <div class="me-4">Service Charge : <input type="text" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}" disabled></div>
+          <div class="me-4">Service Charge : <input type="text" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}"></div>
           <div>Inspection Fee : <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}" disabled>  </div>
         </div>
 
@@ -1390,7 +1244,7 @@
       </div>
 
         <div class="mt-2">
-          <button class="btn btn-info me-2" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="onEditForm()" >Edit</button>
+          <!-- <button class="btn btn-info me-2" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="onEditForm()" >Edit</button> -->
           <button class="btn btn-danger me-2" (click)="modalRef?.hide()">Cancel</button>
           <button class="btn btn-info" type="submit" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
 

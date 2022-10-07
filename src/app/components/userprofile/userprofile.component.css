@@ -112,6 +112,9 @@ mat-divider{
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
   }
+  .notify{
+    width: 330px;
+  }
 
 }
 .butt{
@@ -138,4 +141,19 @@ mat-divider{
 .butt:hover::after{
   opacity: 1;
   transform: translateY(5px);
+}
+/* @media only screen and (width:850px){
+  .notify{
+    width: 520px;
+  }
+}
+@media only screen and (max-width:600px){
+  .notify{
+    width: 330px;
+  }
+} */
+@media only screen and (min-width:800px){
+  .notify{
+    width: 560px;
+  }
 }

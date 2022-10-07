@@ -1,7 +1,7 @@
 
   <div class="m-3 d-flex justify-content-between">
     <!-- <button  type="button" (click)=" clickAddServiceCategory()" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Add service category</button> -->
-    <button type="button" class="btn btn-info me-2" (click)="openModal(template); clickAddServiceCategory()">
+    <button type="button" class="btn btn-info me-2" *ngIf="!hidden" (click)="openModal(template); clickAddServiceCategory()">
       Add Service Categories
     </button>
 
