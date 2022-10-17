@@ -38,12 +38,10 @@ export class ResetpasswordComponent implements OnInit {
     this.api.resetPassword(this.model).subscribe(() => {
       
       
-      console.log("success");
       this.alertService.success('Password Changed');
       
     }, (error : any) => {
    
-      console.log(error);
       this.alertService.danger('Unable to change password');
      
     })

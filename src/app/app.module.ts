@@ -57,7 +57,6 @@ import {
 
 import { ForgetpasswordComponent } from './components/forgetpassword/forgetpassword.component';
 import { EmailComponent } from './components/email/email.component';
-import { MyorderComponent } from './components/myorder/myorder.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -69,7 +68,6 @@ import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.co
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { AllartisanComponent } from './components/allartisan/allartisan.component';
 import { AlltransactionsComponent } from './components/alltransactions/alltransactions.component';
-import { ArtisansdetailsComponent } from './components/artisansdetails/artisansdetails.component';
 import { SignuprouteComponent } from './components/signuproute/signuproute.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { OfflineComponent } from './components/offline/offline.component';
@@ -79,7 +77,6 @@ import { OfflineComponent } from './components/offline/offline.component';
 import { AuthInterceptor} from 'src/_helpers/auth.interceptor';
 import { AuthGuard } from './shared/auth.guard';
 import { RoleGuard } from './shared/role.guard';
-import { InvoiceComponent } from './components/invoice/invoice.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { ArtisanbyidComponent } from './components/artisanbyid/artisanbyid.component';
@@ -135,7 +132,6 @@ import { PaymentComponent } from './components/payment/payment.component';
 
     ForgetpasswordComponent,
     EmailComponent,
-    MyorderComponent,
     UserprofileComponent,
     ArtisanprofileComponent,
     AdminpageComponent,
@@ -144,10 +140,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     ForbiddenComponent,
     AllartisanComponent,
     AlltransactionsComponent,
-    ArtisansdetailsComponent,
     SignuprouteComponent,
     ResetpasswordComponent,
-    InvoiceComponent,
     FilterPipe,
     SortPipe,
     ArtisanbyidComponent,
@@ -240,7 +234,6 @@ import { PaymentComponent } from './components/payment/payment.component';
         { path: 'empty', component: EmptycartComponent },
         { path: 'helpcenter', component: HelpComponent },
 
-        { path: 'myorder', component: MyorderComponent },
         { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
         { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
@@ -256,10 +249,10 @@ import { PaymentComponent } from './components/payment/payment.component';
         { path: 'confirmemail', component: EmailComponent },
         { path: 'checkemail', component: SignuprouteComponent },
         { path: 'passwordreset', component: ResetpasswordComponent },
-        { path: 'invoice', component: InvoiceComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
         { path: 'term of service', component: PrivacyComponent },
         { path: 'payment', component: PaymentComponent },
+        // { path: 'offline', component: OfflineComponent },
         // { path: 'payment', component: PaymentComponent },
         { path: '**', component: PagenotfoundComponent },
 
@@ -273,7 +266,13 @@ import { PaymentComponent } from './components/payment/payment.component';
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: environment.production,
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // })
   ],
   providers: [
     // {

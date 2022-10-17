@@ -16,8 +16,8 @@ checkArtisan:any
   sendClickEvent(text:any){
     
     this.api.getArtisanByService(text).subscribe((res:any) =>{
-      console.log(res);
 
+      
       this.checkData =res
       this.subject.next(text);
     })

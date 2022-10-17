@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "joyhouse": {
+    "EssentialArtisans": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,13 +20,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/joyhouse",
+            "outputPath": "dist/EssentialArtisans",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets",
               "src/manifest.webmanifest",
              {
@@ -52,12 +52,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "5mb",
-                  "maximumError": "5mb"
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "3kb",
-                  "maximumError": "5kb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "6mb"
                 }
               ],
               "fileReplacements": [
@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "joyhouse:build:production"
+              "browserTarget": "EssentialArtisans:build:production"
             },
             "development": {
-              "browserTarget": "joyhouse:build:development"
+              "browserTarget": "EssentialArtisans:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "joyhouse:build"
+            "browserTarget": "EssentialArtisans:build"
 
           }
         },
@@ -106,7 +106,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets",
               "src/manifest.webmanifest"
             ],
@@ -130,5 +130,5 @@
       }
     }
   },
-  "defaultProject": "joyhouse"
+  "defaultProject": "EssentialArtisans"
 }

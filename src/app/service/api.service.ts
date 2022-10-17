@@ -12,9 +12,7 @@ import { UserModel } from '../shared/models/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AllurlService } from './allurl.service';
 import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
-import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
-import { FileToUpload } from '../file-upload/file-to-upload';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -28,8 +26,10 @@ export class ApiService implements OnInit {
   decodedToken: any;
   currentUser!: UserModel;
 
-  // public baseUrl: string = "https://essential-artisans.azurewebsites.net";
-  public baseUrl: string = 'https://localhost:7130';
+  // Content-Security-Policy: script-src 'self' https://myexample.com
+
+  public baseUrl: string = "https://essential-artisans.azurewebsites.net";
+  // public baseUrl: string = 'https://localhost:7130';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -54,19 +54,11 @@ export class ApiService implements OnInit {
   constructor(
     private http: HttpClient,
     private url: AllurlService,
-    private tokenStorage: StorageService,
+    // private tokenStorage: StorageService,
     private router: Router
   ) {}
   ngOnInit(): void {
-    // this.loggedIn()
-    // this.getUserToken();
-    // if (this.finaldata.role === '2') {
-    //   this.router.navigate(['/admin']);
-    // } else if (this.finaldata.role === 'ARTISAN') {
-    //   this.router.navigate(['/']);
-    // } else if (this.finaldata.role === '0') {
-    //   this.router.navigate(['/userprofile']);
-    // }
+  
   }
 
   // user signup
@@ -93,16 +85,8 @@ export class ApiService implements OnInit {
       httpOptions
     );
   }
-  // refresh token
-  // refreshToken(token: string) {
-  //   return this.http.post(
-  //     this.baseUrl + '/api/Auth/refresh-token',
-  //     {
-  //       refreshToken: "good",
-  //     },
-  //     httpOptions
-  //   );
-  // }
+
+  
 
 
   getUserinfo() {
@@ -112,48 +96,6 @@ export class ApiService implements OnInit {
     return this.http.get(this.baseUrl + '/api/Artisan/');
   }
 
-  // isUserLoggedIn() {
-  //   return localStorage.getItem('token') != null;
-  // }
-
-  // getUserToken() {
-  //   return localStorage.getItem('accesstoken');
-  // }
-  // getRefresToken() {
-  //   console.log('hello');
-  //   return localStorage.getItem('accessToken') || '';
-  // }
-
- 
-  // saveToken(token: any) {
-  //   localStorage.setItem('accesstoken', token.accessToken);
-  //   localStorage.setItem('token', token.accessToken);
-  //   console.log('hello');
-  // }
-  // SaveTokens(tokendata: any) {
-  //   localStorage.setItem('token', tokendata.jwtToken);
-  //   localStorage.setItem('refreshtoken', tokendata.refreshToken);
-  // }
-
-  // haveaccess(token: any) {
-  //   const loggedinUser = localStorage.getItem('accesstoken') || '';
-  //   const extracted = loggedinUser.split('.')[1];
-  //   const _atobdata = atob(extracted);
-  //   this.finaldata = JSON.parse(_atobdata);
-  //   console.log(this.finaldata);
-  //   return this.finaldata.role;
-  // }
-
-  // getToken() {
-  //   console.log('hello');
-  //   return localStorage.getItem('accessToken');
-  //   // return window.sessionStorage.getItem(TOKEN_KEY)
-  // }
-
-  // saveUserToLocalStorage(data: UserModel) {
-  //   this.userProfile.next(data);
-  //   localStorage.setItem('token', JSON.stringify(data));
-  // }
 
   userUpdate(userInfo: any) {
     return this.http.put(this.baseUrl + '/api/Customer/update', userInfo);
@@ -176,46 +118,38 @@ export class ApiService implements OnInit {
     );
   }
 
-  // checking if user is logged in
-  // loggedIn() {
-  //   this.loggedinUser = localStorage.getItem('token');
-  //   return (this.loggedinUser = JSON.parse(this.loggedinUser));
-  // }
-  selectFile(event: any): void {
-    this.selectedFiles = event.target.files[0];
-    console.log(event);
-  }
+  
 
   // picture upload
-  upload(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
+  // upload(file: File): Observable<HttpEvent<any>> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file);
 
-    const req = new HttpRequest(
-      'POST',
-      this.baseUrl + '/api/Artisan/upload-profile-image',
-      formData,
-      {
-        reportProgress: true,
-        responseType: 'json',
-      }
-    );
+  //   const req = new HttpRequest(
+  //     'POST',
+  //     this.baseUrl + '/api/Artisan/upload-profile-image',
+  //     formData,
+  //     {
+  //       reportProgress: true,
+  //       responseType: 'json',
+  //     }
+  //   );
 
-    return this.http.request(req);
-  }
+  //   return this.http.request(req);
+  // }
 
-  upload3(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
+  // upload3(file: File): Observable<HttpEvent<any>> {
+  //   const formData: FormData = new FormData();
 
-    formData.append('file', file);
+  //   formData.append('file', file);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/api/Customer/ServiceOrder/create`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
+  //   const req = new HttpRequest('POST', `${this.baseUrl}/api/Customer/ServiceOrder/create`, formData, {
+  //     reportProgress: true,
+  //     responseType: 'json'
+  //   });
 
-    return this.http.request(req);
-  }
+  //   return this.http.request(req);
+  // }
 
   // onUpload(files: any): void{
 
@@ -226,22 +160,22 @@ export class ApiService implements OnInit {
   //   this.http.post( this.baseUrl+ '/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
   // }
 
-  uploadIssue(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
+  // uploadIssue(file: File): Observable<HttpEvent<any>> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file);
 
-    const req = new HttpRequest(
-      'POST',
-      this.baseUrl + '/api/Customer/ServiceOrder/upload',
-      formData,
-      {
-        reportProgress: true,
-        responseType: 'json',
-      }
-    );
+  //   const req = new HttpRequest(
+  //     'POST',
+  //     this.baseUrl + '/api/Customer/ServiceOrder/upload',
+  //     formData,
+  //     {
+  //       reportProgress: true,
+  //       responseType: 'json',
+  //     }
+  //   );
 
-    return this.http.request(req);
-  }
+  //   return this.http.request(req);
+  // }
 
   updateUser(userInfo: any) {
     return this.http.put(
@@ -378,13 +312,7 @@ export class ApiService implements OnInit {
     return this.http.post(this.baseUrl + '/api/Customer/Review/create/', data);
   }
 
-  uploadFile(theFile: FileToUpload): Observable<any> {
-    return this.http.post<FileToUpload>(
-      this.baseUrl + '/api/Customer/ServiceOrder/upload',
-      theFile,
-      httpOptions
-    );
-  }
+  
 
   // Returns an observable
   upload2(file: any): Observable<any> {

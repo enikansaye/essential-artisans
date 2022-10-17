@@ -23,16 +23,23 @@
         <ul class="navbar-nav ms-auto mb-4 mb-lg-0">
        
 
-          <!-- <button type="button" class="btn btn-default btn-danger" 
-          popover="Popover component in Angular ngx bootstrap."
-          popoverTitle="GeeeksforGeeks" placement="bottom">
-          Click here!
-      </button>
-      <button id='gfg' type="button" 
-    class="btn btn-success"
-    tooltip="Tooltip component in Angular ngx bootstrap.">
-    GeeksforGeeks
-</button> -->
+          <li>
+            <div class="w-100 position-absolute bottom-0" *ngIf="modalPwaPlatform === 'ANDROID' || modalPwaPlatform === 'IOS'">
+              <div class="alert alert-secondary m-2">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-1" aria-label="Close" (click)="closePwa()"></button>
+                <!-- Android -->
+                <div *ngIf="modalPwaPlatform === 'ANDROID'" (click)="addToHomeScreen()">
+                  DOWNLOAD
+                </div>
+                <!-- iOS with Safari -->
+                <div *ngIf="modalPwaPlatform === 'IOS'">
+                  <img src="https://res.cloudinary.com/rodrigokamada/image/upload/v1641089482/Blog/angular-pwa/safari_action_button_38x50.png" class="ios-menu m-0" />
+                  DOWNLOAD
+                  <i class="bi bi-plus-square"></i>
+                </div>
+              </div>
+              </div>
+          </li>
           <li class="hover nav-item "   data-bs-toggle="collapse"
           data-bs-target="#navbarTogglerDemo02"
           aria-controls="navbarTogglerDemo02"
@@ -41,6 +48,9 @@
             <a class="hover nav-link navItem my-2 my-lg-0 me-4 cursor"  routerLink="/signup" style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-money-bill-trend-up me-2"></i>EARN</a
             >
+          </li>
+          <li>
+            
           </li>
           <li class=" hover nav-item "   data-bs-toggle="collapse"
           data-bs-target="#navbarTogglerDemo02"
@@ -133,7 +143,7 @@
                 aria-expanded="false"
                 aria-label="Toggle navigation"
               *ngIf="loginApi.loggedIn()"
-              (click)="loginApi.logout()"
+              (click)="Logout()"
             >
               Log Out
             </div>
@@ -148,83 +158,10 @@
   
   
   
-  <!-- <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">{{ logo }}</a>
-      <div class="text-dark" routerLink="/helpcenter">
-        <i class="fa-solid fa-circle-question me-2"></i>Help
-      </div>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarText"
-        aria-controls="navbarText"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-         <span class="navbar-toggler-icon"></span> 
-  
-        <mat-icon>menu</mat-icon>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-        <span class="navbar-text">
-          <div>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li>
-                <button
-                  class="btn btn-info"
-                  routerLink="/signin"
-                  *ngIf="!api.loggedIn()"
-                >
-                  Sign In
-                </button>
-              </li>
-              <li class="nav-item pt-2" *ngIf="api.loggedIn()">
-                <span
-                  class="nav-link active"
-                  aria-current="page"
-                  *ngIf="this.displayUser"
-                  routerLink="/userprofile"
-                  (click)="onClick(api.loggedinUser.id)"
-                  >My Profile</span
-                >
-              </li>
-              <li class="nav-item pt-2" *ngIf="api.loggedIn()">
-                <span
-                  class="nav-link"
-                  *ngIf="this.displayArtisan"
-                  routerLink="/artisanprofile"
-                  (click)="onClick(api.loggedinUser.id)"
-                  >My profile</span
-                >
-              </li>
-              <li class="nav-item pt-2" *ngIf="api.loggedIn() && this.displayAdmin">
-                <span
-                  class="nav-link"
-                  *ngIf="this.displayAdmin"
-                  routerLink="/admin"
-                  >My Profile</span
-                >
-              </li>
-              <li class="nav-item">
-                <button
-                  class="btn btn-info"
-                  *ngIf="api.loggedIn()"
-                  (click)="logout()"
-                >
-                  Log Out
-                </button>
-              </li>
-            </ul>
-          </div>
-        </span>
-      </div>
-    </div>
-  </nav> -->
-  
+
   <router-outlet class="mt-5"></router-outlet>
+
+
   
   <app-footer></app-footer>
 </div>
@@ -236,3 +173,30 @@
 <!-- <div *ngIf="offline">
   <app-offline ></app-offline>
 </div> -->
+<!-- <app-offline *ngIf="offline"></app-offline> -->
+
+
+<div class="w-100 position-absolute top-0" *ngIf="modalVersion">
+  <div class="alert alert-secondary m-2">
+    <button type="button" class="btn-close position-absolute top-0 end-0 m-1" aria-label="Close" (click)="closeVersion()"></button>
+    A new version of this app is available. <a href="" (click)="updateVersion()">Update now</a>
+  </div>
+  </div>
+  
+  <div class="w-100 position-absolute bottom-0" *ngIf="modalPwaPlatform === 'ANDROID' || modalPwaPlatform === 'IOS'">
+  <div class="alert alert-secondary m-2">
+    <button type="button" class="btn-close position-absolute top-0 end-0 m-1" aria-label="Close" (click)="closePwa()"></button>
+    <!-- Android -->
+    <div *ngIf="modalPwaPlatform === 'ANDROID'" (click)="addToHomeScreen()">
+      Add this WEB app to home screen
+    </div>
+    <!-- iOS with Safari -->
+    <div *ngIf="modalPwaPlatform === 'IOS'">
+      To install this WEB app on your device, tap the "Menu" button
+      <img src="https://res.cloudinary.com/rodrigokamada/image/upload/v1641089482/Blog/angular-pwa/safari_action_button_38x50.png" class="ios-menu m-0" />
+      and then "Add to home screen" button
+      <i class="bi bi-plus-square"></i>
+    </div>
+  </div>
+  </div>
+  

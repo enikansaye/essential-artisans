@@ -180,16 +180,14 @@ export class ArtisanprofileComponent implements OnInit {
     this.formControls = this.updateForm.controls;
 
     this.getArtisan();
-    this.getOrder();
-    this.getAllInvoices();
+    // this.getOrder();
+    // this.getAllInvoices();
   }
 
   getArtisan() {
     this.api.getArtisaninfo().subscribe((res: any) => {
-      console.log(res);
 
       this.artisanData = res;
-      console.log(this.artisanData);
     });
   }
 
@@ -206,35 +204,20 @@ export class ArtisanprofileComponent implements OnInit {
 
   onSelect(data: any) {
     let result = Object.entries(this.state);
-    console.log(data.value);
 
-    // const statesList = Object.values(result[data.value])[1];
-
-    // console.log((statesList as any)['cities']);
-    // this.city = (statesList as any)['cities'];
+    
 this.city=data.value
-    console.log(this.city);
   }
 
   onSelectCities(data: any) {
 
-    // this.api.getLocation2(this.city).subscribe((data: any, i: any) => {
-    //   const result = Object.entries(data);
-
-    //   this.state = data;
-    //   console.log(this.state);
-      
-    // });
 
     let result = Object.entries(this.state);
-    console.log(data.value);
 
     const statesList = Object.values(result[data.value])[1];
 
-    console.log((statesList as any)['cities']);
     this.city = (statesList as any)['cities'];
 
-    console.log(this.city);
   }
 
   toggleEditMode(): void {
@@ -261,61 +244,28 @@ this.city=data.value
         this.artisanData.phoneNumber
       );
       this.updateForm.controls['userId'].setValue(this.artisanData.id);
-      console.log(this.loginApi.loggedinUser.id);
       
       this.updateForm.controls['Address'].setValue(this.artisanData.address);
-      // console.log(this.api.loggedinUser.id);
       
       this.updateForm.controls['service'].setValue(this.artisanData.service);
-      // console.log(this.api.loggedinUser.id);
       
       this.updateForm.controls['state'].setValue(this.artisanData.state);
-      // console.log(this.api.loggedinUser.id);
       
       this.updateForm.controls['city'].setValue(this.artisanData.city);
-      // console.log(this.api.loggedinUser.id);
       
     } else {
       this.updateForm.disable();
     }
   }
 
-  // grandtotal() {
-  //   this.alltotal = parseInt(this.result) + parseInt(this.result);
-  // }
-  // celltotal() {
-  //   this.result = parseInt(this.num1) * parseInt(this.num2);
-  // }
-  // onEnter() {
-  //   this.result = parseInt(this.num1) * parseInt(this.num2);
-  //   this.alltotal = this.result + parseInt(this.result);
-  // }
+ 
 
   get userFormGroups() {
     return this.usersForm.get('users') as FormArray;
   }
 
-  // removeFormControl(i: number) {
-  //   let usersArray = this.usersForm.get('users') as FormArray;
-  //   usersArray.removeAt(i);
-  // }
-
-  // addFormControl() {
-  //   let usersArray = this.usersForm.get('users') as FormArray;
-  //   let arraylen = usersArray.length;
-
-  //   let newUsergroup: FormGroup = this.fb.group({
-  //     gHService: [''],
-  //     quantity: [''],
-  //     startTime: [''],
-  //     total: [''],
-  //   });
-
-  //   usersArray.insert(arraylen, newUsergroup);
-  // }
-  onSubmit() {
-    console.log(this.usersForm.value);
-  }
+ 
+  
 
   ngAfterViewInit() {
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
@@ -333,39 +283,7 @@ this.city=data.value
     this.selectedFiles = event.target.files;
   }
 
-  // upload(): void {
-  //   this.progress = 0;
-  //   if (this.selectedFiles) {
-  //     const file: File | null = this.selectedFiles.item(0);
-
-  //     if (file) {
-  //       this.currentFile = file;
-
-  //       const uploadObserver = {
-  //         next: (event: any) => {
-  //           if (event.type === HttpEventType.UploadProgress) {
-  //             this.progress = Math.round((100 * event.loaded) / event.total);
-  //           } else if (event instanceof HttpResponse) {
-  //             this.message = event.body.message;
-  //           }
-  //         },
-  //         error: (err: any) => {
-  //           this.progress = 0;
-  //           if (err.error && err.error.message) {
-  //             this.message = err.error.message;
-  //           } else {
-  //             this.message = 'Could not upload the file!';
-  //           }
-  //           this.currentFile = undefined;
-  //         },
-  //       };
-
-  //       this.api.upload(this.currentFile).subscribe(uploadObserver);
-  //     }
-  //     this.selectedFiles = undefined;
-  //   }
-  // }
-
+  
 
   
   uploadFile(files: any) {
@@ -391,35 +309,14 @@ this.city=data.value
         }, 1500);
         this.getArtisan()
       },
-      error: (err: HttpErrorResponse) => console.log(err)
+      error: (err: HttpErrorResponse) => {
+        
+      }
     });
   }
 
-  // updateUserInformation() {
-  //   this.formSubmitted = true;
-  //   if (this.updateForm.valid) {
-  //     this.api.updateUser(this.updateForm.value).subscribe({
-  //    next:   (data) => {
-  //         alertify.success('Profile successsfully updated.');
-  //         alert('Profile successsfully updated.');
-  //         this.updateForm.disable();
-  //         this.isEditMode = false;
-  //         console.log(data);
-  //         this.isEditMode = !this.isEditMode;
-  //       },
-  //    error:   (error: any) => {
-  //         alert('Profile update failed');
-  //         console.log(error);
-
-  //         alertify.error('Profile update failed');
-  //       }
-  //   });
-  //   }
-  // }
-
+  
   updateUserDetails(row: any) {
-    console.log(row);
-    console.log(row.id);
 
     this.artisanProfileModelObj.userId = this.updateForm.value.userId;
     this.artisanProfileModelObj.firstName = this.updateForm.value.firstName;
@@ -431,68 +328,33 @@ this.city=data.value
     this.artisanProfileModelObj.service = this.updateForm.value.service;
 
     this.artisanurl.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
-      console.log(res);
       this.toastr.success('Profile updated');
       this.isEditMode = this.isEditMode;
       this.updateForm.disable()
       
       this.toggleEditMode();
       this.getArtisan();
-      //   alert('employee updated sucessfully');
-
-      //   // let ref = document.getElementById('cancel'); //this is to close the modal form automatically
-      //   // ref?.click();
-
-      // this.getUserserInfo() //this is to refresh and get the resent data
+     
     });
   }
 
-  // onEdit() {
-  //   this.updateForm.controls['userId'].setValue(
-  //     this.api.loggedinUser.id
-  //   );
-  //   this.updateForm.controls['firstName'].setValue(
-  //     this.api.loggedinUser.firstName
-  //   );
-  //   this.updateForm.controls['lastName'].setValue(
-  //     this.api.loggedinUser.lastName
-  //   );
-  //   this.updateForm.controls['Address'].setValue(
-  //     this.api.loggedinUser.Address
-  //   );
-  //   this.updateForm.controls['city'].setValue(
-  //     this.api.loggedinUser.city
-  //   );
-  //   this.updateForm.controls['state'].setValue(
-  //     this.api.loggedinUser.state
-  //   );
-
-  //   this.updateForm.controls['phoneNumber'].setValue(
-  //     this.api.loggedinUser.phoneNumber
-  //   );
-
-  //   this.showAddEmployee = false;
-  //   this.showUpdate = true;
-  // }
+  
 
   getOrder() {
     this.artisanurl.getArtisanOrder().subscribe((data: any) => {
       this.orderData = data
-      console.log(this.statelga);
     });
   }
 
   getAllServiceCategory(){
     this.adminApi.getServiceCategory().subscribe((data:any)=>{
       this.serviceCategory = data
-      console.log(this.serviceCategory);
       
     })
   }
   getAllInvoices(){
     this.artisanurl.artisanGetAllInvoices().subscribe((data:any)=>{
       this.invoiceData = data
-      console.log("this is response from all response of get invoices", data);
       
     })
   }
@@ -500,7 +362,6 @@ this.city=data.value
   getState(){
     this.api.getLocation().subscribe((data:any)=>{
       this.state2= data
-      console.log( this.state2);
       
     })
   }
@@ -509,7 +370,6 @@ this.city=data.value
     if(userProfile){
       this.api.getLocation2(userProfile).subscribe((data:any)=>{
         this. city2= data
-        console.log( this.city2);
     })
   }
 }
@@ -526,9 +386,7 @@ filterByDate(){
   if(this.filteredOrderData! == ''){
     ivTemp = this.filteredOrderData
   }
-  console.log(ivTemp.length);
   
-  console.log(this.fromDate1, this.toDate1);
 
   const isInRange = (element: any) => { 
     const fDate = new Date(this.fromDate1);
@@ -543,12 +401,10 @@ filterByDate(){
 }
 Search(event:any) {
   if (this.value == '') {
-    console.log(this.value);
     
     this.getOrder();
   } else {
     this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-      console.log(res);
       
       return res.name.toLocaleLowerCase()
         .match(this.value.toLocaleLowerCase());
@@ -558,7 +414,6 @@ Search(event:any) {
 }
 
 onclickNotification(data:any){
-  console.log(data);
   
   let i = 0
   let input ={
@@ -567,14 +422,12 @@ onclickNotification(data:any){
     
   }
   this.api.readNotification(input).subscribe((res:any) =>{
-    console.log(res);
     this.toastr.success('You read this message')
 
 this.signalRService.getNotification()
     // this.signalRService.notification
     
   })
-  console.log(input. notificationId);
   
 }
 

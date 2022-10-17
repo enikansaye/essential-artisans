@@ -9,9 +9,9 @@ import {
   HttpClient,
 } from '@angular/common/http';
 
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take } from 'rxjs/operators';
-import { StorageService } from 'src/app/service/storage.service';
+import { BehaviorSubject, Observable, Subject, throwError ,catchError, empty} from 'rxjs';
+import {  filter, switchMap, take, tap } from 'rxjs/operators';
+// import { StorageService } from 'src/app/service/storage.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { ApiService } from 'src/app/service/api.service';
 import { LoginService } from 'src/app/service/login.service';
@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
  checkerr!:string;
 
   constructor(
-    private token: StorageService,
+    // private token: StorageService,
     private authService: AuthService,
     private http: HttpClient,
     private api: ApiService,
@@ -38,102 +38,96 @@ export class AuthInterceptor implements HttpInterceptor {
     private inject: Injector
   ) {}
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  refreshingAccessToken!: boolean ;
 
-    if (request.url.indexOf('/refresh-token') > -1) {
-      return next.handle(request);
-    }
+  accessTokenRefreshed: Subject<any> = new Subject();
 
 
-    let api = this.inject.get(LoginService);
-    let authreq = request;
-    authreq = this.AddTokenheader(request, api.getToken());
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    // Handle the request
+    request = this.AddTokenheader(request);
 
-   
-    const access_token = localStorage.getItem('access_token');
+    // call next() and handle the response
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.log(error);
 
+        if (error.status === 401) {
+          // 401 error so we are unauthorized
 
-    return next.handle(authreq).pipe(
-      catchError(errordata => {
-        if (errordata.status === 401 || access_token) {
-          const expiration = localStorage.getItem('expiration');
-
-          if (Date.now() < Number(expiration) * 1000) {
-            return this.handleRefrehToken(request, next);
-
-          }
-          return this.handleRefrehToken(request, next);
-
-          // need to implement logout
-          // api.Logout();
-          // refresh token logic
-        //  return this.handleRefrehToken(request, next);
+          // refresh the access token
+          return this.refreshAccessToken()
+            .pipe(
+              switchMap(() => {
+                request = this.AddTokenheader(request);
+                return next.handle(request);
+              }),
+              catchError((err: any) => {
+                console.log(err);
+                this.loginApi.logout();
+                return empty();
+              })
+            )
         }
-        // const err = new Error('test'); 
-        // console.log(err);
-        // this.checkerr = errordata
-        return throwError(() => errordata);
-        // return throwError(errordata);
+
+        return throwError(error);
       })
-    );
-
-    
-
-
-    // let accesstoken = request.clone({
-    //   setHeaders: {
-        // Authorization: `bearer ${this.api.getUserToken()}`,
-    //   },
-    // });
-    // console.log(accesstoken);
-    // return next.handle(accesstoken);
+    )
   }
 
-  handleRefrehToken(request: HttpRequest<any>, next: HttpHandler) {
-    let api = this.inject.get(LoginService);
-    let input =localStorage.getItem('refreshToken')
-
-   
-
-
-
-
-
-    
-    return api.GenerateRefreshToken(input).pipe(
-      switchMap((data: any) => {
-        // api.SaveTokens(data);
-        localStorage.setItem('accessToken', data.data.accessToken);
-        // console.log(localStorage.setItem('refrestoken', data.data.accessToken));
-        
-        localStorage.setItem('refreshtoken', data.data.refreshToken);
-        console.log(data.data.refreshToken);
-        
-        return next.handle(this.AddTokenheader(request,data.data.accessToken))
-      }),
-      catchError(errordata=>{
-        api.logout();
-        // console.log(errordata);
-        
-        // return throwError(errordata)
-        const err = new Error('test'); 
-        return throwError(() => err);
+  refreshAccessToken() {
+    if (this.refreshingAccessToken) {
+      return new Observable(observer => {
+        this.accessTokenRefreshed.subscribe(() => {
+          // this code will run when the access token has been refreshed
+          observer.next();
+          observer.complete();
+        })
       })
-    );
+    } else {
+      this.refreshingAccessToken = true;
+      // we want to call a method in the login service to send a request to refresh the access token
+      return this.loginApi.getNewAccessToken().pipe(
+        tap((res:any) => {
+          console.log(res);
+          
+          console.log("Access Token Refreshed!");
+          this.refreshingAccessToken = false;
+          this.accessTokenRefreshed.next(res);
+        })
+      )
+    }
+    
   }
 
-//   intercept(req: HttpRequest<any>, next: HttpHandler){
-//     const authToken = this.api.getUserToken();
-//     const authRequest = req.clone({
-//         headers: req.headers.set("Authorization", "Bearer " + authToken)
-//     })
-//     return next.handle(authRequest)
-// }
-AddTokenheader(request: HttpRequest<any>, token: any) {
+
+  // addAuthHeader(request: HttpRequest<any>) {
+  //   // get the access token
+  //   const token = this.getAccessToken();
+
+  //   if (token) {
+  //     // append the access token to the request header
+  //     return request.clone({
+  //       setHeaders: {
+  //         'x-access-token': token
+  //       }
+  //     })
+  //   }
+  //   return request;
+  // }
+
+AddTokenheader(request: HttpRequest<any>) {
+  const token = this.loginApi.getToken();
+  console.log(token);
+  
+
+  if(token){
+     request.clone({ headers: request.headers.set('Authorization', 'bearer ' + token) });
+
+  }
   return request.clone({ headers: request.headers.set('Authorization', 'bearer ' + token) });
-}   
+
+}  
+  
 }
 

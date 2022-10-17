@@ -1,5 +1,5 @@
 {
-  "name": "joyhouse",
+  "name": "EssentialArtisans",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "node-sass": "node-sass --output-style compressed -o dist/css src/scss",
-    "pwa": "ng build && http-server -c-1 disk/joyhouse"
+    "pwa": "ng build --configuration production && http-server -c-1 dist/EssentialArtisans"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
     "@angular/material": "^13.3.7",
     "@angular/platform-browser": "~13.3.8",
     "@angular/platform-browser-dynamic": "~13.3.8",
+    "@angular/pwa": "^13.3.9",
     "@angular/router": "~13.3.8",
     "@angular/service-worker": "~13.3.8",
     "@auth0/angular-jwt": "^5.0.2",
@@ -37,6 +38,7 @@
     "highcharts": "^10.0.0",
     "highcharts-angular": "^3.0.0",
     "html-to-pdfmake": "^2.4.5",
+    "http-server": "^14.1.1",
     "jspdf": "^2.5.1",
     "jwthelper": "0.0.4",
     "ng-alertify": "^1.0.2",
@@ -58,7 +60,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.3.5",
-    "@angular/cli": "^13.3.5",
+    "@angular/cli": "^13.3.9",
     "@angular/compiler-cli": "~13.3.8",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",

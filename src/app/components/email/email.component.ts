@@ -36,7 +36,6 @@ export class EmailComponent implements OnInit {
         this.router.navigate(['/signin']);
       },
       (error) => {
-        console.log(error);
 
         this.alertService.danger('unable to confirm email');
 

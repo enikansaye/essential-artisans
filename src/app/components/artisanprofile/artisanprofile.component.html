@@ -59,7 +59,7 @@ Ratings: {{artisanData.rating}}
             class="nav-link p-2 "
             [class.active]="expression == 'match3'"
             toggle
-            (click)="expression = 'match3' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+            (click)="expression = 'match3' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true ;     this.getOrder();            "
             data-bs-toggle="collapse"
             data-bs-target="#navDashboard"
             aria-expanded="false"
@@ -75,7 +75,7 @@ Ratings: {{artisanData.rating}}
             class="nav-link p-2 "
             [class.active]="expression == 'match4'"
             toggle
-            (click)="expression = 'match4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+            (click)="expression = 'match4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true ; this.getAllInvoices()"
             data-bs-toggle="collapse"
             data-bs-target="#navDashboard"
             aria-expanded="false"
@@ -229,7 +229,7 @@ Ratings: {{artisanData.rating}}
               <div class="col-12 align-items-end d-flex">
                 <div class="col-4 col-md-2 rounded-circle me-3">
                   <img  *ngIf="artisanData.profileImage"
-                    src="data:image/png;base64,{{artisanData.profileImage}}" alt="/assets/images/1.jpg"
+                    src="data:image/png;base64,{{artisanData.profileImage}}"
                     class="img-fluid bg-success rounded-circle "
                   />
                   <ngx-avatar size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}" *ngIf="!artisanData.profileImage"></ngx-avatar>
@@ -400,8 +400,8 @@ Ratings: {{artisanData.rating}}
                       <option value="" selected disabled>Select State</option>
                       <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                       
-                    </select>
-                    <span>select your state </span>
+                    </select><br>
+                    <p>select your state </p>
 
                     </div>
   
@@ -413,8 +413,8 @@ Ratings: {{artisanData.rating}}
                         <option selected value="" disabled>Select LGA</option>
                         <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                         
-                      </select>
-                      <span>select your LGA </span>
+                      </select><br>
+                      <p>select your LGA </p>
 
                       </div>
 

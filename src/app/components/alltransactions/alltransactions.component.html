@@ -440,8 +440,9 @@
 
 <!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
   <!-- !-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> --> 
-<div class="d-flex" *ngFor="let data of orderById.filePaths, let i = index"> 
-  <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{data.filePaths}}" *ngIf="hidden" />
+<div class="d-flex mb-1" *ngFor="let data of orderById.filesBytes
+, let i = index"> 
+  <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{data}}" *ngIf="hidden" />
 
 </div>    
   <div>
@@ -488,7 +489,7 @@
 
 
 <!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
-<img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{orderById.artisanProfileImage}}" *ngIf="hidden2" />
+<img  class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{orderById.artisanProfileImage}}" *ngIf="hidden2" />
 
 <div><span>Artisan Image : </span><span class="h6"><button  class="btn btn-info" (click)="imageSource2()">Display</button></span></div>
 

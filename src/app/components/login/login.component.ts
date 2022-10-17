@@ -66,16 +66,12 @@ export class LoginComponent implements OnInit {
     if (this.loginApi.getToken() != '') {
       this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
 
-      console.log(this.currentRole);
 
       this.displayUser = this.currentRole === 'CUSTOMER';
 
-      console.log(this.displayUser);
 
       this.displayArtisan = this.currentRole === 'ARTISAN';
-      console.log(this.displayArtisan);
       this.displayAdmin = this.currentRole === 'ADMIN';
-      console.log(this.displayAdmin);
     }
     this.loginApi.loggedIn();
   }
@@ -86,28 +82,21 @@ export class LoginComponent implements OnInit {
     const registerObserver = {
       next: (result: any) => {
         this.responsedata = result;
-        console.log(this.api.finaldata);
 
-        console.log(this.responsedata.data.userType);
+console.log(this.responsedata);
 
-          // localStorage.setItem(
-          //   'accesstoken',
-          //   this.responsedata.data.accessToken
-          // );
-          // localStorage.setItem('token', JSON.stringify(this.responsedata.data));
-          // this.loginApi.SaveTokens(result.accessToken);
-          // this.roleDisplay()
+        
           localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
-      localStorage.setItem('refreshtoken', this.responsedata.data.refreshToken);
-      localStorage.setItem('token', JSON.stringify(this.responsedata.data));
-      console.log(this.responsedata);
+      // localStorage.setItem('refreshtoken', this.responsedata.data.refreshToken);
+      localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken));
+      console.log(localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken)));
+      
       this.roleDisplay();
         // this.api.SaveTokens(result);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         // this.roles = this.api.haveaccess2().roles;
 
-          console.log(this.responsedata);
           // this.toastr.success('Hello world!');
           this.toastr.success('Welcome you are logged in')
           // return this.responsedata;
@@ -129,7 +118,6 @@ export class LoginComponent implements OnInit {
 
       },
       error: (err: any) => {
-        console.log(err.error);
        return this.errorMessage = err.error
         // this.alertService.danger('signup failed');
       },
@@ -137,36 +125,8 @@ export class LoginComponent implements OnInit {
 
     this.loginApi.loginUser(this.signinForm.value).subscribe(registerObserver 
 
-      // localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
-      // localStorage.setItem('refreshtoken', this.responsedata.data.refreshToken);
-      // localStorage.setItem('token', JSON.stringify(this.responsedata.data));
-      // console.log(this.responsedata);
-
-      // const decodedUser = this.jwtHelper.decodeToken(this.responsedata.data.access_token);
-      // console.log(decodedUser);
-      
-      // localStorage.setItem('expiration', decodedUser.exp);
-      // this.userInfo.next(decodedUser);
-      
-      // this.roleDisplay();
-      
-      // this.reloadPage();
-
-      // if (this.displayArtisan) {
-      //   this.router.navigate(['/artisanprofile']).then(() => {
-      //     window.location.reload();
-      //   });
-      //   // this.reloadPage();
-      // } else if (this.displayUser) {
-      //   this.router.navigate(['/']).then(() => {
-      //     // window.location.reload();
-      //   });
-      // } else {
-      //   this.router.navigate(['/admin']).then(() => {
-      //     window.location.reload();
-      //   });
-      // }
-      // this.reloadPage();
+   
+     
     );
 
     // this.reloadPage();

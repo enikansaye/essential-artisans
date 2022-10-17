@@ -170,10 +170,10 @@ orderId: 0
     this.getUser();
     // this.showAll()
     this.getState();
-    this.getOrder();
-    this.getPendingOrder();
-    this.getQoute();
-    this.getCompletedOrder();
+    // this.getOrder();
+    // this.getPendingOrder();
+    // this.getQoute();
+    // this.getCompletedOrder();
      this.count = localStorage.getItem('notifyCount');
 
 
@@ -207,7 +207,6 @@ orderId: 0
   }
 
   onClickRating(row: any) {
-    console.log(row);
     this.userProfileModelObj.artisanId = row.artisanId;
     this.userProfileModelObj.orderId = row.id;
     this.form.controls['artisanId'].setValue(row.artisanId);
@@ -217,22 +216,17 @@ orderId: 0
   }
 
   submitRating(data: any) {
-    console.log(data);
     const registerObserver = {
       next: (res: any) => {
         this.userProfileModelObj.artisanId = res.id;
-        console.log(this.userProfileModelObj.artisanId);
         this.modalService.hide();
         this.getOrder();
         this.toastr.success('Thanks, for your review');
 
 
         // this.router.navigate(['/checkemail']);
-        console.log(res);
       },
       error: (err: any) => {
-        console.log(err);
-        console.log(this.form.value);
       },
     };
 
@@ -263,42 +257,10 @@ orderId: 0
     }
   }
 
-  // selecting location section
-  // showAll() {
-  //   this.api.getAll().subscribe((data: any, i: any) => {
-  //     const result = Object.entries(data);
-
-  //     this.state = data;
-  //   });
-  // }
-
-  // onSelect(data: any) {
-  //   let result = Object.entries(this.state);
-  //   console.log(data.value);
-
-  //   const statesList = Object.values(result[data.value])[1];
-
-  //   console.log((statesList as any)['cities']);
-  //   this.city = (statesList as any)['cities'];
-
-  //   console.log(this.city);
-  // }
-
-  // onSelectCities(data: any) {
-  //   let result = Object.entries(this.state);
-  //   console.log(data.value);
-
-  //   const statesList = Object.values(result[data.value])[1];
-
-  //   console.log((statesList as any)['cities']);
-  //   this.city = (statesList as any)['cities'];
-
-  //   console.log(this.city);
-  // }
+ 
   getOrder() {
     this.api.getUserOrder().subscribe((data: any) => {
       this.orderData = data;
-      console.log("get all order for user", data);
       
       this.filteredOrderData = [...this.orderData]
       return this.filteredOrderData.reverse();
@@ -322,7 +284,6 @@ orderId: 0
     let body = {
       orderid: row.id,
     };
-    console.log(row.id);
 
     this.api.deletes(body).subscribe((res) => {
       this.toastr.success('Order deleted');
@@ -365,8 +326,7 @@ orderId: 0
 
   // updating user profile
   updateUserDetails(row: any) {
-    console.log(row);
-    console.log(row.id);
+   
 
     this.userprofileModelObj.userId = this.formValue.value.userId;
     this.userprofileModelObj.firstName = this.formValue.value.firstName;
@@ -377,7 +337,6 @@ orderId: 0
     this.userprofileModelObj.phoneNumber = this.formValue.value.PhoneNumber;
 
     this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
-      console.log(res);
       // this.toastr.success('Profile updated');
       this.toastr.success('Profile successfully updated!!!');
       this.getUser();
@@ -408,11 +367,9 @@ orderId: 0
     // this.progressBar.startLoading();
     const updateEmployerObserver = {
       next: (x: any) => {
-        console.log('Account Updated');
         this.router.navigate(['/']);
       },
       error: (err: any) => {
-        console.log(err);
       },
     };
     this.api.userUpdate(this.formValue).subscribe(updateEmployerObserver);
@@ -423,8 +380,7 @@ orderId: 0
   }
 
   onEditOrder(row: any) {
-    console.log(row);
-    console.log(row.artisanId);
+   
 
     this.userprofileModelObj.userId = row.userId;
     this.userprofileModelObj.firstName = row.firstName;
@@ -449,10 +405,8 @@ orderId: 0
 
   getUser() {
     this.api.getUserinfo().subscribe((res: any) => {
-      console.log(res);
 
       this.userData = res;
-      console.log(this.userData);
     });
   }
 
@@ -465,7 +419,6 @@ orderId: 0
   getState(){
     this.api.getLocation().subscribe((data:any)=>{
       this.state2= data
-      console.log( this.state2);
       
     })
   }
@@ -474,7 +427,6 @@ orderId: 0
     if(userProfile){
       this.api.getLocation2(userProfile).subscribe((data:any)=>{
         this. city2= data
-        console.log( this.city2);
     })
   }
 }
@@ -485,27 +437,21 @@ return this.formValue.controls['city'].value
 
   getPendingOrder() {
     return this.api.userGetPendingOrders().subscribe((res: any) => {
-      console.log(res);
       this.pending = res;
 
-      console.log(this.pending);
     });
   }
 
   getQoute() {
     this.api.userGetInvoice().subscribe((data: any) => {
       this.getInvoice = data;
-      console.log(data);
 
-      console.log(this.getInvoice);
       this.filteredQuoteData = [...this.getInvoice]
       return this.filteredQuoteData.reverse();    });
   }
   
   userAprroveQuote(data: any) {
-    console.log(this.getInvoiceId.invoiceId);
     data=this.getInvoiceId
-    console.log(data.invoiceId);
     
     this.getInvoiceByIdForm.value.invoiceId =data.invoiceId
     this.api.customerApproveInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
@@ -514,33 +460,27 @@ return this.formValue.controls['city'].value
 
       window.location.href = this.approveQuote.link;
 
-      console.log(this.approveQuote);
     });
     // this.router.navigate(['https://ravemodal-dev.herokuapp.com/v3/hosted/pay']);
 
 
   }
   userCancelQuote(data: any) {
-    console.log(this.getInvoiceId);
     data=this.getInvoiceId
     this.getInvoiceByIdForm.value.invoiceId = data.invoiceId
     this.api.customerCancelInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
       this.cancelQuote = res;
       this.getQoute();
-      console.log(this.cancelQuote);
     });
   }
 
   // this get invoice by id
   onClickInvoce(data:any){
-    console.log(data);
     this.invoiceId = data.invoiceId,
     this.getInvoiceId = data;
-    console.log(this.getInvoiceId);
     
     
     this.api.getInvoiveById(this.getInvoiceByIdForm.value ,data.invoiceId).subscribe((data: any) => {
-      // this.getInvoiceByIdForm.controls['invoiceId'].setValue( data.invoiceId),
       this.getInvoiceId = data;
       this.artisanName =this.getInvoiceId.artisanInfo.name
       this.artisanEmail =this.getInvoiceId.artisanInfo.email
@@ -561,11 +501,9 @@ this.allTotal = this.getInvoiceId.invoiceTotal
 this.artisanCharge = this.getInvoiceId.artisanCharge
 this.serviceItemsDescription = this.getInvoiceId.description
 this.serviceItemsDetails = this.getInvoiceId.serviceItems
-      console.log(this.serviceItemsDetails);
       
       this.invoiceUserDetails =this.getInvoiceId.customerInfo
-     console.log(data);
-     console.log(this.getInvoiceId.action );
+    
      this.invoiceAction=this.getInvoiceId.action
      this.inspectionFee=this.getInvoiceId.inspectionFee
      this.isFirstTimeCustomer =this.getInvoiceId.isFirstTimeCustomer
@@ -577,41 +515,34 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
  
   getCompletedOrder(){
     this.api.userCompletedOrder().subscribe((data:any)=>{
-      console.log('this is rest for completed order from user', data);
       
     })
   }
   getAprovedInvoice(){
     this.api.userGetApprovedInvoice().subscribe((data:any)=>{
-      console.log('this is response form approved invoice', data);
       
     })
   }
 
   onClickViewOrder(data:any){
-    console.log(data);
     this.deleteForm.value.invoiceId = data.id,
     
     
     this.api.getOrderById(this.deleteForm.value ,data.id).subscribe((data: any) => {
       this.orderById = data
       this.rating4 = data.artisanRating;
-      console.log(this.rating4);
       
 
-      console.log("onclick order",data);
       
   
   })
   }
   Search(event:any) {
     if (this.value == '') {
-      console.log(this.value);
       
       this.getOrder();
     } else {
       this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-        console.log(res);
         
         return res.issue.toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
@@ -621,12 +552,10 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
   }
   quoteSearch(event:any) {
     if (this.value == '') {
-      console.log(this.value);
       
       this.getOrder();
     } else {
       this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-        console.log(res);
         
         return res.issue.toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
@@ -642,7 +571,6 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
 
   applyFilter() {
     this.orderData.filter = ''+Math.random();
-    console.log(this.orderData.date);
     
   }
 
@@ -669,18 +597,14 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     if(this.filteredOrderData! == ''){
       ivTemp = this.filteredOrderData
     }
-    console.log(ivTemp.length);
-    
-    console.log(this.fromDate1, this.toDate1);
+   
 
     const isInRange = (element: any) => { 
-      console.log(isInRange);
       
       const fDate = new Date(this.fromDate1);
       const tDate = new Date(this.toDate1);
       const elementFDate = new Date(element['date']);
 
-      console.log(elementFDate);
       
 
       return (elementFDate > fDate && elementFDate < tDate);
@@ -699,18 +623,14 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
     if(this.filteredQuoteData! == ''){
       ivTemp = this.filteredQuoteData
     }
-    console.log(ivTemp.length);
     
-    console.log(this.fromDate1, this.toDate1);
 
     const isInRange = (element: any) => { 
-      console.log(isInRange);
       
       const fDate = new Date(this.fromDate1);
       const tDate = new Date(this.toDate1);
       const elementFDate = new Date(element['date']);
 
-      console.log(elementFDate);
       
 
       return (elementFDate > fDate && elementFDate < tDate);
@@ -721,12 +641,10 @@ this.serviceItemsDetails = this.getInvoiceId.serviceItems
   }
   search(){
     if (this.value == '') {
-      console.log(this.value);
       
       this.getOrder();
     } else {
       this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-        console.log(res);
         
         return res.issue.toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
@@ -747,8 +665,7 @@ changeFee(){
 }
 changeInspectionDate(row:any){
 row = this.orderById
-console.log(row.id)
-console.log(row);
+
 this.feeForm.value.orderId = row.id
 
 
@@ -759,7 +676,6 @@ this.feeForm.value.orderId = row.id
             this.feeForm.reset()
             this.hidden = !this.hidden
 
-      console.log(res);
       
     });
 
@@ -767,7 +683,6 @@ this.feeForm.value.orderId = row.id
   }
 
   onclickNotification(data:any){
-    console.log(data);
     
     let i = 0
     let input ={
@@ -776,14 +691,12 @@ this.feeForm.value.orderId = row.id
       
     }
     this.api.readNotification(input).subscribe((res:any) =>{
-      console.log(res);
       this.toastr.success('You read this message')
   
   this.signalRService.getNotification()
       // this.signalRService.notification
       
     })
-    console.log(input. notificationId);
     
   }
 }

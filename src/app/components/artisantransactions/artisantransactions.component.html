@@ -113,7 +113,7 @@
             [class.active]="service == 'completed1'"
             class="mat cursor d-none d-lg-block p-2"
             (click)="service = 'completed1'"
-            (click)="getPendingOrder()"
+            
           >
             Pending Orders
           </div>
@@ -127,7 +127,7 @@
           <div
             [class.active]="service == 'completed3'"
             class="mat cursor d-none d-lg-block p-2"
-            (click)="service = 'completed3'"
+            (click)="service = 'completed3';"
           >
             Cancel Orders
           </div>
@@ -165,28 +165,28 @@
               class="mat cursor"
               (click)="service = 'completed'"
             >
-              All Transactions(10)
+              All Transactions
             </li>
             <li
               [class.active]="service == 'completed1'"
               class="mat cursor"
               (click)="service = 'completed1'"
             >
-              Pending Orders(8)
+              Pending Orders
             </li>
             <li
               [class.active]="service == 'completed2'"
               class="mat cursor"
               (click)="service = 'completed2'"
             >
-              Completed Orders(12)
+              Completed Orders
             </li>
             <li
               [class.active]="service == 'completed3'"
               class="mat cursor"
               (click)="service = 'completed3'"
             >
-              Cancel Orders(5)
+              Cancel Orders
             </li>
           </ul>
         </div>
@@ -671,7 +671,7 @@
     <!--  [hidden]="!invoiceinformation.valid" [disabled]="!invoiceBody.valid"-->
     
           <button type="button" name="" class="btn btn-info btn-lg" (click)="submitQuote()"   >Send Quote</button>
-    
+    <div>{{message}}</div>
     
     
     </div>
@@ -695,7 +695,7 @@
 
     <!-- !-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> --> 
     <div class="d-flex" *ngFor="let data of orderById.filePaths, let i = index"> 
-      <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{data.filePaths}}" *ngIf="hidden" />
+      <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{data}}" *ngIf="hidden" />
     
     </div>      
     <div><span class="me-2">Pictures : </span><span class="h6"><button  class="btn btn-info my-2" (click)="imageSource()">View Pictures</button></span></div>

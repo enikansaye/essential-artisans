@@ -28,16 +28,20 @@ export class SignalrService {
       .build();
     this.hubConnection
       .start()
-      .then(() => console.log('Connection started'))
-      .catch((err) => console.log('Error while starting connection: ' + err));
+      .then(() => {
+        // console.log('Connection started')
+      })
+      .catch((err) => {
+        // console.log('Error while starting connection: ' + err)
+      });
   };
 
   public addNotificationDataListener = () => {
     this.hubConnection.on('notification', (data) => {
       this.data = data;
-      console.log('this...........');
+      // console.log('this...........');
 // this. getNotification()
-      console.log(data);
+      // console.log(data);
 
 
       
@@ -49,7 +53,7 @@ export class SignalrService {
     return this.http
       .get<any>(this.api.baseUrl + '/api/Notification/user-notifications')
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         
         this.notification = res;
         this.notificationCount = res.countOfNotifications;
@@ -65,7 +69,7 @@ export class SignalrService {
 
           i++;
         }
-        console.log(neededArray);
+        // console.log(neededArray);
         this.notificationText = neededArray;
       });
   }

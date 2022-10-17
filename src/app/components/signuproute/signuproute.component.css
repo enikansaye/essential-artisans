@@ -6,7 +6,11 @@
     justify-content: center;
     align-items: center;
 }
+.content{
+  min-height: 80vh;
+  height: 80vh;
 
+}
 
 .card-box .card-drop {
   color: #9a9da0;

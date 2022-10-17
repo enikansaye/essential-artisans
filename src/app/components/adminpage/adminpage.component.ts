@@ -12,46 +12,40 @@ import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SignalrService } from 'src/app/service/signalr.service';
 
-
 class itemObject {
-  itemName!:string;
-  price!:number;
-  quantity!:number;
-  total!:number;
-  
-
+  itemName!: string;
+  price!: number;
+  quantity!: number;
+  total!: number;
 }
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
   styleUrls: ['./adminpage.component.css'],
 })
-
-
 export class AdminpageComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
-  itemObject=new itemObject()
-  itemsArray:Array<itemObject>=[
+  itemObject = new itemObject();
+  itemsArray: Array<itemObject> = [
     {
-      itemName:"",
-      price:0,
-      quantity:0,
-      total:0
-  
-    }
-  ]
-  InvoiceObject={
-    personName:"",
-    invoiceDate:"",
-    invoiceNo:"",
-    invoiceTotal:0,
-    orderId:0,
-    invoiceId:0,
-    jobDescription:'',
-    artisanCharge:0,
-    serviceItemsDto: this.itemsArray =[]
-  }
+      itemName: '',
+      price: 0,
+      quantity: 0,
+      total: 0,
+    },
+  ];
+  InvoiceObject = {
+    personName: '',
+    invoiceDate: '',
+    invoiceNo: '',
+    invoiceTotal: 0,
+    orderId: 0,
+    invoiceId: 0,
+    jobDescription: '',
+    artisanCharge: 0,
+    serviceItemsDto: (this.itemsArray = []),
+  };
 
   userData: any;
 
@@ -95,9 +89,10 @@ export class AdminpageComponent implements OnInit {
   inspectionFee: any;
   Action: any;
   value!: '';
-value2: any;
+  value2: any;
   hope3: any;
   order: any;
+  message: any;
 
   constructor(
     private observer: BreakpointObserver,
@@ -106,16 +101,12 @@ value2: any;
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private modalService: BsModalService,
-    public signalRService: SignalrService,
-
-
-
+    public signalRService: SignalrService
   ) {}
 
   ngOnInit(): void {
-
     // this.invoiceForm = this.formBuilder.group({
-    //   invoiceId:0,      
+    //   invoiceId:0,
     //   serviceItemsDto: this.formBuilder.array([this.initRows()])
     // });
     // this.formControls = this.invoiceForm.controls;
@@ -124,10 +115,10 @@ value2: any;
 
     this.getAllUser();
     this.getAllArtisan();
-    this.getAllPendingArtisan();
+    // this.getAllPendingArtisan();
 
-    this.getQouteByAdmin();
-    this.getAllPendingQuote();
+    // this.getQouteByAdmin();
+    // this.getAllPendingQuote();
     this.getAllOrder();
     this.getAllTotalSales();
     // this.getAllCompletedOrder();
@@ -140,8 +131,6 @@ value2: any;
     this.getInvoiceByIdForm = this.formBuilder.group({
       invoiceId: 0,
       // userId: 0,
-      
-
     });
     // ngx chart
     const xAxisData = [];
@@ -258,54 +247,36 @@ value2: any;
       }
     });
   }
-  
-
- 
 
   getAllUser() {
     this.adminApi.getUser().subscribe((res: any) => {
       this.userData = res;
 
-      console.log(this.userData);
       this.totalRecord = res.length;
       this.userLength = res.length;
-      console.log(this.totalRecord);
-      return this.userData.reverse()
+      return this.userData.reverse();
     });
   }
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
       this.artisanData = res;
-      console.log(this.artisanData);
       this.totalRecord = res.length;
       this.artisanLength = res.length;
-      console.log(this.totalRecord);
-      return this.artisanData.reverse()
+      return this.artisanData.reverse();
     });
   }
   getAllPendingArtisan() {
     const registerObserver = {
       next: (res: any) => {
-        console.log(res);
-
         this.pendingArtisans = res;
-        console.log(this.pendingArtisans);
         this.pendingArtisanRecord = res.length;
       },
       error: (err: any) => {
-        console.log(err.error);
         return (this.artisanErrorMessage = err.error);
-        // this.alertService.danger('signup failed');
       },
     };
     this.adminApi.getPendingArtisan().subscribe(registerObserver);
   }
-  // getAllOthers() {
-  //   // this.adminApi.getOthers().subscribe((res: any) => {
-  //   //   this.othersData = res;
-  //   //   console.log(this.othersData)
-  //   // });
-  // }
 
   getArtisanById(id: string) {
     this.adminApi.getArtisanbyid(id).subscribe((res: any) => {
@@ -315,239 +286,192 @@ value2: any;
 
   getQouteByAdmin() {
     this.adminApi.getQoute().subscribe((res: any) => {
-      console.log(res);
       this.viewQoute = res;
       return this.viewQoute;
     });
   }
 
   getAllPendingQuote() {
-
     const registerObserver = {
       next: (res: any) => {
-        console.log("this is from pending quote",res);
         this.viewPendingQoute = res;
         return this.viewPendingQoute;
       },
       error: (err: any) => {
-        console.log(err.error);
-        return this.quotePendingError = err.error;
-        // this.alertService.danger('signup failed');
+        return (this.quotePendingError = err.error);
       },
     };
 
-    this.adminApi.getPendingQuote().subscribe(registerObserver)
-    
+    this.adminApi.getPendingQuote().subscribe(registerObserver);
   }
 
   approveQoute(row: any) {
-    console.log(row.invoiceId);
     this.approveForm.value.invoiceId = row.invoiceId;
-    console.log(row);
 
     this.adminApi
       .aproveQuoteUrl(this.approveForm.value, row.invoiceId)
       .subscribe((res: any) => {
         this.getQouteByAdmin();
 
-        this.toastr.success('invoice created successfully')
-
-        // this.isAprove = !this.isAprove;
-        console.log(res);
-        // this.getQouteByAdmin()
+        this.toastr.success('invoice created successfully');
       });
-
-    // console.log(row);
   }
   approveArtisan(row: any) {
-    console.log(row.id);
     this.artisanId = row.id;
-    console.log(row);
 
     this.adminApi
       .aproveArtisanUrl(this.artisanId, row.id)
       .subscribe((res: any) => {
-        console.log(res);
-
-        this.toastr.success('Artisan Approved')
-        this.getAllPendingArtisan()
-         this.getAllArtisan() 
-         
-
+        this.toastr.success('Artisan Approved');
+        this.getAllPendingArtisan();
+        this.getAllArtisan();
       });
     this.artisanErrorMessage;
-    console.log(row);
   }
-  getInvoiceId:any 
-  invoiceName: any 
-  artisanName:any
-  artisanPhoneNumber:any
-  artisanProfession:any
-  artisanEmail:any
-  userName:any
-  userEmail:any
-  userPhoneNumber:any
-  invoiceUserDetails:any
-  serviceItemsDetails:any
-  accountName:any;
-  accountNumber:any;
-  bankName:any;
-  onClickViewInvoce(data:any){
-    console.log(data);
-    this.getInvoiceByIdForm.value.invoiceId = data.invoiceId,
-    
-    
-    this.api.getInvoiveById(this.getInvoiceByIdForm.value ,data.invoiceId).subscribe((data: any[]) => {
-      this.getInvoiceByIdForm.disable()
-      this.getInvoiceId = data;
-      // artisan
-       this.artisanName =this.getInvoiceId.artisanInfo.name
-       this.artisanEmail =this.getInvoiceId.artisanInfo.email
-       this.artisanProfession =this.getInvoiceId.artisanInfo.profession
-       this.artisanPhoneNumber =this.getInvoiceId.artisanInfo.phoneNumber
+  getInvoiceId: any;
+  invoiceName: any;
+  artisanName: any;
+  artisanPhoneNumber: any;
+  artisanProfession: any;
+  artisanEmail: any;
+  userName: any;
+  userEmail: any;
+  userPhoneNumber: any;
+  invoiceUserDetails: any;
+  serviceItemsDetails: any;
+  accountName: any;
+  accountNumber: any;
+  bankName: any;
+  onClickViewInvoce(data: any) {
+    (this.getInvoiceByIdForm.value.invoiceId = data.invoiceId),
+      this.api
+        .getInvoiveById(this.getInvoiceByIdForm.value, data.invoiceId)
+        .subscribe((data: any[]) => {
+          this.getInvoiceByIdForm.disable();
+          this.getInvoiceId = data;
+          // artisan
+          this.artisanName = this.getInvoiceId.artisanInfo.name;
+          this.artisanEmail = this.getInvoiceId.artisanInfo.email;
+          this.artisanProfession = this.getInvoiceId.artisanInfo.profession;
+          this.artisanPhoneNumber = this.getInvoiceId.artisanInfo.phoneNumber;
 
-      //  user
-       this.userName =this.getInvoiceId.customerInfo.name
-       this.userEmail =this.getInvoiceId.customerInfo.email
-       this.userPhoneNumber =this.getInvoiceId.customerInfo.phoneNumber
+          //  user
+          this.userName = this.getInvoiceId.customerInfo.name;
+          this.userEmail = this.getInvoiceId.customerInfo.email;
+          this.userPhoneNumber = this.getInvoiceId.customerInfo.phoneNumber;
 
-       this.accountName = this.getInvoiceId.accountName
-       this.accountNumber = this.getInvoiceId.accountNumber
-       this.bankName = this.getInvoiceId.bankName
+          this.accountName = this.getInvoiceId.accountName;
+          this.accountNumber = this.getInvoiceId.accountNumber;
+          this.bankName = this.getInvoiceId.bankName;
 
-this.inspectionFee = this.getInvoiceId.inspectionFee
-this.artisanCharge = this.getInvoiceId.artisanCharge
-this.jobDescription = this.getInvoiceId.jobDescription
-this.allTotal = this.getInvoiceId.invoiceTotal
-this.serviceItemsDetails = this.getInvoiceId.serviceItems
-       console.log(this.serviceItemsDetails);
-       
-       this.invoiceUserDetails =this.getInvoiceId.customerInfo
-      console.log(data);
-     this.Action =this.getInvoiceId.action ;
+          this.inspectionFee = this.getInvoiceId.inspectionFee;
+          this.artisanCharge = this.getInvoiceId.artisanCharge;
+          this.jobDescription = this.getInvoiceId.jobDescription;
+          this.allTotal = this.getInvoiceId.invoiceTotal;
+          this.serviceItemsDetails = this.getInvoiceId.serviceItems;
 
-      return this.getInvoiceId
+          this.invoiceUserDetails = this.getInvoiceId.customerInfo;
+          this.Action = this.getInvoiceId.action;
 
-    });
-    
-
+          return this.getInvoiceId;
+        });
   }
   onEditForm(): void {
     this.isEditMode = true;
-// this.serviceItemsDetails = this.itemsArray
-// const control = this.serviceItemsDetails;
-// control.controls =[];
-//     if (this.isEditMode) {
-//       // this.invoiceForm.enable();
-//       // this.formControls['firstName'].enable();
-
-      
-//     }
   }
-  grandtotal:number =0
-getInvoiceTotalAmount() {
-return this.itemsArray.reduce((acc, item) => {
-acc += this.updateTotalInItemsArray(item) 
-this.grandtotal =acc;
-console.log(this.grandtotal);
+  grandtotal: number = 0;
+  getInvoiceTotalAmount() {
+    return this.itemsArray.reduce((acc, item) => {
+      acc += this.updateTotalInItemsArray(item);
+      this.grandtotal = acc;
 
-return acc;
-}, 0)
- 
-}
+      return acc;
+    }, 0);
+  }
 
+  updateTotalInItemsArray(item: itemObject) {
+    item.total = item.quantity && item.price ? item.quantity * item.price : 0;
+    return item.total;
+  }
 
-updateTotalInItemsArray(item: itemObject) {
-item.total =(item.quantity && item.price) ? item.quantity * item.price:0;
-return item.total
-}
- 
-  submitEditedQuote(data:any){
-    
-    data = this.serviceItemsDetails
-    console.log(data);
-    this.serviceItemsDetailsiId = this.serviceItemsDetails.serviceItemId
+  submitEditedQuote(data: any) {
+    data = this.serviceItemsDetails;
+    this.serviceItemsDetailsiId = this.serviceItemsDetails.serviceItemId;
 
-    // this.serviceItemsDetailsiId = this.serviceItemsDetails[i]['this.serviceItemsDetails.serviceItemId']
-    // this.serviceItemsDetailsiId = data[i]['serviceItemsDetails ']
-    console.log(this.serviceItemsDetailsiId);
-    let index = this.serviceItemsDetails.findIndex((x:any)=> {
+    let index = this.serviceItemsDetails.findIndex((x: any) => {});
 
-    });
-  
-    let itemsDto = []
+    let itemsDto = [];
 
-    for (let index = 0; index < data.length; index++) {      
-      itemsDto.push(data[index])
+    for (let index = 0; index < data.length; index++) {
+      itemsDto.push(data[index]);
     }
-    
 
     let invoiceEdit = {
-      "invoiceId": this.getInvoiceId.invoiceId,
-      "artisanCharge": this.artisanCharge ,
-      "serviceItemsDto": itemsDto
-    } 
+      invoiceId: this.getInvoiceId.invoiceId,
+      artisanCharge: this.artisanCharge,
+      serviceItemsDto: itemsDto,
+    };
 
-    console.log(invoiceEdit);
-    
-    this.InvoiceObject.invoiceId  =  this.getInvoiceId.invoiceId
-    this.InvoiceObject.artisanCharge    =  this.getInvoiceId.artisanCharge
+    this.InvoiceObject.invoiceId = this.getInvoiceId.invoiceId;
+    this.InvoiceObject.artisanCharge = this.getInvoiceId.artisanCharge;
 
-    console.log(this.InvoiceObject.artisanCharge );
-    
-   
-    
-    
+    const uploadObserver = {
+      next: (event: any) => {
+        this.getInvoiceId = data;
+        this.toastr.success('Quote Successfully Updated');
+  
+        this.getQouteByAdmin();
+  
+        this.modalRef?.hide();
+
+      },
+      error: (err: any) => {
+        if (err.error && err.error.message) {
+          this.message = err.error.message;
+          this.toastr.warning(this.message);
+
+        } else {
+          // this.message = 'Could not upload the file!';
+          this.toastr.warning(this.message);
+
+        }
+      },
+    };
+
     this.adminApi.editQuoteUrl(invoiceEdit).subscribe((data: any[]) => {
-     
-      this.getInvoiceId = data;
-      this.toastr.success('Quote Successfully Updated')
-
-      this.getQouteByAdmin()
-
-      this.modalRef?.hide()
-
-      console.log(data);
-      console.log(this.getInvoiceId.action );
-
+   
     });
-
   }
   suspendArtisan(row: any) {
     this.artisanId = row.id;
 
     const registerObserver = {
       next: (res: any) => {
-        this.toastr.success('Artisan Suspended')
-        this.getAllArtisan()
-
-        console.log("this is a respond from suspend artisan",res);
+        this.toastr.success('Artisan Suspended');
+        this.getAllArtisan();
       },
       error: (err: any) => {
         this.toastr.warning('Signup failed');
 
-        return this.quotePendingError = err.error;
+        return (this.quotePendingError = err.error);
       },
     };
 
     this.adminApi
       .suspendArtisanUrl(this.artisanId, row.id)
       .subscribe(registerObserver);
-   
   }
   deleteArtisan(row: any) {
     this.artisanId = row.id;
     const registerObserver = {
       next: (res: any) => {
-        this.toastr.success('Artisan Deleted')
-        this.getAllArtisan()
-
-        console.log("this is a respond from delete artisan", res);
+        this.toastr.success('Artisan Deleted');
+        this.getAllArtisan();
       },
       error: (err: any) => {
-        this.toastr.warning('Something went Wrong!!!')
+        this.toastr.warning('Something went Wrong!!!');
 
-        return this.quotePendingError = err.error;
+        return (this.quotePendingError = err.error);
       },
     };
     this.adminApi
@@ -556,36 +480,22 @@ return item.total
   }
 
   confirmPayment(row: any) {
-    console.log(row.invoiceId );
     this.approveForm.value.invoiceId = row.invoiceId;
-    console.log(row);
 
     this.adminApi
       .confirmPaymentUrl(this.approveForm.value, row.invoiceId)
-      .subscribe((res: any) => {
-        console.log("this is a respond from confirm payment",res);
-      });
-    // this.artisanErrorMessage;
-    console.log(row);
+      .subscribe((res: any) => {});
   }
 
   getAllOrder() {
     this.adminApi.getOrder().subscribe((res: any) => {
-      console.log(res);
-      this.order =res
+      this.order = res;
       this.totalLength = res.length;
-      // this.AllOrderData = res;
-      // console.log(this.AllOrderData);
-      // return this.AllOrderData.reverse();
     });
   }
   getAllTotalSales() {
     this.adminApi.getTotalSales().subscribe((res: any) => {
-      console.log('this is total sales',res);
       this.totalSales = res;
-      // this.AllOrderData = res;
-      // console.log(this.AllOrderData);
-      // return this.AllOrderData.reverse();
     });
   }
 
@@ -600,57 +510,37 @@ return item.total
     this.modalService.hide(modalId);
   }
 
-
-  Search(event:any) {
+  Search(event: any) {
     if (this.value == '') {
-      console.log(this.value);
-      
       this.getAllArtisan();
     } else {
       this.artisanData = this.artisanData.filter((res: any) => {
-        console.log(res);
-        
-        return res.firstName.toLocaleLowerCase()
+        return res.firstName
+          .toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
       });
     }
-  // return this.hope;
   }
-  Search2(event:any) {
+  Search2(event: any) {
     if (this.value2 == '') {
-      console.log(this.value);
-      
       this.getAllUser();
     } else {
       this.userData = this.userData.filter((res: any) => {
-        console.log(res);
-        
-        return res.firstName.toLocaleLowerCase()
+        return res.firstName
+          .toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
       });
     }
-  // return this.hope;
   }
-  onclickNotification(data:any){
-    console.log(data);
-    
-    let i = 0
-    let input ={
-      
-        notificationId :data
-      
-    }
-    this.api.readNotification(input).subscribe((res:any) =>{
-      console.log(res);
-      this.toastr.success('You read this message')
+  onclickNotification(data: any) {
+    let i = 0;
+    let input = {
+      notificationId: data,
+    };
+    this.api.readNotification(input).subscribe((res: any) => {
+      this.toastr.success('You read this message');
 
-this.signalRService.getNotification()
-      // this.signalRService.notification
-      
-    })
-    console.log(input. notificationId);
-    
+      this.signalRService.getNotification();
+    });
   }
-
- 
 }

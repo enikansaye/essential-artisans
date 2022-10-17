@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {  Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { ApiService } from './api.service';
 })
 export class LoginService {
   loggedinUser: any;
+  tokencheck: any;
 
   constructor(private http:HttpClient, private router: Router,private api: ApiService) { }
   tokenresp:any;
@@ -31,20 +32,8 @@ logoutUser(){
     
   ); 
 }
-    GenerateRefreshToken(payload:any) {
-      let input = {
-        // "accessToken": this.getToken(),
-        "refreshToken": this.getRefreshToken()
-        // refreshToken: this.getRefresToken(),
-        // refreshToken: localStorage.getItem('refreshToken') || '',
-      };
-    //  let input =localStorage.getItem('refreshToken');
-     console.log(input);
-     let value =input.refreshToken
-
-     
-
-      return this.http.post(this.api.baseUrl + '/api/Auth/refresh-token/'  + value ,payload);
+    GenerateRefreshToken() {
+ return this.http.get(this.api.baseUrl + '/api/Auth/refresh-token/');
     }
 
     isUserLoggedIn() {
@@ -60,15 +49,20 @@ logoutUser(){
     }
 
     SaveTokens(tokendata: any) {
-      localStorage.setItem('accessToken', tokendata.accessToken);
+      console.log(tokendata);
+      
+      localStorage.removeItem('accesstoken');
+      localStorage.setItem('accesstoken', tokendata.data.accessToken);
       // console.log(localStorage.setItem('refrestoken', tokendata.accessToken));
       
-      localStorage.setItem('refreshtoken', tokendata.refreshToken);
+      // localStorage.removeItem('refreshtoken');
+      // localStorage.setItem('refreshtoken', tokendata.data.refreshToken);
       // console.log(localStorage.setItem('refreshtoken', tokendata.refreshToken));
       
     }
      // checking if user is logged in
   loggedIn() {
+    // this.loggedinUser = this.tokencheck;
     this.loggedinUser = localStorage.getItem('token');
     return (this.loggedinUser = JSON.parse(this.loggedinUser));
   }
@@ -76,20 +70,15 @@ logoutUser(){
       // checking with refresh token
       logout() {
 
-    
-        localStorage.clear();
-        localStorage.removeItem('expiration');
-        localStorage.removeItem('refreshtoken');
-        this.router.navigateByUrl('/signin');
-      
-      this.router.navigate(['/']).then(() => {
-        window.location.reload();
-      });
-      localStorage.removeItem('accesstoken')
-      return localStorage.removeItem('token');
+    alert('Your Token Expired, please Login')
+       return localStorage.clear();
+       
     }
 
   haveaccess(token:any){
+    console.log(token);
+    this.tokencheck =token
+    
     let _token =token.split('.')[1];
     this.tokenresp = JSON.parse(atob(_token))
     console.log(this.tokenresp.role);
@@ -98,5 +87,24 @@ logoutUser(){
 
     
     return this.tokenresp.role
+  }
+
+
+
+  getNewAccessToken() {
+    return this.http.get(`${this.api.baseUrl}/api/Auth/refresh-token/`,
+     {
+      headers: {
+        // 'x-refresh-token': this.getRefreshToken(),
+        // '_id': this.getUserId()
+      },
+      observe: 'response'
+    }).pipe(
+      tap((res: HttpResponse<any>) => {
+        console.log(res);
+        
+        this.SaveTokens(res.headers.get('accesstoken'));
+      })
+    )
   }
 }

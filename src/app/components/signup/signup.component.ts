@@ -81,38 +81,29 @@ export class SignupComponent implements OnInit {
 
 onSelect(data: any) {
   let result = Object.entries(this.state);
-  console.log(data.value);
 
   const statesList = Object.values(result[data.value])[1];
 
-  console.log((statesList as any)['cities']);
   this.city = (statesList as any)['cities'];
 
-  console.log(this.city);
 }
 
 onSelectCities(data: any) {
   let result = Object.entries(this.state);
-  console.log(data.value);
 
   const statesList = Object.values(result[data.value])[1];
 
-  console.log((statesList as any)['cities']);
   this.city = (statesList as any)['cities'];
 
-  console.log(this.city);
 }
   onSubmit() {
     this.toastr.info('Working on creating new account');
 
     const registerObserver = {
       next: (res: any) => {
-        console.log('Artican created');
         this.router.navigate(['/checkemail']);
       },
       error: (err: any) => {
-        console.log(err);
-        console.log();
         return this.errorMessage = err.error
         // this.alertService.danger('signup failed');
       },
@@ -126,7 +117,6 @@ onSelectCities(data: any) {
   getAllServiceCategory() {
     this.adminApi.getServiceCategory().subscribe((res: any) => {
       this.serviceData = res;
-      console.log( this.serviceData);
       
     });
   }
@@ -137,7 +127,6 @@ onSelectCities(data: any) {
       this.signupForm.controls['service'].value
 
       this.state2= data
-      console.log( this.state2);
       
     })
   }
@@ -146,7 +135,6 @@ onSelectCities(data: any) {
     if(userProfile){
       this.api.getLocation2(userProfile).subscribe((data:any)=>{
         this. city2= data
-        console.log( this.city2);
     })
   }
 }

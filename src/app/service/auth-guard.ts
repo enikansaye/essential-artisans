@@ -8,12 +8,13 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-    constructor(private api: ApiService, private router: Router){}
+    constructor(private api: ApiService, private router: Router, private loginApi: LoginService){}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,7 +23,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-  let userInfo = this.api.loggedIn();
+  let userInfo = this.loginApi.loggedIn();
   if(route.data['userType'] === 'guest'){
       return true;
   }else if(route.data['userType'] === 'CUSTOMER'){

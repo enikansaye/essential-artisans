@@ -70,18 +70,13 @@ export class RegisterComponent implements OnInit {
         // this.toastr.success('artisan Suspended')
         this.toastr.info('Working on creating new account');
 
-        // localStorage.setItem('email', res.data.email);
-
-        // localStorage.setItem('emails', data.email);
-        // localStorage.setItem('email', this.signupForm.value.email);
+       
 
         this.router.navigate(['/checkemail']);
 
 
       },
       error: (err: any) => {
-        console.log(err);
-        console.log(data);
         return this.errorMessage = err.error
         
         // this.alertService.danger('signup failed');
@@ -93,16 +88,13 @@ export class RegisterComponent implements OnInit {
 
   hope:any
  resendEmail(){
-  // console.log(data);
   
   this.hope = localStorage.getItem('email');
 
-  console.log(this.hope);
   this.signupForm.value.email =this.hope
   
 
   this.api.ResendEmail(this.hope).subscribe((res:any)=>{
-console.log(res);
 
   })
  }
@@ -111,7 +103,6 @@ console.log(res);
   getState(){
     this.api.getLocation().subscribe((data:any)=>{
       this.state2= data
-      console.log( this.state2);
       
     })
   }
@@ -120,7 +111,6 @@ console.log(res);
     if(userProfile){
       this.api.getLocation2(userProfile).subscribe((data:any)=>{
         this. city2= data
-        console.log( this.city2);
     })
   }
 }

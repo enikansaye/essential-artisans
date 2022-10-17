@@ -32,19 +32,15 @@ Form !: FormGroup;
     })
   }
   onSubmit(){
-    // this.alertService.info('Working on sending email');
     
     const forgetPasswordObserver = {
       next: (res:any) => {
        
-        // this.alertService.success('Check email to change password');
-        console.log('Check email to change password');
    
         // this.router.navigate(['/dashboard']);
       },
       error: (err:any) => {
      
-        console.log(err);
         // this.alertService.danger('Unable to send email');
       }
     };

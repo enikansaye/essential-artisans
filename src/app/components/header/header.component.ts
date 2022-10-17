@@ -52,10 +52,8 @@ export class HeaderComponent implements OnInit {
 
   onClick(row:any){
     
-    console.log(row);
     
         this.userProfileModelObj.id = row.id;
-        console.log(this.userProfileModelObj.id);
         
     
         // this.formValue.controls['name'].setValue(row.name);
@@ -65,16 +63,12 @@ export class HeaderComponent implements OnInit {
         if (this.loginApi.getToken()!='') {
           this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
     
-          console.log(this.currentRole);
     
           this.displayUser = this.currentRole === 'CUSTOMER';
     
-          console.log(this.displayUser);
     
           this.displayArtisan = this.currentRole === 'ARTISAN';
-          console.log(this.displayArtisan);
           this.displayAdmin = this.currentRole === 'ADMIN';
-          console.log(this.displayAdmin);
         }
       this.loginApi.loggedIn()
       }

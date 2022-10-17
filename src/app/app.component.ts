@@ -8,10 +8,13 @@ import { EventBusService } from './service/event-bus.service';
 import { LoaderService } from './service/loader.service';
 import { LoginService } from './service/login.service';
 import { SignalrService } from './service/signalr.service';
-import { StorageService } from './service/storage.service';
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { filter, map } from 'rxjs/operators';
+
 
 import { UserModel } from './shared/models/user.model';
 import { UpdateService } from './update.service';
+import { Platform } from '@angular/cdk/platform';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +30,20 @@ export class AppComponent implements OnInit {
     id: 0,
   };
   offline: boolean = true;
+  isOnline!: boolean;
+  modalVersion!: boolean;
+
 
   onNetwortStatusChange(){
-    this.offline = !navigator.onLine
+    this.offline = !navigator.onLine;
+    // this.isOnline = window.navigator.onLine;
+    // console.info(`isOnline=[${this.isOnline}]`);
   }
+
+  // private updateOnlineStatus(): void {
+  //   this.isOnline = window.navigator.onLine;
+  //   console.info(`isOnline=[${this.isOnline}]`);
+  // }
  
   userProfileModelObj: userProfileModel = new userProfileModel();
   loggedinUser1: any;
@@ -38,6 +51,8 @@ export class AppComponent implements OnInit {
   menuState!: string;
   modalRef?: BsModalRef | null;
   modalRef2?: BsModalRef;
+  modalPwaEvent: any;
+  modalPwaPlatform: string|undefined;
   constructor(
     public api: ApiService,
     private router: Router,
@@ -46,7 +61,15 @@ export class AppComponent implements OnInit {
     private updateService: UpdateService,
     public loginApi: LoginService,
     public signalRService: SignalrService,
-  ) {updateService.checkForUpdate()}
+    private swUpdate: SwUpdate,
+    private platform: Platform,
+  ) {
+    this.isOnline = false;
+    this.modalVersion = false;
+
+
+    updateService.checkForUpdate()
+  }
 
   loading$ = this.loader.loading$;
   
@@ -69,38 +92,75 @@ export class AppComponent implements OnInit {
     this.signalRService.addNotificationDataListener(); 
     this.signalRService.getNotification()
     
-    // this.api.getNotification().subscribe((res:any)=>{
-    //   this.notificationCount = res.countOfNotifications
-    //   localStorage.setItem('notifyCount', this.notificationCount)
-    //   localStorage.setItem('alldatacount', res.userNotifications[0].notificationText);
+  
+// service worker 
+    // this.onNetwortStatusChange();
+    window.addEventListener('online', this.onNetwortStatusChange.bind(this));
+    window.addEventListener('offline', this.onNetwortStatusChange.bind(this));
 
+    // this.updateOnlineStatus();
 
-    //   console.log(this.notificationCount);
-      
-    //   console.log(res);
-      
-    // })
-    // this.api.readNotification().subscribe((res:any)=>{
-    //   // this.notificationMessage = res
-    //   console.log(res);
-      
-    // })
+    // window.addEventListener('online',  this.updateOnlineStatus.bind(this));
+    // window.addEventListener('offline', this.updateOnlineStatus.bind(this));
 
-    this.onNetwortStatusChange();
-    window.addEventListener('online', this.onNetwortStatusChange.bind(this))
-    window.addEventListener('offline', this.onNetwortStatusChange.bind(this))
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.pipe(
+        filter((evt: any): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
+        map((evt: any) => {
+          console.info(`currentVersion=[${evt.currentVersion} | latestVersion=[${evt.latestVersion}]`);
+          this.modalVersion = true;
+        }),
+      );
+    }
+
+    this.loadModalPwa();
 
   }
+
+  
+
+  private loadModalPwa(): void {
+    if (this.platform.ANDROID) {
+      window.addEventListener('beforeinstallprompt', (event: any) => {
+        event.preventDefault();
+        this.modalPwaEvent = event;
+        this.modalPwaPlatform = 'ANDROID';
+      });
+    }
+
+    if (this.platform.IOS && this.platform.SAFARI) {
+      const isInStandaloneMode = ('standalone' in window.navigator) && ((<any>window.navigator)['standalone']);
+      if (!isInStandaloneMode) {
+        this.modalPwaPlatform = 'IOS';
+      }
+    }
+  }
+
+  public addToHomeScreen(): void {
+    this.modalPwaEvent.prompt();
+    this.modalPwaPlatform = undefined;
+  }
+
+  public closePwa(): void {
+    this.modalPwaPlatform = undefined;
+  }
+
   logo!: "/assets/images/logos.png";
   onClick(row:any){
     
-console.log(row);
 
     this.userProfileModelObj.id = row.id;
-    console.log(this.userProfileModelObj.id);
     
 
     // this.formValue.controls['name'].setValue(row.name);
+  }
+  public updateVersion(): void {
+    this.modalVersion = false;
+    window.location.reload();
+  }
+
+  public closeVersion(): void {
+    this.modalVersion = false;
   }
 
   toggleMenu() {
@@ -112,16 +172,12 @@ console.log(row);
     if (this.loginApi.getToken()!='') {
       this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
 
-      console.log(this.currentRole);
 
       this.displayUser = this.currentRole === 'CUSTOMER';
 
-      console.log(this.displayUser);
 
       this.displayArtisan = this.currentRole === 'ARTISAN';
-      console.log(this.displayArtisan);
       this.displayAdmin = this.currentRole === 'ADMIN';
-      console.log(this.displayAdmin);
     }
   this.loginApi.loggedIn()
   }
@@ -149,6 +205,13 @@ console.log(row);
   closeModal(modalId?: number){
     this.modalService.hide(modalId);
   }
-
+  Logout() {
+    // this.loginApi.logoutUser().subscribe(()=>{
+  localStorage.clear();
+  // localStorage.removeItem('expiration');
+  // localStorage.removeItem('refreshtoken');
+  this.router.navigateByUrl('/signin');
+    // })
+}
 
 }

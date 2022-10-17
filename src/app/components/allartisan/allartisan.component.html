@@ -4,7 +4,7 @@
 
     <div class="cards-6 section-gray">
       <div class="container-fluid w-100">
-        <div class="5">Availabe Artisans within your Selected category</div>
+        <div class="5">Available Artisans within your Selected category</div>
 
 
      
@@ -56,7 +56,7 @@
                   </div>
                
                 </div>
-                <ngx-star-rating [id]="artisanData.rating" [(ngModel)]="artisanData.rating" [disabled]="true"></ngx-star-rating>
+                <ngx-star-rating [id]="data.rating" [(ngModel)]="data.rating" [disabled]="true"></ngx-star-rating>
 
               </div>
             </div>
@@ -170,34 +170,16 @@
           #input
           (change)="onChange(input.value)"
         />
-       
+        <br>
+       <div class="my-2">
+        <span >Support formats are .jpg .gif .png </span><br>
+       <span>Pictures may not exceed 2MB</span>
+       </div>
       </div>
 
-      <!-- <input  
-
-      formControlName="Files"
-    
-      id="file"  
-    
-      type="file"  
-    
-      multiple
-    
-      class="form-control"
-    
-     (change)="onFileChange($event)"> -->
     
 
-     <!-- <div class="form-group">
-      <label for="file">File</label>
-      <input
-          formControlName="files"
-          id="file"
-          type="file"
-          class="form-control"
-          multiple=""
-          (change)="onFileChange($event)">
-          </div> -->
+     
 
           <label class="btn btn-default">
             <input type="file" multiple (change)="selectFiles($event)" formControlName="files" />
@@ -206,7 +188,7 @@
     <div class="mt-4">
       <!-- <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple> -->
     </div>
-<div></div>
+<div class="h5 " style="color: red;">{{message }}</div>
 
 <button class="btn btn-info mt-3" id='ModelId'    type="submit">Send</button>
     </form>

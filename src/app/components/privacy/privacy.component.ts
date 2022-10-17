@@ -42,7 +42,6 @@ total(){
 
   return this.invoice.products.reduce((acc) => {
     acc += this.invoice.products.reduce((sum:any, p:any)=> sum + (p.qty * p.price), 0).toFixed(2);
-    console.log(acc);
     this.newItemEvent= acc
     return acc;
   },0)
@@ -62,7 +61,6 @@ total(){
     
   }
   onSubmit(data:any){
-console.log(data);
 
   }
 

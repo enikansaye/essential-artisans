@@ -36,8 +36,8 @@
             ><i class="bi bi-grid-3x3-gap"></i> DASHBOARD</div
           >
          
-          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2';sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true" ><i class="fa-solid fa-cart-shopping "></i> MY ORDERS</div>
-          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3' ;sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"><i class="fa-solid fa-list"></i> QUOTE</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match2'" (click)="expression = 'match2';sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; getOrder()" ><i class="fa-solid fa-cart-shopping "></i> MY ORDERS</div>
+          <div class="p-3 cursor"  [class.active]="expression == 'match3'" (click)="expression = 'match3' ;sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; getQoute()"><i class="fa-solid fa-list"></i> QUOTE</div>
           
 
           
@@ -709,8 +709,8 @@
 
 <!-- <div><span>Pictures : </span><button class="h6">View Pictures</button></div> -->
 <!-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> -->
-<div class="d-flex w-100" *ngFor="let data of orderById.filePaths, let i = index"> 
-  <img class="image-fluid mb-1" style="height: 100px; width:100px;" src="data:image/png;base64,{{data.filePaths}}" *ngIf="hidden" />
+<div class="d-flex w-100" *ngFor="let data of orderById.filesBytes, let i = index"> 
+  <img class="image-fluid mb-1" style="height: 100px; width:100px;" src="data:image/png;base64,{{data}}" *ngIf="hidden" />
 
 </div>  
 <div><span>Pictures : </span><span class="h6"><button  class="btn btn-info mt-2" (click)="imageSource()">View Pictures</button></span></div>
