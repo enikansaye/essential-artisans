@@ -259,6 +259,8 @@ export class AdminpageComponent implements OnInit {
   }
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
+      console.log(res);
+      
       this.artisanData = res;
       this.totalRecord = res.length;
       this.artisanLength = res.length;
