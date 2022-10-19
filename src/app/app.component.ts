@@ -15,6 +15,7 @@ import { filter, map } from 'rxjs/operators';
 import { UserModel } from './shared/models/user.model';
 import { UpdateService } from './update.service';
 import { Platform } from '@angular/cdk/platform';
+import { NgxLoader } from 'ngx-http-loader';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
   offline: boolean = true;
   isOnline!: boolean;
   modalVersion!: boolean;
+spinkit: any;
 
 
   onNetwortStatusChange(){
@@ -53,6 +55,7 @@ export class AppComponent implements OnInit {
   modalRef2?: BsModalRef;
   modalPwaEvent: any;
   modalPwaPlatform: string|undefined;
+  public ngxloader = NgxLoader;
   constructor(
     public api: ApiService,
     private router: Router,
@@ -78,6 +81,7 @@ export class AppComponent implements OnInit {
   displayUser: any;
   displayArtisan: any;
   currentRole: any;
+
  
 
   ngOnInit(): void {

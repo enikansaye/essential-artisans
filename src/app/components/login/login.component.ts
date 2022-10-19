@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   jwtHelper = new JwtHelperService();
 
   signinForm!: FormGroup;
+  resendForm!: FormGroup;
   hide = true;
   data: any;
   responsedata: any;
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   isLoggedIn = false;
   isLoginFailed = false;
+  hidden: boolean = false;
   userInfo: any;
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +54,12 @@ export class LoginComponent implements OnInit {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+
+    });
+    this.resendForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      // password: ['', Validators.required],
+
     });
     this.api.finaldata;
 
@@ -83,13 +91,13 @@ export class LoginComponent implements OnInit {
       next: (result: any) => {
         this.responsedata = result;
 
-console.log(this.responsedata);
+// console.log(this.responsedata);
 
         
           localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
       // localStorage.setItem('refreshtoken', this.responsedata.data.refreshToken);
       localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken));
-      console.log(localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken)));
+      // console.log(localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken)));
       
       this.roleDisplay();
         // this.api.SaveTokens(result);
@@ -142,5 +150,39 @@ console.log(this.responsedata);
   localStorage.removeItem('refreshtoken');
   this.router.navigateByUrl('/signin');
     })
+}
+
+sendLink() {
+  this.hidden = !this.hidden;
+}
+
+// resendConfirmationMail(data:any){
+//   console.log(data);
+  
+//   this.loginApi.ResendMail(this.resendForm.value.email).subscribe((res)=>{
+// console.log(res);
+
+//   })
+// }
+resendConfirmationMail(data:any) {
+  console.log(data);
+  
+  const inspectionObserver = {
+    next: (res: any) => {
+      console.log(res);
+      
+      this.toastr.success('Inspection Fee Sucessfully Updated!!');
+      this.resendForm.reset();
+      this.hidden = !this.hidden;
+    },
+    err: (err: any) => {
+      console.log(err);
+      
+      this.toastr.warning('Something Went wrong!!');
+    },
+  };
+  this.loginApi
+    .ResendMail(this.resendForm.value.email, this.resendForm.value.email)
+    .subscribe(inspectionObserver);
 }
 }

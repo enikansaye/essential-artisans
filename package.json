@@ -47,6 +47,7 @@
     "ngx-avatar": "^4.1.0",
     "ngx-bootstrap": "^8.0.0",
     "ngx-echarts": "^8.0.1",
+    "ngx-http-loader": "^2.0.1",
     "ngx-owl-carousel": "^2.0.7",
     "ngx-owl-carousel-o": "^6.0.2",
     "ngx-pagination": "^6.0.1",

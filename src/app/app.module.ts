@@ -101,6 +101,7 @@ import { PopoverModule }
 // import { DatePipe } from './pipes/date.pipe';
 import { SessionRecoveryInterceptor } from 'src/_helpers/SessionRecoveryInterceptor';
 import { PaymentComponent } from './components/payment/payment.component';
+import { NgxHttpLoaderModule } from 'ngx-http-loader';
 
 // import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
 
@@ -190,6 +191,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     MatNativeDateModule,
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
+    NgxHttpLoaderModule.forRoot(),
+
 
     // MatDialogModule,
     // MatDividerModule,

@@ -6042,6 +6042,13 @@
   dependencies:
     "tslib" "^2.3.0"
 
+"ngx-http-loader@^2.0.1":
+  "integrity" "sha512-NCZ/210OGcbrCwANm4EXPDBmGk3ZqwJQ1rzM5duH2SGE8Fp/D3h0ZsSlPpYN6nEPuvqLlRfpawVnmGhWBOKsJQ=="
+  "resolved" "https://registry.npmjs.org/ngx-http-loader/-/ngx-http-loader-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "tslib" "^2.3.0"
+
 "ngx-owl-carousel-o@^6.0.2":
   "integrity" "sha512-pB9RwWw/WMe2RojHCYc/a55ETy63tDD5g41DficofjL9c0g4Ht6oN9SD7HFlhhDKOIKcXcJXOZQHihAdbiazpw=="
   "resolved" "https://registry.npmjs.org/ngx-owl-carousel-o/-/ngx-owl-carousel-o-6.0.2.tgz"

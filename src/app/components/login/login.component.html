@@ -77,17 +77,27 @@
                 >
                  {{ errorMessage }}
                 </span>
-                  <div class="form-group pt-1 mb-4">
+                  <div class="form-group pt-1 mb-4 ">
                     <button
-                      class="btn btn-dark btn-lg btn-block cursor"
+                      class="btn btn-dark btn-lg btn-block cursor "
                       type="submit"
                       [disabled]="signinForm.invalid"
                     >
                       Login
                     </button>
+
+                  
                   </div>
 
                   <a class="small text-muted" href="/forgetpassword">Forgot password?</a>
+                  <form [formGroup]="resendForm"  class="d-flex my-2" >
+                    <input type="text" class="mx-2" *ngIf="hidden" formControlName="email">
+                  
+                    <div class="me-2 cursor" style="color: #3111c0" *ngIf="!hidden" (click)="sendLink()" >Resend Confirmation Mail</div>
+                    <button class="btn btn-danger me-2" *ngIf="hidden" (click)="sendLink()">Cancel</button>
+                    <button class="btn btn-info me-2" *ngIf="hidden" (click)="resendConfirmationMail(this.resendForm.value)" >Send Mail</button>
+                  
+                  </form> 
                   <p class="mb-5 pb-lg-2 cursor" style="color: #3111c0" routerLink="/register">
                     Don't have an account? Register here
                   </p>

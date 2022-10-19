@@ -76,17 +76,21 @@ logoutUser(){
     }
 
   haveaccess(token:any){
-    console.log(token);
-    this.tokencheck =token
+    // console.log(token);
+    if(token != null){
+      this.tokencheck =token
     
-    let _token =token.split('.')[1];
-    this.tokenresp = JSON.parse(atob(_token))
-    console.log(this.tokenresp.role);
-    console.log(this.tokenresp);
-    localStorage.setItem('expiration', this.tokenresp.exp);
+      let _token =token.split('.')[1];
+      this.tokenresp = JSON.parse(atob(_token))
+      // console.log(this.tokenresp.role);
+      // console.log(this.tokenresp);
+      localStorage.setItem('expiration', this.tokenresp.exp);
+      return this.tokenresp.role
 
+  
+    }
+ return null
     
-    return this.tokenresp.role
   }
 
 
@@ -106,5 +110,8 @@ logoutUser(){
         this.SaveTokens(res.headers.get('accesstoken'));
       })
     )
+  }
+  ResendMail(data:any, value:any){
+    return this.http.get(this.api.baseUrl + '/api/Auth/resend/' +  data, value)
   }
 }
