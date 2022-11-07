@@ -71,7 +71,7 @@ export class AllartisanComponent implements OnInit {
   countries: any;
   state2: any;
   city2: any;
-
+  searchText:any
   myFiles: string[] = [];
   issue!: string;
 
@@ -89,7 +89,8 @@ export class AllartisanComponent implements OnInit {
     private login: LoginService,
     private modalService: BsModalService,
     private toastr: ToastrService,
-    private data: UserService
+    private data: UserService,
+    
   ) {
     this.formValue = this.formBuilder.group({
       id: this.login.loggedinUser.id,
@@ -111,13 +112,13 @@ export class AllartisanComponent implements OnInit {
   }
   text: any;
 
-  getArtisan(name: any) {
-    this.api.getArtisanByService(name).subscribe((res: any) => {});
-  }
+  
 
   ngOnInit(): void {
     this.getState();
-
+    // this.data.sendClickEvent(this.text)
+    
+// this.getArtisan(this.text)
     this.update();
 
     this.search = this.formBuilder.group({
@@ -159,22 +160,22 @@ export class AllartisanComponent implements OnInit {
     this.formValue.controls['ArtisanId'].setValue(row.id);
   }
 
-  submitCheck(data: any) {
-    const formData = new FormData();
+  // submitCheck(data: any) {
+  //   const formData = new FormData();
 
-    for (var i = 0; i < this.myFiles.length; i++) {
-      formData.append('file[]', this.myFiles[i]);
-    }
+  //   for (var i = 0; i < this.myFiles.length; i++) {
+  //     formData.append('file[]', this.myFiles[i]);
+  //   }
 
-    this.http
-      .post(
-        this.api.baseUrl + '/api/Customer/ServiceOrder/create',
-        this.formValue.value
-      )
-      .subscribe((res) => {
-        alert('Uploaded Successfully.');
-      });
-  }
+  //   this.http
+  //     .post(
+  //       this.api.baseUrl + '/api/Customer/ServiceOrder/create',
+  //       this.formValue.value
+  //     )
+  //     .subscribe((res) => {
+  //       alert('Uploaded Successfully.');
+  //     });
+  // }
   selectedFile: File | any = null;
   onSelectedFile(e: any) {
     this.selectedFile = e.target.files[0];
@@ -237,6 +238,7 @@ export class AllartisanComponent implements OnInit {
   // get all available artisans
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
+      
       this.artisanData = res;
       this.totalRecord = res.length;
     });
@@ -276,23 +278,27 @@ export class AllartisanComponent implements OnInit {
   }
 
   hope!: any;
-  Search() {
+  Search(event: any) {
     if (this.location == '') {
-      this.getAllArtisan();
-    } else {
+      this.update()
+        } else {
       this.artisanData = this.artisanData.filter((res: any) => {
         return res.location
           .toLocaleLowerCase()
-          .match(this.location.toLocaleLowerCase());
+          .match(this.value.toLocaleLowerCase());
       });
     }
     return this.hope;
   }
 
+
+
   update() {
     this.artisanData = this.data.getClickEvent().subscribe((data: any) => {
+      
       if (data != '') {
         this.api.getArtisanByService(data).subscribe((res: any) => {
+          
           this.artisanData = res;
         });
       }
@@ -318,4 +324,5 @@ export class AllartisanComponent implements OnInit {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
   }
+  
 }

@@ -50,11 +50,10 @@ export class AuthInterceptor implements HttpInterceptor {
     // call next() and handle the response
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        // console.log(error);
+        // console.log(error.status);
+
 
         if (error.status === 401) {
-          // 401 error so we are unauthorized
-
           // refresh the access token
           return this.refreshAccessToken()
             .pipe(
@@ -64,6 +63,7 @@ export class AuthInterceptor implements HttpInterceptor {
               }),
               catchError((err: any) => {
                 // console.log(err);
+                // alert('Your Token Expired, please Login');
                 this.loginApi.logout();
                 return empty();
               })
@@ -118,7 +118,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 AddTokenheader(request: HttpRequest<any>) {
   const token = this.loginApi.getToken();
-  console.log(token);
+  // console.log(token);
   
 
   if(token){

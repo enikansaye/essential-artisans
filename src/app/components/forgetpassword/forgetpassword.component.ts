@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'ngx-alerts';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class ForgetpasswordComponent implements OnInit {
   hide= true;
   // email =strings =""
 Form !: FormGroup;
+  message: any;
 
   reset(){
 
@@ -23,6 +24,8 @@ Form !: FormGroup;
     private http: HttpClient,
     private router: Router,
     private api: ApiService,
+    private toastr: ToastrService,
+
     ) { }
 
   ngOnInit(): void {
@@ -36,12 +39,15 @@ Form !: FormGroup;
     const forgetPasswordObserver = {
       next: (res:any) => {
        
-   
-        // this.router.navigate(['/dashboard']);
+        this.toastr.success('Kindly check your mail');
+
+        this.router.navigate(['/checkemail']);
+
       },
       error: (err:any) => {
+        this.message =err.error
      
-        // this.alertService.danger('Unable to send email');
+        this.toastr.warning('Unable to send email');
       }
     };
     this.api.forgetPassword(this.Form.value).subscribe(forgetPasswordObserver);

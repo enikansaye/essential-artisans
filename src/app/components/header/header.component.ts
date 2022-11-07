@@ -5,7 +5,7 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { LoginService } from 'src/app/service/login.service';
 import { Emitters } from 'src/emitters/emitters';
-import { userProfileModel } from '../userprofile/userprofile.model';
+import { userProfileModel } from '../customer/userprofile/userprofile.model';
 // import { MenuItem } from './menu-item';
 
 @Component({

@@ -6,15 +6,18 @@
       <div class="container-fluid w-100">
         <div class="5">Available Artisans within your Selected Category</div>
 
-
-     
+        <!-- <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
+        </div> -->
+        <div class="col-6 my-2">
+          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for Artisans within your location">
+        </div>
        
         <div class="row mt-4 cursor">
           <div
             class="col-md-4"
             (click)="openModal(template)"
             *ngFor="
-              let data of artisanData
+              let data of artisanData | filter : searchText
                 | paginate
                   : {
                       id: 'listing_pagination',
@@ -63,8 +66,8 @@
           </div>
         </div>
 
-        <div *ngIf="artisanData?.length == 0">
-          no artisan within you
+        <div *ngIf="!artisanData" class=" w-100  h-100 d-flex align-center justify-content-center">
+          No Artisan Within Your Location
         </div>
       </div>
     </div>
@@ -169,6 +172,9 @@
           [(ngModel)]="value"
           #input
           (change)="onChange(input.value)"
+          placeholder="
+          dd/mm/yyyy, --:--
+          "
         />
         <br>
        <div class="my-2">

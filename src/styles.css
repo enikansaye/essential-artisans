@@ -5,8 +5,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 /*@import url(c:\Users\USER\Desktop\artisan-app-fe\node_modules\alertifyjs\build\css\alertify.min.css); */
-@import url(/Users/lyticaltechnology/Desktop/artisan-app-fe/node_modules/alertifyjs/build/css/alertify.min.css);
-@import url(/Users/lyticaltechnology/Desktop/artisan-app-fe/node_modules/alertifyjs/build/css/themes/bootstrap.min.css);
+/* @import url(/Users/lyticaltechnology/Desktop/artisan-app-fe/node_modules/alertifyjs/build/css/alertify.min.css); */
+/* @import url(/Users/lyticaltechnology/Desktop/artisan-app-fe/node_modules/alertifyjs/build/css/themes/bootstrap.min.css); */
 /*@import url(c:\Users\USER\Desktop\artisan-app-fe\node_modules\alertifyjs\build\css\themes\bootstrap.min.css); */
 :root {
   --bs-blue: #0d6efd;
@@ -100,10 +100,12 @@ input.star:checked ~label.star:before{
 
 }
 label.star:before{
-  font-size: 1rem;
+  font-size: 1.5rem;
+  text-shadow:none;
 }
 div.stars{
   width: auto !important;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {

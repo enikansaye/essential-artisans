@@ -19,6 +19,7 @@ checkArtisan:any
 
       
       this.checkData =res
+      
       this.subject.next(text);
     })
     

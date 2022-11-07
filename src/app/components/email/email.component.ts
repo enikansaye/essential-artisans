@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
-import { AlertService } from 'ngx-alerts';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
@@ -18,7 +18,8 @@ export class EmailComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private toastr: ToastrService,
+
   ) // private progressbar: ProgressbarService
   {}
 
@@ -30,14 +31,14 @@ export class EmailComponent implements OnInit {
   getEmailData() {
     this.api.confirmEmail(this.urlParams).subscribe(
       () => {
-        this.alertService.success('Email Confirmed');
+        this.toastr.success('Email Confirmed');
 
         this.emailConfirmed = true;
         this.router.navigate(['/signin']);
       },
       (error) => {
 
-        this.alertService.danger('unable to confirm email');
+        this.toastr.warning('unable to confirm email');
 
         this.emailConfirmed = false;
       }

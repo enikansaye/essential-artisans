@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "EssentialArtisans": {
+    "joyhouse": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/EssentialArtisans",
+            "outputPath": "dist/joyhouse",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -33,7 +33,8 @@
                 "glob":"_redirect",
                 "input":"src",
                 "output": "/"
-              }
+              },
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "node_modules/ngx-toastr/toastr.css",
@@ -83,10 +84,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "EssentialArtisans:build:production"
+              "browserTarget": "joyhouse:build:production"
             },
             "development": {
-              "browserTarget": "EssentialArtisans:build:development"
+              "browserTarget": "joyhouse:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +95,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "EssentialArtisans:build"
+            "browserTarget": "joyhouse:build"
 
           }
         },
@@ -108,6 +109,7 @@
             "assets": [
               "src/favicon.png",
               "src/assets",
+              "src/manifest.webmanifest",
               "src/manifest.webmanifest"
             ],
             "styles": [
@@ -130,5 +132,5 @@
       }
     }
   },
-  "defaultProject": "EssentialArtisans"
+  "defaultProject": "joyhouse"
 }

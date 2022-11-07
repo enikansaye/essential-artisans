@@ -1,0 +1,114 @@
+
+ <section class="w-100" style="background-color: #f4f4f8">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                alt="login form"
+                class="img-fluid h-100"
+                style="border-radius: 1rem 0 0 1rem"
+              />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form [formGroup]="signinForm" (ngSubmit)="login()">
+                  <div class="d-flex align-items-center mb-3 pb-3">
+                   <img src="/assets/images/logos.png" class="w-50" alt="">
+                  </div>
+
+                  <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
+                    Sign in to your account
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="email"
+                      id=""
+                      formControlName="email"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signinFormControl['email'].touched || submitted) && signinFormControl['email'].errors?.['required']"
+                    >
+                      Email is required
+                    </span>
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="signinFormControl['email'].touched && signinFormControl['email'].errors?.['email']"
+                    >
+                      Enter a valid email address
+                    </span>
+
+                    <div class="form-label" >Email</div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <!-- <mat-label>Enter your password</mat-label> -->
+                      <input matInput [type]="hide ? 'password' : 'text'" class="ps-1 fs-5" 
+                    
+                      formControlName="password"
+                     >
+                      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                    </mat-form-field>
+                    <span
+                    style="color: #dc3545;"
+                    *ngIf="(signinFormControl['password'].touched || submitted) && signinFormControl['password'].errors?.['required']"
+                  >
+                    Password is required
+                  </span>
+
+                    <div class="form-label mt-1" for="form2Example27"
+                      >Password</div
+                    >
+                  </div>
+                  <span
+                  class="text-danger h3" role="alert"
+                  *ngIf="signinForm.valid || submitted"
+                  
+                >
+                 {{ errorMessage }}
+                </span>
+                  <div class="form-group pt-1 mb-4 ">
+                    <button
+                      class="btn btn-dark btn-lg btn-block cursor "
+                      type="submit"
+                      [disabled]="signinForm.invalid"
+                    >
+                      Login
+                    </button>
+
+                  
+                  </div>
+
+                  <a class="small text-muted" routerLink="/forgetpassword">Forgot password?</a>
+                  <form [formGroup]="resendForm"  class="d-flex my-2" >
+                    <input type="text" class="mx-2" *ngIf="hidden" formControlName="email">
+                  
+                    <div class="me-2 cursor" style="color: #3111c0" *ngIf="!hidden" (click)="sendLink()" >Resend Confirmation Mail</div>
+                    <button class="btn btn-danger me-2" *ngIf="hidden" (click)="sendLink()">Cancel</button>
+                    <button class="btn btn-info me-2" *ngIf="hidden" (click)="resendConfirmationMail(this.resendForm.value)" >Send Mail</button>
+                  
+                  </form> 
+                  <p class="mb-5 pb-lg-2 cursor" style="color: #3111c0" routerLink="/register">
+                    Don't have an account? Register here
+                  </p>
+                  <!-- <a href="#!" class="small text-muted">Terms of use.</a> -->
+                  <a routerLink="/ourpolicy" class="small text-muted">Privacy policy</a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

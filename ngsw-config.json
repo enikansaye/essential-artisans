@@ -7,13 +7,11 @@
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/favicon.png",
+          "/favicon.ico",
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
-          "/*.js",
-          "/assets/offline/offline2.png"
-
+          "/*.js"
         ]
       }
     },

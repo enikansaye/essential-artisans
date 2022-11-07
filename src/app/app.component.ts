@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit , TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { userProfileModel } from './components/userprofile/userprofile.model';
+import { userProfileModel } from './components/customer/userprofile/userprofile.model';
 import { ApiService } from './service/api.service';
 import { EventBusService } from './service/event-bus.service';
 import { LoaderService } from './service/loader.service';
@@ -38,14 +38,10 @@ spinkit: any;
 
   onNetwortStatusChange(){
     this.offline = !navigator.onLine;
-    // this.isOnline = window.navigator.onLine;
-    // console.info(`isOnline=[${this.isOnline}]`);
+
   }
 
-  // private updateOnlineStatus(): void {
-  //   this.isOnline = window.navigator.onLine;
-  //   console.info(`isOnline=[${this.isOnline}]`);
-  // }
+
  
   userProfileModelObj: userProfileModel = new userProfileModel();
   loggedinUser1: any;
@@ -98,7 +94,7 @@ spinkit: any;
     
   
 // service worker 
-    // this.onNetwortStatusChange();
+    this.onNetwortStatusChange();
     window.addEventListener('online', this.onNetwortStatusChange.bind(this));
     window.addEventListener('offline', this.onNetwortStatusChange.bind(this));
 
@@ -111,7 +107,7 @@ spinkit: any;
       this.swUpdate.versionUpdates.pipe(
         filter((evt: any): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
         map((evt: any) => {
-          console.info(`currentVersion=[${evt.currentVersion} | latestVersion=[${evt.latestVersion}]`);
+          // console.info(`currentVersion=[${evt.currentVersion} | latestVersion=[${evt.latestVersion}]`);
           this.modalVersion = true;
         }),
       );

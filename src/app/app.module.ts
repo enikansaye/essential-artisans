@@ -22,7 +22,6 @@ import { NgxEchartsModule } from 'ngx-echarts';
 // import { AlertModule } from 'ngx-alerts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { NetworkInterceptor } from './loader/network.interceptor';
 import {MatMenuModule} from '@angular/material/menu';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatSnackBarModule} from  '@angular/material/snack-bar'
@@ -34,21 +33,18 @@ import {MatSnackBarModule} from  '@angular/material/snack-bar'
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
 
-import { FooterComponent } from './components/footer/footer.component';
-import { AboutusComponent } from './components/aboutus/aboutus.component';
-import { PrivacyComponent } from './components/privacy/privacy.component';
+import { FooterComponent } from './components/common/footer/footer.component';
+// import { AboutusComponent } from './components/aboutus/aboutus.component';
+import { PrivacyComponent } from './components/common/privacy/privacy.component';
 import { ZippyComponent } from './components/zippy/zippy.component';
-import { ContactusComponent } from './components/contactus/contactus.component';
-import { PolicyComponent } from './components/policy/policy.component';
-import { PlumbingComponent } from './components/plumbing/plumbing.component';
-import { ElectricianComponent } from './components/electrician/electrician.component';
-import { AcrepairComponent } from './components/acrepair/acrepair.component';
-import { CapentaryComponent } from './components/capentary/capentary.component';
+import { ContactusComponent } from './components/common/contactus/contactus.component';
+import { PolicyComponent } from './components/common/policy/policy.component';
 
-import { RegisterComponent } from './components/register/register.component';
+
+import { RegisterComponent } from './components/auth/register/register.component';
 import {
   ErrorStateMatcher,
   MatNativeDateModule,
@@ -57,19 +53,18 @@ import {
 
 import { ForgetpasswordComponent } from './components/forgetpassword/forgetpassword.component';
 import { EmailComponent } from './components/email/email.component';
-import { UserprofileComponent } from './components/userprofile/userprofile.component';
+import { UserprofileComponent } from './components/customer/userprofile/userprofile.component';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { ArtisanprofileComponent } from './components/artisanprofile/artisanprofile.component';
+import { ArtisanprofileComponent } from './components/artisans/artisanprofile/artisanprofile.component';
 
-import { AdminpageComponent } from './components/adminpage/adminpage.component';
-import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
-import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { AdminpageComponent } from './components/admin/adminpage/adminpage.component';
+import { PagenotfoundComponent } from './components/common/pagenotfound/pagenotfound.component';
+import { ForbiddenComponent } from './components/common/forbidden/forbidden.component';
 import { AllartisanComponent } from './components/allartisan/allartisan.component';
-import { AlltransactionsComponent } from './components/alltransactions/alltransactions.component';
-import { SignuprouteComponent } from './components/signuproute/signuproute.component';
-import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { AlltransactionsComponent } from './components/admin/alltransactions/alltransactions.component';
+import { SignuprouteComponent } from './components/auth/signuproute/signuproute.component';
 import { OfflineComponent } from './components/offline/offline.component';
 // import { authInterceptorProviders } from '../_helpers/auth.interceptor';
 
@@ -80,14 +75,14 @@ import { RoleGuard } from './shared/role.guard';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { ArtisanbyidComponent } from './components/artisanbyid/artisanbyid.component';
-import { ServicecategoryComponent } from './components/servicecategory/servicecategory.component';
+import { ServicecategoryComponent } from './components/admin/servicecategory/servicecategory.component';
 import { AdminartisanbyidComponent } from './components/adminartisanbyid/adminartisanbyid.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ToastrModule } from 'ngx-toastr';
 import { AvatarModule } from 'ngx-avatar';
 import { EmptycartComponent } from './components/emptycart/emptycart.component';
-import { HelpComponent } from './components/help/help.component';
-import { ArtisantransactionsComponent } from './components/artisantransactions/artisantransactions.component';
+import { HelpComponent } from './components/common/help/help.component';
+import { ArtisantransactionsComponent } from './components/artisans/artisantransactions/artisantransactions.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import {MatListModule} from '@angular/material/list'
@@ -99,9 +94,12 @@ import { PopoverModule }
     import { TooltipModule  } from 'ngx-bootstrap/tooltip';
 
 // import { DatePipe } from './pipes/date.pipe';
-import { SessionRecoveryInterceptor } from 'src/_helpers/SessionRecoveryInterceptor';
-import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentComponent } from './components/customer/payment/payment.component';
 import { NgxHttpLoaderModule } from 'ngx-http-loader';
+import { AboutusComponent } from './components/common/aboutus/aboutus.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ResetpasswordComponent } from './components/auth/resetpassword/resetpassword.component';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 // import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
 
@@ -123,10 +121,7 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
     ZippyComponent,
     ContactusComponent,
     PolicyComponent,
-    PlumbingComponent,
-    ElectricianComponent,
-    AcrepairComponent,
-    CapentaryComponent,
+   
     OfflineComponent,
 
     RegisterComponent,
@@ -143,7 +138,8 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
     AlltransactionsComponent,
     SignuprouteComponent,
     ResetpasswordComponent,
-    FilterPipe,
+    
+    // FilterPipe,
     SortPipe,
     ArtisanbyidComponent,
     ServicecategoryComponent,
@@ -172,6 +168,8 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
     MatButtonModule,
     MatSidenavModule,
     MatToolbarModule,
+    Ng2SearchPipeModule,
+
     HighchartsChartModule,
     ChartModule,
     MatPaginatorModule,
@@ -208,7 +206,6 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
       echarts: () => import('echarts'),
     }),
     
-    // AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right' }),
 
     RouterModule.forRoot(
       [
@@ -229,10 +226,7 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
         { path: 'contactus', component: ContactusComponent },
         { path: 'ourpolicy', component: PolicyComponent },
         {path: "service" , component: ServicecategoryComponent },
-        { path: 'electrician', component: ElectricianComponent },
-        { path: 'plumbing', component: PlumbingComponent },
-        { path: 'carpentry', component: CapentaryComponent },
-        { path: 'acrepair', component: AcrepairComponent },
+        
         { path: 'register', component: RegisterComponent },
         { path: 'empty', component: EmptycartComponent },
         { path: 'helpcenter', component: HelpComponent },
@@ -252,6 +246,7 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
         { path: 'confirmemail', component: EmailComponent },
         { path: 'checkemail', component: SignuprouteComponent },
         { path: 'passwordreset', component: ResetpasswordComponent },
+        // { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
         { path: 'term of service', component: PrivacyComponent },
         { path: 'payment', component: PaymentComponent },
@@ -264,30 +259,30 @@ import { NgxHttpLoaderModule } from 'ngx-http-loader';
       { scrollPositionRestoration: 'enabled' }
     ),
       AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
     // ServiceWorkerModule.register('ngsw-worker.js', {
     //   enabled: environment.production,
-    //   // Register the ServiceWorker as soon as the application is stable
+    //   // Register the ServiceWorker as soon as the app is stable
     //   // or after 30 seconds (whichever comes first).
     //   registrationStrategy: 'registerWhenStable:30000'
-    // })
+    // }),
+  //   ServiceWorkerModule.register("ngsw-worker.js", {
+  //     enabled: environment.production,
+  //     registrationStrategy: "registerImmediately"
+  // }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
+
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthTokenInterceptors,
-    //   multi: true
-    // },
+    {provide: LocationStrategy, useClass:PathLocationStrategy},
+
     { provide: HTTP_INTERCEPTORS,  useClass: AuthInterceptor, multi:true },
-    // { provide: HTTP_INTERCEPTORS,  useClass: SessionRecoveryInterceptor, multi:true },
-    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
-    // authInterceptorProviders
-    // , useClass: ShowOnDirtyErrorStateMatcher
+    
+    
   ],
  
   bootstrap: [AppComponent],

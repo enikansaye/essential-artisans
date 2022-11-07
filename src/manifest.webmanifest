@@ -1,7 +1,9 @@
 {
-  "name": "EssentialArtisans",
-  "short_name": "EssentialArtisans",
+  "name": "Essential Artisans",
+  "short_name": "Essential Artisans",
   "theme_color": "#1976d2",
+  "description": "Essential Artisans",
+
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

@@ -120,62 +120,7 @@ export class ApiService implements OnInit {
 
   
 
-  // picture upload
-  // upload(file: File): Observable<HttpEvent<any>> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('file', file);
-
-  //   const req = new HttpRequest(
-  //     'POST',
-  //     this.baseUrl + '/api/Artisan/upload-profile-image',
-  //     formData,
-  //     {
-  //       reportProgress: true,
-  //       responseType: 'json',
-  //     }
-  //   );
-
-  //   return this.http.request(req);
-  // }
-
-  // upload3(file: File): Observable<HttpEvent<any>> {
-  //   const formData: FormData = new FormData();
-
-  //   formData.append('file', file);
-
-  //   const req = new HttpRequest('POST', `${this.baseUrl}/api/Customer/ServiceOrder/create`, formData, {
-  //     reportProgress: true,
-  //     responseType: 'json'
-  //   });
-
-  //   return this.http.request(req);
-  // }
-
-  // onUpload(files: any): void{
-
-  //   let fileToUpload = <File>files[0];
-  //   const formData = new FormData();
-  //   formData.append('file', fileToUpload, fileToUpload.name);
-
-  //   this.http.post( this.baseUrl+ '/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
-  // }
-
-  // uploadIssue(file: File): Observable<HttpEvent<any>> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('file', file);
-
-  //   const req = new HttpRequest(
-  //     'POST',
-  //     this.baseUrl + '/api/Customer/ServiceOrder/upload',
-  //     formData,
-  //     {
-  //       reportProgress: true,
-  //       responseType: 'json',
-  //     }
-  //   );
-
-  //   return this.http.request(req);
-  // }
+ 
 
   updateUser(userInfo: any) {
     return this.http.put(

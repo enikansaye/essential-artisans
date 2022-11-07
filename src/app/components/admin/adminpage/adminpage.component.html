@@ -1,0 +1,1092 @@
+<mat-sidenav-container class="">
+    <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3  mt-5 pt-5 ">
+        <mat-toolbar class="w-100 d-flex justify-content-end">
+          <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
+                   
+            <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'over'" class="d-flex justify-content-end">close</mat-icon>
+      
+          <!-- </button> -->
+        </mat-toolbar>
+        <div class="w-100 d-flex flex-column text-center">
+          <img src="assets/images/mayor.jpg" class="image image-fluid mx-auto ">
+        <h4 class="mt-2 mt-md-4">ENIKANSAYE MAYOWA</h4>
+        <h4>Software Developer</h4>
+        </div>
+    
+        <!-- Navbar nav -->
+        <ul class="navbar-nav flex-column mx-5 px-3 ">
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page1'"
+              toggle
+              (click)="expression = 'page1' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+              <i class="nav-icon bi bi-house-door me-2"></i> DASHBOARD
+            </a>
+          </li>
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page9'"
+              toggle
+              (click)="expression = 'page9' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; getAllArtisan()"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+            <i class="fa-solid fa-user"></i> ARTISANS
+            </a>
+          </li>
+          <!-- <li
+            class="nav-item cursor align-text-center"  style="width: 200px;" 
+            [class.active]="expression == 'page2'"
+            toggle
+            (click)="expression = 'page2'"
+          >
+            <a
+              class="nav-link p-3"
+              data-bs-toggle="collapse"
+              data-bs-target="#navCourses"
+              aria-expanded="false"
+              aria-controls="navCourses"
+            >
+              <i class="nav-icon bi bi-book me-2"></i> Artisans
+            </a>
+          </li> -->
+          <!-- Nav item -->
+          <!-- <li class="nav-item cursor"  >
+            <a
+              class="nav-link collapsed text-dark"
+              [class.active]="expression == 'page3'"
+              toggle
+              (click)="expression = 'page3'"
+              
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> User
+            </a>
+          </li> -->
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page3'"
+              toggle
+              (click)="expression = 'page3' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; getAllUser()"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+            <i class="fa-solid fa-user"></i> USERS
+            </a>
+          <!-- </li>
+          <li class="nav-item cursor"  >
+            <a
+              class="nav-link collapsed"
+              [class.active]="expression == 'page4'"
+              toggle
+              (click)="expression = 'page4'"
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> 0rders
+            </a>
+          </li> -->
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page4'"
+              toggle
+              (click)="expression = 'page4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+            <i class="fa-solid fa-cart-shopping "></i> ORDERS
+            </a>
+          </li>
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page6'"
+              toggle
+              (click)="expression = 'page6' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; getQouteByAdmin()"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+            <i class="fa-solid fa-list"></i>  QUOTE
+            </a>
+          </li>
+          <!-- <li class="nav-item cursor"  >
+            <a
+              class="nav-link collapsed"
+              [class.active]="expression == 'page5'"
+              toggle
+              (click)="expression = 'page5'"
+            >
+              <i class="nav-icon bi bi-person-lines-fill me-2"></i> Service
+            </a>
+          </li> -->
+
+          <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+            <a
+              class="nav-link p-2 "
+              [class.active]="expression == 'page5'"
+              toggle
+              (click)="expression = 'page5' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+              data-bs-toggle="collapse"
+              data-bs-target="#navDashboard"
+              aria-expanded="false"
+              aria-controls="navDashboard"
+              
+            >
+            <i class="fa-solid fa-gear me-2" ></i>SERVICES
+            </a>
+          </li>
+
+        
+
+        
+        </ul> 
+  
+  </mat-sidenav>
+  <mat-sidenav-content opened>
+   
+
+    <div class="ms-3 mt-5 pt-5" [ngSwitch]="expression">
+      <div>
+        <mat-toolbar class="col-12">
+          <div class="d-lg-none">
+            <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">label_important</mat-icon>
+          </div>
+
+          <nav class="navbar-default navbar w-100 navbar-expand float-right">
+            <a id="nav-toggle" >
+              <i class="bi bi-menu"></i>
+            </a>
+         
+
+            
+            <!--Navbar nav -->
+            <ul
+              class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap"
+            >
+              <li class="dropdown stopevent">
+                <a
+                  class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted position-relative bg-info"
+                
+                  role="button"
+                  id="dropdownNotification"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-bell"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-danger fs-6" >
+                    {{signalRService.notificationCount}}
+                    </span>
+                </a>
+             <div
+                  class=" dropdown-menu dropdown-menu-end notify"
+                  aria-labelledby="dropdownNotification"
+                >
+                  <div class="">
+                    <div
+                      class="border-bottom px-3 pb-3 d-flex justify-content-between align-items-center"
+                    >
+                      <span class="h4 mb-0">Notifications</span>
+                      <a  class="text-muted">
+                        <span class="align-middle">
+                          <i class="bi bi-settings me-1"></i>
+                        </span>
+                      </a>
+                    </div>
+                    <!-- List group -->
+                  <ul
+                    class="list-group list-group-flush notification-list-scroll"
+                  >
+                    <li class="list-group-item bg-light">
+                      <div class="row">
+                        <div class="col">
+                          <a class="text-body" >
+                           
+                              
+                            <div class="ms-3" *ngFor=" let data of signalRService.notificationText; let i= index">
+                              <!-- <h5 class="fw-bold mb-1">Kristin Watson:</h5> -->
+                             <div class="text-wrap"  (click)="onclickNotification(data.notificationId)">
+                              <span class="me-2" >
+                                {{i+1 }}
+                               
+                              </span>
+                            {{data.notificationText }}
+                            <a class="float-right" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            data-bs-title="This top tooltip is themed via CSS variables." (click)="onclickNotification(data.notificationId)"><i class="fa-solid fa-rectangle-xmark"></i></a>
+                              
+                             </div>
+                             
+                            </div>
+                          </a>
+                        </div>
+                       
+                      </div>
+                    </li>
+                 
+                    
+                   
+                  </ul>
+                    
+                  </div>
+                </div>
+              </li>
+              <!-- List -->
+            
+            </ul>
+          </nav>
+
+        </mat-toolbar>
+
+        <div class="container-fluid p-4 " *ngSwitchCase="'page1'">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+              <div
+                class="border-bottom pb-4 mb-4 d-lg-flex justify-content-between align-items-center"
+              >
+                <div class="mb-3 mb-lg-0">
+                  <h1 class="mb-0 h2 fw-bold">Dashboard</h1>
+                </div>
+                <div class="d-flex">
+                 
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row text-light">
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6 justify-content-center">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body col1 rounded justify-content-center">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Total Orders</span
+                      >
+                     
+
+                    </div>
+                    <div>
+                      <span class="bi bi-shopping-bag fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1" *ngIf="order">{{totalLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!order">0</h2>
+
+
+
+                 
+                </div>
+              
+              </div>
+              <!-- popover="Total Service Items : {{totalSales.serviceItemsTotalAmount}}, Total ArtisanCharge:
+              {{totalSales.totalArtisanCharge}} , Total InspectionFee: {{totalSales.totalInspectionFee
+              }}
+              " -->
+             
+
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+              <!-- Card -->
+              <div class="card mb-4 cursor " 
+              popoverTitle="Break Down Of Income" placement="right" >
+                <!-- Card body -->
+                <div class="card-body rounded col2" >
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >Total Income</span
+                      >
+                    </div>
+                    
+                  </div>
+                  <h2 class="fw-bold mb-1" *ngIf="totalSales"> &#8358; {{totalSales.totalAmount}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!totalSales"> &#8358; 0</h2>
+                  
+                </div>
+               
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body col3 rounded">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >CLIENT/USERS</span
+                      >
+                    </div>
+                    <div>
+                      <span class="bi bi-users fs-3 text-primary"></span>
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1" *ngIf="userData "> {{userLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!userData ">0</h2>
+                
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card body -->
+                <div class="card-body col4 rounded">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                  >
+                    <div>
+                      <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
+                      <span class="fs-6 text-uppercase fw-semi-bold"
+                        >artisans</span
+                      >
+                    </div>
+                    <div>
+                      <!-- <span class="bi bi-users fs-3 text-primary"></span> -->
+                    </div>
+                  </div>
+                  <h2 class="fw-bold mb-1" *ngIf="artisanData">{{artisanLength}}</h2>
+                  <h2 class="fw-bold mb-1" *ngIf="!artisanData">0</h2>
+                  
+                </div>
+              </div>
+            </div>
+           
+          </div>
+          <div class="row">
+            <div class="col-xl-8 col-lg-12 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card header -->
+                <div
+                  class="card-header align-items-center card-header-height d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <h4 class="mb-0">Earnings</h4>
+                  </div>
+                  <div>
+                    <div class="dropdown dropstart">
+                      <a
+                        class="text-muted text-decoration-none"
+                        role="button"
+                        id="courseDropdown1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="bi bi-more-vertical"></i>
+                      </a>
+                     
+                    </div>
+                  </div>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                  <!-- Earning chart -->
+                  <div echarts [options]="chartOption"  class="demo-chart" id="chart1"></div>
+                 
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-12">
+              <!-- Card -->
+              <div class="card mb-4">
+                <!-- Card header -->
+                <div
+                  class="card-header align-items-center card-header-height d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <h4 class="mb-0">Traffic</h4>
+                  </div>
+                
+                </div>
+                <!-- Card body -->
+                
+                <div class="card-body">
+                
+                  <div echarts [options]="options"  [theme]="theme" class="demo-chart" id="chart2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4 col3">
+              <!-- Card -->
+              <div class="card h-100">
+                <!-- Card header -->
+                <div
+                  class="card-header d-flex align-items-center justify-content-between card-header-height"
+                >
+                  <h4 class="mb-0">All Artisans</h4>
+                  <div  [class.active]="expression == 'page2'"
+                  toggle
+                  (click)="expression = 'page2'" class="btn btn-outline-white btn-sm" >View all</div>
+                  
+                </div>
+                <!-- Card body -->
+                <div class="card-body ">
+                  <!-- List group -->
+                  <ul class="list-group list-group-flush" *ngFor="let data of artisanData">
+                    <li class="list-group-item px-0 pt-0">
+                      <div class="row ">
+                        <div class="col-auto d-flex text-center w-100">
+                        
+                          <div class="d-flex justify-content-between w-100">
+                            <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
+                          <div>
+                           <h4> {{data.firstName}} {{data.lastName}}</h4>
+                           <h4> {{data.profession}}</h4>
+                           <span>{{data.email}}</span>
+
+                          </div>
+                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.location}}</div>
+                          </div>
+                        
+                        </div>
+                      
+                       
+                      </div>
+                      <hr>
+                   
+                    </li>
+                  
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12 col-12 mb-4">
+        
+              <div class="card h-100">
+              
+                <div
+                  class="card-header d-flex align-items-center justify-content-between card-header-height"
+                >
+                  <h4 class="mb-0">Recent User</h4>
+                  <a [class.active]="expression == 'page3'"
+                  toggle
+                  (click)="expression = 'page3'"class="btn btn-outline-white btn-sm">View all</a>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                  <!-- List group flush -->
+                  <ul class="list-group list-group-flush" *ngFor="let data of userData">
+                    <li class="list-group-item px-0 pt-0">
+                      <div class="row ">
+                        <div class="col-auto d-flex text-center w-100">
+                         
+                          <div class="d-flex justify-content-between w-100">
+                            <!-- <h4 class="text-center">Enikansaye mayowa</h4> -->
+                          <div>
+                           <h4> {{data.firstName}} {{data.lastName}}</h4>
+                           <span>{{data.email}}</span>
+
+                          </div>
+                          <div class=""><span><i class="bi bi-geo-alt-fill"></i></span> {{data.address}}</div>
+                          </div>
+                        
+                        </div>
+                      
+                       
+                      </div>
+                      <hr>
+                   
+                    </li>
+                  
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+
+     <!--Artisan section  -->
+      <div class="pt-5" *ngSwitchCase="'page9'" id="no-tables" >
+
+        <div class=" w-100 d-flex align-center justify-content-between">
+
+          <div class="h4 me-2">ARTISANS SECTION</div>
+          <div>
+            <button
+          class="nav-link  btn btn-info text-light float-end mb-3"
+          [class.active]="expression == 'page7'"
+          toggle
+          (click)="expression = 'page7'; getAllPendingArtisan()"
+          
+        >
+          New Artisan
+          
+      </button> 
+          </div>
+          
+        </div>
+        <div>
+          <div class="col-6 my-2">
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for Artisans within your location">
+          </div>
+                  <table class="table table-striped" >
+              <thead>
+                <tr>
+                  <!-- <th >Artisan ID </th> -->
+                  <th >Registered Date</th>
+                  <th >Email Address</th>
+                  <th >Name</th>
+                  <th >Service</th>
+                  <th >Status</th>
+                  <th >Location</th>
+                  <th >Number</th>
+
+                  <th >Action</th>
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of artisanData | filter : searchText">
+                <tr class="align-center justify-content-center" >
+                  <!-- <td data-title="Artisan ID">{{data.id}} </td> -->
+                  <td data-title="Registered Date">{{data.dateRegistered}} </td>
+                  <td data-title="Email Address">{{data.email}}</td>
+                  <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
+                  <td data-title="Service">{{data.profession}} </td>
+                  <td data-title="Status" >{{data.status}}</td>
+                  <!-- <td *ngIf="data.action === 3">Suspended</td> -->
+                  <td data-title="Location">{{data.location}} </td>
+                  <td data-title="Number">{{data.phoneNumber}} </td>
+
+                  <td data-title="Action" >
+                  <button class="btn btn-info me-2" (click)="suspendArtisan(data)">Suspend</button>
+                  <button class="btn btn-success me-2" (click)="approveArtisan(data)">Activate Artisan</button>
+                  <!-- <button class="btn btn-danger" (click)="deleteArtisan(data)">Delete</button> -->
+                </td>
+                  
+             
+                </tr> 
+               
+            
+              
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="artisanPage = $event"></pagination-controls>
+
+        
+
+        </div>
+      </div>
+
+      <!-- user section -->
+      <div class="pt-5" *ngSwitchCase="'page3'" id="no-tables" >
+        <div class="col-6 my-2">
+          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for Artisans within your location">
+        </div>
+       <div class="h4 mb-3"> USERS SECTION</div> 
+        <div>
+           <table class="table">
+              <thead>
+                <tr>
+                  <!-- <th>User ID</th> -->
+                  <th>Registered Date</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Number</th>
+                  <!-- <th scope="col">Status</th> -->
+                  <!-- <th scope="col">Action</th> -->
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of userData | filter : searchText">
+                <tr class="align-center justify-content-center">
+                  <!-- <td data-title="User ID" scope="row">{{data.id}}</td> -->
+                  <td data-title="Registered Date" scope="row">{{data.dateRegistered}}</td>
+                  <td data-title="Email Address" scope="row">{{data.email}}</td>
+                  <td data-title="Name">{{data.firstName}} {{data.lastName}}</td>
+                  <td data-title="Location">{{data.address}}</td>
+                  <!-- <td data-title="Location">{{data.title}}</td> -->
+                  <td data-title="Number">{{data.phoneNumber}}</td>
+                  <!-- <td data-title="Status">Suspended</td> -->
+                  <!-- <td data-title="Action" class="">
+                   
+                    <i class="bi bi-stop-btn-fill text-success me-4 h5"></i>
+                    <i class="bi bi-pencil-square me-4 h5" ></i>
+                    <i class="bi bi-trash text-danger h5"></i>
+                  </td> -->
+                </tr>
+             
+              
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="userPage = $event"></pagination-controls>
+
+        </div>
+      </div>
+
+      <!-- others main section -->
+      <div *ngSwitchCase="'page4'" class="pt-5">
+        
+    <app-alltransactions></app-alltransactions>
+      </div>
+
+     
+      <!-- service categories section -->
+      <div *ngSwitchCase="'page5'" class="pt-5">
+        
+    <app-servicecategory></app-servicecategory>
+      </div>
+
+
+<!-- Quote section -->
+      <div class="pt-5" *ngSwitchCase="'page6'" id="no-tables" >
+        <div>
+          <div class="nav-item cursor btn btn-info float-end mb-3"
+          [class.active]="expression == 'page8'"
+          toggle
+          (click)="expression = 'page8'; getAllPendingQuote()"
+        >
+          <a
+            class="nav-link collapsed "
+            style="color: white;"
+            data-bs-toggle="collapse"
+            data-bs-target="#navCourses"
+            aria-expanded="false"
+            aria-controls="navCourses"
+          >
+            <i class="nav-icon bi bi-book me-2"></i> Pending Qoute
+          </a>
+        </div>
+        
+        <div class="col-6 my-2">
+          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for Artisans within your location">
+        </div>
+           <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">  Invoice ID/Order ID</th>
+                  <th scope="col">  Artisan's Name</th>
+                  <th scope="col">Client Name</th>
+                  <th scope="col">Client Number</th>
+                  <th scope="col">Order Categories</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Total Amount</th>
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of viewQoute |filter: searchText| paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr class="align-center justify-content-center">
+                  <td data-title="Invoice ID/Order ID" scope="row">{{data.invoiceId}}/{{data.serviceOrderUniqueId }}</td>
+                  <td data-title="Artisan's Name" scope="row">{{data.artisanInfo.name}}</td>
+                  <td data-title="Client Name">{{data.customerInfo.name}}</td>
+                  <td data-title="Client Number">{{data.customerInfo.phoneNumber}}</td>
+                  <td data-title="Order Categories">{{data.artisanInfo.profession}}</td>
+                  <td data-title="Location">{{data.serviceOrderAddress}}</td>
+                  <td data-title="Status" *ngIf="data.action === 1">Pending</td>
+                  <td data-title="Status" *ngIf="data.action === 2">Admin Approved</td>
+                  <td data-title="Status" *ngIf="data.action ===4">Customer Canceled</td>
+                  <td data-title="Status" *ngIf="data.action ===5">Payment Confirmed</td>
+                  <td data-title="Status" *ngIf="data.action ===3"> Customer Approved</td>
+                  <td data-title="Total Amount">{{data.invoiceTotal}}</td>
+                  <td>
+                    <button type="button" class="btn btn-info me-2" (click)="openModal(template) ; onClickViewInvoce(data)">
+                      View Quote
+                    </button>
+                    <button class="btn btn-inline-info me-2" (click)="approveQoute(data)" *ngIf="data.action === 1">Approve</button>
+                    <button class="btn btn-success me-2" *ngIf="data.action === 2">Approved</button>
+                    <button class="btn btn-success me-2" (click)="confirmPayment(data)" *ngIf="data.action ===3">Confirm Payment</button>
+                    <button class="btn btn-success me-2"  *ngIf="data.action === 5"> Payment Confirmed</button>
+                  </td>
+                 
+                </tr>
+             
+              
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+      <!-- Pending Quote section -->
+      <div class="pt-5" *ngSwitchCase="'page8'" id="no-tables" >
+        <div>
+
+           <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">  Invoice ID/Order ID</th>
+                  <th scope="col">  Artisan's Name</th>
+                  <th scope="col">Client Name</th>
+                  <th scope="col">Client Number</th>
+                  <th scope="col">Order Categories</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Total Amount</th>
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of viewPendingQoute | paginate: { id: 'listing_pagination',itemsPerPage: 10, currentPage: page, totalItems: totalRecord}">
+                <tr class="align-center justify-content-center">
+                  <td data-title="Invoice ID/Order ID" scope="row">{{data.invoiceId}}/{{data.serviceOrderUniqueId }}</td>
+                  <td data-title="Artisan's Name" scope="row">{{data.artisanInfo.name}}</td>
+                  <td data-title="Client Name">{{data.customerInfo.name}}</td>
+                  <td data-title="Client Number">{{data.customerInfo.phoneNumber}}</td>
+                  <td data-title="Order Categories">{{data.artisanInfo.profession}}</td>
+                  <td data-title="Location">{{data.serviceOrderAddress}}</td>
+                  <td data-title="Status" *ngIf="data.action === 1">Pending</td>
+                  <td data-title="Status" *ngIf="data.action === 2">Admin Approved</td>
+                  <td data-title="Status" *ngIf="data.action ===4">Customer Canceled</td>
+                  <td data-title="Status" *ngIf="data.action ===5">Payment Confirmed</td>
+                  <td data-title="Status" *ngIf="data.action ===3"> Customer Approved</td>
+                  <td data-title="Total Amount">{{data.invoiceTotal}}</td>
+                  <td>
+                    <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="onClickViewInvoce(data)">
+                      View Quote
+                    </button>
+                    <button class="btn btn-inline-info me-2" (click)="approveQoute(data)" *ngIf="data.action === 1">Approve</button>
+                    <!-- <button class="btn btn-success me-2" *ngIf="data.action === 2">Approved</button> -->
+                    <!-- <button class="btn btn-success me-2" (click)="confirmPayment(data)" *ngIf="data.action ===3">Confirm Payment</button> -->
+                    <!-- <button class="btn btn-success me-2"  *ngIf="data.action ===5"> Payment Confirmed</button> -->
+                  </td>
+                 
+                </tr>
+             
+              
+              </tbody>
+            </table>
+            <div class="h3 d-flex h justify-content-center align-items-center text-muted" style="height: 450px" *ngIf="!viewPendingQoute">
+{{quotePendingError}}
+            </div>
+        </div>
+      </div>
+
+
+
+      <!-- pending Artisan Section -->
+      <div class="pt-5 " *ngSwitchCase="'page7'" id="no-tables" >
+        <div class="h-100">
+
+          <table class="table table-striped" *ngIf="pendingArtisans " >
+            <thead>
+              <tr>
+                <th >Artisan ID </th>
+                <th >Email Address</th>
+                <th >Name</th>
+                <th >Service</th>
+                <th >Status</th>
+                <th >Location</th>
+                <th >Number</th>
+
+                <th >Action</th>
+              
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of pendingArtisans">
+              <tr class="align-center justify-content-center" >
+                <td data-title="Artisan ID">{{data.id}} </td>
+                <td data-title="Email Address">{{data.email}}</td>
+                <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
+                <td data-title="Service">{{data.profession}} </td>
+                <!-- <td *ngIf="data.action === 3">Suspended</td> -->
+                <td data-title="Location">{{data.location}} </td>
+                <td data-title="Number">{{data.phoneNumber}} </td>
+
+                <td>
+                  <!-- <button class="btn btn-info me-2">View Artisan</button> -->
+                  <button class="btn btn-info me-2" (click)="approveArtisan(data)">Approve</button>
+                  <!-- <button class="btn btn-inline-info me-2" (click)="suspendArtisan(data)">Suspend</button> -->
+                  <button class="btn btn-danger me-2" (click)="deleteArtisan(data)">Delete</button>
+                </td>
+                
+           
+              </tr> 
+             
+          
+            
+            </tbody>
+          </table>
+
+
+
+
+         
+           <div *ngIf="!pendingArtisans "  >
+            <div class="h1  d-flex align-items-center justify-content-center text-muted" style="height: 500px;">{{artisanErrorMessage}}</div>
+
+           </div>
+       </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!-- Modal  pending-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+       <div></div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>Artisan Details</h4>
+            <h5>Name: <span>{{artisanName}}</span></h5>
+            <h5>Email: <span>{{artisanEmail}}</span></h5>
+            
+          <h5> PhoneNumber: <span>{{artisanPhoneNumber}}</span></h5>
+        <h5> Profession: <span>{{artisanProfession}}</span></h5>
+          </div>
+          <div>
+            <h4>User Details</h4>
+            <h5>Name: <span>{{userName}}</span></h5>
+
+            <h5>Email: <span>{{userEmail}}</span></h5>
+          <h5> PhoneNumber: <span>{{userPhoneNumber}}</span> </h5>
+          <h5> Total Amount: <span>{{allTotal}}</span> </h5>
+ 
+          </div>
+        </div>
+       
+        <div class="card border-secondary mt-2 mb-5">
+          <div class="card-body">
+            <!-- <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4> -->
+  
+  
+            <form action="" #invoiceBody="ngForm">
+              <div *ngFor="let obj of serviceItemsDetails;let i=index">
+            <div class="row" >
+  
+              <div class="col-md-3">
+                <label>Item Name</label>
+                <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
+                  <span *ngIf="name3?.errors?.required">This field is required</span>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <label>Unit Price</label>
+                <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
+                  <span *ngIf="name4?.errors?.required">This field is required</span>
+                </div> -->
+              </div>
+              <div class="col-md-3">
+                <label>Quantity</label>
+                <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+  
+                <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
+                  <span *ngIf="name5?.errors?.required">This field is required</span>
+                </div> -->
+  
+              </div>
+              <div class="col-md-2">
+                <label>Total (&#8358;)</label><br>
+                <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" >
+  
+              </div>
+  
+              <div class="col-md-1" *ngIf="i!=0">
+                <!-- <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button> -->
+              </div>
+  
+  
+  
+             </div>
+  
+            </div>
+  
+            <div class="form-floating mt-2">
+              <textarea class="form-control" 
+               required >{{jobDescription}}</textarea>
+              <!-- <label for="floatingTextarea">Description of Job to be done</label> -->
+            </div>
+            
+
+            <div>
+              <div class="d-flex mt-3">
+                <div class="me-4">Service Charge : <input type="text" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}" disabled></div>
+                <div>Inspection Fee : <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}">  </div>
+              </div>            </div>
+            <div>
+              <!-- <h4>Inspection Fee</h4><input type="text" name="inspectionFee" [(ngModel)]="inspectionFee" #inspectionFee="ngModel" required value="{{artisanCharge}}"> -->
+            </div>
+            </form>
+  
+  
+            </div>
+  
+          </div>
+  
+            <!-- <span class="mt-3">ACCOUNT NAME :{{accountName}}</span><br/>
+            <span>ACCOUNT NUMBER: {{accountNumber}}</span><br/>
+            <span>ACCOUNT NAME: {{bankName}}</span> -->
+
+            <div class="mt-2">
+              <!-- <button class="btn btn-info " (click)="onEditForm()" >Edit</button> -->
+              <button class="btn btn-danger me-2"(click)="onEditForm()" >Cancel</button>
+              <button class="btn btn-info" type="submit"  (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
+    
+    
+            </div>
+
+          <!-- </form> -->
+        
+
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quote section -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">View Quote</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4>Artisan Details</h4>
+        <h5>Name: <span>{{artisanName}}</span></h5>
+        <h5>Email: <span>{{artisanEmail}}</span></h5>
+        
+      <h5> PhoneNumber: <span>{{artisanPhoneNumber}}</span></h5>
+    <h5> Profession: <span>{{artisanProfession}}</span></h5>
+      </div>
+      <div>
+        <h4>User Details</h4>
+        <h5>Name: <span>{{userName}}</span></h5>
+
+        <h5>Email: <span>{{userEmail}}</span></h5>
+      <h5> PhoneNumber: <span>{{userPhoneNumber}}</span> </h5>
+      <h5 > Total Amount: <span class="h6">&#8358; {{allTotal}}</span> </h5>
+
+      </div>
+    </div>
+   
+    <div class="card border-secondary mt-2 mb-5">
+      <div class="card-body">
+        <!-- <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4> -->
+
+
+        <form action="" #invoiceBody="ngForm">
+          <div *ngFor="let obj of serviceItemsDetails;let i=index">
+        <div class="row" >
+
+          <div class="col-md-3">
+            <label>Item Name</label>
+            <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+
+            <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
+              <span *ngIf="name3?.errors?.required">This field is required</span>
+            </div> -->
+          </div>
+          <div class="col-md-3">
+            <label>Unit Price(&#8358;)</label>
+            <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+
+            <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
+              <span *ngIf="name4?.errors?.required">This field is required</span>
+            </div> -->
+          </div>
+          <div class="col-md-3">
+            <label>Quantity</label>
+            <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+
+            <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
+              <span *ngIf="name5?.errors?.required">This field is required</span>
+            </div> -->
+
+          </div>
+          <div class="col-md-2">
+            <label>Total (&#8358;)</label><br>
+            <input type="number" class="form-control" name="total{{i}}" [(ngModel)]="obj.total" [ngModel]="updateTotalInItemsArray(obj)" disabled >
+
+          </div>
+
+          <div class="col-md-1" *ngIf="i!=0">
+          </div>
+
+
+
+         </div>
+
+        </div>
+        <div class="d-flex mt-3">
+          <div class="me-1">Service Charge :<br> <input type="text" name="artisanCharge" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}"></div>
+          <div class="me-1">Inspection Fee :<br> <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}" disabled>  </div>
+          <div>Discount : <br> <input type="text" placeholder="% of Total Amount" [(ngModel)]="discountPercentage" [ngModelOptions]="{standalone: true}" ><span class="ms-2"> &#8358; {{ discountedPrice}}</span> </div>
+        </div>
+
+        <div class="form-floating mt-2">
+          <textarea class="form-control" 
+           required >{{jobDescription}}</textarea>
+        </div>
+
+        <div>
+        </div>
+        </form>
+
+
+        </div>
+
+      </div>
+
+        <div class="mt-2">
+          <button class="btn btn-danger me-2" (click)="modalRef?.hide()">Cancel</button>
+          <button class="btn btn-info" type="submit" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
+
+
+        </div>
+        {{message}}
+
+    
+
+
+  </div>
+  
+</ng-template>

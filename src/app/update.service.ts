@@ -10,7 +10,6 @@ import { SwUpdate } from "@angular/service-worker";
 export class UpdateService{
 constructor(private SwUpdate: SwUpdate, private snackbar : MatSnackBar){
     if(!SwUpdate.isEnabled){
-        console.log('Service worker is not enabled');
         
     }
 }

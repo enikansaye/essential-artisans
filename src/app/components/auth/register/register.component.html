@@ -1,0 +1,253 @@
+
+<section class="w-100 d-flex justify-content-center align-items-center" style="background-color: #f4f4f8;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-6">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row ">
+           
+            <div class="col-md-12 col-lg-12 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
+                <form  [formGroup]="signupForm" (ngSubmit)="onSubmit(this.signupForm.value)">
+
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <img class="w-50" src="/assets/images/logos.png" alt="">
+                  </div>
+
+                  <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
+                    Sign up as a User
+                  </div>
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="firstName"
+                      class="form-control form-control-lg mb-1"
+                    />
+                    <span style="color: #dc3545;"
+                    *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
+                    First Name is required
+                </span>
+                   
+                  <div>  <label class="form-label" for="">First Name</label></div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="lastName"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['lastName'].touched || submitted) && signupFormControl['lastName'].errors?.['required']"
+                    >
+                      LastName is required
+                    </span>
+                    <div class="form-label" for="form2Example27">Last Name</div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="email"
+                      id=""
+                      formControlName="email"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['email'].touched || submitted) && signupFormControl['email'].errors?.['required']"
+                    >
+                      Email is required
+                    </span>
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="signupFormControl['email'].touched && signupFormControl['email'].errors?.['email']"
+                    >
+                      Enter a valid email address
+                    </span>
+                    <div>  <label class="form-label" for="">Email</label></div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="PhoneNumber"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['PhoneNumber'].touched || submitted) && signupFormControl['PhoneNumber'].errors?.['required']"
+                    >
+                      Phone Number is required
+                    </span>
+                    <div>  <label class="form-label" for="">Phone</label></div>
+                  </div>
+
+                  <!-- <div class="form-group form-outline mb-4">
+                   
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="State"
+                      [(ngModel)]="selectedCountry.name"
+                      (change)="onSelect($event.target)"
+                    >
+                      <option selected value="" >select location</option>
+                      <option class="form-control form-control-lg mb-1"
+                        *ngFor="let country of countries"
+                        value="{{ countries.indexOf(country) }}"
+                      >
+                        {{ country.name }}
+                      </option>
+                    </select>
+                   <div> <label for="country" class="form-label">Select State</label></div>
+                  </div>
+
+                  <div class="form-group form-outline mb-4">
+      
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                      formControlName="city"
+                      [(ngModel)]="selectedCountry.cities"
+                    >
+                      <option selected value="">select location</option>
+                      <option *ngFor="let state of states" value="cities">
+                        {{ state }}
+                      </option>
+                    </select>
+                    <label for="country" class="form-label">Select City</label>
+                  </div> -->
+
+                  <div class="form-group input-group-lg form-outline mb-4">
+                    <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+                      <option value="" selected disabled>Select State</option>
+                      <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
+                      
+                    </select>
+                    <div>  <label class="form-label mt-2" for="">State Location</label></div>
+                    </div>
+  
+                    <div class="form-group input-group-lg form-outline mb-4"   >
+                      <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+                        <option selected value="">Select LGA</option>
+                        <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                        
+                      </select>
+                      <div>  <label class="form-label mt-2" for="">LGA Location</label></div>
+                      </div>
+
+                  <div class="form-group form-outline mb-4">
+                    <input
+                      type="text"
+                      id=""
+                      formControlName="address"
+                      class="form-control form-control-lg mb-1"
+                    />
+
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['address'].touched || submitted) && signupFormControl['address'].errors?.['required']"
+                    >
+                      Address is required
+                    </span>
+                   <div> <label for="country" class="form-label">Address</label></div>
+                  </div>
+
+                  <!-- <mat-form-field class="example-full-width" >
+                    
+                    <input
+                      matInput
+                      [type]="hide ? 'password' : 'text'"
+                      type="password"
+                      id="mypassword"
+                      formControlName="password"
+                      name="password"
+                    />
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide"
+                    >
+                      <mat-icon >{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                    </button>
+                    <mat-error
+                      *ngIf="
+                        signupForm.controls['password'].dirty &&
+                        signupForm.hasError('required', 'minLength')
+                      "
+                    >
+                      password cann't be less than four
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.hasError('required')">
+                      password is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field> -->
+
+                  <!-- <div class="form-group form-outline mb-4"> -->
+                    <mat-form-field appearance="outline" class="w-100">
+                      <!-- <mat-label>Enter your password</mat-label> -->
+                      <input matInput [type]="hide ? 'password' : 'text'"  class="ps-1 fs-5"
+                      id="mypassword"
+                      formControlName="password"
+                      name="password">
+                      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </button>
+                    </mat-form-field>
+                    <span
+                    style="color: #dc3545;"
+                    *ngIf="(signupFormControl['password'].touched || submitted) && signupFormControl['password'].errors?.['required']"
+                  >
+                    Password is required
+                  </span>
+                    
+                  <!-- </div> -->
+              
+                
+                
+                  <div for="country" class="form-label">Password</div>
+
+                  <span
+                  class=" h3" role="alert" style="color: #dc3545;"
+                  *ngIf="signupForm.valid || submitted"
+                  
+                >
+                 {{ errorMessage }}
+                </span>
+                  <div class="form-group pt-1 mb-4">
+                    <button
+                      class="btn btn-dark btn-lg btn-block"
+                      type="submit"
+                      
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+
+
+                  
+                  <p class="mb-5 pb-lg-2 cursor" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
+                  <a href="#!" class="small text-muted" routerLink="/ourpolicy">Privacy policy</a>
+                </form>
+                <!-- <button class="btn btn-success btn-lg btn-block" (click)="resendEmail()">Resend Link</button> -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

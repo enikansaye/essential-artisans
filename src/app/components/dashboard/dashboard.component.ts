@@ -72,7 +72,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getArtisan(name: any) {
-    this.api.getArtisanByService(name).subscribe((res: any) => {});
+    this.api.getArtisanByService(name).subscribe((res: any) => {
+    });
   }
   hope3: any;
   onChangeService(event: any) {
