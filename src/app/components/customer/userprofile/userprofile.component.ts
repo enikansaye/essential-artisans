@@ -123,6 +123,8 @@ export class UserprofileComponent implements OnInit {
   hasDiscount: any;
   discount: any;
   searchText:any
+  isEditMode!: boolean;
+  formControls: any;
 
 
   constructor(
@@ -161,6 +163,8 @@ orderId: 0
     });
     this.feeForm.disable()
     this.formValue.disable();
+    this.formControls = this.formValue.controls;
+
 
     this.deleteForm = this.formBuilder.group({
       orderId: 0,
@@ -301,33 +305,7 @@ orderId: 0
   }
 
   
-  // on click to update userprofile
-  onEdit() {
-    this.showUpdate = !this.showUpdate;
-
-    if (this.showUpdate) {
-      this.formValue.enable();
-
-    this.formValue.controls['userId'].setValue(this.login.loggedinUser.id);
-    this.formValue.controls['firstName'].setValue(
-      this.login.loggedinUser.firstName
-    );
-    this.formValue.controls['lastName'].setValue(
-      this.login.loggedinUser.lastName
-    );
-    this.formValue.controls['Address'].setValue(this.login.loggedinUser.address);
-    this.formValue.controls['city'].setValue(this.login.loggedinUser.city);
-    this.formValue.controls['state'].setValue(this.login.loggedinUser.state);
-
-    this.formValue.controls['phoneNumber'].setValue(
-      this.login.loggedinUser.phoneNumber
-    );
-    }else {
-      this.formValue.disable();
-    }
-    // this.showAddEmployee = false;
-    // this.showUpdate = true;
-  }
+  
 
   // updating user profile
   updateUserDetails(row: any) {
@@ -380,8 +358,49 @@ orderId: 0
     this.api.userUpdate(this.formValue).subscribe(updateEmployerObserver);
   }
 
-  toggleEditMode(): void {
-    this.isComplete = !this.isComplete;
+  // toggleEditMode(): void {
+  //   this.isComplete = !this.isComplete;
+  // }
+
+
+
+    // on click to update userprofile
+
+  toggleEditMode(data:any): void {
+    
+    this.isEditMode = !this.isEditMode;
+
+    if (this.isEditMode) {
+      this.formControls['firstName'].enable();
+      this.formControls['lastName'].enable();
+      this.formControls['phoneNumber'].enable();
+      this.formControls['address'].enable();
+      this.formControls['state'].enable();
+      this.formControls['city'].enable();
+      this.formControls['userId'].enable();
+
+      this.formValue.controls['firstName'].setValue(
+        this.userData.firstName
+      );
+      this.formValue.controls['lastName'].setValue(
+        this.userData.lastName
+      );
+    
+      this.formValue.controls['phoneNumber'].setValue(
+        this.userData.phoneNumber
+      );
+      this.formValue.controls['userId'].setValue(this.userData.id);
+      
+      this.formValue.controls['address'].setValue(this.userData.address);
+      
+      
+      this.formValue.controls['state'].setValue(this.userData.state);
+      
+      this.formValue.controls['city'].setValue(this.userData.city);
+      
+    } else {
+      this.formValue.disable();
+    }
   }
 
   onEditOrder(row: any) {
@@ -405,11 +424,12 @@ orderId: 0
     // this.updateOrder.controls['state'].setValue(row.state);
     this.updateOrder.controls['phoneNumber'].setValue(row.phoneNumber);
     this.updateOrder.controls['issue'].setValue(row.issue);
-    this.updateOrder.controls['issue'].setValue(row.inspectionDate);
+    this.updateOrder.controls['inspectionDate'].setValue(row.inspectionDate);
   }
 
   getUser() {
     this.api.getUserinfo().subscribe((res: any) => {
+      
 
       this.userData = res;
     });

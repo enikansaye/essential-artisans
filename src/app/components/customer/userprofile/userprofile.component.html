@@ -160,7 +160,7 @@
 
             <div class="col align-items-end d-flex">
               <div class="col-4 col-md-2 rounded-circle me-3 ">
-                <ngx-avatar size="130" name="{{userData.firstName}} {{userData.lastName}}"></ngx-avatar>
+                <ngx-avatar *ngIf="userData" size="130" name="{{userData.firstName}} {{userData.lastName}}"></ngx-avatar>
                 <!-- <img src="assets/images/avatar1.webp" class=" img-fluid bg-success rounded" /> -->
               </div>
              
@@ -204,8 +204,8 @@
                   </div>
                 </div>
                
-                <div class="form-group form-outline mb-4 d-flex" *ngIf="showUpdate">
-                  <label for="inputtext" class="col-sm-2 col-form-label"
+                <div class="form-group form-outline mb-4 d-flex" *ngIf="isEditMode">
+                  <label for="inputtext" class="col-sm-2 col-form-label me-2"
                   >STATE</label
                 >
                   <select class="form-select " style="width: 32%;" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
@@ -216,12 +216,12 @@
                   </div>
                   
 
-                  <div class="form-group form-outline mb-4 d-flex"  *ngIf="showUpdate" >
-                    <label for="inputtext" class="col-sm-2 col-form-label"
+                  <div class="form-group form-outline mb-4 d-flex"  *ngIf="isEditMode" >
+                    <label for="inputtext" class="col-sm-2 col-form-label me-2"
                     >LGA</label
                   >
                     <select class="form-select" style="width: 32%;" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
-                      <option selected value="">Select Location</option>
+                      <option selected value="">{{userData.city}}</option>
                       <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                       
                     </select>
@@ -260,10 +260,10 @@
             </div>
           </section>
           
-          <button class="btn btn-outline-success mx-1 mb-4 ms-5" *ngIf="!showUpdate" (click)="onEdit()">edit profile</button>
+          <button class="btn btn-outline-success mx-1 mb-4 ms-5" (click)="toggleEditMode(userData)" *ngIf="!isEditMode">edit profile</button>
 
-          <button *ngIf="showUpdate" type="submit"  class="btn btn-outline-info mb-4 mb-4 ms-5 me-2">Update Profile</button>
-          <button *ngIf="showUpdate" (click)="onEdit()" class="btn btn-outline-danger mb-4">Cancel</button>
+          <button  *ngIf="isEditMode" type="submit"  class="btn btn-outline-info mb-4 mb-4 ms-5 me-2">Update Profile</button>
+          <button (click)="toggleEditMode(userData)" *ngIf="isEditMode" class="btn btn-outline-danger mb-4">Cancel</button>
 
           </form>
 
@@ -324,7 +324,7 @@
                     
                 </tr>
                 </thead>
-                <tbody *ngFor="let data of filteredOrderData |filter : searchText | paginate: { itemsPerPage:5, currentPage:p}; ">
+                <tbody *ngFor="let data of filteredOrderData |filter : searchText | paginate: { itemsPerPage:20, currentPage:p}; ">
                   <tr>
                     <td  data-title="Date">{{data.date}}</td>
                     <td data-title="inspection Date">{{data.inspectionDate}}</td>
@@ -354,7 +354,7 @@
                       <button class="btn btn-success me-2" *ngIf="!data.isCancelled && data.action === 4">Completed</button>
                       <button class="btn btn-danger me-2" *ngIf="data.action === 5">Canceled</button>
                       
-                      <button class="btn btn-success me-2" (click)="toggleEditMode()" *ngIf="data.isApproved">Processing</button>
+                      <button class="btn btn-success me-2"  *ngIf="data.isApproved">Processing</button>
                       
 
                       <button type="button" class="btn btn-dark" (click)="openModal(template); onClickRating(data)" *ngIf="data.action === 4 && data.artisanRating == null " >Rate</button>
@@ -433,7 +433,7 @@
                   </tr>
                 </thead>
              
-                <tbody *ngFor="let i=index,let data of filteredQuoteData |filter : searchText | paginate: { itemsPerPage:5, currentPage:page};  ">
+                <tbody *ngFor="let i=index,let data of filteredQuoteData |filter : searchText | paginate: { itemsPerPage:20, currentPage:page};  ">
                   <tr>
                     <td  data-title="Date">{{data.date}}</td>
                     <td  data-title="Invoice ID">{{data.invoiceId}}/{{data.serviceOrderUniqueId}}</td>

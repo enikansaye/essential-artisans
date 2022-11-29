@@ -13,7 +13,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
@@ -79,6 +79,7 @@ export class AllartisanComponent implements OnInit {
   modalRef2?: BsModalRef;
   progressInfos!: [];
   fileInfos!: Observable<any>;
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -94,14 +95,14 @@ export class AllartisanComponent implements OnInit {
   ) {
     this.formValue = this.formBuilder.group({
       id: this.login.loggedinUser.id,
-      Name: [''],
+      Name: ['',Validators.required],
       ArtisanId: 2,
-      PropertyAddress: [''],
-      InspectionDateAndTime: [''],
-      // InspectionTime: [''],
-      PhoneNumber: [''],
-      AlternateNumber: [''],
-      Issue: [''],
+      PropertyAddress: ['',Validators.required],
+      InspectionDateAndTime: ['',Validators.required],
+      // InspectionTime: ['',Validators.required],
+      PhoneNumber: ['',Validators.required],
+      AlternateNumber: ['',Validators.required],
+      Issue: ['',Validators.required],
       profile: [''],
       files: [''],
       Files: [''],
@@ -111,7 +112,9 @@ export class AllartisanComponent implements OnInit {
     });
   }
   text: any;
-
+  get orderFormControl() {
+    return this.formValue.controls;
+  }
   
 
   ngOnInit(): void {
@@ -218,11 +221,13 @@ export class AllartisanComponent implements OnInit {
         this.formValue.reset();
       },
       error: (err: any) => {
+        console.log(err);
+        
         this.progress = 0;
         if (err.error && err.error.message) {
           this.message = err.error.message;
         } else {
-          this.message = 'Could not upload the file!';
+          this.message = "Input Field cannot be Empty"
         }
       },
     };

@@ -37,6 +37,8 @@ export class AlltransactionsComponent implements OnInit {
   completePage: number = 1;
   pendingPage: number = 1;
   allPage: number = 1;
+  completedPage: number = 1;
+  // cancelPage: number = 1;
   length = 10;
   pageSize = 10;
   pageIndex = 1;
@@ -97,6 +99,7 @@ export class AlltransactionsComponent implements OnInit {
     this.adminApi.getOrder().subscribe((res: any) => {
       this.totalLength = res.length;
       this.AllOrderData = res;
+      
       
 
       this.filteredOrderData = [...this.AllOrderData];

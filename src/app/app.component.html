@@ -1,5 +1,10 @@
 <div class="">
-  <nav class="navbar navbar-expand-lg bg-light fixed-top ">
+  <div class="h-25 w-100 d-flex align-items-center">
+    <div class="container fixed-top">
+      <div class="scrolling-text text-info" [@scroll]="state" (@scroll.done)="scrollDone()">Sign up and Enjoy up to 40% Discount on all Orders for all Service Category. Free Inspection on your First Order.</div>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg bg-light  ">
     <div class="container-fluid ">
       <a class="navbar-brand cursor" routerLink="/" 
       data-bs-target="#navbarTogglerDemo02"
@@ -49,13 +54,22 @@
            
             <!-- </div> -->
         </li>
+          <!-- <li class="hover nav-item "   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation" *ngIf="!loginApi.loggedIn()">
+            <a class="hover nav-link navItem my-2 my-lg-0 me-4 cursor"  routerLink="/register" style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-brands fa-hire-a-helper me-2"></i>HIRE ARTISANS</a
+            >
+          </li> -->
           <li class="hover nav-item "   data-bs-toggle="collapse"
           data-bs-target="#navbarTogglerDemo02"
           aria-controls="navbarTogglerDemo02"
           aria-expanded="false"
           aria-label="Toggle navigation">
             <a class="hover nav-link navItem my-2 my-lg-0 me-4 cursor"  routerLink="/signup" style="font-size: 20px; font-weight: 400;"
-              ><i class="fa-solid fa-money-bill-trend-up me-2"></i>EARN</a
+              ><i class="fa-solid fa-money-bill-trend-up me-2"></i>BECOME AN ARTISAN</a
             >
           </li>
           <li>
@@ -67,7 +81,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation">
             <a class="  nav-link  my-2 my-lg-0 me-4 navItem cursor"  routerLink="/helpcenter" style="font-size: 20px; font-weight: 400; " 
-              ><i class=" fa-solid fa-circle-question me-2"></i>Help</a
+              ><i class=" fa-solid fa-circle-question me-2"></i>HELP</a
             >
           </li>
           <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
@@ -76,7 +90,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation">
             <a class=" nav-link  me-4 cursor navItem" routerLink="/aboutus" style="font-size: 20px; font-weight: 400;"
-              ><i class="fa-solid fa-address-card"></i> About</a
+              ><i class="fa-solid fa-address-card"></i> ABOUT</a
             >
           </li>
           <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
@@ -85,7 +99,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayAdmin" routerLink="/admin">
             <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
-              ><i class="fa-solid fa-user"></i> My Profile</a
+              ><i class="fa-solid fa-user"></i> My PROFILE</a
             >
           </li>
           <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
@@ -95,7 +109,7 @@
           aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayUser "  routerLink="/userprofile"
           (click)="onClick(loginApi.loggedinUser.id)">
             <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
-              ><i class="fa-solid fa-user"></i> My Profile</a
+              ><i class="fa-solid fa-user"></i> My PROFILE</a
             >
           </li>
           <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
@@ -106,7 +120,7 @@
           routerLink="/artisanprofile"
           (click)="onClick(loginApi.loggedinUser.id)">
             <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
-              ><i class="fa-solid fa-user"></i> My Profile</a
+              ><i class="fa-solid fa-user"></i> My PROFILE</a
             >
           </li>
   
@@ -130,7 +144,7 @@
               routerLink="/signin"
               *ngIf="!loginApi.loggedIn()"
             >
-              Sign In
+              SIGN IN
             </div>
           </li>
   
@@ -154,7 +168,7 @@
               *ngIf="loginApi.loggedIn()"
               (click)="Logout()"
             >
-              Log Out
+              LOG OUT
             </div>
           </li>
     
@@ -172,7 +186,6 @@
 
 
   
-  <app-footer></app-footer>
 </div>
 <!-- <ng-container *ngIf="loading$ | async">
   <div class="overlay"></div>

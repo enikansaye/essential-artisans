@@ -267,7 +267,7 @@
                 *ngFor="
                   let data of filteredOrderData | filter: searchText
                    
-                    | paginate: { itemsPerPage: 5, currentPage: p }
+                    | paginate: { itemsPerPage: 20, currentPage: p }
                 "
               >
                 <td data-title="Date">{{ data.date }}</td>
@@ -315,7 +315,7 @@
                   >
                     Reject Order
                   </button>
-                  <button
+                  <!-- <button
                     type="button"
                     class="btn btn-info"
                     (click)="openModal(template)"
@@ -324,7 +324,22 @@
                     " 
                   >
                     Create Invoice
-                  </button>
+                  </button> -->
+                  <!-- <ng-template #template3>
+                    <div class="modal-body text-center">
+                      <p>Kindly note the commission rate below on Artisans Service charge</p>
+                      <button type="button" class="btn btn-danger me-3" (click)="decline()" >Decline</button>
+                      <button type="button" class="btn btn-info" (click)=" openModal(template); onEdit(data)" >Proceed</button>
+
+                    </div>
+                  </ng-template> -->
+                  <!-- <button type="button" *ngIf="data.action === 2 && !data.hasInvoice
+                  "  class="btn btn-info" (click)="openModal2(template3); onEdit(data)"> Create Invoice</button> -->
+
+                  <button type="button" *ngIf="data.action === 2 && !data.hasInvoice
+                  "  class="btn btn-info" (click)="openModal(template4); onEdit(data)"> Create Invoice</button>
+
+
                   <button class="btn btn-info" *ngIf="data.action === 2 && data.hasInvoice && !data.isOrderInvoiceApproved"> Invoice Awaiting Approval</button>
 
                   <!-- <button *ngIf="data.isApproved">Awaiting Quote</button> -->
@@ -347,8 +362,11 @@
               <tr *ngIf="AllOrderData.length == 0">
                 no order
               </tr>
+              
             </tbody>
+            
           </table>
+           
 
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
@@ -376,7 +394,7 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="let data of AllpendingData | paginate: { itemsPerPage: 5, currentPage: pendingPage }">
+                *ngFor="let data of AllpendingData | paginate: { itemsPerPage: 20, currentPage: pendingPage }">
                 <td data-title="Order ID">{{ data.id}}</td>
                 <td data-title="Date">{{ data.date }}</td>
                 <td data-title="Inspection Date">{{data.inspectionDate}}td>
@@ -400,7 +418,7 @@
                 >
                   Reject Order
                 </button>
-                <button
+                <!-- <button
                 type="button"
                 class="btn btn-info"
                 (click)="openModal(template)"
@@ -409,7 +427,10 @@
                 " 
               >
                 Create Invoice
-              </button>
+              </button> -->
+              <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Launch static backdrop modal
+              </button> -->
                 </td>
 
                
@@ -458,7 +479,7 @@
               <tbody >
                 <tr
                   *ngFor="
-                    let data of completeOrderData | paginate: { itemsPerPage: 5, currentPage: completePage}
+                    let data of completeOrderData | paginate: { itemsPerPage: 20, currentPage: completePage}
                   "
                 >
                   <td data-title="Date">{{ data.date }}</td>
@@ -503,6 +524,9 @@
                 <th scope="col">Issue</th>
 
 
+               
+
+
                 <th scope="col">Location</th>
 
                 <th scope="col">Status</th>
@@ -512,7 +536,7 @@
             <tbody >
               <tr
                 *ngFor="
-                  let data of completeOrderData | paginate: { itemsPerPage: 5, currentPage: completePage}
+                  let data of completeOrderData | paginate: { itemsPerPage: 20, currentPage: completePage}
                 "
               >
                 <td data-title="Date">{{ data.date }}</td>
@@ -550,14 +574,14 @@
 </div>
 
 <!-- modal for invoice -->
-<ng-template #template>
+<ng-template #templateNested>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Create Quote</h4>
     <button
       type="button"
       class="btn-close close pull-right"
       aria-label="Close"
-      (click)="modalRef?.hide()"
+      (click)="closeModal()"
     >
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
@@ -686,9 +710,9 @@
   
     
     <!--  [hidden]="!invoiceinformation.valid" [disabled]="!invoiceBody.valid"-->
-    <button class="btn btn-danger  btn-lg me-2" (click)="modalRef?.hide()" >Cancel</button>
+    <button class="btn btn-danger  btn-lg me-2" (click)="closeModal()" >Cancel</button>
 
-          <button type="button" name="" class="btn btn-info btn-lg" (click)="submitQuote()"   >Send Quote</button>
+          <button type="button" name="" class="btn btn-info btn-lg" (click)="submitQuote();"   >Send Quote</button>
     
     
     
@@ -742,20 +766,90 @@
 
 <div><span class="me-2">Customer's Phone Number : </span><span class="h6" *ngIf="orderById.action  === 3 || orderById.action === 2 || orderById.action === 4">{{orderById.customerPhoneNumber}}</span></div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
   </div>
   <button class="btn btn-danger me-2" (click)="modalRef?.hide()" >Cancel</button>
 
 </ng-template>
+
+<!-- <pre class="card card-block card-header">{{message}}</pre> -->
+<!-- <ng-template #template3>
+  <div class="modal-body text-center">
+    <p>Kindly note the commission rate below on Artisans Service charge</p>
+    <button type="button" class="btn btn-info" (click)=" openModal(template); onEdit(filteredOrderData)" >Proceed</button>
+    <button type="button" class="btn btn-danger" (click)="decline()" >Decline</button>
+  </div>
+</ng-template> -->
+
+<ng-template #template3>
+  <div class="modal-body text-center">
+    <p>Kindly note the commission rate below on Artisans Service charge</p>
+    <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
+      <div>&#8358;5000 and Below</div>
+      <div class="me-5">10%</div>
+    </div>
+    <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
+      <div>Above &#8358;5000 </div>
+      <div class="me-5">20%</div>
+    </div>
+
+    <!-- <table>
+      
+      <tbody>
+        <tr>
+          <td>&#8358;5000 and Below</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Above &#8358;5000</td>
+          <td>30%</td>
+        </tr>
+      </tbody>
+
+    </table> -->
+   <div class="d-flex float-end mt-3">
+    <button type="button" class="btn btn-danger me-3" (click)="decline()" >Decline</button>
+    <!-- <button type="button" class="btn btn-info" (click)=" openModal(template); decline() " >Proceed</button> -->
+   </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #template4>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">First modal</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Kindly note the commission rate below on Artisans Service charge</p>
+    <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
+      <div>&#8358;5000 and Below</div>
+      <div class="me-5">10%</div>
+    </div>
+    <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
+      <div>Above &#8358;5000 </div>
+      <div class="me-5">20%</div>
+    </div>
+    <br />
+    <button type="button" class="btn btn-info me-2" (click)="openModal2(templateNested)">Agree</button>
+    <button type="button" class="btn btn-danger" (click)="closeModal(1)">Decline</button>
+    <!-- <button type="button" class="btn btn-primary" (click)="closeModal()">Close all modal</button> -->
+  </div>
+</ng-template>
+ 
+<!-- <ng-template #templateNested>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Second modal</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef2?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    This is nested modal.<br />
+    <button *ngIf="modalRef" type="button" class="btn btn-danger" (click)="closeFirstModal()">Close first modal</button> -->
+    <!-- <button type="button" class="btn btn-danger" (click)="closeModal(2)">Close self</button>
+    <button type="button" class="btn btn-danger" (click)="closeModal()">Close all modal</button>
+  </div>
+</ng-template> -->

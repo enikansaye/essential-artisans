@@ -21,6 +21,15 @@ import { NgxLoader } from 'ngx-http-loader';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('scroll', [
+      state('on', style({right: '-100%'})),
+      transition('* => *', [
+        style({right: '-100%'}),
+        animate(20000, style({right: '100%'}))
+      ])
+    ])
+  ],
  
 })
 export class AppComponent implements OnInit {
@@ -34,6 +43,11 @@ export class AppComponent implements OnInit {
   isOnline!: boolean;
   modalVersion!: boolean;
 spinkit: any;
+state = 0;
+
+scrollDone() {
+  this.state++;
+}
 
 
   onNetwortStatusChange(){
@@ -67,7 +81,7 @@ spinkit: any;
     this.modalVersion = false;
 
 
-    updateService.checkForUpdate()
+   this.updateService.checkForUpdate()
   }
 
   loading$ = this.loader.loading$;

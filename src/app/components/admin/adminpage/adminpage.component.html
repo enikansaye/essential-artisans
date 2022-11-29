@@ -3,7 +3,7 @@
         <mat-toolbar class="w-100 d-flex justify-content-end">
           <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
                    
-            <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'over'" class="d-flex justify-content-end">close</mat-icon>
+            <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'over'" class="d-flex justify-content-end cursor">close</mat-icon>
       
           <!-- </button> -->
         </mat-toolbar>
@@ -170,7 +170,7 @@
     <div class="ms-3 mt-5 pt-5" [ngSwitch]="expression">
       <div>
         <mat-toolbar class="col-12">
-          <div class="d-lg-none">
+          <div class="d-lg-none cursor">
             <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">label_important</mat-icon>
           </div>
 
@@ -573,10 +573,10 @@
                 
                 </tr>
               </thead>
-              <tbody *ngFor="let data of artisanData | filter : searchText">
+              <tbody *ngFor="let data of artisanData | filter : searchText | paginate: { itemsPerPage: 30, currentPage: quotePage }">
                 <tr class="align-center justify-content-center" >
                   <!-- <td data-title="Artisan ID">{{data.id}} </td> -->
-                  <td data-title="Registered Date">{{data.dateRegistered}} </td>
+                  <td data-title="Registered Date">{{ data.dateRegistered}} </td>
                   <td data-title="Email Address">{{data.email}}</td>
                   <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
                   <td data-title="Service">{{data.profession}} </td>
@@ -621,6 +621,7 @@
                   <th scope="col">Name</th>
                   <th scope="col">Location</th>
                   <th scope="col">Number</th>
+                  <th scope="col">Status</th>
                   <!-- <th scope="col">Status</th> -->
                   <!-- <th scope="col">Action</th> -->
                 
@@ -635,6 +636,9 @@
                   <td data-title="Location">{{data.address}}</td>
                   <!-- <td data-title="Location">{{data.title}}</td> -->
                   <td data-title="Number">{{data.phoneNumber}}</td>
+                  <!-- <td data-title="Status">{{data.AccountStatus}}</td> -->
+
+
                   <!-- <td data-title="Status">Suspended</td> -->
                   <!-- <td data-title="Action" class="">
                    
@@ -1059,7 +1063,7 @@
         <div class="d-flex mt-3">
           <div class="me-1">Service Charge :<br> <input type="text" name="artisanCharge" [(ngModel)]="artisanCharge" [ngModelOptions]="{standalone: true}"></div>
           <div class="me-1">Inspection Fee :<br> <input type="text" [(ngModel)]="inspectionFee" [ngModelOptions]="{standalone: true}" disabled>  </div>
-          <div>Discount : <br> <input type="text" placeholder="% of Total Amount" [(ngModel)]="discountPercentage" [ngModelOptions]="{standalone: true}" ><span class="ms-2"> &#8358; {{ discountedPrice}}</span> </div>
+          <div>Discount(%) : <br> <input type="text" placeholder="% of Total Amount" [(ngModel)]="discountPercentage" [ngModelOptions]="{standalone: true}" ><span class="ms-2"> &#8358; {{ discountedPrice}}</span> </div>
         </div>
 
         <div class="form-floating mt-2">
@@ -1077,8 +1081,9 @@
       </div>
 
         <div class="mt-2">
-          <button class="btn btn-danger me-2" (click)="modalRef?.hide()">Cancel</button>
+          <button class="btn btn-danger me-2" (click)="modalRef?.hide()">Close</button>
           <button class="btn btn-info" type="submit" *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="submitEditedQuote(invoiceBody.value)"> Update Invoice</button>
+          <!-- <button class="btn btn-info"  *ngIf="this.Action !== 2 && this.Action !== 5 && this.Action !== 3" (click)="submitEditedQuote(invoiceBody.value)"> Cancel Invoice</button> -->
 
 
         </div>

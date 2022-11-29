@@ -138,6 +138,10 @@ export class ArtisantransactionsComponent implements OnInit {
   openDialog() {}
 
   onEdit(row: any) {
+    console.log(row);
+    console.log(row.id);
+    this.modalRef?.hide();
+    
     this.InvoiceObject.orderId = row.id;
   }
 
@@ -165,11 +169,30 @@ export class ArtisantransactionsComponent implements OnInit {
       id: 1,
       class: 'modal-lg',
     });
+    this.InvoiceObject.orderId
+    console.log(this.InvoiceObject.orderId);
+
+    
   }
 
   closeModal(modalId?: number) {
     this.modalService.hide(modalId);
   }
+  openModal2(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+  }
+ 
+  confirm(): void {
+    // this.message = 'Confirmed!';
+    this.modalRef?.hide();
+    
+  }
+ 
+  decline(): void {
+    // this.message = 'Declined!';
+    this.modalRef?.hide();
+  }
+
 
   getPendingOrder() {
     const registerObserver = {
@@ -259,6 +282,8 @@ export class ArtisantransactionsComponent implements OnInit {
 
   submitQuote() {
     this.InvoiceObject.invoiceTotal = this.grandtotal;
+    console.log(this.InvoiceObject.orderId);
+    
 
     let itemsDto = [];
 
@@ -271,7 +296,8 @@ export class ArtisantransactionsComponent implements OnInit {
         this.toastr.success('invoice created successfully');
       this.getAllOrder();
 
-      this.modalRef?.hide();
+      // this.modalRef?.hide();
+      this.closeModal()
 
       },
       error: (err: any) => {
@@ -305,12 +331,13 @@ export class ArtisantransactionsComponent implements OnInit {
   getInvoiceTotalAmount() {
      const data= this.itemsArray.reduce((acc, item) => {
       acc += this.updateTotalInItemsArray(item);
-      this.grandtotal = this.InvoiceObject.artisanCharge + acc;
+      this.grandtotal = (+this.InvoiceObject.artisanCharge) + (+acc);
       
 // const total = +this.InvoiceObject.artisanCharge + (+acc)
       return acc;
     }, -0);
-    const total = +this.InvoiceObject.artisanCharge + (+data)
+    const total = +(this.InvoiceObject.artisanCharge) + (+data)
+    
       return total;
     
   }

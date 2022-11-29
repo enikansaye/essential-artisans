@@ -96,6 +96,7 @@ export class AdminpageComponent implements OnInit {
   discountedPrice: any;
   discountPercentage: any;
   searchText:any
+quotePage: any;
 
   constructor(
     private observer: BreakpointObserver,

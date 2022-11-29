@@ -265,7 +265,7 @@
                 class="align-center justify-content-center w-100"
                 *ngFor="
                   let data of filteredOrderData | filter: searchText
-                    | paginate: { itemsPerPage: 5, currentPage: allPage }
+                    | paginate: { itemsPerPage: 30, currentPage: allPage }
                 "
               >
                 <td data-title="Order ID">{{ data.uniqueId }}</td>
@@ -314,17 +314,25 @@
                   >
                     Awaiting Approval
                   </button>
+                  <button
+                  class="btn btn-danger me-2"
+                  (click)="rejectOrder(data)"
+                  *ngIf="data.action === 0"
+                >
+                  Reject Order
+                </button>
+
                   <button class="btn btn-success me-2" *ngIf="data.isApproved">
                     Approved
                   </button>
 
-                  <button
+                  <!-- <button
                     class="btn btn-danger me-2"
                     (click)="rejectOrder(data)"
                     *ngIf="data.action === 5"
                   >
                     Reject Order
-                  </button>
+                  </button> -->
                   <button class="btn btn-danger me-2" *ngIf="data.isCancelled">
                     Order Rejected
                   </button>
@@ -350,7 +358,7 @@
                       aria-label="Default select example"
                       (change)="onChangeArtisan($event.target)"
                     >
-                      <option value="" selected disabled>Select State</option>
+                      <option value="" selected disabled>Select Artisans</option>
                       <!-- <option *ngFor="let data of assignArtisan"  [ngValue]="data">{{data.firstName}}</option> -->
                       <option
                         *ngFor="let artisan of assignArtisan"
@@ -399,7 +407,7 @@
             <tbody class="">
               <tr
                 class="align-center justify-content-center w-100"
-                *ngFor="let data of pending"
+                *ngFor="let data of pending |paginate: { itemsPerPage: 30, currentPage: pendingPage }"
               >
                 <td data-title="Order ID">{{ data.uniqueId }}</td>
                 <td data-title=" Date">{{ data.date }}</td>
@@ -501,7 +509,7 @@
             <tbody class="">
               <tr
                 class="align-center justify-content-center w-100"
-                *ngFor="let data of completedOrder"
+                *ngFor="let data of completedOrder |paginate: { itemsPerPage: 30, currentPage: completedPage }"
               >
                 <td data-title="Order ID">{{ data.uniqueId }}</td>
                 <td data-title=" Date">{{ data.date }}</td>
@@ -557,7 +565,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of canceledOrder">
+              <tr *ngFor="let data of canceledOrder |paginate: { itemsPerPage: 30, currentPage: cancelPage }">
                 <td data-title="Order ID" scope="row">{{ data.uniqueId }}</td>
                 <td data-title="Date">{{ data.date }}</td>
                 <td data-title="Location">{{ data.propertyAddress }}</td>

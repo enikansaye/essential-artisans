@@ -7,7 +7,7 @@
       opened
       class="col-6 col-md-3"
     >
-      <mat-toolbar class="w-100 d-flex justify-content-end ">
+      <mat-toolbar class="w-100 d-flex cursor justify-content-end ">
         <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
           <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'over'" class="d-flex justify-content-end"
             >close</mat-icon
@@ -101,7 +101,7 @@ Ratings: {{artisanData.rating}}
     <mat-sidenav-content opened>
       <div class="content mat-elevation-z4 flex-column ms-3 ms-lg-4 mt-5" >
         <mat-toolbar class="col-12">
-          <div class="d-lg-none">
+          <div class="d-lg-none cursor">
             <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">label_important</mat-icon>
           </div>
 
@@ -543,7 +543,7 @@ Ratings: {{artisanData.rating}}
                 </thead>
                 <tbody>
                   <tr
-                    *ngFor="let data of invoiceData | paginate: { itemsPerPage:10, currentPage:quotePage}; ">
+                    *ngFor="let data of invoiceData | paginate: { itemsPerPage:20, currentPage:quotePage}; ">
                     <td data-title="Order ID/Invoice ID">{{data.invoiceId}}/{{data.serviceOrderUniqueId}}</td>
                     <td data-title=" Date">{{ data.date }}</td>
                     <td data-title=" User's Name">{{ data.customerInfo.name}}</td>

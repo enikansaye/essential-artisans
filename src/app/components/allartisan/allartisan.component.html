@@ -109,6 +109,12 @@
           id="exampleInputText"
           aria-describedby="emailHelp"
         />
+        <span
+        style="color: #dc3545;"
+          *ngIf="(orderFormControl['Name'].touched || submitted) && orderFormControl['Name'].errors?.['required']"
+        >
+        Name Field is required
+        </span>
       </div>
 
       <div class="mb-1">
@@ -121,6 +127,12 @@
           class="form-control"
           id="exampleInputPassword1"
         />
+        <span
+        style="color: #dc3545;"
+          *ngIf="(orderFormControl['PropertyAddress'].touched || submitted) && orderFormControl['PropertyAddress'].errors?.['required']"
+        >
+        Address is required
+        </span>
       </div>
     
 
@@ -134,6 +146,12 @@
           type="number"
           class="form-control"
         />
+        <span
+        style="color: #dc3545;"
+          *ngIf="(orderFormControl['PhoneNumber'].touched || submitted) && orderFormControl['PhoneNumber'].errors?.['required']"
+        >
+          Phone Number is required
+        </span>
       </div>
       <!-- <div class="mb-1">
         <label for="exampleInputPassword1" class="form-label"
@@ -161,6 +179,12 @@
           class="form-control"
           id="exampleInputPassword1"
         />
+        <span
+        style="color: #dc3545;"
+          *ngIf="(orderFormControl['Issue'].touched || submitted) && orderFormControl['Issue'].errors?.['required']"
+        >
+          Job Description is required
+        </span>
       </div>
       <div class="mt-4">
         <label for="exampleInputPassword1" class="form-label me-2"
@@ -176,6 +200,13 @@
           dd/mm/yyyy, --:--
           "
         />
+        <br>
+        <span
+        style="color: #dc3545;"
+          *ngIf="(orderFormControl['InspectionDateAndTime'].touched || submitted) && orderFormControl['InspectionDateAndTime'].errors?.['required']"
+        >
+        Inspection Date and Time is required
+        </span>
         <br>
        <div class="my-2">
         <span >Support formats are .jpg .gif .png </span><br>

@@ -18,7 +18,7 @@
     /* align-items: center; */
    position: absolute;
    z-index: 0;
-   justify-content: end;
+   flex: end;
    padding-left: 21% ; 
    padding-top: 15px;
 
@@ -106,7 +106,7 @@ color: #000000;
         /* align-items: center; */
        position: absolute;
        z-index: 0;
-       justify-content: end;
+       flex: end;
        padding-left: 21% ; 
        padding-top: 15px;
     
