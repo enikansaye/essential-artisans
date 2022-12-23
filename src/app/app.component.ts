@@ -16,6 +16,7 @@ import { UserModel } from './shared/models/user.model';
 import { UpdateService } from './update.service';
 import { Platform } from '@angular/cdk/platform';
 import { NgxLoader } from 'ngx-http-loader';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,9 @@ import { NgxLoader } from 'ngx-http-loader';
   styleUrls: ['./app.component.css'],
   animations: [
     trigger('scroll', [
-      state('on', style({right: '-100%'})),
+      state('on', style({right: '-2500%'})),
       transition('* => *', [
-        style({right: '-100%'}),
+        style({right: '-250%'}),
         animate(20000, style({right: '100%'}))
       ])
     ])
@@ -33,7 +34,7 @@ import { NgxLoader } from 'ngx-http-loader';
  
 })
 export class AppComponent implements OnInit {
-  title = 'artisan finder';
+  // title = 'artisan finder';
   user = {
     email: '',
     userName: '',
@@ -76,7 +77,9 @@ scrollDone() {
     public signalRService: SignalrService,
     private swUpdate: SwUpdate,
     private platform: Platform,
+    private meta: Meta, private title: Title
   ) {
+   
     this.isOnline = false;
     this.modalVersion = false;
 
@@ -129,8 +132,21 @@ scrollDone() {
 
     this.loadModalPwa();
 
-  }
+    this.meta.addTags([
+      
+      { name: 'description', content: "Artisan Nigeria is an online on-demand home and office maintenance marketplace and service provider. We connect skilled, verified and professional artisans (plumbers, electricians, AC repairers, Carpenters.) with individuals and organizations, and retail stores for affordable, convenient and automated end-to-end home and office maintenance services."},
+{ name: "title", content: "Artisans in Lagos, Artisan services in Nigeria, Artisans Lagos | essentialartisans.ng"},
+{ name:"keywords", content:"Artisans in Lagos, Lagos Artisans, Artisans services in Nigeria, Artisans Lagos, Plumbing, Plumber, Carpentry, Carpenter, AC repair, AC repairer, Electrical, Electrician, Installation, fixing"},
+    { name:"viewport", content:"width=device-width, initial-scale=1.0" },
 
+{charset: 'UTF-8'}    
+]);
+    this.setTitle('Essential Artisans')
+
+  }
+public setTitle(newTitle:string){
+  this.title.setTitle(newTitle)
+}
   
 
   private loadModalPwa(): void {
@@ -169,12 +185,13 @@ scrollDone() {
     // this.formValue.controls['name'].setValue(row.name);
   }
   public updateVersion(): void {
-    this.modalVersion = false;
     window.location.reload();
+    this.modalVersion = true;
+
   }
 
   public closeVersion(): void {
-    this.modalVersion = false;
+    this.modalVersion = true;
   }
 
   toggleMenu() {

@@ -1,7 +1,9 @@
 <div class="">
   <div class="h-25 w-100 d-flex align-items-center">
     <div class="container fixed-top">
-      <div class="scrolling-text text-info" [@scroll]="state" (@scroll.done)="scrollDone()">Sign up and Enjoy up to 40% Discount on all Orders for all Service Category. Free Inspection on your First Order.</div>
+      <marquee class="text-info" style="font-size: 22px;
+      padding-top: 5px;height: 40px;">Sign up and Enjoy up to 40% Discount on all Orders for all Service Category. Free Inspection on your First Order.</marquee>
+      <!-- <div class="scrolling-text text-info" [@scroll]="state" (@scroll.done)="scrollDone()">Sign up and Enjoy up to 40% Discount on all Orders for all Service Category. Free Inspection on your First Order.</div> -->
     </div>
   </div>
   <nav class="navbar navbar-expand-lg bg-light  ">
@@ -11,7 +13,7 @@
       aria-controls="navbarTogglerDemo02"
       aria-expanded="false"
       aria-label="Toggle navigation"
-        ><img src="/assets/images/logos.png" style="width: 200px" alt=""
+        ><img alt="Essential-Artisans-logo" src="/assets/images/logos.png" style="width: 200px" alt=""
       /></a>
       <button
         class="navbar-toggler"
@@ -187,40 +189,11 @@
 
   
 </div>
-<!-- <ng-container *ngIf="loading$ | async">
-  <div class="overlay"></div>
-  <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
-</ng-container> -->
+
 <ngx-http-loader  [opacity]="0.5"  [subTitle]="'ESSENTIAL ARTISANS'" [loader]="ngxloader.ELLIPSIS" [iconColor]="'white'" [backdropBackgroundColor]="'black'">
 </ngx-http-loader>
 
-<!-- <div *ngIf="offline">
-  <app-offline ></app-offline>
-</div> -->
-<!-- <app-offline *ngIf="offline"></app-offline> -->
 
 
-<!-- <div class="w-100 position-absolute top-0" *ngIf="modalVersion">
-  <div class="alert alert-secondary m-2">
-    <button type="button" class="btn-close position-absolute top-0 end-0 m-1" aria-label="Close" (click)="closeVersion()"></button>
-    A new version of this app is available. <a href="" (click)="updateVersion()">Update now</a>
-  </div>
-  </div> -->
-<!--   
-  <div class="w-100 position-absolute bottom-0" *ngIf="modalPwaPlatform === 'ANDROID' || modalPwaPlatform === 'IOS'">
-  <div class="alert alert-secondary m-2">
-    <button type="button" class="btn-close position-absolute top-0 end-0 m-1" aria-label="Close" (click)="closePwa()"></button>
-    Android
-    <div *ngIf="modalPwaPlatform === 'ANDROID'" (click)="addToHomeScreen()">
-      Add this Essential Artisans app to home screen
-    </div> -->
-    <!-- iOS with Safari -->
-    <!-- <div *ngIf="modalPwaPlatform === 'IOS'">
-      To install Essential Artisans app on your device, tap the "Menu" button
-      <img src="https://res.cloudinary.com/rodrigokamada/image/upload/v1641089482/Blog/angular-pwa/safari_action_button_38x50.png" class="ios-menu m-0" />
-      and then "Add to home screen" button
-      <i class="bi bi-plus-square"></i>
-    </div>
-  </div>
-  </div> -->
+
   

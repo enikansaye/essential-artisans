@@ -17,6 +17,15 @@ export class AdminService {
       })
     );
   }
+
+// get all artisans reviews
+  getReviews(id:any, data:any) {
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/Customer/reviews/' + id, data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 // get all artisans
   getArtisan() {
     return this.http.get<any>(this.apiUrl.baseUrl +'/api/App/artisans').pipe(

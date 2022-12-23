@@ -733,10 +733,10 @@
   </div>
   <div class="modal-body" >
 
-    <div><span class="me-2">  Order Date : </span><span class="h6">{{orderById.date}}</span></div>
+    <div><span class="me-2">  Order Date : </span><span class="h6">{{orderDate}}</span></div>
 
     <!-- !-- <button mat-button matRipple class="purple-500 fuse-white-fg mr-12"; (click)="imageSource()">Display</button> --> 
-    <div class="d-flex" *ngFor="let data of orderById.filePaths, let i = index"> 
+    <div class="d-flex" *ngFor="let data of orderfiles, let i = index"> 
       <img class="image-fluid" style="height: 100px; width:100px;" src="data:image/png;base64,{{data}}" *ngIf="hidden" />
     
     </div>      
@@ -817,21 +817,42 @@
 
 <ng-template #template4>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">First modal</h4>
+    <div class="modal-title pull-left h2">Commission Rate</div>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <p>Kindly note the commission rate below on Artisans Service charge</p>
-    <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
+    <h4>Kindly note the commission rate below on Artisans Service charge</h4>
+
+    <table class="table">
+     <thead>
+      <tr>
+        <th scope="col">Service Charge Amount(&#8358;)</th>
+        <th scope="col"> Rate(%)</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+        <!-- <th scope="row"></th> -->
+        <td >&#8358;5000 and Below</td>
+        <td>10%</td>
+      </tr>
+      <tr>
+        <!-- <th scope="row"></th> -->
+        <td>Above &#8358;5000</td>
+        <td>20%</td>
+      </tr>
+     </tbody>
+    </table>
+    <!-- <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
       <div>&#8358;5000 and Below</div>
       <div class="me-5">10%</div>
     </div>
     <div class="d-flex align-align-center justify-content-between ms-2 mt-2">
       <div>Above &#8358;5000 </div>
       <div class="me-5">20%</div>
-    </div>
+    </div> -->
     <br />
     <button type="button" class="btn btn-info me-2" (click)="openModal2(templateNested)">Agree</button>
     <button type="button" class="btn btn-danger" (click)="closeModal(1)">Decline</button>

@@ -66,6 +66,8 @@ export class LoginService {
   // checking with refresh token
   logout() {
     // alert('Token Epired, Please login')
+    // this.router.navigate(['/signin']);
+
     return localStorage.clear();
   }
 

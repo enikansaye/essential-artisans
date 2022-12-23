@@ -11,9 +11,9 @@
 
                 <form  [formGroup]="signupForm" (ngSubmit)="onSubmit(this.signupForm.value)">
 
-                  <div class="d-flex align-items-center mb-3 pb-1">
+                  <!-- <div class="d-flex align-items-center mb-3 pb-1">
                     <img class="w-50" src="/assets/images/logos.png" alt="">
-                  </div>
+                  </div> -->
 
                   <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
                     Sign up as a User
@@ -21,14 +21,17 @@
                   <div class="form-group form-outline mb-4">
                     <input
                       type="text"
-                      id=""
+                      id="firstName"
+                      name="firstName"
                       formControlName="firstName"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['firstName'].errors }"
                     />
                     <span style="color: #dc3545;"
                     *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
                     First Name is required
                 </span>
+                
                    
                   <div>  <label class="form-label" for="">First Name <span style="color: red;">*</span></label></div>
                   </div>
@@ -39,6 +42,8 @@
                       id=""
                       formControlName="lastName"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['lastName'].errors }"
+
                     />
 
                     <span
@@ -56,6 +61,8 @@
                       id=""
                       formControlName="email"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['email'].errors }"
+
                     />
 
                     <span
@@ -79,6 +86,8 @@
                       id=""
                       formControlName="PhoneNumber"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['PhoneNumber'].errors }"
+
                     />
 
                     <span
@@ -126,12 +135,18 @@
                     <label for="country" class="form-label">Select City</label>
                   </div> -->
 
-                  <div class="form-group input-group-lg form-outline mb-4">
+                  <div class="form-group input-group-lg form-outline mb-4" (click)="getState()">
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
                       <option value="" selected disabled>Select State</option>
                       <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                       
                     </select>
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['state'].touched || submitted) && signupFormControl['state'].errors?.['required']"
+                    >
+                      State is required
+                    </span>
                     <div>  <label class="form-label mt-2" for="">State Location <span style="color: red;">*</span></label></div>
                     </div>
   
@@ -141,6 +156,12 @@
                         <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                         
                       </select>
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['city'].touched || submitted) && signupFormControl['city'].errors?.['required']"
+                      >
+                        LGA is required
+                      </span>
                       <div>  <label class="form-label mt-2" for="">LGA Location <span style="color: red;">*</span></label></div>
                       </div>
 
@@ -150,6 +171,8 @@
                       id=""
                       formControlName="address"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['address'].errors }"
+
                     />
 
                     <span

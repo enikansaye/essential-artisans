@@ -171,7 +171,7 @@
       <div>
         <mat-toolbar class="col-12">
           <div class="d-lg-none cursor">
-            <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">label_important</mat-icon>
+            <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">menu</mat-icon>
           </div>
 
           <nav class="navbar-default navbar w-100 navbar-expand float-right">
@@ -568,6 +568,8 @@
                   <th >Status</th>
                   <th >Location</th>
                   <th >Number</th>
+                  <th >Account Number</th>
+                  <th >Bank Name</th>
 
                   <th >Action</th>
                 
@@ -584,6 +586,8 @@
                   <!-- <td *ngIf="data.action === 3">Suspended</td> -->
                   <td data-title="Location">{{data.location}} </td>
                   <td data-title="Number">{{data.phoneNumber}} </td>
+                  <td data-title="Account Number">{{data.accountNumber}} </td>
+                  <td data-title="Bank Name">{{data.bankName}} </td>
 
                   <td data-title="Action" >
                   <button class="btn btn-info me-2" (click)="suspendArtisan(data)">Suspend</button>

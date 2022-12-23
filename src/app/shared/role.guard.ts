@@ -13,7 +13,7 @@ export class RoleGuard implements CanActivate {
     if(this.loginApi.haveaccess(this.loginApi.getToken())){
       return true
     };
-    this.router.navigate(["forbidden"])
+    this.router.navigate(["signin"])
    return false
 // if(this.api.loggedIn()){
 //   return true;

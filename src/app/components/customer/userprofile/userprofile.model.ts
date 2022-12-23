@@ -18,5 +18,8 @@ export class userProfileModel{
   userId: number=0
   orderId: number= 0
   controls: any;
+  accountNumber:any;
+  bankCode:any;
+  bankName:any
     
 }

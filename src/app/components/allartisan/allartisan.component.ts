@@ -26,6 +26,7 @@ import { UserService } from 'src/app/service/user.service';
 import { LoginService } from 'src/app/service/login.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
+
 // Maximum file size allowed to be uploaded = 1MB
 const MAX_SIZE: number = 1048576;
 
@@ -53,6 +54,7 @@ export class AllartisanComponent implements OnInit {
 
   formValue!: FormGroup;
   search!: FormGroup;
+  reviewsForm!: FormGroup;
   min: any = '';
   value: any;
   artisanData: any;
@@ -80,6 +82,7 @@ export class AllartisanComponent implements OnInit {
   progressInfos!: [];
   fileInfos!: Observable<any>;
   submitted = false;
+  artisanReviews: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -123,6 +126,11 @@ export class AllartisanComponent implements OnInit {
     
 // this.getArtisan(this.text)
     this.update();
+
+    this.reviewsForm = this.formBuilder.group({
+      artisanId: 0,
+    });
+  
 
     this.search = this.formBuilder.group({
       state: [''],
@@ -186,6 +194,8 @@ export class AllartisanComponent implements OnInit {
 
   onSubmitCheck(data: any) {
     this.orderModelObj.artisanId = data.ArtisanId;
+    this.submitted = true;
+    
 
     this.formValue.value.ArtisanId = data.ArtisanId;
 
@@ -221,13 +231,14 @@ export class AllartisanComponent implements OnInit {
         this.formValue.reset();
       },
       error: (err: any) => {
-        console.log(err);
         
         this.progress = 0;
-        if (err.error && err.error.message) {
+        if (err.error || err.error.message) {
           this.message = err.error.message;
+          
         } else {
-          this.message = "Input Field cannot be Empty"
+          
+          
         }
       },
     };
@@ -246,6 +257,20 @@ export class AllartisanComponent implements OnInit {
       
       this.artisanData = res;
       this.totalRecord = res.length;
+    });
+  }
+  // get all artisan reviews
+  getArtisanReviews(data:any) {
+    
+    // this.reviewsForm.value.artisanId = data.id
+    
+    
+    this.adminApi.getReviews(data.id,this.reviewsForm.value.artisanId).subscribe((res: any) => {
+      console.log(res);
+      
+
+      this.artisanReviews = res;
+      // this.totalRecord = res.length;
     });
   }
 
@@ -305,6 +330,8 @@ export class AllartisanComponent implements OnInit {
         this.api.getArtisanByService(data).subscribe((res: any) => {
           
           this.artisanData = res;
+          console.log(res);
+          
         });
       }
 

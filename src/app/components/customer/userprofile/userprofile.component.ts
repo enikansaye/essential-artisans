@@ -6,7 +6,12 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,12 +21,9 @@ import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/service/login.service';
 import { DatePipe } from '@angular/common';
 // import { MatTableDataSource } from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { SignalrService } from 'src/app/service/signalr.service';
-
-
-
 
 // import { DataService } from 'src/app/service/data.service';
 
@@ -36,7 +38,7 @@ export class UserprofileComponent implements OnInit {
   filterForm = new FormGroup({
     fromDate: new FormControl(),
     toDate: new FormControl(),
-});
+  });
 
   selectedFiles?: FileList;
   currentFile?: File;
@@ -48,7 +50,6 @@ export class UserprofileComponent implements OnInit {
   userProfileModelObj: userProfileModel = new userProfileModel();
   bsModalRef?: BsModalRef;
   modalRef?: BsModalRef;
-
 
   userData: any;
   loggedinUser: any;
@@ -84,14 +85,14 @@ export class UserprofileComponent implements OnInit {
   public form!: FormGroup;
   rating3: number = 0;
 
-  invoiceId:number=0;
+  invoiceId: number = 0;
   orderData: any;
   filteredOrderData: any;
   filteredQuoteData: any;
   pending: any;
   getInvoice: any;
   cancelQuote: any;
-  getInvoiceId:any; 
+  getInvoiceId: any;
   artisanName: any;
   artisanEmail: any;
   artisanProfession: any;
@@ -122,10 +123,10 @@ export class UserprofileComponent implements OnInit {
   discountedPrice: any;
   hasDiscount: any;
   discount: any;
-  searchText:any
+  searchText: any;
   isEditMode!: boolean;
   formControls: any;
-
+  submitted = false;
 
   constructor(
     private observer: BreakpointObserver,
@@ -133,14 +134,11 @@ export class UserprofileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    public login:LoginService,
-    private modalService: BsModalService,//for ngx-bootstrap modal
-    private toastr: ToastrService ,// private dataApi:DataService
-    public signalRService: SignalrService,
-  ) {
-    
-   
-  }
+    public login: LoginService,
+    private modalService: BsModalService, //for ngx-bootstrap modal
+    private toastr: ToastrService, // private dataApi:DataService
+    public signalRService: SignalrService
+  ) {}
 
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
@@ -156,15 +154,12 @@ export class UserprofileComponent implements OnInit {
 
     this.feeForm = this.formBuilder.group({
       inspectionFee: 0,
-      inspectionDateAndTime: "",
-orderId: 0
-
-
+      inspectionDateAndTime: '',
+      orderId: 0,
     });
-    this.feeForm.disable()
+    this.feeForm.disable();
     this.formValue.disable();
     this.formControls = this.formValue.controls;
-
 
     this.deleteForm = this.formBuilder.group({
       orderId: 0,
@@ -172,9 +167,9 @@ orderId: 0
 
     this.getInvoiceByIdForm = this.formBuilder.group({
       invoiceId: 0,
-      // userId: 0,
-      
+      dateAndTimeOfWhenJobNeedsToBeDone:['']
 
+      // userId: 0,
     });
     this.getUser();
     // this.showAll()
@@ -183,8 +178,7 @@ orderId: 0
     // this.getPendingOrder();
     // this.getQoute();
     // this.getCompletedOrder();
-     this.count = localStorage.getItem('notifyCount');
-
+    this.count = localStorage.getItem('notifyCount');
 
     this.updateOrder = this.formBuilder.group({
       name: [''],
@@ -208,7 +202,7 @@ orderId: 0
     this.rating3 = 0;
     this.form = this.formBuilder.group({
       rating: ['', Validators.required],
-      
+
       comment: [''],
       artisanId: 0,
       orderId: 0,
@@ -220,7 +214,7 @@ orderId: 0
     this.userProfileModelObj.orderId = row.id;
     this.form.controls['artisanId'].setValue(row.artisanId);
     this.form.controls['orderId'].setValue(row.id);
-    
+
     // this.form.controls['rating'].setValue('')
   }
 
@@ -232,11 +226,9 @@ orderId: 0
         this.getOrder();
         this.toastr.success('Thanks, for your review');
 
-
         // this.router.navigate(['/checkemail']);
       },
-      error: (err: any) => {
-      },
+      error: (err: any) => {},
     };
 
     this.api.postRating(this.form.value).subscribe(registerObserver);
@@ -266,14 +258,12 @@ orderId: 0
     }
   }
 
- 
   getOrder() {
     this.api.getUserOrder().subscribe((data: any) => {
       this.orderData = data;
-      
-      this.filteredOrderData = [...this.orderData]
-      return this.filteredOrderData.reverse();
 
+      this.filteredOrderData = [...this.orderData];
+      return this.filteredOrderData.reverse();
     });
   }
 
@@ -304,13 +294,8 @@ orderId: 0
     this.selectedFiles = event.target.files;
   }
 
-  
-  
-
   // updating user profile
   updateUserDetails(row: any) {
-   
-
     this.userprofileModelObj.userId = this.formValue.value.userId;
     this.userprofileModelObj.firstName = this.formValue.value.firstName;
     this.userprofileModelObj.lastName = this.formValue.value.lastName;
@@ -323,8 +308,7 @@ orderId: 0
       // this.toastr.success('Profile updated');
       this.toastr.success('Profile successfully updated!!!');
       this.getUser();
-      this.formValue.disable()
-
+      this.formValue.disable();
 
       this.showUpdate = !this.showUpdate;
 
@@ -343,8 +327,6 @@ orderId: 0
     this.showUpdate = false;
   }
 
-
-
   onSubmit() {
     // this.alertService.info("Updating Account");
     // this.progressBar.startLoading();
@@ -352,8 +334,7 @@ orderId: 0
       next: (x: any) => {
         this.router.navigate(['/']);
       },
-      error: (err: any) => {
-      },
+      error: (err: any) => {},
     };
     this.api.userUpdate(this.formValue).subscribe(updateEmployerObserver);
   }
@@ -362,12 +343,9 @@ orderId: 0
   //   this.isComplete = !this.isComplete;
   // }
 
+  // on click to update userprofile
 
-
-    // on click to update userprofile
-
-  toggleEditMode(data:any): void {
-    
+  toggleEditMode(data: any): void {
     this.isEditMode = !this.isEditMode;
 
     if (this.isEditMode) {
@@ -379,33 +357,25 @@ orderId: 0
       this.formControls['city'].enable();
       this.formControls['userId'].enable();
 
-      this.formValue.controls['firstName'].setValue(
-        this.userData.firstName
-      );
-      this.formValue.controls['lastName'].setValue(
-        this.userData.lastName
-      );
-    
+      this.formValue.controls['firstName'].setValue(this.userData.firstName);
+      this.formValue.controls['lastName'].setValue(this.userData.lastName);
+
       this.formValue.controls['phoneNumber'].setValue(
         this.userData.phoneNumber
       );
       this.formValue.controls['userId'].setValue(this.userData.id);
-      
+
       this.formValue.controls['address'].setValue(this.userData.address);
-      
-      
+
       this.formValue.controls['state'].setValue(this.userData.state);
-      
+
       this.formValue.controls['city'].setValue(this.userData.city);
-      
     } else {
       this.formValue.disable();
     }
   }
 
   onEditOrder(row: any) {
-   
-
     this.userprofileModelObj.userId = row.userId;
     this.userprofileModelObj.firstName = row.firstName;
     this.userprofileModelObj.lastName = row.lastName;
@@ -429,8 +399,6 @@ orderId: 0
 
   getUser() {
     this.api.getUserinfo().subscribe((res: any) => {
-      
-
       this.userData = res;
     });
   }
@@ -441,29 +409,26 @@ orderId: 0
     this.key = key;
     this.reverse = !this.reverse;
   }
-  getState(){
-    this.api.getLocation().subscribe((data:any)=>{
-      this.state2= data
-      
-    })
+  getState() {
+    this.api.getLocation().subscribe((data: any) => {
+      this.state2 = data;
+    });
   }
-  onChangeState(event:any){
-    let userProfile =this.formValue.controls['state'].value
-    if(userProfile){
-      this.api.getLocation2(userProfile).subscribe((data:any)=>{
-        this. city2= data
-    })
+  onChangeState(event: any) {
+    let userProfile = this.formValue.controls['state'].value;
+    if (userProfile) {
+      this.api.getLocation2(userProfile).subscribe((data: any) => {
+        this.city2 = data;
+      });
+    }
   }
-}
-onChangeCity(event:any){
-return this.formValue.controls['city'].value
-  
-}
+  onChangeCity(event: any) {
+    return this.formValue.controls['city'].value;
+  }
 
   getPendingOrder() {
     return this.api.userGetPendingOrders().subscribe((res: any) => {
       this.pending = res;
-
     });
   }
 
@@ -471,270 +436,229 @@ return this.formValue.controls['city'].value
     this.api.userGetInvoice().subscribe((data: any) => {
       this.getInvoice = data;
 
-      this.filteredQuoteData = [...this.getInvoice]
-      return this.filteredQuoteData.reverse();    });
-  }
-  
-  userAprroveQuote(data: any) {
-    data=this.getInvoiceId
-    
-    this.getInvoiceByIdForm.value.invoiceId =data.invoiceId
-    this.api.customerApproveInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
-      this.approveQuote = res;
-      this.getQoute();
-
-      window.location.href = this.approveQuote.link;
-
+      this.filteredQuoteData = [...this.getInvoice];
+      return this.filteredQuoteData.reverse();
     });
+  }
+
+  get signupFormControl() {
+    return this.getInvoiceByIdForm.controls;
+  }
+  userAprroveQuote(data: any) {
+    data = this.getInvoiceId;
+    this.submitted = true;
+
+    this.getInvoiceByIdForm.value.invoiceId = data.invoiceId;
+    
+    this.api
+      .customerApproveInvoice(this.getInvoiceByIdForm.value)
+      .subscribe((res: any) => {
+        this.approveQuote = res;
+        this.getQoute();
+
+        window.location.href = this.approveQuote.link;
+      });
     // this.router.navigate(['https://ravemodal-dev.herokuapp.com/v3/hosted/pay']);
-
-
   }
   userCancelQuote(data: any) {
-    data=this.getInvoiceId
-    
-    this.getInvoiceByIdForm.value.invoiceId = data.invoiceId
-    this.api.customerCancelInvoice(this.getInvoiceByIdForm.value, data.invoiceId).subscribe((res: any) => {
-      this.modalRef?.hide();
+    data = this.getInvoiceId;
 
-      
-      this.cancelQuote = res;
-      this.getQoute();
-    });
+    this.getInvoiceByIdForm.value.invoiceId = data.invoiceId;
+    this.api
+      .customerCancelInvoice(this.getInvoiceByIdForm.value, data.invoiceId)
+      .subscribe((res: any) => {
+        this.modalRef?.hide();
+
+        this.cancelQuote = res;
+        this.getQoute();
+      });
   }
 
   // this get invoice by id
-  onClickInvoce(data:any){
-    this.invoiceId = data.invoiceId,
-    this.getInvoiceId = data;
-    
-    
-    
-    this.api.getInvoiveById(this.getInvoiceByIdForm.value ,data.invoiceId).subscribe((data: any) => {
+  onClickInvoce(data: any) {
+    (this.invoiceId = data.invoiceId), (this.getInvoiceId = data);
 
-      this.getInvoiceId = data;
-      this.artisanName =this.getInvoiceId.artisanInfo.name
-      this.artisanEmail =this.getInvoiceId.artisanInfo.email
-      this.artisanProfession =this.getInvoiceId.artisanInfo.profession
-      this.artisanPhoneNumber =this.getInvoiceId.artisanInfo.phoneNumber
+    this.api
+      .getInvoiveById(this.getInvoiceByIdForm.value, data.invoiceId)
+      .subscribe((data: any) => {
+        this.getInvoiceId = data;
+        this.artisanName = this.getInvoiceId.artisanInfo.name;
+        this.artisanEmail = this.getInvoiceId.artisanInfo.email;
+        this.artisanProfession = this.getInvoiceId.artisanInfo.profession;
+        this.artisanPhoneNumber = this.getInvoiceId.artisanInfo.phoneNumber;
 
-     //  user
-      this.userName =this.getInvoiceId.customerInfo.name
-      this.userEmail =this.getInvoiceId.customerInfo.email
-      this.userPhoneNumber =this.getInvoiceId.customerInfo.phoneNumber
+        //  user
+        this.userName = this.getInvoiceId.customerInfo.name;
+        this.userEmail = this.getInvoiceId.customerInfo.email;
+        this.userPhoneNumber = this.getInvoiceId.customerInfo.phoneNumber;
 
-      this.accountName = this.getInvoiceId.accountName
-      this.accountNumber = this.getInvoiceId.accountNumber
-      this.bankName = this.getInvoiceId.bankName
-      this.jobDescription = this.getInvoiceId.jobDescription
+        this.accountName = this.getInvoiceId.accountName;
+        this.accountNumber = this.getInvoiceId.accountNumber;
+        this.bankName = this.getInvoiceId.bankName;
+        this.jobDescription = this.getInvoiceId.jobDescription;
 
-this.allTotal = this.getInvoiceId.invoiceTotal
-this.artisanCharge = this.getInvoiceId.artisanCharge
-this.serviceItemsDescription = this.getInvoiceId.description
-this.serviceItemsDetails = this.getInvoiceId.serviceItems
-      
-      this.invoiceUserDetails =this.getInvoiceId.customerInfo
-    
-     this.invoiceAction=this.getInvoiceId.action
-     this.inspectionFee=this.getInvoiceId.inspectionFee
-     this.isFirstTimeCustomer =this.getInvoiceId.isFirstTimeCustomer
-     this.discountPercentage =this.getInvoiceId.discountPercentage
-     this.discountedPrice =this.getInvoiceId.discountedPrice
-     this.hasDiscount=this.getInvoiceId.hasDiscount
-     this.discount=this.getInvoiceId.discount
+        this.allTotal = this.getInvoiceId.invoiceTotal;
+        this.artisanCharge = this.getInvoiceId.artisanCharge;
+        this.serviceItemsDescription = this.getInvoiceId.description;
+        this.serviceItemsDetails = this.getInvoiceId.serviceItems;
 
+        this.invoiceUserDetails = this.getInvoiceId.customerInfo;
 
-
-    });
-
-  }
- 
-  getCompletedOrder(){
-    this.api.userCompletedOrder().subscribe((data:any)=>{
-      
-    })
-  }
-  getAprovedInvoice(){
-    this.api.userGetApprovedInvoice().subscribe((data:any)=>{
-      
-    })
+        this.invoiceAction = this.getInvoiceId.action;
+        this.inspectionFee = this.getInvoiceId.inspectionFee;
+        this.isFirstTimeCustomer = this.getInvoiceId.isFirstTimeCustomer;
+        this.discountPercentage = this.getInvoiceId.discountPercentage;
+        this.discountedPrice = this.getInvoiceId.discountedPrice;
+        this.hasDiscount = this.getInvoiceId.hasDiscount;
+        this.discount = this.getInvoiceId.discount;
+      });
   }
 
-  onClickViewOrder(data:any){
-    this.deleteForm.value.invoiceId = data.id,
-    
-    
-    
-    this.api.getOrderById(this.deleteForm.value ,data.id).subscribe((data: any) => {
-      
-      this.orderById = data
-      this.rating4 = data.artisanRating;
-      
-
-      
-  
-  })
+  getCompletedOrder() {
+    this.api.userCompletedOrder().subscribe((data: any) => {});
   }
-  Search(event:any) {
+  getAprovedInvoice() {
+    this.api.userGetApprovedInvoice().subscribe((data: any) => {});
+  }
+
+  onClickViewOrder(data: any) {
+    (this.deleteForm.value.invoiceId = data.id),
+      this.api
+        .getOrderById(this.deleteForm.value, data.id)
+        .subscribe((data: any) => {
+          this.orderById = data;
+          this.rating4 = data.artisanRating;
+        });
+  }
+  Search(event: any) {
     if (this.value == '') {
-      
       this.getOrder();
     } else {
       this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-        
-        return res.issue.toLocaleLowerCase()
+        return res.issue
+          .toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
       });
     }
-  // return this.hope;
+    // return this.hope;
   }
-  quoteSearch(event:any) {
+  quoteSearch(event: any) {
     if (this.value == '') {
-      
       this.getOrder();
     } else {
       this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-        
-        return res.issue.toLocaleLowerCase()
+        return res.issue
+          .toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
       });
     }
-  // return this.hope;
+    // return this.hope;
   }
-
-  
-
-
-
 
   applyFilter() {
-    this.orderData.filter = ''+Math.random();
-    
+    this.orderData.filter = '' + Math.random();
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
-  Operations!: any[] // set this however you did before.
+  Operations!: any[]; // set this however you did before.
   filteredOperations: any[] = [];
 
+  originalLeaves: any = [];
+  filterLeaves: any = [];
+  fromDate1 = '';
+  toDate1 = '';
 
-  originalLeaves :any =[]
-  filterLeaves :any =[]
-  fromDate1=''
-  toDate1=''
+  filterByDate() {
+    let k = 0;
+    var ivTemp = this.orderData;
 
-
-  filterByDate(){
-    let k = 0
-    var ivTemp = this.orderData
-   
     this.filteredOrderData = [...this.orderData];
 
-    if(this.filteredOrderData! == ''){
-      ivTemp = this.filteredOrderData
+    if (this.filteredOrderData! == '') {
+      ivTemp = this.filteredOrderData;
     }
-   
 
-    const isInRange = (element: any) => { 
-      
+    const isInRange = (element: any) => {
       const fDate = new Date(this.fromDate1);
       const tDate = new Date(this.toDate1);
       const elementFDate = new Date(element['date']);
 
-      
-
-      return (elementFDate > fDate && elementFDate < tDate);
-    }
+      return elementFDate > fDate && elementFDate < tDate;
+    };
     const result = Object.values(ivTemp).filter(isInRange);
-    return this.filteredOrderData =result
-    
+    return (this.filteredOrderData = result);
   }
 
-  filterByDate2(){
-    let k = 0
-    var ivTemp = this.getInvoice
-   
+  filterByDate2() {
+    let k = 0;
+    var ivTemp = this.getInvoice;
+
     this.filteredQuoteData = [...this.getInvoice];
 
-    if(this.filteredQuoteData! == ''){
-      ivTemp = this.filteredQuoteData
+    if (this.filteredQuoteData! == '') {
+      ivTemp = this.filteredQuoteData;
     }
-    
 
-    const isInRange = (element: any) => { 
-      
+    const isInRange = (element: any) => {
       const fDate = new Date(this.fromDate1);
       const tDate = new Date(this.toDate1);
       const elementFDate = new Date(element['date']);
 
-      
-
-      return (elementFDate > fDate && elementFDate < tDate);
-    }
+      return elementFDate > fDate && elementFDate < tDate;
+    };
     const result = Object.values(ivTemp).filter(isInRange);
-    return this.filteredQuoteData =result
-    
+    return (this.filteredQuoteData = result);
   }
-  search(){
+  search() {
     if (this.value == '') {
-      
       this.getOrder();
     } else {
       this.filteredOrderData = this.filteredOrderData.filter((res: any) => {
-        
-        return res.issue.toLocaleLowerCase()
+        return res.issue
+          .toLocaleLowerCase()
           .match(this.value.toLocaleLowerCase());
       });
     }
   }
 
-  hidden:boolean = false;
+  hidden: boolean = false;
 
-imageSource(){
+  imageSource() {
     this.hidden = !this.hidden;
-}
+  }
 
-hidden2:boolean = false;
+  hidden2: boolean = false;
 
-changeFee(){
+  changeFee() {
     this.hidden2 = !this.hidden2;
-}
-changeInspectionDate(row:any){
-row = this.orderById
+  }
+  changeInspectionDate(row: any) {
+    row = this.orderById;
 
-this.feeForm.value.orderId = row.id
+    this.feeForm.value.orderId = row.id;
 
-
-  this.api
-    .updateInspectionDate(this.feeForm.value)
-    .subscribe((res: any) => {
-            this.toastr.success('Inspection Fee Sucessfully Updated!!');
-            this.feeForm.reset()
-            this.hidden = !this.hidden
-
-      
+    this.api.updateInspectionDate(this.feeForm.value).subscribe((res: any) => {
+      this.toastr.success('Inspection Fee Sucessfully Updated!!');
+      this.feeForm.reset();
+      this.hidden = !this.hidden;
     });
 
     this.toastr.warning('Something Went wrong!!');
   }
 
-  onclickNotification(data:any){
-    
-    let i = 0
-    let input ={
-      
-        notificationId :data
-      
-    }
-    this.api.readNotification(input).subscribe((res:any) =>{
-      this.toastr.success('You read this message')
-  
-  this.signalRService.getNotification()
+  onclickNotification(data: any) {
+    let i = 0;
+    let input = {
+      notificationId: data,
+    };
+    this.api.readNotification(input).subscribe((res: any) => {
+      this.toastr.success('You read this message');
+
+      this.signalRService.getNotification();
       // this.signalRService.notification
-      
-    })
-    
+    });
   }
 }

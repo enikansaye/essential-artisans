@@ -61,7 +61,8 @@ export class AlltransactionsComponent implements OnInit {
   toDate1: any;
   hidden2: boolean = false;
   message: any;
-  searchText:any;
+  searchText: any;
+  errorMessage: any;
 
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
@@ -99,8 +100,6 @@ export class AlltransactionsComponent implements OnInit {
     this.adminApi.getOrder().subscribe((res: any) => {
       this.totalLength = res.length;
       this.AllOrderData = res;
-      
-      
 
       this.filteredOrderData = [...this.AllOrderData];
       return this.filteredOrderData.reverse();
@@ -154,18 +153,29 @@ export class AlltransactionsComponent implements OnInit {
   }
   hope: any;
   hope2: any;
+
   getArtisanToReassign(data: any) {
+    this.orderForm.value.orderId = data.id;
+    this.assignArtisan = data;
+    this.hope2 = data;
+
+    const reAssignObserver = {
+      next: (event: any) => {
+        console.log(event);
+        this.assignArtisan = event;
+        this.hope2 = data;
+      },
+      error: (err: any) => {
+        console.log(err.error);
+        this.errorMessage = err.error;
+      },
+    };
+
     this.hope = data;
 
-    this.orderForm.value.orderId = data.id;
     this.adminApi
       .reassignArtisan1(this.orderForm.value, data.id)
-      .subscribe((data: any) => {
-        this.assignArtisan = data;
-        this.hope2 = data;
-
-        // this.completedOrderLength =data.length
-      });
+      .subscribe(reAssignObserver);
   }
   hope3: any;
   onChangeArtisan(event: any) {
@@ -173,25 +183,30 @@ export class AlltransactionsComponent implements OnInit {
   }
 
   reassignArtisan(data: any) {
+    console.log(data);
+
     data = this.hope2;
+    console.log(this.hope3);
 
     this.reassignForm.value.orderId = this.hope.id;
     this.reassignForm.value.artisanId = this.hope3;
+    console.log(this.reassignForm.value);
 
     const reAssignObserver = {
       next: (event: any) => {
-        this.toastr.success('Order successfully sent!!!');
+        console.log(event);
 
+        this.toastr.success('Order successfully Re-assign to Artisan!!!');
       },
       error: (err: any) => {
+        console.log(err);
+
         if (err.error && err.error.message) {
           this.message = err.error.message;
           this.toastr.warning(this.message);
-
         } else {
           // this.message = 'Could not upload the file!';
           this.toastr.warning(this.message);
-
         }
       },
     };
@@ -280,7 +295,7 @@ export class AlltransactionsComponent implements OnInit {
       return elementFDate > fDate && elementFDate < tDate;
     };
     const result = Object.values(ivTemp).filter(isInRange);
-    return this.filteredOrderData = result;
+    return (this.filteredOrderData = result);
   }
 
   hidden: boolean = false;

@@ -23,6 +23,7 @@ import {
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ArtisansService } from 'src/app/service/artisans.service';
 import { ToastrService } from 'ngx-toastr';
+import { iif } from 'rxjs';
 
 const htmlToPdfmake = require('html-to-pdfmake');
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -103,6 +104,8 @@ export class ArtisantransactionsComponent implements OnInit {
   message: any;
   message2: any;
   cancelOrder: any;
+  orderDate: any;
+  orderfiles: any;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -197,8 +200,12 @@ export class ArtisantransactionsComponent implements OnInit {
   getPendingOrder() {
     const registerObserver = {
       next: (res: any) => {
-        this.AllpendingData = res;
-        this.AllpendingLength = res.length;
+        if(res){
+          this.AllpendingData = res;
+
+          this.AllpendingLength = res.length;
+
+        }
       },
       error: (err: any) => {
         return (this.pendingOrderError = err.error);
@@ -248,9 +255,12 @@ export class ArtisantransactionsComponent implements OnInit {
   getCompletedOrder() {
     const registerObserver = {
       next: (res: any) => {
-        this.completeOrderData = res;
-        this.completeOrderLength = res.length;
-        return this.completeOrderData.reverse();
+        if(res){
+          this.completeOrderData = res;
+          this.completeOrderLength = res.length;
+          return this.completeOrderData.reverse();
+        }
+        
       },
       error: (err: any) => {
         return (this.completeOrderError = err.error);
@@ -261,9 +271,13 @@ export class ArtisantransactionsComponent implements OnInit {
   getCancelOrder() {
     const registerObserver = {
       next: (res: any) => {
-        this.cancelOrderData = res;
+        if(res){
+          this.cancelOrderData = res;
         this.cancelOrderLength = res.length;
         return this.completeOrderData.reverse();
+
+        }
+        
       },
       error: (err: any) => {
         return (this.cancelOrderError = err.error);
@@ -273,10 +287,14 @@ export class ArtisantransactionsComponent implements OnInit {
   }
   onClickViewOrder(data: any) {
     (this.signupForm.value.invoiceId = data.id),
+    console.log(data);
+    
       this.artisanurl
         .getOrderById(this.signupForm.value, data.id)
         .subscribe((data: any) => {
           this.orderById = data;
+          this.orderDate = data.date
+          this.orderfiles = data.filePaths
         });
   }
 

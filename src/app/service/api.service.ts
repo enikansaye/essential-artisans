@@ -28,8 +28,8 @@ export class ApiService implements OnInit {
 
   // Content-Security-Policy: script-src 'self' https://myexample.com
 
-  public baseUrl: string = "https://essential-artisans.azurewebsites.net";
-  // public baseUrl: string = 'https://localhost:7130';
+  // public baseUrl: string = "https://essential-artisans.azurewebsites.net";
+  public baseUrl: string = 'https://localhost:7130';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -240,6 +240,9 @@ export class ApiService implements OnInit {
   // }
 
   // this is is to get a default artisans
+  getAllBanks(): any {
+    return this.http.get<any>(this.baseUrl + '/api/App/banks');
+  }
   getAll(): any {
     return this.http.get<any>(this.baseUrl + '/api/App/locations');
   }
@@ -311,7 +314,7 @@ export class ApiService implements OnInit {
 
   userGetInvoice() {
     return this.http
-      .get<any>(this.baseUrl + '/api/Customer/customer/invoices')
+      .get<any>(this.baseUrl + '/api/Customer/customer/approved/invoices')
       .pipe(
         map((res: any) => {
           return res;
@@ -327,10 +330,10 @@ export class ApiService implements OnInit {
         })
       );
   }
-  customerApproveInvoice( data:any, id:number) {
+  customerApproveInvoice( data:any) {
    
     return this.http
-      .put<any>(this.baseUrl + '/api/Customer/invoice/accept/'+id, data)
+      .put<any>(this.baseUrl + '/api/Customer/invoice/accept/', data)
       .pipe(
         map((res: any) => {
           return res;

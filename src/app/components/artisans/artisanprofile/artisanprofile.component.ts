@@ -145,6 +145,7 @@ export class ArtisanprofileComponent implements OnInit {
   invoiceUserDetails: any;
   Action: any;
   invoiceId: any;
+  bankData: any;
 
 
   constructor(
@@ -200,6 +201,9 @@ export class ArtisanprofileComponent implements OnInit {
       phoneNumber: [''],
       userId: [0],
       service: [''],
+      bankName: [''],
+  bankCode: [''],
+  accountNumber:['']
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
@@ -257,6 +261,9 @@ this.city=data.value
       this.formControls['state'].enable();
       this.formControls['city'].enable();
       this.formControls['userId'].enable();
+      this.formControls['bankName'].enable();
+      this.formControls['bankCode'].enable();
+      this.formControls['accountNumber'].enable();
 
       this.updateForm.controls['firstName'].setValue(
         this.artisanData.firstName
@@ -277,6 +284,7 @@ this.city=data.value
       this.updateForm.controls['state'].setValue(this.artisanData.state);
       
       this.updateForm.controls['city'].setValue(this.artisanData.city);
+      this.updateForm.controls['bankName'].setValue(this.bankName);
       
     } else {
       this.updateForm.disable();
@@ -308,7 +316,18 @@ this.city=data.value
     this.selectedFiles = event.target.files;
   }
 
-  
+  getBanks() {
+    this.api.getAllBanks().subscribe((res: any) => {
+      this.bankData = res;
+    });
+  } 
+
+  onBanks(data: any) {
+    const hope =this.updateForm.value.bankCode
+    let bankNewName = this.bankData.find((s:any) => s.code === hope);
+    this.bankName = bankNewName.name
+    
+  }
 
   
   uploadFile(files: any) {
@@ -342,6 +361,7 @@ this.city=data.value
 
   
   updateUserDetails(row: any) {
+    
 
     this.artisanProfileModelObj.userId = this.updateForm.value.userId;
     this.artisanProfileModelObj.firstName = this.updateForm.value.firstName;
@@ -351,6 +371,12 @@ this.city=data.value
     this.artisanProfileModelObj.state = this.updateForm.value.state;
     this.artisanProfileModelObj.phoneNumber = this.updateForm.value.PhoneNumber;
     this.artisanProfileModelObj.service = this.updateForm.value.service;
+    this.artisanProfileModelObj.accountNumber = this.updateForm.value.accountNumber;
+    this.artisanProfileModelObj.bankCode = this.updateForm.value.bankCode;
+    this.artisanProfileModelObj.bankName = this.bankName;
+    this.updateForm.value.bankName =this.bankName
+
+
 
     this.artisanurl.artisanUpdate(this.updateForm.value).subscribe((res: any) => {
       this.toastr.success('Profile updated');

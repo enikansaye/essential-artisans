@@ -9,15 +9,22 @@
         <!-- <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
         </div> -->
         <div class="col-6 my-2">
-          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for Artisans within your location">
+          <input
+            class="form-control"
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            autocomplete="off"
+            placeholder="&#61442;  Start searching for Artisans within your location"
+          />
         </div>
-       
+
         <div class="row mt-4 cursor">
           <div
-            class="col-md-4"
-            (click)="openModal(template)"
+            class="col-md-4 mb-5 mb-md-none"
             *ngFor="
-              let data of artisanData | filter : searchText
+              let data of artisanData
+                | filter : searchText
                 | paginate
                   : {
                       id: 'listing_pagination',
@@ -25,27 +32,37 @@
                       currentPage: page,
                       totalItems: totalRecord
                     }
-                
             "
           >
-            <div class="card card-profile  " (click)="onEdit(data)">
-              <div class="card-avatar " >
+            <div
+              class="card card-profile"
+              (click)="onEdit(data); openModal(template)"
+            >
+              <div class="card-avatar">
                 <a>
-                  <img class="img-fluid  " style="width: 200px; height: 200px; object-fit:fill;" *ngIf="data.profileImage" src="data:image/png;base64,{{ data.profileImage}}" />
-                 <div class="img " *ngIf="!data.profileImage ">
-                  <ngx-avatar size="130" name="{{data.firstName}} {{data.lastName}}"></ngx-avatar></div>
+                  <img
+                    class="img-fluid"
+                    style="width: 200px; height: 200px; object-fit: fill"
+                    *ngIf="data.profileImage"
+                    src="data:image/png;base64,{{ data.profileImage }}"
+                  />
+                  <div class="img" *ngIf="!data.profileImage">
+                    <ngx-avatar
+                      size="130"
+                      name="{{ data.firstName }} {{ data.lastName }}"
+                    ></ngx-avatar>
+                  </div>
                   <!-- <img class="img img-fluid " *ngIf="!data.profileImage" src="/assets/images/avatar1.webp" /> -->
                 </a>
               </div>
 
               <div class="table">
                 <h4 class="card-caption">
-                  {{ data.name }} 
-                 
+                  {{ data.name }}
                 </h4>
-                <p class="category text-muted h6 pt-3">{{ data.firstName }} {{data.lastName}}</p>
-
-
+                <p class="category text-muted h6 pt-3">
+                  {{ data.firstName }} {{ data.lastName }}
+                </p>
 
                 <!-- <p class=" text-center mt-2" >
                   
@@ -57,16 +74,65 @@
                   <div class="list-inline-item mt-2 small">
                     <i class="bi bi-geo-alt-fill"></i>{{ data.location }}
                   </div>
-               
                 </div>
-                <ngx-star-rating [id]="data.rating" [(ngModel)]="data.rating" [disabled]="true"></ngx-star-rating>
-
+                <!-- <ngx-star-rating [id]="data.rating" [(ngModel)]="data.rating" [disabled]="true"></ngx-star-rating> -->
               </div>
             </div>
+            <span
+              (click)="getArtisanReviews(data)"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              <span *ngIf="data.rating === 5"
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ></span>
+              <!-- when rating is 4 -->
+              <span *ngIf="data.rating === 4"
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ></span>
+
+              <!-- when rating is 3 -->
+
+              <span *ngIf="data.rating === 3"
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ></span>
+
+              <!-- when rating is 2 -->
+
+              <span *ngIf="data.rating === 2"
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ></span>
+
+              <!-- when rating is 1 -->
+
+              <span *ngIf="data.rating === 1"
+                ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ></span>
+              <!-- rating zero -->
+              <span *ngIf="data.rating === 0"
+                ><i class="bi bi-star"></i><i class="bi bi-star"></i
+                ><i class="bi bi-star"></i><i class="bi bi-star"></i
+                ><i class="bi bi-star"></i
+              ></span>
+              ({{ data.reviewCount }} verified rating)</span
+            >
           </div>
         </div>
 
-        <div *ngIf="!artisanData" class=" w-100  h-100 d-flex align-center justify-content-center">
+        <div
+          *ngIf="!artisanData"
+          class="w-100 h-100 d-flex align-center justify-content-center"
+        >
           No Artisan Within Your Location
         </div>
       </div>
@@ -74,10 +140,7 @@
   </div>
 </div>
 
-<div>
-  
-</div>
-
+<div></div>
 
 <!-- modal for invoice -->
 <ng-template #template>
@@ -96,9 +159,8 @@
   <div class="modal-body">
     <!-- modal form -->
     <form
-      [formGroup]="formValue" (ngSubmit)="onSubmitCheck(this.formValue.value)"
-     
-     
+      [formGroup]="formValue"
+      (ngSubmit)="onSubmitCheck(this.formValue.value)"
     >
       <div class="mb-1">
         <label for="exampleInputEmail1" class="form-label">Full Name</label>
@@ -108,35 +170,38 @@
           class="form-control"
           id="exampleInputText"
           aria-describedby="emailHelp"
+          [ngClass]="{
+            'is-invalid': submitted && orderFormControl['Name'].errors
+          }"
         />
         <span
-        style="color: #dc3545;"
+          style="color: #dc3545"
           *ngIf="(orderFormControl['Name'].touched || submitted) && orderFormControl['Name'].errors?.['required']"
         >
-        Name Field is required
+          Name Field is required
         </span>
       </div>
 
       <div class="mb-1">
-        <label for="exampleInputPassword1" class="form-label"
-          >Address</label
-        >
+        <label for="exampleInputPassword1" class="form-label">Address</label>
         <input
           formControlName="PropertyAddress"
           type="text"
           class="form-control"
           id="exampleInputPassword1"
+          [ngClass]="{
+            'is-invalid':
+              submitted && orderFormControl['PropertyAddress'].errors
+          }"
         />
         <span
-        style="color: #dc3545;"
+          style="color: #dc3545"
           *ngIf="(orderFormControl['PropertyAddress'].touched || submitted) && orderFormControl['PropertyAddress'].errors?.['required']"
         >
-        Address is required
+          Address is required
         </span>
       </div>
-    
 
-     
       <div class="mb-1">
         <label for="exampleInputPassword1" class="form-label"
           >Phone Number</label
@@ -145,9 +210,12 @@
           formControlName="PhoneNumber"
           type="number"
           class="form-control"
+          [ngClass]="{
+            'is-invalid': submitted && orderFormControl['PhoneNumber'].errors
+          }"
         />
         <span
-        style="color: #dc3545;"
+          style="color: #dc3545"
           *ngIf="(orderFormControl['PhoneNumber'].touched || submitted) && orderFormControl['PhoneNumber'].errors?.['required']"
         >
           Phone Number is required
@@ -163,13 +231,12 @@
           class="form-control"
         />
       </div> -->
-   
 
-  <!-- <div>
+      <!-- <div>
       <output *ngIf=successResponse class="success"><b>{{successResponse}}</b></output>
   </div> -->
-      
-<div class="my-2">
+
+      <div class="my-2">
         <label for="exampleInputPassword1" class="form-label"
           >Description</label
         >
@@ -178,9 +245,12 @@
           type="textarea"
           class="form-control"
           id="exampleInputPassword1"
+          [ngClass]="{
+            'is-invalid': submitted && orderFormControl['Issue'].errors
+          }"
         />
         <span
-        style="color: #dc3545;"
+          style="color: #dc3545"
           *ngIf="(orderFormControl['Issue'].touched || submitted) && orderFormControl['Issue'].errors?.['required']"
         >
           Job Description is required
@@ -200,35 +270,123 @@
           dd/mm/yyyy, --:--
           "
         />
-        <br>
+        <br />
         <span
-        style="color: #dc3545;"
+          style="color: #dc3545"
           *ngIf="(orderFormControl['InspectionDateAndTime'].touched || submitted) && orderFormControl['InspectionDateAndTime'].errors?.['required']"
         >
-        Inspection Date and Time is required
+          Inspection Date and Time is required
         </span>
-        <br>
-       <div class="my-2">
-        <span >Support formats are .jpg .gif .png </span><br>
-       <span>Pictures may not exceed 2MB</span>
-       </div>
+        <br />
+        <div class="my-2">
+          <span>Support formats are .jpg .gif .png </span><br />
+          <span>Pictures may not exceed 2MB</span>
+        </div>
       </div>
 
-    
+      <label class="btn btn-default">
+        <input
+          type="file"
+          multiple
+          (change)="selectFiles($event)"
+          formControlName="files"
+        />
+      </label>
 
-     
+      <div class="mt-4">
+        <!-- <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple> -->
+      </div>
+      <div class="h5" style="color: red">{{ message }}</div>
 
-          <label class="btn btn-default">
-            <input type="file" multiple (change)="selectFiles($event)" formControlName="files" />
-          </label>
-
-    <div class="mt-4">
-      <!-- <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple> -->
-    </div>
-<div class="h5 " style="color: red;">{{message }}</div>
-
-<button class="btn btn-info mt-3" id='ModelId'    type="submit">Send</button>
+      <button class="btn btn-info mt-3" id="ModelId" type="submit">Send</button>
     </form>
   </div>
-  
 </ng-template>
+
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Verified Customer Feedback
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+                  <div *ngIf="!artisanReviews" class="d-flex justify-content-center">No review fo this Artisan</div>
+
+        <div class="card p-2" *ngFor="let reviews of artisanReviews">
+          <div>{{ reviews.customerFirstName }}</div>
+
+          <div class="d-flex justify-content-center py-2 ps-3">
+            {{ reviews.customerComment }}
+          </div>
+          <!-- <div *ngIf="!reviews" class="d-flex justify-content-center">No review fo this Artisan</div> -->
+          <!-- <div class="d-flex float-end">{{reviews.rating}}</div> -->
+          <span class="d-flex float-end">
+            <span *ngIf="reviews.rating === 5"
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+            ></span>
+            <!-- when rating is 4 -->
+            <span *ngIf="reviews.rating === 4"
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+            ></span>
+
+            <!-- when rating is 3 -->
+
+            <span *ngIf="reviews.rating === 3"
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+            ></span>
+
+            <!-- when rating is 2 -->
+
+            <span *ngIf="reviews.rating === 2"
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+            ></span>
+
+            <!-- when rating is 1 -->
+
+            <span *ngIf="reviews.rating === 1"
+              ><i class="bi bi-star-fill" style="color: #f7b01f"></i
+            ></span>
+            <!-- rating zero -->
+            <span *ngIf="reviews.rating === 0"
+              ><i class="bi bi-star"></i><i class="bi bi-star"></i
+              ><i class="bi bi-star"></i><i class="bi bi-star"></i
+              ><i class="bi bi-star"></i
+            ></span>
+            ({{ reviews.reviewCount }} verified rating)</span
+          >
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

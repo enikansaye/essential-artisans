@@ -264,6 +264,7 @@ quotePage: any;
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
       
+      
       this.artisanData = res;
       this.totalRecord = res.length;
       this.artisanLength = res.length;
@@ -291,6 +292,7 @@ quotePage: any;
 
   getQouteByAdmin() {
     this.adminApi.getQoute().subscribe((res: any) => {
+      
       
       this.viewQoute = res;
       return this.viewQoute.reverse();

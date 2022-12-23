@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   ngOnInit(): void {
     
-    this.getState()
+    // this.getState()
 
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(data:any) {
-    this.submitted = false;
+    this.submitted = true;
     localStorage.setItem('email', data.email);
 
 
@@ -77,7 +77,13 @@ export class RegisterComponent implements OnInit {
 
       },
       error: (err: any) => {
-        return this.errorMessage = err.error
+        
+        if(err.error || err.error.message){
+
+          this.errorMessage = err.error
+
+
+       }
         
         // this.alertService.danger('signup failed');
       },

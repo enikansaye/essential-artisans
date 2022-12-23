@@ -126,6 +126,8 @@ export class LoginComponent implements OnInit {
 
       },
       error: (err: any) => {
+        console.log(err);
+        
        return this.errorMessage = err.error
         // this.alertService.danger('signup failed');
       },

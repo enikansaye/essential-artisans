@@ -10,11 +10,11 @@
             <div class="col-md-12 col-lg-12 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
 
-                <form  [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <form  [formGroup]="signupForm" (ngSubmit)="onSubmit(this.signupForm.value)">
 
-                  <div class="d-flex align-items-center mb-3 pb-1">
+                  <!-- <div class="d-flex align-items-center mb-3 pb-1">
                   <img src="/assets/images/logos.png" class="w-50" alt="">
-                  </div>
+                  </div> -->
 
                   <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
                     Sign up as an Artisan
@@ -25,6 +25,8 @@
                       id=""
                       formControlName="firstName"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['firstName'].errors }"
+
                     />
                     <span style="color: #dc3545;"
                     *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
@@ -40,6 +42,8 @@
                       id=""
                       formControlName="lastName"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['lastName'].errors }"
+
                     />
 
                     <span
@@ -57,6 +61,8 @@
                       id=""
                       formControlName="email"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['email'].errors }"
+
                     />
 
                     <span
@@ -80,6 +86,8 @@
                       id=""
                       formControlName="phoneNumber"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['phoneNumber'].errors }"
+
                     />
 
                     <span
@@ -126,15 +134,23 @@
                     </select>
                     <label for="country" class="form-label">Select City</label>
                   </div> -->
-                  <div class="form-group input-group-lg form-outline mb-4">
+                  <div class="form-group input-group-lg form-outline mb-4" (click)="getState()">
                   <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
                     <option value="" selected disabled>Select State</option>
                     <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                     
                   </select>
 
+                  <span
+                  style="color: #dc3545;"
+                    *ngIf="(signupFormControl['state'].touched || submitted) && signupFormControl['state'].errors?.['required']"
+                  >
+                    State is required
+                  </span>
+
                   <div> <label for="country" class="form- mt-2">State Location <span style="color: red;">*</span></label></div>
-                  </div>
+                 
+                </div>
 
                   <div class="form-group input-group-lg form-outline mb-4"   >
                     <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
@@ -142,6 +158,12 @@
                       <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                       
                     </select>
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['city'].touched || submitted) && signupFormControl['city'].errors?.['required']"
+                    >
+                      LGA is required
+                    </span>
                     <div> <label for="country" class="form-label mt-2"> LGA Location <span style="color: red;">*</span></label></div>
                     </div>
 
@@ -153,6 +175,8 @@
                       id=""
                       formControlName="address"
                       class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['address'].errors }"
+
                     />
 
                     <span
@@ -165,14 +189,55 @@
                   </div>
 
                   <div class="form-group input-group-lg form-outline mb-4">
-                    <select class="form-select" aria-label="Default select example" formControlName="categoryId" >
+                    <select class="form-select" aria-label="Default select example" formControlName="categoryId" (click)="getAllServiceCategory()" >
                       <option value="" s selected disabled>Select Service category</option>
                       <option *ngFor="let service of serviceData" [ngValue]="service.categoryId">{{service.name}}</option>
                       
                     </select>
   
-                    <div> <label for="country" class="form- mt-2">service category <span style="color: red;">*</span></label></div>
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['categoryId'].touched || submitted) && signupFormControl['categoryId'].errors?.['required']"
+                    >
+                    Service Category is required
+                    </span>
+                    <div> <label for="country" class="form- mt-2">Service Category <span style="color: red;">*</span></label></div>
                     </div>
+
+                    <div class="form-group form-outline mb-4">
+                      <input
+                        type="text"
+                        id=""
+                        formControlName="bankAccountNumber"
+                        class="form-control form-control-lg mb-1"
+                        [ngClass]="{ 'is-invalid': submitted && signupFormControl['bankAccountNumber'].errors }"
+  
+                      />
+  
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['bankAccountNumber'].touched || submitted) && signupFormControl['bankAccountNumber'].errors?.['required']"
+                      >
+                        Account Number is required
+                      </span>
+                     <div> <label for="" class="form-label">Account Number<span style="color: red;">*</span></label></div>
+                    </div>
+
+                    <div class="form-group input-group-lg form-outline mb-4" (click)="getBanks()" (change)="onBanks($event.target)" >
+                      <select class="form-select" aria-label="Default select example" formControlName="bankCode" >
+                        <option value="" selected disabled>Bank Name</option>
+                        <option *ngFor="let banks of bankData" [ngValue]="banks.code">{{banks.name}}</option>
+                        
+                      </select>
+    
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['bankCode'].touched || submitted) && signupFormControl['bankCode'].errors?.['required']"
+                      >
+                      Bank Name is required
+                      </span>
+                      <div> <label for="country" class="form- mt-2">Bank Name <span style="color: red;">*</span></label></div>
+                      </div>
 
                   <mat-form-field appearance="outline" class="w-100">
                     <!-- <mat-label>Enter your password</mat-label> -->
