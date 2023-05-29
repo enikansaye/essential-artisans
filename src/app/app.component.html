@@ -99,7 +99,7 @@
           data-bs-target="#navbarTogglerDemo02"
           aria-controls="navbarTogglerDemo02"
           aria-expanded="false"
-          aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayAdmin" routerLink="/admin">
+          aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayAdmin" routerLink="/Admin">
             <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-user"></i> My PROFILE</a
             >
@@ -123,6 +123,17 @@
           (click)="onClick(loginApi.loggedinUser.id)">
             <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-user"></i> My PROFILE</a
+            >
+          </li>
+          <li class="hover nav-item my-2 my-lg-0"   data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation"   
+          routerLink="/market place"
+          >
+            <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
+              ><i class="fa-solid fa-market"></i> Market Place</a
             >
           </li>
   

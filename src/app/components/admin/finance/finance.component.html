@@ -1,0 +1,102 @@
+<div class="container-fluid">
+    <section class="row pt-2">
+      <div class="row d-flex justify-content-around">
+        <div class="row text-light">
+          <div class="col-xl-3 col-lg-6 col-md-6 col-6 justify-content-center">
+            <!-- Card -->
+            <div class="card mb-4">
+              <!-- Card body -->
+              <div class="card-body col1 rounded justify-content-center">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                >
+                  <div>
+                    <span class="fs-6 text-uppercase fw-semi-bold"
+                      >Completed</span
+                    >
+                    <!-- <i class="fa-solid fa-eye"></i>
+                        <i class="fa-duotone fa-eye"></i> -->
+                  </div>
+                  <div>
+                    <span class="bi bi-shopping-bag fs-3 text-primary"></span>
+                  </div>
+                </div>
+                <h2 class="fw-bold mb-1" *ngIf="completedData">{{ completedData.length }}</h2>
+                <h2 class="fw-bold mb-1" *ngIf="!completedData">0</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+            <!-- Card -->
+            <div class="card mb-4">
+              <!-- Card body -->
+              <div class="card-body rounded col2">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                >
+                  <div>
+                    <!-- <i class="fa-solid fa-face-smile"></i> -->
+                    <span class="fs-6 text-uppercase fw-semi-bold">Queued</span>
+                  </div>
+                  <div>
+                    <!-- <span class="bi bi-book-open fs-3 text-primary"></span> -->
+                  </div>
+                </div>
+                <h2 class="fw-bold mb-1" *ngIf="queuedData" >
+                  {{queuedData.length}}
+                </h2>
+                <h2 class="fw-bold mb-1" *ngIf="!queuedData">0</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+            <!-- Card -->
+            <div class="card mb-4">
+              <!-- Card body -->
+              <div class="card-body col3 rounded">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                >
+                  <div>
+                    <!-- <i class="fa-solid fa-heart"></i> -->
+                    <span class="fs-6 text-uppercase fw-semi-bold"
+                      >Pending</span
+                    >
+                  </div>
+                  <div>
+                    <!-- <span class="bi bi-users fs-3 text-primary"></span> -->
+                  </div>
+                </div>
+                <h2 class="fw-bold mb-1" *ngIf="pendingData">
+                  {{ pendingData.Length }}
+                </h2>
+                <h2 class="fw-bold mb-1" *ngIf="!pendingData">0</h2>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-6 col-md-6 col-6">
+            <!-- Card -->
+            <div class="card mb-4">
+              <!-- Card body -->
+              <div class="card-body col4 rounded">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-3 lh-1"
+                >
+                  <div>
+                    <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
+                    <span class="fs-6 text-uppercase fw-semi-bold">Canceled</span>
+                  </div>
+                  <div>
+                    <span class="bi bi-users fs-3 text-primary"></span>
+                  </div>
+                </div>
+                <h2 class="fw-bold mb-1" *ngIf="failedData">{{ failedData.Length }}</h2>
+                <h2 class="fw-bold mb-1" *ngIf="!failedData">0</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+  

@@ -1,0 +1,104 @@
+<ng-container>
+    <div class="container "*ngIf="product.length == 0" >
+        <div class="ms-0">
+            <div class="h5 class-title">My Carts</div>
+        </div>
+        <div class="center d-flex flex-column align-items-center">
+            <img class="w-50" src="/assets/images/emptycart.png" alt="">
+            <h3>Your card is empty</h3>
+            <h4>No available items</h4>
+           <button class="btn btn-info" routerLink="/market place">Shop Now</button> 
+        </div>
+    </div>
+    <div class="container mt-2" *ngIf="product.length != 0">
+        <div class="card-table">
+            <div class="cart-product">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                        <th>Sr</th>
+                        <th>Product Name</th>
+                        <th>Product Image</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of product let i = index">
+    <td>{{i + 1}}</td>
+    <td>{{item.name}}</td>
+    <td><img class="w-25" src="data:image/png;base64,{{item.productImages}}" alt=""></td>
+    <td>{{item.description}}</td>
+    <td>{{item.price}}</td>
+    <td>{{item.quantity}}</td>
+    <td>{{item.total}}</td>
+    <td>
+        <button class="btn btn-danger" (click)="removeItem(item)"><i class="fas fa-trash"></i></button>
+    </td>
+                        </tr>
+                    </tbody>
+                </table>
+   <div class="d-flex justify-content-end me-5 mb-3">
+    <button class="btn btn-danger me-2" (click)="emptyCart()">Empty Carts</button>
+    <button class="btn btn-info me-2">Shop more</button>
+    <button class="btn btn-success me-3" (click)="openModal(template); getCartItems()">Checkout</button>
+
+    <div>Total Amount<br><strong>&#8358; {{grandTotal}} </strong></div>
+   </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #template>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+    <div class="modal-body">
+      <div >
+     
+          
+            <h2 class="card-title" style="color: #ff7359">Order Form</h2>
+
+            <form (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
+              <div>
+                <label for="customerName">Name:</label>
+                <input  class="form-control form-control-lg mb-1" type="text" id="customerName" name="customerName" [(ngModel)]="customerName" required>
+              </div>
+              <div>
+                <label for="customerAddress">Address:</label>
+                <input  class="form-control form-control-lg mb-1" type="text" id="customerAddress" name="customerAddress" [(ngModel)]="customerAddress" required>
+              </div>
+              <div>
+                <label for="customerPhoneNumber">Phone Number:</label>
+                <input  class="form-control form-control-lg mb-1" type="text" id="customerPhoneNumber" name="customerPhoneNumber" [(ngModel)]="customerPhoneNumber" required>
+              </div>
+              <div class="form-group form-outline mb-4">
+                <label for="customerEmail">Email:</label>
+                <input   class="form-control form-control-lg mb-1" type="email" id="customerEmail" name="customerEmail" [(ngModel)]="customerEmail" required>
+              </div>
+            
+            
+              <!-- Assuming you have access to the cart items in the component -->
+              <div *ngFor="let item of product">
+                <h3>Product: {{ item.productName }}</h3>
+                <div>
+                  <label for="quantity{{ item.productId }}">Quantity:</label>
+                  <input type="number" id="quantity{{ item.productId }}" name="quantity{{ item.productId }}" [(ngModel)]="item.quantity" required>
+                </div>
+                <input type="hidden" [name]="'productId' + item.productId" [ngModel]="item.productId">
+              </div>
+            
+              <button class="btn" type="submit" style="background-color: #ff7359; border: none; color: white;" [disabled]="!checkoutForm.form.valid">Place Order</button>
+            </form>
+                
+      </div>
+    </div>
+  </ng-template>
+  

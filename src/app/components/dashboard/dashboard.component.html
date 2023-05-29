@@ -38,6 +38,7 @@
               <li><a class="dropdown-item" #Carpentry name="Carpentry" id="Carpentry" routerLink="/available artisan" (click)="this.data.sendClickEvent(Carpentry.id)">Carpenter</a></li>
               <li><a class="dropdown-item" #Electrician name="Electrician" id="Electrician" (click)="this.data.sendClickEvent(Electrician.id)" routerLink="/available artisan">Electrician</a></li>
               <li><a class="dropdown-item" #Plumbing name="Plumbing" routerLink="/available artisan" id="Plumbing" (click)="this.data.sendClickEvent(Plumbing.id)">Plumbing</a></li>
+              <li><a class="dropdown-item" #Cleaning_Service name="Cleaning Service" routerLink="/available artisan" id="Clearning Service" (click)="this.data.sendClickEvent(Cleaning_Service.id)">Cleaning Service</a></li>
             </ul>
          
           <!-- <select class="form-select" aria-label="Default select example" (change)="onChangeService($event.target)" >
@@ -153,8 +154,13 @@
     </div>
   </section>
 
+
+
+
+ 
+
   <!-- artisans within location -->
-  <section class="pt-3">
+  <section class="pt-3" #scroll id="scrollable">
     <div class="container-fluid">
       <!-- Title -->
       <div class="row mb-4">
@@ -163,6 +169,7 @@
           <p class="mb-0">Choose from thousand of available Artisans</p>
         </div>
       </div>
+   
 
       <!-- Tabs content START -->
       <div class="tab-content" id="course-pills-tabContent">
@@ -330,7 +337,7 @@
 
             <!-- Card item START -->
             <div class=" col-6 col-sm-6 col-lg-4 col-xl-3 cursor" >
-              <div class="card shadow h-100" #Plumbing name="Plumbing" routerLink="/available artisan" id="Plumbing" (click)="this.data.sendClickEvent(Plumbing.id)">
+              <div class="card shadow h-100"  routerLink="/categories" >
                 <!-- Image -->
                 <img
                   src="assets/images/plumbing.png"
@@ -342,10 +349,10 @@
 
                   <!-- Title -->
                   <h5 class="card-title fw-normal">
-                    <a class="text-decoration-none text-info"> PLUMBING</a>
+                    <a class="text-decoration-none text-info"> OTHERS</a>
                   </h5>
                   <p class="mb-2 text-truncate-2">
-                    Get all your plumbing work done
+                    
                   </p>
                   <!-- Rating star -->
                   <ul class="list-inline mb-0">
@@ -373,7 +380,59 @@
                 <div class="card-footer pt-0 pb-3">
                   <hr />
                   <div>
-                    See All Plumbers
+                    View Others
+                    <span><i class="bi bi-arrow-right"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card item END -->
+            <!-- Card item START -->
+            <div class=" col-6 col-sm-6 col-lg-4 col-xl-3 cursor" >
+              <div class="card shadow h-100"  routerLink="/categories" >
+                <!-- Image -->
+                <img
+                  src="assets/images/plumbing.png"
+                  class="card-img-top h-50"
+                  alt="Essential-Plumbing"
+                />
+                <div class="card-body pb-0">
+                  <!-- Badge and favorite -->
+
+                  <!-- Title -->
+                  <h5 class="card-title fw-normal">
+                    <a class="text-decoration-none text-info"> OTHERS</a>
+                  </h5>
+                  <p class="mb-2 text-truncate-2">
+                    
+                  </p>
+                  <!-- Rating star -->
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="bi bi-star-fill text-warning"></i>
+                    </li>
+                    <li class="list-inline-item me-0 small">
+                      <i class="far fa-star text-warning"></i>
+                    </li>
+                    <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                      4.0/5.0
+                    </li>
+                  </ul>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer pt-0 pb-3">
+                  <hr />
+                  <div>
+                    View Others
                     <span><i class="bi bi-arrow-right"></i></span>
                   </div>
                 </div>
@@ -388,6 +447,9 @@
       <!-- Tabs content END -->
     </div>
   </section>
+
+
+ 
 
   <!-- what people says -->
   <section class="container-fluid pt-md-2 mt-5 bg-primary bg-opacity-10 shadow">
@@ -470,6 +532,7 @@
       </div>
     </div>
   </section>
+  <!-- End of what people says about us -->
 
   <!-- ======= About Section ======= -->
   <section class="container mt-5 "  >
@@ -550,6 +613,17 @@
     </div>
   </section>
 
+  <div>
+    <div  *ngFor="let card of serviceData">
+      <div class="d-flex" (click)="toggleSection(card)">
+        {{ card.name }}
+      </div>
+      <div class="section" [ngClass]="{ 'hidden': !card.name }">
+        Section content goes here
+      </div>
+    </div>
+  </div>
+  
 
 
   <app-footer></app-footer>

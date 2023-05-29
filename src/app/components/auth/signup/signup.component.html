@@ -208,6 +208,24 @@
                       <input
                         type="text"
                         id=""
+                        formControlName="accountName"
+                        class="form-control form-control-lg mb-1"
+                        [ngClass]="{ 'is-invalid': submitted && signupFormControl['accountName'].errors }"
+  
+                      />
+  
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['accountName'].touched || submitted) && signupFormControl['accountName'].errors?.['required']"
+                      >
+                        Account Name is required
+                      </span>
+                     <div> <label for="" class="form-label">Account Name<span style="color: red;">*</span></label></div>
+                    </div>
+                    <div class="form-group form-outline mb-4">
+                      <input
+                        type="text"
+                        id=""
                         formControlName="bankAccountNumber"
                         class="form-control form-control-lg mb-1"
                         [ngClass]="{ 'is-invalid': submitted && signupFormControl['bankAccountNumber'].errors }"

@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ApiService } from 'src/app/service/api.service';
 import { UserService } from 'src/app/service/user.service';
 import { AdminService } from 'src/app/shared/admin.service';
+
+interface Data {
+  id: string;
+  name: boolean;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -12,14 +18,17 @@ import { AdminService } from 'src/app/shared/admin.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
+
+
   searchForm!: FormGroup;
   searchArtisan: any;
   location: any;
-  serviceData: any;
+  serviceData !: Data[];
+  
   serviceCategories: any;
   state2: any;
   city2: any;
-
   constructor(
     private api: ApiService,
     private adminApi: AdminService,
@@ -67,6 +76,8 @@ export class DashboardComponent implements OnInit {
 
   getAllServiceCategory() {
     this.adminApi.getServiceCategory().subscribe((res: any) => {
+      console.log(res);
+      
       this.serviceData = res;
     });
   }
@@ -79,5 +90,11 @@ export class DashboardComponent implements OnInit {
   onChangeService(event: any) {
     this.hope3 = `${event.value}`;
     // this.router.navigate(['/available artisan']);
+  }
+
+  toggleSection(card:any): void {
+    console.log(card);
+    
+    card.name = !card.name;
   }
 }

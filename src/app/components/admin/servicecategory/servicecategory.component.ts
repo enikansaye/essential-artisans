@@ -4,6 +4,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/shared/admin.service';
 import { servicecategoryModel } from './servicecategory.model';
+import { ApiService } from 'src/app/service/api.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-servicecategory',
@@ -17,19 +19,28 @@ export class ServicecategoryComponent implements OnInit {
   showUpdate!: boolean;
   modalRef?: BsModalRef | null;
   modalRef2?: BsModalRef;
+  selectedFiles!: FileList;
+  progressInfos!: [];
+
   servicecategoryModelObj: servicecategoryModel = new servicecategoryModel();
+  progress: number = 0;
+  message: any;
+  submitted: boolean = false;
 
   constructor(
     private adminApi: AdminService,
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private api : ApiService,
+    private http: HttpClient
   ) {}
   formValue!: FormGroup;
   updateFormValue!: FormGroup;
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
-      name: [''],
+      Name: [''],
+      File: ['']
     });
 
     this.updateFormValue = this.formBuilder.group({
@@ -43,28 +54,68 @@ export class ServicecategoryComponent implements OnInit {
     this.getAllServiceCategory();
   }
 
-  postServiceCategory() {
-    this.servicecategoryModelObj.name = this.formValue.value.name;
+  selectFiles(event: any) {
+    this.progressInfos = [];
+    this.selectedFiles = event.target.files;
+  }
 
-    if (this.formValue.valid) {
-      this.adminApi.postServiceCategory(this.formValue.value).subscribe(
-        (result) => {
-          // this.toastr.success('artisan Approved')
+  // postServiceCategory1() {
+  //   this.servicecategoryModelObj.name = this.formValue.value.name;
+  //   if (this.formValue.valid) {
+  //     this.adminApi.postServiceCategory(this.formValue.value).subscribe(
+  //       (result) => {
+  //         // this.toastr.success('artisan Approved')
 
-          this.toastr.success('ServiceCategory added sucessfully');
-          this.modalRef?.hide();
+  //         this.toastr.success('ServiceCategory added sucessfully');
+  //         this.modalRef?.hide();
 
-          let ref = document.getElementById('cancel'); //this is to close the modal form automatically
-          ref?.click();
+  //         let ref = document.getElementById('cancel'); //this is to close the modal form automatically
+  //         ref?.click();
 
-          this.formValue.reset(); //this is to reset the form after logging in
-          this.getAllServiceCategory();
-        },
-        (err: any) => {
-          this.toastr.warning('something went wrong');
+  //         this.formValue.reset(); //this is to reset the form after logging in
+  //         this.getAllServiceCategory();
+  //       },
+  //       (err: any) => {
+  //         this.toastr.warning('something went wrong');
+  //       }
+  //     );
+  //   }
+  // }
+  postServiceCategory(data: any) {
+    console.log(data);
+    
+    this.submitted = true;
+    
+    // this.servicecategoryModelObj.name = this.formValue.value.Name;
+
+    const formdata = new FormData();
+
+    formdata.append('Name', data.Name);
+    // formdata.append('File', data.File);
+  ;
+    
+
+    const uploadObserver = {
+      next: (event: any) => {
+        this.modalRef?.hide();
+        this.toastr.success('Order successfully sent!!!');
+
+        this.formValue.reset();
+      },
+      error: (err: any) => {
+        
+        this.progress = 0;
+        if (err.error || err.error.message) {
+          this.message = err.error.message;
+          
+        } else {
+          
+          
         }
-      );
-    }
+      },
+    };
+
+    this.adminApi.postServiceCategory(formdata).subscribe(uploadObserver);
   }
 
   getAllServiceCategory() {

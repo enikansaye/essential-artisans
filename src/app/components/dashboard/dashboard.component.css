@@ -71,3 +71,32 @@
   transform: translateX(5px);
 }
 
+mat-panel-title{
+  width: fit-content;
+  height: 400px;
+}
+mat-expansion-panel{
+  height: 1000px;
+}
+
+#scrollable { 
+  /* background:lightgray; */
+  width:100%;
+  height:600px;
+  /* max-height:300px;  */
+  overflow-y:scroll;
+}
+/* #scrollable div{
+  height: 100px;
+} */
+
+.section {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
+
+.section:not(.hidden) {
+  height: auto;
+}
+

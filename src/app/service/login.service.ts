@@ -59,8 +59,8 @@ export class LoginService {
   // checking if user is logged in
   loggedIn() {
     // this.loggedinUser = this.tokencheck;
-    this.loggedinUser = localStorage.getItem('token');
-    return (this.loggedinUser = JSON.parse(this.loggedinUser));
+   return this.loggedinUser = localStorage.getItem('token');
+    // return (this.loggedinUser = JSON.parse(this.loggedinUser));
   }
 
   // checking with refresh token

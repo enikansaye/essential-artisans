@@ -100,6 +100,9 @@ import { AboutusComponent } from './components/common/aboutus/aboutus.component'
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ResetpasswordComponent } from './components/auth/resetpassword/resetpassword.component';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { CategoriesComponent } from './components/categories/categories.component';
+// import { EcommerceComponent } from './ecommerce/ecommerce.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 // import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
 
@@ -130,30 +133,33 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     EmailComponent,
     UserprofileComponent,
     ArtisanprofileComponent,
-    AdminpageComponent,
+    // AdminpageComponent,
   
     PagenotfoundComponent,
     ForbiddenComponent,
     AllartisanComponent,
-    AlltransactionsComponent,
+    // AlltransactionsComponent,
     SignuprouteComponent,
     ResetpasswordComponent,
     
     // FilterPipe,
     SortPipe,
     ArtisanbyidComponent,
-    ServicecategoryComponent,
+    // ServicecategoryComponent,
     AdminartisanbyidComponent,
     EmptycartComponent,
     HelpComponent,
     ArtisantransactionsComponent,
     // DatePipe,
     PaymentComponent,
+    CategoriesComponent,
+    // EcommerceComponent,
     
   
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
@@ -169,6 +175,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     MatSidenavModule,
     MatToolbarModule,
     Ng2SearchPipeModule,
+    MatExpansionModule,
 
     HighchartsChartModule,
     ChartModule,
@@ -187,6 +194,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     Ng2OrderModule,
     MatDatepickerModule,
     MatNativeDateModule,
+
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
     NgxHttpLoaderModule.forRoot(),
@@ -228,7 +236,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
         {path: "service" , component: ServicecategoryComponent },
         
         { path: 'register', component: RegisterComponent },
-        { path: 'empty', component: EmptycartComponent },
+        // { path: 'empty', component: EmptycartComponent },
         { path: 'helpcenter', component: HelpComponent },
 
         { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
@@ -242,7 +250,8 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
           component: AllartisanComponent,
           canActivate:[AuthGuard],
         },
-        { path: 'alltransactions', component: AlltransactionsComponent },
+        { path: 'categories', component: CategoriesComponent },
+        // { path: 'alltransactions', component: AlltransactionsComponent },
         { path: 'confirmemail', component: EmailComponent },
         { path: 'checkemail', component: SignuprouteComponent },
         { path: 'passwordreset', component: ResetpasswordComponent },
@@ -250,6 +259,11 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
         { path: 'term of service', component: PrivacyComponent },
         { path: 'payment', component: PaymentComponent },
+        {
+          path: 'Admin',
+          loadChildren: () => import('./components/admin/admin.module')
+            .then(m => m.AdminModule),
+        },
         // { path: 'offline', component: OfflineComponent },
         // { path: 'payment', component: PaymentComponent },
         { path: '**', component: PagenotfoundComponent },

@@ -19,12 +19,12 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
 
   hide = true;
   signupForm!: FormGroup;
   password?: string;
-  
+
   statelga: any;
   state2: any;
   city2: any;
@@ -37,11 +37,10 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private toastr: ToastrService,
-        private authApi: AuthService
+    private authApi: AuthService
   ) {}
   submitted = false;
   ngOnInit(): void {
-    
     // this.getState()
 
     this.signupForm = this.formBuilder.group({
@@ -60,68 +59,54 @@ export class RegisterComponent implements OnInit {
     return this.signupForm.controls;
   }
 
-  onSubmit(data:any) {
+  onSubmit(data: any) {
     this.submitted = true;
     localStorage.setItem('email', data.email);
-
 
     const registerObserver = {
       next: (res: any) => {
         // this.toastr.success('artisan Suspended')
         this.toastr.info('Working on creating new account');
 
-       
-
         this.router.navigate(['/checkemail']);
-
-
       },
       error: (err: any) => {
-        
-        if(err.error || err.error.message){
+        if (err.error || err.error.message) {
+          this.errorMessage = err.error;
+        }
 
-          this.errorMessage = err.error
-
-
-       }
-        
         // this.alertService.danger('signup failed');
       },
     };
 
-    this.authApi.registerUser(this.signupForm.value).subscribe(registerObserver);
+    this.authApi
+      .registerUser(this.signupForm.value)
+      .subscribe(registerObserver);
   }
 
-  hope:any
- resendEmail(){
-  
-  this.hope = localStorage.getItem('email');
+  hope: any;
+  resendEmail() {
+    this.hope = localStorage.getItem('email');
 
-  this.signupForm.value.email =this.hope
-  
+    this.signupForm.value.email = this.hope;
 
-  this.api.ResendEmail(this.hope).subscribe((res:any)=>{
-
-  })
- }
-
-
-  getState(){
-    this.api.getLocation().subscribe((data:any)=>{
-      this.state2= data
-      
-    })
+    this.api.ResendEmail(this.hope).subscribe((res: any) => {});
   }
-  onChangeState(event:any){
-    let userProfile =this.signupForm.controls['state'].value
-    if(userProfile){
-      this.api.getLocation2(userProfile).subscribe((data:any)=>{
-        this. city2= data
-    })
+
+  getState() {
+    this.api.getLocation().subscribe((data: any) => {
+      this.state2 = data;
+    });
   }
-}
-onChangeCity(event:any){
-return this.signupForm.controls['city'].value
-  
-}
+  onChangeState(event: any) {
+    let userProfile = this.signupForm.controls['state'].value;
+    if (userProfile) {
+      this.api.getLocation2(userProfile).subscribe((data: any) => {
+        this.city2 = data;
+      });
+    }
+  }
+  onChangeCity(event: any) {
+    return this.signupForm.controls['city'].value;
+  }
 }

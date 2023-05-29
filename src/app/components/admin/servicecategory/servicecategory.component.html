@@ -85,7 +85,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" id ="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button *ngIf="showAddService" type="button" (click)="postServiceCategory()" class="btn btn-primary">Add Category</button>
+          <button *ngIf="showAddService" type="button" (click)="postServiceCategory(this.formValue.value)" class="btn btn-primary">Add Category</button>
           <!-- <button *ngIf="showUpdate"    type="button" (click)="updateServiceCategory(this.updateFormValue.value)" class="btn btn-primary">Update</button> -->
           <!-- <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button> -->
         </div>
@@ -107,10 +107,18 @@
 <form [formGroup]="formValue"  >
 <div class="mb-3" >
   <label for="exampleInputEmail1" class="form-label">Service category Name</label>
-  <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+  <input formControlName="Name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
   <!-- <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
   
 </div>
+<label class="btn btn-default">
+  <input
+    type="file"
+    multiple
+    (change)="selectFiles($event)"
+    formControlName="File"
+  />
+</label>
 </form>
 </div>
           <div *ngIf="showUpdate">
@@ -135,7 +143,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" id ="cancel" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
-    <button *ngIf="showAddService" type="button" (click)="postServiceCategory()" class="btn btn-info">Add Category</button>
+    <button *ngIf="showAddService" type="button" (click)="postServiceCategory(this.formValue.value)" class="btn btn-info">Add Category</button>
     <!-- <button *ngIf="showUpdate"    type="button" (click)="updateServiceCategory(this.updateFormValue.value)" class="btn btn-primary">Update</button> -->
     <!-- <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button> -->
   </div>

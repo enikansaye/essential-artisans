@@ -204,8 +204,8 @@
   </nav>
 
   <section>
-    <div [ngSwitch]="service" *ngIf="AllOrderData">
-      <div class="row d-flex">
+    <div [ngSwitch]="service" >
+      <div class="row d-flex justify-content-between">
         <div class="d-flex col-6">
           <div class="">
             <input
@@ -229,7 +229,7 @@
           </div>
           <div
             class="border border-2 d-flex align-center justify-content-center"
-            style="height: 27px; width: 30px; background-color: aliceblue"
+            style="height: 27px; width: 60px; background-color: rgb(255, 240, 242)"
             (click)="filterByDate()"
           >
             <i class="bi bi-search"></i>
@@ -273,7 +273,7 @@
                 <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody class="">
+            <tbody class="" *ngIf="AllOrderData">
               <tr
                 class="align-center justify-content-center w-100"
                 *ngFor="
@@ -404,7 +404,7 @@
         </div>
 
         <div *ngIf="!filteredOrderData">
-          <app-emptycart></app-emptycart>
+          <!-- <app-emptycart></app-emptycart> -->
         </div>
       </div>
 
@@ -507,7 +507,7 @@
             </div> -->
 
             <div *ngIf="!pending">
-              <app-emptycart></app-emptycart>
+              <!-- <app-emptycart></app-emptycart> -->
             </div>
           </div>
         </div>
@@ -576,7 +576,7 @@
           ></pagination-controls>
         </div>
         <div *ngIf="!completedOrder">
-          <app-emptycart></app-emptycart>
+          <!-- <app-emptycart></app-emptycart> -->
         </div>
       </div>
 
@@ -617,7 +617,7 @@
       </div>
     </div>
     <div *ngIf="!AllOrderData">
-      <app-emptycart></app-emptycart>
+      <!-- <app-emptycart></app-emptycart> -->
     </div>
   </section>
 </div>

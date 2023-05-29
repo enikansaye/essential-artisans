@@ -53,7 +53,11 @@ export class AdminService {
 
 // Service category section
   postServiceCategory(data: any) {
-    return this.http.post<any>(this.apiUrl.baseUrl +'/api/Admin/ServiceCategory/create', data).pipe(
+    // const formdata = new FormData();
+
+    return this.http.post(this.apiUrl.baseUrl +'/api/Admin/ServiceCategory/create', data, {
+
+    }).pipe(
       map((res: any) => {
         return res;
       })
@@ -62,6 +66,14 @@ export class AdminService {
 
   getServiceCategory() {
     return this.http.get<any>(this.apiUrl.baseUrl +'/api/ServiceCategory/all').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  
+  }
+  getSubServiceCategory(category :any) {
+    return this.http.get<any>(this.apiUrl.baseUrl +'/api/ServiceCategory/ServiceCategory/artisans/capentary' + category).pipe(
       map((res: any) => {
         return res;
       })
@@ -234,4 +246,5 @@ export class AdminService {
     })
   );
  }
+//  upload product
 } 

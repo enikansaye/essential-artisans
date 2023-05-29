@@ -1,0 +1,136 @@
+<ng-container>
+    <button class="btn btn-info" (click)="openModal(template)">Create New Product</button>
+</ng-container>
+
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Modal</h4>
+      <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form
+        [formGroup]="productForm"
+        (ngSubmit)="onSubmitCheck(this.productForm.value)"
+      >
+        <div class="mb-1">
+          <label for="exampleInputEmail1" class="form-label">Product Name</label>
+          <input
+            formControlName="Name"
+            type="text"
+            class="form-control"
+            id="exampleInputText"
+            aria-describedby="emailHelp"
+            [ngClass]="{
+              'is-invalid': submitted && f['Name'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['Name'].touched || submitted) && f['Name'].errors?.['required']"
+          >
+            Name Field is required
+          </span>
+        </div>
+  
+        <div class="mb-1">
+          <label for="exampleInputPassword1" class="form-label">Price</label>
+          <input
+            formControlName="Price"
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid':
+                submitted && f['Price'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['Price'].touched || submitted) && f['Price'].errors?.['required']"
+          >
+            Price is required
+          </span>
+        </div>
+  
+        <div class="mb-1">
+          <label for="exampleInputPassword1" class="form-label"
+            >Product Description</label
+          >
+          <input
+            formControlName="Description"
+            type="textarea"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f['Description'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['Description'].touched || submitted) && f['Description'].errors?.['required']"
+          >
+          Product Description is required
+          </span>
+        </div>
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="getCategory()"  >
+             Select Category
+          </button>
+          <ul class="dropdown-menu" >
+            <li  *ngFor="let data of categoryData" [value]="data.CategoryId"><a class="dropdown-item"  (click)="getEstateNotification(data) "  >{{data.name}}</a></li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="getCategory()"  >
+             Select Sub-category
+          </button>
+          <ul class="dropdown-menu" >
+            <li *ngFor="let data of subCategory" [value]="data.subCategoryId" (click)="getSubcategory(data) "><a class="dropdown-item"    >{{data.name}}</a></li>
+          </ul>
+        </div>
+       
+        
+
+  
+        <div class="my-2">
+          <label for="exampleInputPassword1" class="form-label"
+            >Product Quantity</label
+          >
+          <input
+            formControlName="StockQuantity"
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid': submitted && f['StockQuantity'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['StockQuantity'].touched || submitted) && f['StockQuantity'].errors?.['required']"
+          >
+          Product Quantity is required
+          </span>
+        </div>
+       
+  
+        <label class="btn btn-default">
+          <input
+            type="file"
+            multiple
+            (change)="selectFiles($event)"
+            formControlName="File"
+          />
+        </label>
+  
+        <div class="mt-4">
+          <!-- <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple> -->
+        </div>
+        <div class="h5" style="color: red">{{ message }}</div>
+  
+        <button class="btn btn-info mt-3" id="ModelId" type="submit">Send</button>
+      </form>
+    </div>
+  </ng-template>

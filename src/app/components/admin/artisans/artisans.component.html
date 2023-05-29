@@ -1,0 +1,74 @@
+ <!--Artisan section  -->
+ <div class="pt-5"  id="no-tables" >
+
+    <div class=" w-100 d-flex align-center justify-content-between">
+
+      <div class="h4 me-2">ARTISANS SECTION</div>
+      <div>
+        <button
+      class="nav-link  btn btn-info text-light float-end mb-3"
+      toggle
+      (click)=" getAllPendingArtisan()"
+      
+    >
+      New Artisan
+      
+  </button> 
+      </div>
+      
+    </div>
+    <div>
+      <div class="col-6 my-2">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for Artisans within your location">
+      </div>
+              <table class="table table-striped" >
+          <thead>
+            <tr>
+              <!-- <th >Artisan ID </th> -->
+              <th >Registered Date</th>
+              <th >Email Address</th>
+              <th >Name</th>
+              <th >Service</th>
+              <th >Status</th>
+              <th >Location</th>
+              <th >Number</th>
+              <th >Account Number</th>
+              <th >Bank Name</th>
+
+              <th >Action</th>
+            
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of artisanData | filter : searchText | paginate: { itemsPerPage: 30, currentPage: quotePage }">
+            <tr class="align-center justify-content-center" >
+              <!-- <td data-title="Artisan ID">{{data.id}} </td> -->
+              <td data-title="Registered Date">{{ data.dateRegistered}} </td>
+              <td data-title="Email Address">{{data.email}}</td>
+              <td data-title="Name">{{data.firstName}} {{data.lastName}} </td>
+              <td data-title="Service">{{data.profession}} </td>
+              <td data-title="Status" >{{data.status}}</td>
+              <!-- <td *ngIf="data.action === 3">Suspended</td> -->
+              <td data-title="Location">{{data.location}} </td>
+              <td data-title="Number">{{data.phoneNumber}} </td>
+              <td data-title="Account Number">{{data.accountNumber}} </td>
+              <td data-title="Bank Name">{{data.bankName}} </td>
+
+              <td data-title="Action" >
+              <button class="btn btn-info me-2" (click)="suspendArtisan(data)">Suspend</button>
+              <button class="btn btn-success me-2" (click)="approveArtisan(data)">Activate Artisan</button>
+              <!-- <button class="btn btn-danger" (click)="deleteArtisan(data)">Delete</button> -->
+            </td>
+              
+         
+            </tr> 
+           
+        
+          
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="artisanPage = $event"></pagination-controls>
+
+    
+
+    </div>
+  </div>

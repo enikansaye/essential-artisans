@@ -384,53 +384,42 @@ export class ApiService implements OnInit {
     }
 
 
-  // uploadCheck(
-  //   id: any,
-  //   Name: string,
-  //   ArtisanId: any,
-  //   PropertyAddress: string,
-  //   // InspectionDate: string,
-  //   // InspectionTime: string,
-  //   PhoneNumber: any,
-  //   AlternateNumber: any,
-  //   Issue: string,
-  //   profile: string,
-  //   Files: string,
-  //   ArtisanEmail: string,
-  //   OrderId: any,
-  // ): Observable<any> {
-  //   const formData: FormData = new FormData();
-  //   formData.append('id',id),
-  //   formData.append("Name", Name),
-  //     formData.append("ArtisanId", ArtisanId),
-  //       formData.append("PropertyAddress", PropertyAddress),
-  //         // formData.append("InspectionDate", InspectionDate),
-  //           // formData.append("InspectionTime",InspectionTime),
-  //             formData.append(" PhoneNumber", PhoneNumber),
-  //               formData.append(" AlternateNumber", AlternateNumber),
-  //                 formData.append("Issue", Issue),
-  //                   // formData.append("profile", string),
-  //                     formData.append(" Files", Files),
-  //                       formData.append(" ArtisanEmail", ArtisanEmail),
-  //                         formData.append(" OrderId",OrderId );
-
-  //   return this.http.post(this.baseUrl +'/api/Customer/ServiceOrder/create', formData, {
-  //     reportProgress: true,
-  //     responseType: 'json',
-  //     observe:'events'
-  //   }).pipe(
-  //     catchError((err:any)=>{
-  //       alert(err.message);
-  //       return throwError(err.message)
-  //     })
-  //   );
-
-  // }
-
-  // checkCheck(data:any){
-  //   return this.http.post(this.baseUrl +'/api/Customer/ServiceOrder/create',data)
-  // }
+ createProduct(formData: any): Observable<any>{
+ return this.http.post(this.baseUrl + "/api/Product/create-product", formData)
+ }
 
 
-  
+  // finance section
+  getPendingPayment(){
+    return this.http.get<any>(this.baseUrl + '/api/Transfer/pending/transfers').pipe(
+       map((res: any) => {
+         return res;
+       })
+     );
+    }
+  getCompletedPayment(){
+    return this.http.get<any>(this.baseUrl + '/api/Transfer/completed/transfers').pipe(
+       map((res: any) => {
+         return res;
+       })
+     );
+    }
+  getQueuedPayment(){
+    return this.http.get<any>(this.baseUrl + '/api/Transfer/queued/transfers/').pipe(
+       map((res: any) => {
+         return res;
+       })
+     );
+    }
+  getFailedPayment(){
+    return this.http.get<any>(this.baseUrl + '/api/Transfer/failed/transfers/').pipe(
+       map((res: any) => {
+         return res;
+       })
+     );
+    }
+    makePayment(id : number, data: any){
+      return this.http.put<any>(this.baseUrl + "/api/Transfer/makepayment/" + id, data)
+    }
+
 }

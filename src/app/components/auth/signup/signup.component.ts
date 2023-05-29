@@ -70,6 +70,7 @@ export class SignupComponent implements OnInit {
       bankCode: ['', Validators.required],
       bankAccountNumber: ['', Validators.required],
       bankName: ['', Validators.required],
+      accountName: ['', Validators.required],
     });
   }
   get signupFormControl() {

@@ -1,0 +1,257 @@
+
+<ng-container class="mt-5 pt-5">
+    <mat-sidenav-container class="">
+        <mat-sidenav #sidenav="matSidenav" mode="over" opened class="col-6 col-md-3 ">
+            <mat-toolbar class="w-100 d-flex justify-content-end">
+              <!-- <button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()"> -->
+                       
+                <mat-icon (click)="sidenav.toggle()" *ngIf="sidenav.opened && sidenav.mode === 'side'" class="d-flex justify-content-end cursor">close</mat-icon>
+          
+              <!-- </button> -->
+            </mat-toolbar>
+            <div class="w-100 d-flex flex-column text-center">
+              <img src="assets/images/mayor.jpg" class="image image-fluid mx-auto ">
+            <h4 class="mt-2 mt-md-4">Essential Artisans</h4>
+            <h4>Admin </h4>
+            </div>
+        
+            <!-- Navbar nav -->
+            <ul class="navbar-nav flex-column mx-5 px-3 ">
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                
+                  toggle
+                  (click)="sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/"
+                  
+                >
+                  <i class="nav-icon bi bi-house-door me-2"></i> DASHBOARD
+                </a>
+              </li>
+    
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                  
+                  toggle
+                  (click)=" sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; "
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/All Artisans"
+                  
+                >
+                <i class="fa-solid fa-user"></i> ARTISANS
+                </a>
+              </li>
+         
+               
+                  
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                  
+                  toggle
+                  (click)=" sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true; "
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/All Users"
+                  
+                >
+                <i class="fa-solid fa-user"></i> USERS
+                </a>
+          
+    
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                 
+                  toggle
+                  (click)="  sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/All Transactions"
+                  
+                >
+                <i class="fa-solid fa-cart-shopping "></i> ORDERS
+                </a>
+              </li>
+    
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                 
+                  toggle
+                  (click)="sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true;"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/All Invoices"
+                  
+                >
+                <i class="fa-solid fa-list"></i>  QUOTE
+                </a>
+              </li>
+              
+    
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                  toggle
+                  (click)=" sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/ServiceCategory"
+                  
+                >
+                <i class="fa-solid fa-gear me-2" ></i>SERVICES
+                </a>
+              </li>
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                  toggle
+                  (click)=" sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/Finance"
+                  
+                >
+                <i class="fa-solid fa-gear me-2" ></i>FINANCE
+                </a>
+              </li>
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                  toggle
+                  (click)=" sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
+                  routerLink="/Admin/Products"
+                  
+                >
+                <i class="fa-solid fa-gear me-2" ></i>Products
+                </a>
+              </li>
+    
+            
+    
+            
+            </ul> 
+      
+      </mat-sidenav>
+      <mat-sidenav-content opened>
+        <div class="ms-3">
+              <mat-toolbar class="col-12">
+                <div class="d-lg-none cursor">
+                  <mat-icon (click)="sidenav.toggle()" *ngIf="!sidenav.opened && sidenav.mode === 'over'">menu</mat-icon>
+                </div>
+      
+                <nav class="navbar-default navbar w-100 navbar-expand float-right">
+                  <a id="nav-toggle" >
+                    <i class="bi bi-menu"></i>
+                  </a>
+               
+      
+                  
+                  <!--Navbar nav -->
+                  <ul
+                    class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap"
+                  >
+                    <li class="dropdown stopevent">
+                      <a
+                        class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted position-relative bg-info"
+                      
+                        role="button"
+                        id="dropdownNotification"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-danger fs-6" >
+                          {{signalRService.notificationCount}}
+                          </span>
+                      </a>
+                   <div
+                        class=" dropdown-menu dropdown-menu-end notify"
+                        aria-labelledby="dropdownNotification"
+                      >
+                        <div class="">
+                          <div
+                            class="border-bottom px-3 pb-3 d-flex justify-content-between align-items-center"
+                          >
+                            <span class="h4 mb-0">Notifications</span>
+                            <a  class="text-muted">
+                              <span class="align-middle">
+                                <i class="bi bi-settings me-1"></i>
+                              </span>
+                            </a>
+                          </div>
+                          <!-- List group -->
+                        <ul
+                          class="list-group list-group-flush notification-list-scroll"
+                        >
+                          <li class="list-group-item bg-light">
+                            <div class="row">
+                              <div class="col">
+                                <a class="text-body" >
+                                 
+                                    
+                                  <div class="ms-3" *ngFor=" let data of signalRService.notificationText; let i= index">
+                                    <!-- <h5 class="fw-bold mb-1">Kristin Watson:</h5> -->
+                                   <div class="text-wrap"  (click)="onclickNotification(data.notificationId)">
+                                    <span class="me-2" >
+                                      {{i+1 }}
+                                     
+                                    </span>
+                                  {{data.notificationText }}
+                                  <a class="float-right" data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-custom-class="custom-tooltip"
+                                  data-bs-title="This top tooltip is themed via CSS variables." (click)="onclickNotification(data.notificationId)"><i class="fa-solid fa-rectangle-xmark"></i></a>
+                                    
+                                   </div>
+                                   
+                                  </div>
+                                </a>
+                              </div>
+                             
+                            </div>
+                          </li>
+                       
+                          
+                         
+                        </ul>
+                          
+                        </div>
+                      </div>
+                    </li>
+                    <!-- List -->
+                  
+                  </ul>
+                </nav>
+      
+              </mat-toolbar>
+              </div>
+              <router-outlet></router-outlet>
+        </mat-sidenav-content>
+        </mat-sidenav-container>
+</ng-container>
+    

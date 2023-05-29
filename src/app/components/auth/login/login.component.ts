@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
               window.location.reload();
             });
           } else {
-            this.router.navigate(['/admin']).then(() => {
+            this.router.navigate(['/Admin/']).then(() => {
               window.location.reload();
             });
           }

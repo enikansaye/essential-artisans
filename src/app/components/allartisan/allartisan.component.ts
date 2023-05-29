@@ -74,7 +74,7 @@ export class AllartisanComponent implements OnInit {
   state2: any;
   city2: any;
   searchText:any
-  myFiles: string[] = [];
+  // myFiles: string[] = [];
   issue!: string;
 
   modalRef?: BsModalRef | null;
@@ -274,9 +274,9 @@ export class AllartisanComponent implements OnInit {
     });
   }
 
-  selectFile(event: any): void {
-    this.selectedFiles = event.target.files;
-  }
+  // selectFile(event: any): void {
+  //   this.selectedFiles = event.target.files;
+  // }
 
   working = false;
   // uploadFile?: File | null;

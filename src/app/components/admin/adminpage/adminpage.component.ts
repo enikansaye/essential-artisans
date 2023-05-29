@@ -117,8 +117,7 @@ quotePage: any;
 
     // this.invoiceForm.disable();
 
-    this.getAllUser();
-    this.getAllArtisan();
+    // this.getAllUser();
     // this.getAllPendingArtisan();
 
     // this.getQouteByAdmin();
@@ -240,55 +239,20 @@ quotePage: any;
     this.pageIndex = event.pageIndex;
   }
 
-  ngAfterViewInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-      if (res.matches) {
-        this.sidenav.mode = 'over';
-        this.sidenav.close();
-      } else {
-        this.sidenav.mode = 'side';
-        this.sidenav.open();
-      }
-    });
-  }
+  // ngAfterViewInit() {
+  //   this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+  //     if (res.matches) {
+  //       this.sidenav.mode = 'over';
+  //       this.sidenav.close();
+  //     } else {
+  //       this.sidenav.mode = 'side';
+  //       this.sidenav.open();
+  //     }
+  //   });
+  // }
 
-  getAllUser() {
-    this.adminApi.getUser().subscribe((res: any) => {
-      this.userData = res;
-
-      this.totalRecord = res.length;
-      this.userLength = res.length;
-      return this.userData.reverse();
-    });
-  }
-  getAllArtisan() {
-    this.adminApi.getArtisan().subscribe((res: any) => {
-      
-      
-      this.artisanData = res;
-      this.totalRecord = res.length;
-      this.artisanLength = res.length;
-      return this.artisanData.reverse();
-    });
-  }
-  getAllPendingArtisan() {
-    const registerObserver = {
-      next: (res: any) => {
-        this.pendingArtisans = res;
-        this.pendingArtisanRecord = res.length;
-      },
-      error: (err: any) => {
-        return (this.artisanErrorMessage = err.error);
-      },
-    };
-    this.adminApi.getPendingArtisan().subscribe(registerObserver);
-  }
-
-  getArtisanById(id: string) {
-    this.adminApi.getArtisanbyid(id).subscribe((res: any) => {
-      this.artisanData = res;
-    });
-  }
+ 
+ 
 
   getQouteByAdmin() {
     this.adminApi.getQoute().subscribe((res: any) => {
@@ -324,18 +288,7 @@ quotePage: any;
         this.toastr.success('invoice Approved' );
       });
   }
-  approveArtisan(row: any) {
-    this.artisanId = row.id;
-
-    this.adminApi
-      .aproveArtisanUrl(this.artisanId, row.id)
-      .subscribe((res: any) => {
-        this.toastr.success('Artisan Approved');
-        this.getAllPendingArtisan();
-        this.getAllArtisan();
-      });
-    this.artisanErrorMessage;
-  }
+ 
   getInvoiceId: any;
   invoiceName: any;
   artisanName: any;
@@ -455,42 +408,7 @@ quotePage: any;
 
     this.adminApi.editQuoteUrl(invoiceEdit).subscribe(uploadObserver);
   }
-  suspendArtisan(row: any) {
-    this.artisanId = row.id;
-
-    const registerObserver = {
-      next: (res: any) => {
-        this.toastr.success('Artisan Suspended');
-        this.getAllArtisan();
-      },
-      error: (err: any) => {
-        this.toastr.warning('Signup failed');
-
-        return (this.quotePendingError = err.error);
-      },
-    };
-
-    this.adminApi
-      .suspendArtisanUrl(this.artisanId, row.id)
-      .subscribe(registerObserver);
-  }
-  deleteArtisan(row: any) {
-    this.artisanId = row.id;
-    const registerObserver = {
-      next: (res: any) => {
-        this.toastr.success('Artisan Deleted');
-        this.getAllArtisan();
-      },
-      error: (err: any) => {
-        this.toastr.warning('Something went Wrong!!!');
-
-        return (this.quotePendingError = err.error);
-      },
-    };
-    this.adminApi
-      .deleteArtisanUrl(this.artisanId, row.id)
-      .subscribe(registerObserver);
-  }
+ 
 
   confirmPayment(row: any) {
     this.approveForm.value.invoiceId = row.invoiceId;
@@ -503,7 +421,7 @@ quotePage: any;
   getAllOrder() {
     this.adminApi.getOrder().subscribe((res: any) => {
       this.order = res;
-      this.totalLength = res.length;
+      // this.totalLength = res.length;
     });
   }
   getAllTotalSales() {
@@ -523,28 +441,8 @@ quotePage: any;
     this.modalService.hide(modalId);
   }
 
-  Search(event: any) {
-    if (this.value == '') {
-      this.getAllArtisan();
-    } else {
-      this.artisanData = this.artisanData.filter((res: any) => {
-        return res.firstName
-          .toLocaleLowerCase()
-          .match(this.value.toLocaleLowerCase());
-      });
-    }
-  }
-  Search2(event: any) {
-    if (this.value2 == '') {
-      this.getAllUser();
-    } else {
-      this.userData = this.userData.filter((res: any) => {
-        return res.firstName
-          .toLocaleLowerCase()
-          .match(this.value.toLocaleLowerCase());
-      });
-    }
-  }
+ 
+ 
   onclickNotification(data: any) {
     let i = 0;
     let input = {

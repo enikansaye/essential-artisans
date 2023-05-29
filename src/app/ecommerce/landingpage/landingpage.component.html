@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="form-group input-group-lg form-outline mb-4 "   >
+    <div class="col-4 mt-3">
+      <select class="form-select" aria-label="Default select example" (click)="getProductCategory()">
+        <option selected value="">Select Category</option>
+        <option *ngFor="let data of categoryData" >{{data.name}}</option>
+        
+      </select>
+    </div>
+    
+  <div class="row">
+    <ng-container *ngFor="let items of productlist">
+      <div class="card col-md-3 col-3 " >
+        <div (click)="productById(items.productId)">
+        <img  src="data:image/png;base64,{{items.productImages}}" alt="">
+        <h5>{{items.name}}</h5>
+      <p  style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 10ch;">{{items.description}}</p>
+      <div class="d-flex justify-content-between">
+        <div>Price</div>
+        <div>&#8358; {{items.price}}</div>
+
+      </div>
+      </div>
+      <button class="btn btn-info" (click)="addToCart(items)">Add to cart</button>
+      </div>
+    </ng-container>
+    
+  </div>
+</div>
