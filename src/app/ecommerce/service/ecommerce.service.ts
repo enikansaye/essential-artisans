@@ -24,7 +24,7 @@ export class EcommerceService {
   // }
  
     getAllProducts(){
-      return  this.http.get(this.ecommerceUrl + "/Product/get-all-products");
+      return  this.http.get(this.ecommerceUrl + "/Product/products");
       }
   
   // getProductById(product : any ){
@@ -34,7 +34,7 @@ export class EcommerceService {
   // }
   getProductById1(id : number ){
     
-    return this.http.get(this.ecommerceUrl + '/Product/get-product/' + id)
+    return this.http.get(this.ecommerceUrl + '/Product/product/' + id)
   }
 
 

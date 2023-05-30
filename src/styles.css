@@ -4,6 +4,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ 
 /*@import url(c:\Users\USER\Desktop\artisan-app-fe\node_modules\alertifyjs\build\css\alertify.min.css); */
 /* @import url(/Users/lyticaltechnology/Desktop/artisan-app-fe/node_modules/alertifyjs/build/css/alertify.min.css); */
 /* @import url(/Users/lyticaltechnology/Desktop/artisan-app-fe/node_modules/alertifyjs/build/css/themes/bootstrap.min.css); */
@@ -59,6 +60,9 @@
 *::after {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+}
+bs-dropdown-container {
+  z-index: 1060;;
 }
 .cursor{
 cursor: pointer;

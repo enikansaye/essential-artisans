@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -106,6 +107,9 @@ export class ArtisantransactionsComponent implements OnInit {
   cancelOrder: any;
   orderDate: any;
   orderfiles: any;
+
+  items: string[] = ['Item 1', 'Item 2', 'Item 3'];
+  selectedItem !: string;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -120,7 +124,8 @@ export class ArtisantransactionsComponent implements OnInit {
     public dialog: MatDialog,
     private modalService: BsModalService,
     private artisanurl: ArtisansService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -183,6 +188,8 @@ export class ArtisantransactionsComponent implements OnInit {
   }
   openModal2(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    this.closeModal(1)
+
   }
  
   confirm(): void {
@@ -402,5 +409,15 @@ export class ArtisantransactionsComponent implements OnInit {
 
   imageSource() {
     this.hidden = !this.hidden;
+  }
+
+  getCategory(){
+
+  }
+  getSubCategory(){
+
+  }
+  onFirstDropdownChange() {
+    this.changeDetectorRef.detectChanges();
   }
 }

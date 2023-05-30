@@ -600,34 +600,16 @@
               <div class="row">
     
                 <div class="col-md-8">
-                  <!-- <div class="form-group">
-                    <label for="name">Issued Person Name</label>
-                    <input type="text" class="form-control" name="personName" id="name" [(ngModel)]="InvoiceObject.personName" #name="ngModel" required>
-     -->
-                    <!-- <div class="alert alert-danger" *ngIf="!name.valid">
-                      <span *ngIf="name?.errors?.required">This field is required</span>
-                    </div> -->
-    
-    
-                  <!-- </div> -->
+                  
                   <div class="form-group">
                     <label for="date">Invoice Date</label>
                     <input type="date" class="form-control" name="invoiceDate" id="date" [(ngModel)]="InvoiceObject.invoiceDate"  #name1="ngModel"   required>
     
-                    <!-- <div class="alert alert-danger" *ngIf="!name1.valid">
-                      <span *ngIf="name1?.errors?.required">This field is required</span>
-                    </div> -->
+                   
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <!-- <div class="form-group">
-                    <label for="invoiceNo">Invoice No</label>
-                    <input type="text" class="form-control" name="invoiceNo" id="invoiceNo" [(ngModel)]="InvoiceObject.invoiceNo"  #name2="ngModel" required>
-     -->
-                    <!-- <div class="alert alert-danger" *ngIf="!name2.valid">
-                      <span *ngIf="name2?.errors?.required">This field is required</span>
-                    </div> -->
-                  <!-- </div> -->
+                  
     
                   <div class="form-group">
                     <label for="TAmount">Total Amount</label>
@@ -652,28 +634,39 @@
               <div class="row" >
     
                 <div class="col-md-3">
-                  <label>Item Name</label>
-                  <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+                  
+                  <!-- <div class="modal-body"> -->
+                    <div class="form-group">
+                      <label for="firstDropdown">First Dropdown</label>
+                      <select class="form-control" id="firstDropdown" [(ngModel)]="selectedItem" (ngModelChange)="onFirstDropdownChange()">
+                        <option *ngFor="let item of items" [value]="item">{{ item }}</option>
+                      </select>
+                    </div>
+                    <div class="form-group" *ngIf="selectedItem">
+                      <label for="secondDropdown">Second Dropdown</label>
+                      <select class="form-control" id="secondDropdown" >
+                        <select name="" id="">helllo</select>
+                      </select>
+                    </div>
+                  <!-- </div> -->
+                  
+                
+                  <!-- <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required > -->
     
-                  <!-- <div class="alert alert-danger" *ngIf="!name3.valid">
-                    <span *ngIf="name3?.errors?.required">This field is required</span>
-                  </div> -->
+                
                 </div>
                 <div class="col-md-3">
                   <label>Unit Price</label>
                   <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
     
-                  <!-- <div class="alert alert-danger" *ngIf="!name4.valid">
-                    <span *ngIf="name4?.errors?.required">This field is required</span>
-                  </div> -->
+                 
                 </div>
                 <div class="col-md-3">
+                  
                   <label>Quantity</label>
                   <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
     
-                  <!-- <div class="alert alert-danger" *ngIf="!name5.valid">
-                    <span *ngIf="name5?.errors?.required">This field is required</span>
-                  </div> -->
+                  
     
                 </div>
                 <div class="col-md-2">

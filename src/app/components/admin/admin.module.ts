@@ -24,6 +24,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ProductComponent } from './product/product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FinanceComponent } from './finance/finance.component';
+import { OrderedproductComponent } from './orderedproduct/orderedproduct.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { FinanceComponent } from './finance/finance.component';
     ServicecategoryComponent,
     ProductComponent,
     FinanceComponent,
+    OrderedproductComponent,
 
   ],
   imports: [

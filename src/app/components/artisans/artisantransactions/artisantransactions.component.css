@@ -1,3 +1,6 @@
+.dropdown-menu {
+  z-index: 1060; /* Adjust the z-index as needed */
+}
 
   .content {
     display: flex;

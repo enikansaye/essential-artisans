@@ -383,10 +383,14 @@ export class ApiService implements OnInit {
       return this.http.put<any>(this.baseUrl + "/api/Notification",data)
     }
 
-
+// creating new product
  createProduct(formData: any): Observable<any>{
- return this.http.post(this.baseUrl + "/api/Product/create-product", formData)
+ return this.http.post(this.baseUrl + "/api/Product/product", formData)
  }
+//  get all ordered product
+getAllOrderedProduct(){
+  return this.http.get(this.baseUrl + "/api/ProductOrder/products-ordered")
+  }
 
 
   // finance section

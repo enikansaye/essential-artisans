@@ -41,12 +41,18 @@ export class ProductComponent implements OnInit {
       Name: ['', Validators.required],
       Price: ['', Validators.required],
       Description: ['', Validators.required],
+      CategoryId: [],
+      Size: [],
+      Model: [],
+      SubCategoryId: [],
+      VendorName: [],
+      VendorAddress: [],
+      VendorPhoneNumber: [],
       StockQuantity: [''],
       Files: [''],
       File: [''],
       FileNames: [''],
-      CategoryId: [],
-      SubCategoryId: [],
+      
     });
   }
   get f() {
@@ -120,6 +126,12 @@ export class ProductComponent implements OnInit {
     formdata.append('StockQuantity', data.StockQuantity);
     formdata.append('CategoryId', data.CategoryId);
     formdata.append('SubCategoryId', data.SubCategoryId);
+    formdata.append('Size', data.Size);
+    formdata.append('Model', data.Model);
+    formdata.append('VendorName', data.VendorName);
+    formdata.append('VendorAddress', data.VendorAddress);
+    formdata.append('VendorPhoneNumber', data.VendorPhoneNumber);
+    
    
     if (this.selectedFiles) {
       const fileNames: string[] = [];

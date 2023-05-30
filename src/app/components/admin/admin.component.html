@@ -144,6 +144,21 @@
                   data-bs-target="#navDashboard"
                   aria-expanded="false"
                   aria-controls="navDashboard"
+                  routerLink="/Admin/Ordered Product"
+                  
+                >
+                <i class="fa-solid fa-gear me-2" ></i>Product Ordered
+                </a>
+              </li>
+              <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+                <a
+                  class="nav-link p-2 "
+                  toggle
+                  (click)=" sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navDashboard"
+                  aria-expanded="false"
+                  aria-controls="navDashboard"
                   routerLink="/Admin/Products"
                   
                 >

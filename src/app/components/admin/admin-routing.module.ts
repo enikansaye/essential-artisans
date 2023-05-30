@@ -10,6 +10,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { QuoteComponent } from './quote/quote.component';
 import { ProductComponent } from './product/product.component';
 import { FinanceComponent } from './finance/finance.component';
+import { OrderedproductComponent } from './orderedproduct/orderedproduct.component';
 
 const routes: Routes = [
   { path: '',
@@ -44,6 +45,10 @@ const routes: Routes = [
     {
       path: 'Products',
       component: ProductComponent,
+    },
+    {
+      path: 'Ordered Product',
+      component: OrderedproductComponent,
     },
     {
       path: 'Finance',

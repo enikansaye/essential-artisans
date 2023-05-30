@@ -114,6 +114,106 @@
           Product Quantity is required
           </span>
         </div>
+        <div class="my-2">
+          <label for="exampleInputPassword1" class="form-label"
+            >Product Size</label
+          >
+          <input
+            formControlName="Size"
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid': submitted && f['Size'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['Size'].touched || submitted) && f['Size'].errors?.['required']"
+          >
+          Product Size is required
+          </span>
+        </div>
+        <div class="my-2">
+          <label for="exampleInputPassword1" class="form-label"
+            >Product Model Number</label
+          >
+          <input
+            formControlName="Model"
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid': submitted && f['Model'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['Model'].touched || submitted) && f['Model'].errors?.['required']"
+          >
+          Product Model Number is required
+          </span>
+        </div>
+        <div class="my-2">
+          <label for="exampleInputPassword1" class="form-label"
+            >Vendor's Name</label
+          >
+          <input
+            formControlName="VendorName"
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid': submitted && f['VendorName'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['VendorName'].touched || submitted) && f['VendorName'].errors?.['required']"
+          >
+          Vendor's Name is required
+          </span>
+        </div>
+        <div class="my-2">
+          <label for="exampleInputPassword1" class="form-label"
+            >Vendor's Address</label
+          >
+          <input
+            formControlName="VendorAddress"
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid': submitted && f['VendorAddress'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['VendorAddress'].touched || submitted) && f['VendorAddress'].errors?.['required']"
+          >
+          Vendor's Address is required
+          </span>
+        </div>
+        <div class="my-2">
+          <label for="exampleInputPassword1" class="form-label"
+            >Vendor Phone Number</label
+          >
+          <input
+            formControlName="VendorPhoneNumber"
+            type="number"
+            class="form-control"
+            id="exampleInputPassword1"
+            [ngClass]="{
+              'is-invalid': submitted && f['VendorPhoneNumber'].errors
+            }"
+          />
+          <span
+            style="color: #dc3545"
+            *ngIf="(f['VendorPhoneNumber'].touched || submitted) && f['VendorPhoneNumber'].errors?.['required']"
+          >
+          Vendor Phone Number is required
+          </span>
+        </div>
        
   
         <label class="btn btn-default">

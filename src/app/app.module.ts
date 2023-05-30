@@ -103,6 +103,8 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { CategoriesComponent } from './components/categories/categories.component';
 // import { EcommerceComponent } from './ecommerce/ecommerce.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+
 
 // import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
 
@@ -194,6 +196,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     Ng2OrderModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    BsDropdownModule.forRoot(),
 
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
