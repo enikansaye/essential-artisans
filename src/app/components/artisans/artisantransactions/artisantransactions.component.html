@@ -626,7 +626,24 @@
           </div>
           <div class="card border-secondary mt-2 mb-5">
             <div class="card-body">
-              <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-info" (click)="addRow()">Add Input</button></h4>
+              <h4 class="card-title d-flex justify-content-between">Items Details 
+                
+                <form [formGroup]="myForm">
+                  <select formControlName="firstSelect">
+                    <option value="">Select category</option>
+                    <option value="specificValue">Specific Value</option>
+                    <option value="otherValue">Other Value</option>
+                  </select>
+                
+                  <select formControlName="secondSelect" *ngIf="showSecondSelect">
+                    <option value="">Select sub category</option>
+                    <option value="otherValue">Other Value</option>
+                    <option value="specificValue">Specific Value</option>
+                  </select>
+                </form>
+                
+                
+                <button type="button" class="btn btn-info" (click)="addRow()">Add Input</button></h4>
     
     
               <form action="" #invoiceBody="ngForm">
@@ -636,7 +653,7 @@
                 <div class="col-md-3">
                   
                   <!-- <div class="modal-body"> -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label for="firstDropdown">First Dropdown</label>
                       <select class="form-control" id="firstDropdown" [(ngModel)]="selectedItem" (ngModelChange)="onFirstDropdownChange()">
                         <option *ngFor="let item of items" [value]="item">{{ item }}</option>
@@ -647,13 +664,19 @@
                       <select class="form-control" id="secondDropdown" >
                         <select name="" id="">helllo</select>
                       </select>
-                    </div>
+                    </div> -->
                   <!-- </div> -->
                   
                 
-                  <!-- <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required > -->
+                  <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
     
                 
+                </div>
+                <div class="col-md-3">
+                  <label>Unit Price</label>
+                  <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+    
+                 
                 </div>
                 <div class="col-md-3">
                   <label>Unit Price</label>
@@ -682,7 +705,8 @@
     
     
                </div>
-    
+    <div>Suggest Items: <button type="button" class="btn btn-info" (click)="addRow()">Add Input</button>
+    </div>
               </div>
     
               <div class="form-floating">

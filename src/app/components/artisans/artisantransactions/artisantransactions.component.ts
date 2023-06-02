@@ -7,7 +7,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -34,6 +34,24 @@ class itemObject {
   price!: number;
   quantity!: number;
   total!: number;
+  id !: number;
+  marketPlaceProductId !: number;
+}
+class itemObject1 {
+  name!: string;
+  price!: number;
+  quantity!: number;
+  total!: number;
+  id !: number;
+  marketPlaceProductId !: number;
+}
+class itemObject2 {
+  name!: string;
+  price!: number;
+  quantity!: number;
+  total!: number;
+  id !: number;
+  marketPlaceProductId !: number;
 }
 
 @Component({
@@ -51,6 +69,8 @@ export class ArtisantransactionsComponent implements OnInit {
       price: 0,
       quantity: 0,
       total: 0,
+      id: 0,
+      marketPlaceProductId : 0,
     },
   ];
   InvoiceObject = {
@@ -61,7 +81,9 @@ export class ArtisantransactionsComponent implements OnInit {
     orderId: 0,
     jobDescription: '',
     artisanCharge: 0,
-    items: (this.itemsArray = []),
+    mainProduct: (this.itemsArray = []),
+    suggestedProductOne: (this.itemsArray = []),
+    suggestedProductTwo: (this.itemsArray = []),
   };
 
   modalRef?: BsModalRef | null;
@@ -85,6 +107,8 @@ export class ArtisantransactionsComponent implements OnInit {
   showFirstLastButtons = true;
   totalLength: any;
   serviceOrdeIdForm!: FormGroup;
+  myForm !: FormGroup;
+  showSecondSelect: boolean = false;
   issue: any; //string for search of data
   p: number = 1; //pagination
   pendingPage: number = 1; //pagination
@@ -108,7 +132,7 @@ export class ArtisantransactionsComponent implements OnInit {
   orderDate: any;
   orderfiles: any;
 
-  items: string[] = ['Item 1', 'Item 2', 'Item 3'];
+  mainProduct: string[] = ['Item 1', 'Item 2', 'Item 3'];
   selectedItem !: string;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
@@ -140,6 +164,21 @@ export class ArtisantransactionsComponent implements OnInit {
     });
     this.serviceOrdeIdForm = this.formBuilder.group({
       serviceOrdeId: 0,
+    });
+
+
+    this.myForm = new FormGroup({
+      firstSelect: new FormControl(),
+      secondSelect: new FormControl(),
+    });
+
+    this.myForm.get('firstSelect')?.valueChanges.subscribe(value => {
+      // Check the selected value and show/hide the second select accordingly
+      if (value === 'specificValue') {
+        this.showSecondSelect = true;
+      } else {
+        this.showSecondSelect = false;
+      }
     });
   }
 
@@ -312,7 +351,7 @@ export class ArtisantransactionsComponent implements OnInit {
 
     let itemsDto = [];
 
-    for (let index = 0; index < this.InvoiceObject.items.length; index++) {
+    for (let index = 0; index < this.InvoiceObject.mainProduct.length; index++) {
       this.itemsArray[index].total = this.hope;
     }
 
@@ -346,6 +385,12 @@ export class ArtisantransactionsComponent implements OnInit {
 
   addRow() {
     this.itemsArray.push(new itemObject());
+  }
+  addsuggested1() {
+    this.itemsArray.push(new itemObject1());
+  }
+  addsuggested2() {
+    this.itemsArray.push(new itemObject2());
   }
 
   removeRow(i: number) {

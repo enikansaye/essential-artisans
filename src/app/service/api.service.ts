@@ -392,6 +392,21 @@ getAllOrderedProduct(){
   return this.http.get(this.baseUrl + "/api/ProductOrder/products-ordered")
   }
 
+  // get all service categories
+  getAllServiceCategory(){
+    return this.http.get(this.baseUrl + "/api/ServiceCategory/all/")
+
+  }
+  // get all category by id
+getAllCategory(id : number){
+  return this.http.get(this.baseUrl + "/api/Product/products-category/" + id)
+ 
+}
+// get all sub categories
+getAllSubCategory(id : number){
+  return this.http.get(this.baseUrl + "/api/Product/products-sub-category" + id)
+ 
+}
 
   // finance section
   getPendingPayment(){
