@@ -629,16 +629,18 @@
               <h4 class="card-title d-flex justify-content-between">Items Details 
                 
                 <form [formGroup]="myForm">
-                  <select formControlName="firstSelect">
-                    <option value="">Select category</option>
-                    <option value="specificValue">Specific Value</option>
-                    <option value="otherValue">Other Value</option>
+                 <div (click)="getServiceCategory()">
+                  <select formControlName="firstSelect"  (change)="onChangeState($event.target)" >
+                    <option [value]="" >Select category</option>
+                    <option  *ngFor="let data of categoryData" [value]="data.categoryId"  >{{data.name}}</option>
+                    <!-- <option value="otherValue">Other Value</option> -->
                   </select>
+                 </div>
                 
-                  <select formControlName="secondSelect" *ngIf="showSecondSelect">
-                    <option value="">Select sub category</option>
-                    <option value="otherValue">Other Value</option>
-                    <option value="specificValue">Specific Value</option>
+                  <select  (change)="onChangeCity($event.target)"  >
+                    <option value="" >Select sub category</option>
+                    <option  *ngFor="let data of categoryValue" >{{data.name}} {{data.price}} {{data.model}} {{data.size}} {{data.subCategory}}</option>
+                    <!-- <option value="specificValue">Specific Value</option> -->
                   </select>
                 </form>
                 
@@ -652,32 +654,15 @@
     
                 <div class="col-md-3">
                   
-                  <!-- <div class="modal-body"> -->
-                    <!-- <div class="form-group">
-                      <label for="firstDropdown">First Dropdown</label>
-                      <select class="form-control" id="firstDropdown" [(ngModel)]="selectedItem" (ngModelChange)="onFirstDropdownChange()">
-                        <option *ngFor="let item of items" [value]="item">{{ item }}</option>
-                      </select>
-                    </div>
-                    <div class="form-group" *ngIf="selectedItem">
-                      <label for="secondDropdown">Second Dropdown</label>
-                      <select class="form-control" id="secondDropdown" >
-                        <select name="" id="">helllo</select>
-                      </select>
-                    </div> -->
-                  <!-- </div> -->
                   
-                
+                  
+                  <label>Item name</label>
+
                   <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
     
                 
                 </div>
-                <div class="col-md-3">
-                  <label>Unit Price</label>
-                  <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
-    
-                 
-                </div>
+       
                 <div class="col-md-3">
                   <label>Unit Price</label>
                   <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
@@ -705,7 +690,87 @@
     
     
                </div>
-    <div>Suggest Items: <button type="button" class="btn btn-info" (click)="addRow()">Add Input</button>
+    <div *ngFor="let obj of itemsArray1;let j=index">Suggest Items: <button type="button" class="btn btn-info" ></button>
+      <div class="row" >
+    
+        <div class="col-md-3">
+          
+          
+          
+          <label>Item name</label>
+
+          <input type="text" class="form-control" name="name{{j}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+
+        
+        </div>
+
+        <div class="col-md-3">
+          <label>Unit Price</label>
+          <input type="number" class="form-control" name="price{{j}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+
+         
+        </div>
+        <div class="col-md-3">
+          
+          <label>Quantity</label>
+          <input type="number" class="form-control" name="quantity{{j}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+
+          
+
+        </div>
+        <div class="col-md-2">
+          <label>Total</label><br>
+          <input type="number" class="form-control" name="total{{j}}"  [ngModel]="updateTotalInItemsArray(obj)">
+
+        </div>
+
+        <div class="col-md-1" *ngIf="i!=0">
+          <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
+        </div>
+
+
+
+       </div>
+       <div class="row" >
+    
+        <div class="col-md-3">
+          
+          
+          
+          <label>Item name</label>
+
+          <input type="text" class="form-control" name="name{{j}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+
+        
+        </div>
+
+        <div class="col-md-3">
+          <label>Unit Price</label>
+          <input type="number" class="form-control" name="price{{j}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+
+         
+        </div>
+        <div class="col-md-3">
+          
+          <label>Quantity</label>
+          <input type="number" class="form-control" name="quantity{{j}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
+
+          
+
+        </div>
+        <div class="col-md-2">
+          <label>Total</label><br>
+          <input type="number" class="form-control" name="total{{j}}"  [ngModel]="updateTotalInItemsArray(obj)">
+
+        </div>
+
+        <div class="col-md-1" *ngIf="i!=0">
+          <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
+        </div>
+
+
+
+       </div>
     </div>
               </div>
     

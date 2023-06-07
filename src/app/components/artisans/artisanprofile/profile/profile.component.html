@@ -1,0 +1,270 @@
+<div class="content mat-elevation-z4 flex-column ms-3 ms-lg-4 mt-5" >
+    
+    <div  >
+      <div >
+        <section
+          class="col w-100 justify-content-flexstart align-items-center  p-md-5 " 
+        >
+          <!-- <div class="h5 text-dark">EDIT INFORMATION</div> -->
+
+          <div class="col-12 align-items-end d-flex">
+            <div class="col-4 col-md-2 rounded-circle me-3">
+              <img  *ngIf="artisanData.profileImage"
+                src="data:image/png;base64,{{artisanData.profileImage}}"
+                class="img-fluid bg-success rounded-circle "
+              />
+              <ngx-avatar size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}" *ngIf="!artisanData.profileImage"></ngx-avatar>
+              <!-- <img class="img img-fluid rounded-circle " *ngIf="!artisanData.profileImage" src="/assets/images/1.jpg" /> -->
+            </div>
+          
+
+
+            <div class="row" style="margin-bottom:15px;">
+              <div class="">
+                <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+                <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
+              </div>
+              <div class="col-md-4">
+                <span class="upload" *ngIf="progress > 0">
+                  {{progress}}%
+                </span>
+                <span class="upload" *ngIf="message">
+                  {{message}}
+                </span>
+              </div>
+            </div>
+
+
+            </div>
+        </section>
+
+        <section class="w-100 ms-3  ps-md-5">
+          <div>
+            <div class="h5">ACCOUNT INFORMATION</div>
+            <form [formGroup]="updateForm" (ngSubmit)=" updateUserDetails(this.updateForm.value)">
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label "
+                  >FIRST NAME</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputFirstName"
+                    placeholder="{{artisanData.firstName}}"
+                    value="{{artisanData.firstName}}"
+                    formControlName="firstName"
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label"
+                  >LAST NAME</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputtext"
+                    placeholder="{{artisanData.lastName}}"
+                    formControlName="lastName"
+                  />
+                </div>
+              </div>
+
+            
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label"
+                  >PHONE NUMBER</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="inputnumber"
+                    placeholder="{{artisanData.phoneNumber}}"
+                    formControlName="phoneNumber"
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label"
+                  >SERVICE</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputtext"
+                    placeholder="{{artisanData.profession}}"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label"
+                  >ADDRESS</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputtext"
+                    placeholder="{{artisanData.address}}"
+                    formControlName="Address"
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label"
+                  >Location</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputtext"
+                    placeholder="{{artisanData.location}}"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3 row">
+                <label for="inputtext" class="col-sm-2 col-form-label"
+                  >Account Number</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputtext"
+                    formControlName="accountNumber"
+                    placeholder="{{artisanData.accountNumber}}"
+                    
+                  />
+                </div>
+              </div>
+
+
+
+              <div class="form-group input-group-lg form-outline mb-4" (click)="getBanks()" (change)="onBanks($event.target)" >
+                <select class="form-select" aria-label="Default select example" formControlName="bankCode" >
+                  <option value="" selected disabled>Bank Name</option>
+                  <option *ngFor="let banks of bankData" [ngValue]="banks.code">{{banks.name}}</option>
+                  
+                </select>
+
+                
+                <div> <label for="country" class="form- mt-2">Bank Name <span style="color: red;">*</span></label></div>
+                </div>
+              
+
+              
+            
+            
+              <div class="form-group form-outline mb-4 d-flex">
+                <label for="inputtext" class="col-sm-2 col-form-label me-2"
+                >STATE</label
+              >
+                <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
+                  <option value="" selected disabled>Select State</option>
+                  <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
+                  
+                </select><br>
+                <p>select your state </p>
+
+                </div>
+
+                <div class="form-group form-outline mb-4 d-flex "   >
+                  <label for="inputtext" class="col-sm-2 col-form-label me-2"
+                  >LGA</label
+                >
+                  <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
+                    <option selected value="" disabled>Select LGA</option>
+                    <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                    
+                  </select><br>
+                  <p>select your LGA </p>
+
+                  </div>
+
+               <div class="d-flex">
+
+                <button class="btn btn-outline-success mx-1" (click)="toggleEditMode()" *ngIf="!isEditMode">
+                  edit profile
+                </button>
+                <!-- <button class="btn btn-outline-success mx-1"  type="submit"   *ngIf="isEditMode">
+                 update profile
+                </button> -->
+                <button class="btn btn-info me-2" type="submit"  *ngIf="isEditMode">Save Profile</button>
+                <button class="btn btn-danger "(click)="toggleEditMode()" *ngIf="isEditMode">Cancel</button>
+                <!-- <button class="btn btn-outline-danger mx-1">
+                  Delete Account
+                </button> -->
+              </div>
+          
+            </form>
+          </div>
+        </section>
+
+        <section class="p-2 mb-5 ps-md-5 butt">
+      
+          <div class="collapse pt-4" id="collapseExample">
+            <div class="card card-body">
+              <h2>ChANGE PASSWORD</h2>
+              <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"
+                  >Current Password</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword"
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"
+                  >New Password</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword"
+                  />
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label"
+                  >Confirm Password</label
+                >
+                <div class="col-sm-4">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary mt-3">Update Changes</button>
+          </div>
+        </section>
+      </div>
+
+      
+      <!-- <div *ngSwitchCase="'match3'" class="p-3">
+       
+        <app-artisantransactions></app-artisantransactions>
+      </div> -->
+
+
+
+     
+    </div>
+  </div>
+
+  

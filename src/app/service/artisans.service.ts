@@ -86,4 +86,20 @@ export class ArtisansService {
        })
      );
     }
+
+      // get all service categories
+  getAllServiceCategory(){
+    return this.http.get(this.api.baseUrl + "/api/ServiceCategory/all/")
+
+  }
+  // get all category by id
+getAllCategory(id : number){
+  return this.http.get(this.api.baseUrl + "/api/Product/products-category/" + id)
+ 
+}
+// get all sub categories
+getAllSubCategory(id : number){
+  return this.http.get(this.api.baseUrl + "/api/Product/products-sub-category/" + id)
+ 
+}
 }

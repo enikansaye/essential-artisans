@@ -36,22 +36,31 @@ class itemObject {
   total!: number;
   id !: number;
   marketPlaceProductId !: number;
+  model !: number 
+  type !: number
+  size !: string
 }
-class itemObject1 {
+class suggestedProductOne {
   name!: string;
   price!: number;
   quantity!: number;
   total!: number;
   id !: number;
   marketPlaceProductId !: number;
+  model !: number 
+  type !: number
+  size !: string
 }
-class itemObject2 {
+class suggestedProductTwo {
   name!: string;
   price!: number;
   quantity!: number;
   total!: number;
   id !: number;
   marketPlaceProductId !: number;
+  model !: number 
+  type !: number
+  size !: string
 }
 
 @Component({
@@ -71,6 +80,35 @@ export class ArtisantransactionsComponent implements OnInit {
       total: 0,
       id: 0,
       marketPlaceProductId : 0,
+  model : 0,
+  type : 0,
+  size : " "
+    },
+  ];
+  itemsArray1: Array<itemObject> = [
+    {
+      name: '',
+      price: 0,
+      quantity: 0,
+      total: 0,
+      id: 0,
+      marketPlaceProductId : 0,
+  model : 0,
+  type : 0,
+  size : " "
+    },
+  ];
+  itemsArray2: Array<itemObject> = [
+    {
+      name: '',
+      price: 0,
+      quantity: 0,
+      total: 0,
+      id: 0,
+      marketPlaceProductId : 0,
+  model : 0,
+  type : 0,
+  size : " "
     },
   ];
   InvoiceObject = {
@@ -81,9 +119,9 @@ export class ArtisantransactionsComponent implements OnInit {
     orderId: 0,
     jobDescription: '',
     artisanCharge: 0,
-    mainProduct: (this.itemsArray = []),
-    suggestedProductOne: (this.itemsArray = []),
-    suggestedProductTwo: (this.itemsArray = []),
+    items: (this.itemsArray = []),
+    suggestedProductOne: (this.itemsArray1 = []),
+    suggestedProductTwo: (this.itemsArray2 = []),
   };
 
   modalRef?: BsModalRef | null;
@@ -132,8 +170,10 @@ export class ArtisantransactionsComponent implements OnInit {
   orderDate: any;
   orderfiles: any;
 
-  mainProduct: string[] = ['Item 1', 'Item 2', 'Item 3'];
+  items: string[] = ['Item 1', 'Item 2', 'Item 3'];
   selectedItem !: string;
+  categoryData !: any;
+  categoryValue: any;
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -158,6 +198,7 @@ export class ArtisantransactionsComponent implements OnInit {
     this.getPendingOrder();
     this.getAllOrder();
     this.getCancelOrder();
+    // this.getServiceCategory();
 
     this.signupForm = this.formBuilder.group({
       orderId: 0,
@@ -201,6 +242,7 @@ export class ArtisantransactionsComponent implements OnInit {
       return this.filteredOrderData.reverse();
     });
   }
+ 
 
   key: string = 'id';
   reverse: boolean = false;
@@ -208,6 +250,8 @@ export class ArtisantransactionsComponent implements OnInit {
     this.key = key;
     this.reverse = !this.reverse;
   }
+  // get all service category
+
 
   // generate invoice section
 
@@ -351,7 +395,7 @@ export class ArtisantransactionsComponent implements OnInit {
 
     let itemsDto = [];
 
-    for (let index = 0; index < this.InvoiceObject.mainProduct.length; index++) {
+    for (let index = 0; index < this.InvoiceObject.items.length; index++) {
       this.itemsArray[index].total = this.hope;
     }
 
@@ -387,10 +431,10 @@ export class ArtisantransactionsComponent implements OnInit {
     this.itemsArray.push(new itemObject());
   }
   addsuggested1() {
-    this.itemsArray.push(new itemObject1());
+    this.itemsArray.push(new suggestedProductOne());
   }
   addsuggested2() {
-    this.itemsArray.push(new itemObject2());
+    this.itemsArray.push(new suggestedProductTwo());
   }
 
   removeRow(i: number) {
@@ -415,6 +459,51 @@ export class ArtisantransactionsComponent implements OnInit {
   updateTotalInItemsArray(item: itemObject) {
     item.total = item.quantity && item.price ? item.quantity * item.price : 0;
     return item.total;
+  }
+
+
+  // get() {
+  //   this.api.getLocation().subscribe((data: any) => {
+  //     this.state2 = data;
+  //   });
+  // }
+ 
+  getServiceCategory(){
+    this.artisanurl.getAllServiceCategory().subscribe(res =>{
+      console.log(res);
+      
+      this.categoryData =res
+    })
+  }
+  getSubcategoryid(data: any){
+    console.log(data);
+    
+    this.artisanurl.getAllCategory(data).subscribe(res =>{
+      console.log(res);
+      
+    })
+  }
+  onChangeState(event: any) {
+    
+    let userProfile = this.myForm.controls['firstSelect'].value;
+    // let userProfile = this.signupForm.controls['state'].value;
+    if (userProfile) {
+      this.artisanurl.getAllCategory(userProfile).subscribe((data: any) => {
+        console.log(data);
+        
+        this.categoryValue = data;
+      });
+    }
+  }
+
+  
+  onChangeCity(event: any) {
+    
+
+  }
+  checkforchange(data :any){
+    console.log(data);
+    
   }
 
   filterByDate() {

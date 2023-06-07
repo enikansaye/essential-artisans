@@ -104,6 +104,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 // import { EcommerceComponent } from './ecommerce/ecommerce.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 
 // import { AuthTokenInterceptors } from 'src/_helpers/AuthTokenInterceptors';
@@ -155,6 +156,7 @@ import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
     // DatePipe,
     PaymentComponent,
     CategoriesComponent,
+    InvoiceComponent,
     // EcommerceComponent,
     
   
@@ -243,7 +245,7 @@ import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
         { path: 'helpcenter', component: HelpComponent },
 
         { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
-        { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
+        // { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
         
         { path: 'admin', component: AdminpageComponent, canActivate:[AuthGuard]  },
@@ -261,7 +263,14 @@ import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
         // { path: 'passwordreset', component: ResetpasswordComponent },
         { path: 'artisanbyid', component: AdminartisanbyidComponent },
         { path: 'term of service', component: PrivacyComponent },
+        { path: 'invoice', component: InvoiceComponent },//invoice for testing
         { path: 'payment', component: PaymentComponent },
+        {
+          path: 'artisanprofile',
+          loadChildren: () => import('./components/artisans/artisanprofile/artisans.module')
+            .then(m => m.ArtisansModule),
+            canActivate:[RoleGuard]
+        },
         {
           path: 'Admin',
           loadChildren: () => import('./components/admin/admin.module')

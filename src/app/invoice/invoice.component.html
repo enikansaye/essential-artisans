@@ -1,0 +1,99 @@
+<div class="invoice-container">
+  <h2>Create Invoice</h2>
+
+  <form (submit)="submitInvoiceForm()">
+    <div>
+      <label for="orderId">Order ID:</label>
+      <input type="text" id="orderId" name="orderId" [(ngModel)]="orderId" required>
+    </div>
+    <div>
+      <label for="jobDescription">Job Description:</label>
+      <textarea id="jobDescription" name="jobDescription" [(ngModel)]="jobDescription" required></textarea>
+    </div>
+    <div>
+      <label for="artisanCharge">Artisan Charge:</label>
+      <input type="number" id="artisanCharge" name="artisanCharge" [(ngModel)]="artisanCharge" required>
+    </div>
+
+    <h3>Main Product</h3>
+    <div class="form-group">
+      <label for="firstSelect">First Select:</label>
+      <select id="firstSelect" name="firstSelect" [(ngModel)]="firstSelect" (change)="onFirstSelectChange()">
+        <option *ngFor="let option of firstSelectOptions" [value]="option.categoryId">{{ option.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="secondSelect">Second Select:</label>
+      <select id="secondSelect" name="secondSelect" [(ngModel)]="secondSelect" (change)="onSecondSelectChange()">
+        <option *ngFor="let option of secondSelectOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <label for="mainProductName">Name:</label>
+      <input type="text" id="mainProductName" name="mainProductName" [(ngModel)]="mainProductName" required>
+    </div>
+    <div>
+      <label for="mainProductQuantity">Quantity:</label>
+      <input type="number" id="mainProductQuantity" name="mainProductQuantity" [(ngModel)]="mainProductQuantity" required>
+    </div>
+    <div>
+      <label for="mainProductPrice">Price:</label>
+      <input type="number" id="mainProductPrice" name="mainProductPrice" [(ngModel)]="mainProductPrice" required>
+    </div>
+    <div>
+      <label for="mainProductModel">Model:</label>
+      <input type="text" id="mainProductModel" name="mainProductModel" [(ngModel)]="mainProductModel" required>
+    </div>
+    <div>
+      <label for="mainProductSize">Size:</label>
+      <input type="text" id="mainProductSize" name="mainProductSize" [(ngModel)]="mainProductSize" required>
+    </div>
+
+    <h3>Suggested Product 1</h3>
+    <div>
+      <label for="suggestedProductOneName">Name:</label>
+      <input type="text" id="suggestedProductOneName" name="suggestedProductOneName" [(ngModel)]="suggestedProductOneName" required>
+    </div>
+    <div>
+      <label for="suggestedProductOneQuantity">Quantity:</label>
+      <input type="number" id="suggestedProductOneQuantity" name="suggestedProductOneQuantity" [(ngModel)]="suggestedProductOneQuantity" required>
+    </div>
+    <div>
+      <label for="suggestedProductOnePrice">Price:</label>
+      <input type="number" id="suggestedProductOnePrice" name="suggestedProductOnePrice" [(ngModel)]="suggestedProductOnePrice" required>
+    </div>
+    <div>
+      <label for="suggestedProductOneModel">Model:</label>
+      <input type="text" id="suggestedProductOneModel" name="suggestedProductOneModel" [(ngModel)]="suggestedProductOneModel" required>
+    </div>
+    <div>
+      <label for="suggestedProductOneSize">Size:</label>
+      <input type="text" id="suggestedProductOneSize" name="suggestedProductOneSize" [(ngModel)]="suggestedProductOneSize" required>
+    </div>
+
+    <h3>Suggested Product 2</h3>
+    <div>
+      <label for="suggestedProductTwoName">Name:</label>
+      <input type="text" id="suggestedProductTwoName" name="suggestedProductTwoName" [(ngModel)]="suggestedProductTwoName" required>
+    </div>
+    <div>
+      <label for="suggestedProductTwoQuantity">Quantity:</label>
+      <input type="number" id="suggestedProductTwoQuantity" name="suggestedProductTwoQuantity" [(ngModel)]="suggestedProductTwoQuantity" required>
+    </div>
+    <div>
+      <label for="suggestedProductTwoPrice">Price:</label>
+      <input type="number" id="suggestedProductTwoPrice" name="suggestedProductTwoPrice" [(ngModel)]="suggestedProductTwoPrice" required>
+    </div>
+    <div>
+      <label for="suggestedProductTwoModel">Model:</label>
+      <input type="text" id="suggestedProductTwoModel" name="suggestedProductTwoModel" [(ngModel)]="suggestedProductTwoModel" required>
+    </div>
+    <div>
+      <label for="suggestedProductTwoSize">Size:</label>
+      <input type="text" id="suggestedProductTwoSize" name="suggestedProductTwoSize" [(ngModel)]="suggestedProductTwoSize" required>
+    </div>
+
+    <button type="submit">Create Invoice</button>
+  </form>
+</div>
