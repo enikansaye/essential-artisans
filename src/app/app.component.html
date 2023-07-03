@@ -119,7 +119,7 @@
           aria-controls="navbarTogglerDemo02"
           aria-expanded="false"
           aria-label="Toggle navigation" *ngIf="loginApi.loggedIn() && this.displayArtisan"  
-          routerLink="/artisanprofile"
+          routerLink="/artisanprofile/transactions"
           (click)="onClick(loginApi.loggedinUser.id)">
             <a class="nav-link  me-4 cursor navItem"  style="font-size: 20px; font-weight: 400;"
               ><i class="fa-solid fa-user"></i> My PROFILE</a

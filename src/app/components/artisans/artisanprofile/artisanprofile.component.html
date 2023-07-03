@@ -15,7 +15,7 @@
         <!-- </button> -->
       </mat-toolbar>
  <div class="w-100 d-flex flex-column align-items-center ">
-  <img  *ngIf="artisanData.profileImage"
+  <img  *ngIf="artisanData?.profileImage"
   src="data:image/png;base64,{{artisanData.profileImage}}" alt=""
   class="img-fluid bg-success rounded-circle w-50"
 />
@@ -48,6 +48,7 @@ Ratings: {{artisanData.rating}}
             data-bs-target="#navDashboard"
             aria-expanded="false"
             aria-controls="navDashboard"
+            routerLink="/artisanprofile/profile"
             
           >
             <i class="nav-icon bi bi-house-door me-2"></i> PROFILE
@@ -64,6 +65,7 @@ Ratings: {{artisanData.rating}}
             data-bs-target="#navDashboard"
             aria-expanded="false"
             aria-controls="navDashboard"
+            routerLink="/artisanprofile/transactions"
             
           >
           <i class="fa-solid fa-cart-shopping me-2"></i>ORDERS
@@ -84,13 +86,25 @@ Ratings: {{artisanData.rating}}
           >
           <i class="fa-solid fa-briefcase me-2"></i>QUOTE
           </a>
+          </li>
+        <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
+          <a
+            class="nav-link p-2 "
+            [class.active]="expression == 'match4'"
+            toggle
+            (click)="expression = 'match4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true ; this.getAllInvoices()"
+            data-bs-toggle="collapse"
+            data-bs-target="#navDashboard"
+            aria-expanded="false"
+            aria-controls="navDashboard"
+            routerLink="/artisanprofile/wallet"
+            
+          >
+          <i class="fa-solid fa-briefcase me-2"></i>WALLET
+          </a>
+          </li>
       
-          
-
      
-
-      
-
       
       </ul> 
 
@@ -190,37 +204,7 @@ Ratings: {{artisanData.rating}}
           </ul>
         </nav>
   
-        <!-- <div class="d-flex justify-content-end w-100">
-          <i class="bi bi-heart me-3"></i>
-          <i class="bi bi-cart me-3"></i>
-          <div>
-            <div class="dropdown">
-              <a
-                href="#"
-                class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                id="dropdownUser2"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <strong>mayowa</strong>
-                <div class="bg-success rounded-circle">
-                  <img
-                    src=""
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="img-fluid"
-                  />
-                </div>
-              </a>
-              <ul
-                class="dropdown-menu text-small shadow"
-                aria-labelledby="dropdownUser2"
-              >
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
+       
       </mat-toolbar>
     </div>
       <div>

@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
           this.toastr.success('Welcome you are logged in')
           // return this.responsedata;
           if (this.displayArtisan) {
-            this.router.navigate(['/artisanprofile']).then(() => {
+            this.router.navigate(['/artisanprofile/transactions']).then(() => {
               window.location.reload();
             });
             // this.reloadPage();

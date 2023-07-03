@@ -1,1 +1,41 @@
-<p>invoice works!</p>
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="items">
+      <div *ngFor="let item of itemForms; let i = index" [formGroupName]="i" class="item-group">
+        <h4>Item {{ i + 1 }}</h4>
+        <div class="form-group">
+          <label>Main Product Name</label>
+          <input type="text" formControlName="mainProduct.name">
+         
+        </div>
+        <!-- Repeat the above pattern for the remaining fields -->
+        <!-- mainProduct.quantity, mainProduct.price, mainProduct.marketPlaceProductId, mainProduct.model, mainProduct.type, mainProduct.size -->
+        <!-- suggestedProductOne.name, suggestedProductOne.quantity, suggestedProductOne.price, suggestedProductOne.marketPlaceProductId, suggestedProductOne.model, suggestedProductOne.type, suggestedProductOne.size -->
+        <!-- suggestedProductTwo.name, suggestedProductTwo.quantity, suggestedProductTwo.price, suggestedProductTwo.marketPlaceProductId, suggestedProductTwo.model, suggestedProductTwo.type, suggestedProductTwo.size -->
+  
+        <button type="button" (click)="removeItem(i)" class="btn-remove">Remove Item</button>
+      </div>
+    </div>
+  
+    <button type="button" (click)="addItem()" class="btn-add">Add Item</button>
+  
+    <div class="form-group">
+      <label>Artisan Charge</label>
+      <input type="number" formControlName="artisanCharge">
+      
+    </div>
+  
+    <div class="form-group">
+      <label>Job Description</label>
+      <textarea formControlName="jobDescription"></textarea>
+      
+    </div>
+  
+    <div class="form-group">
+      <label>Order ID</label>
+      <input type="number" formControlName="orderId">
+      
+    </div>
+  
+    <button type="submit" [disabled]="orderForm.invalid">Submit</button>
+  </form>
+  

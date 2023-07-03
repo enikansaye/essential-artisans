@@ -5,6 +5,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ArtisantransactionsComponent } from '../artisantransactions/artisantransactions.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 const routes: Routes = [
   { path: '',
@@ -12,8 +13,8 @@ const routes: Routes = [
   canActivate:[AuthGuard],
   children: [
     {
-      path: 'artisanprofile',
-      component: ArtisanprofileComponent,
+      path: 'transactions',
+      component: ArtisantransactionsComponent,
 
     },
     {
@@ -27,10 +28,15 @@ const routes: Routes = [
 
     },
     {
-      path: 'transactions',
-      component: ArtisantransactionsComponent,
+      path: 'wallet',
+      component: WalletComponent,
 
     },
+    // {
+    //   path: 'transactions',
+    //   component: ArtisantransactionsComponent,
+
+    // },
   ]
   }
 ];

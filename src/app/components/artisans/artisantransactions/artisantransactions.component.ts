@@ -170,10 +170,17 @@ export class ArtisantransactionsComponent implements OnInit {
   orderDate: any;
   orderfiles: any;
 
-  items: string[] = ['Item 1', 'Item 2', 'Item 3'];
+  // items: string[] = ['Item 1', 'Item 2', 'Item 3'];
   selectedItem !: string;
   categoryData !: any;
   categoryValue: any;
+  productData: any;
+  selectedOption : any;
+  selectedName : any;
+  selectedPrice : any;
+  allowInput: boolean = false;
+
+
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -181,6 +188,8 @@ export class ArtisantransactionsComponent implements OnInit {
   }
   AllpendingData: any;
   AllOrderData: any;
+  items: any[] = [];
+  selectedItemValue: string = '';
   constructor(
     private adminApi: AdminService,
     public api: ApiService,
@@ -191,6 +200,27 @@ export class ArtisantransactionsComponent implements OnInit {
     private toastr: ToastrService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
+  assignValueToInput(data : any) {
+    console.log(data);
+    this.selectedOption = data.name
+    this.selectedPrice = data.price
+    
+    console.log(this.selectedOption);
+    // for(let data of this.selectedOption){
+    //   console.log(data);
+      
+    // }
+    
+    if (this.selectedOption === '') {
+      this.allowInput = true;
+    } else {
+      this.allowInput = false;
+    }
+  }
+  letsee(data : any){
+    console.log(data);
+    
+  }
 
   ngOnInit(): void {
     // this.onEdit(this.check)
@@ -198,6 +228,7 @@ export class ArtisantransactionsComponent implements OnInit {
     this.getPendingOrder();
     this.getAllOrder();
     this.getCancelOrder();
+    this.artisanGetAllProduct();
     // this.getServiceCategory();
 
     this.signupForm = this.formBuilder.group({
@@ -221,6 +252,21 @@ export class ArtisantransactionsComponent implements OnInit {
         this.showSecondSelect = false;
       }
     });
+  }
+  artisanGetAllProduct(){
+    this.artisanurl.getAllProduct().subscribe(res =>{
+      console.log(res);
+      
+      this.items = res
+      this.productData = res
+      console.log(res);
+      
+    })
+
+  }
+  onItemSelected(selectedValue: string) {
+    // Update the value of the input field
+    this.selectedItemValue = selectedValue;
   }
 
   openDialog() {}

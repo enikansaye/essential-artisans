@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/service/api.service';
 import { ArtisansService } from 'src/app/service/artisans.service';
 import { LoginService } from 'src/app/service/login.service';
 import { SignalrService } from 'src/app/service/signalr.service';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,11 +32,12 @@ export class ProfileComponent implements OnInit {
   bankData: any;
   city2: any;
   state2: any;
+  serviceCategory: any;
 
   constructor(
     private observer: BreakpointObserver,
     public api: ApiService,
-    // public adminApi: AdminService,
+    public adminApi: AdminService,
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
@@ -47,6 +49,9 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getArtisan();
+    this.getState()
+    this.getAllServiceCategory();
     this.updateForm = this.fb.group({
       firstName: [''],
       lastName: [''],
@@ -63,6 +68,14 @@ export class ProfileComponent implements OnInit {
     });
     this.updateForm.disable();
     this.formControls = this.updateForm.controls;
+
+    
+  }
+  getAllServiceCategory(){
+    this.adminApi.getServiceCategory().subscribe((data:any)=>{
+      this.serviceCategory = data
+      
+    })
   }
 
   uploadFile(files: any) {

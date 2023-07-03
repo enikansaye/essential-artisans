@@ -24,6 +24,14 @@ export class ArtisansService {
       })
     )
   }
+  getAllProduct(){
+    
+    return this.http.get(this.api.baseUrl + "/api/Product/artisan-category-products").pipe(
+      map((res:any)=>{
+        return res;
+      })
+    )
+  }
 
   generateInvoice(data:any){
     return this.http.post( this.api.baseUrl+ '/api/Artisan/invoice/create',data)

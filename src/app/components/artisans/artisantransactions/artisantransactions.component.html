@@ -651,6 +651,34 @@
               <form action="" #invoiceBody="ngForm">
                 <div *ngFor="let obj of itemsArray;let i=index">
               <div class="row" >
+                <!-- <select [(ngModel)]="selectedOption">
+                  <option *ngFor="let option of productData" [value]="option">{{ option.name }}</option>
+                  <option value="">Other</option>
+                </select> -->
+                <select >
+                  <option *ngFor="let option of productData" (click)="assignValueToInput(option)">{{ option.name }}</option>
+                  <option value="">Other</option>
+
+                </select>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="artisanGetAllProduct()">
+                    send email
+                  </button>
+                  <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item"  *ngFor="let data of productData" (click)="assignValueToInput(data)" >{{data.name}}</a></li>
+                  </ul>
+                </div>
+                
+                <input type="text" [(ngModel)]="selectedOption" [disabled]="!allowInput" [ngModelOptions]="{standalone: true}" />
+
+                <!-- <select (change)="onItemSelected($event.target.value)" >
+                  <option value="">Select an item</option>
+                  <option *ngFor="let item of items" [value]="item.value">{{ item.label }}</option>
+                </select>
+                
+                <input type="text" [(ngModel)]="selectedItemValue" placeholder="Auto-filled input" />
+                 -->
+                
     
                 <div class="col-md-3">
                   
@@ -658,14 +686,14 @@
                   
                   <label>Item name</label>
 
-                  <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
+                  <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" value="{{selectedOption}}" #name3="ngModel"   required >
     
                 
                 </div>
        
                 <div class="col-md-3">
                   <label>Unit Price</label>
-                  <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
+                  <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" [value]="selectedPrice" #name4="ngModel"   required>
     
                  
                 </div>

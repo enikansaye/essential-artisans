@@ -36,10 +36,10 @@ mat-sidenav-content{
   border-radius: 10px;
   
 }
-.content {
+/* .content {
   display: flex;
   justify-content: flex-start;
-}
+} */
 .icons{
   margin-left: 30%;
   margin-right: 30%;
