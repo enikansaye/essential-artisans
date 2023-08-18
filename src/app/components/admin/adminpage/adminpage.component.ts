@@ -127,7 +127,9 @@ quotePage: any;
     // this.getAllCompletedOrder();
 
     // this.getAllUser()
-
+    this.artisanLength
+    console.log(this.artisanLength);
+    
     this.approveForm = this.formBuilder.group({
       invoiceId: 0,
     });
@@ -237,6 +239,17 @@ quotePage: any;
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
+  }
+
+  getAllArtisan() {
+    this.adminApi.getArtisan().subscribe((res: any) => {
+      
+      
+      this.artisanData = res;
+      this.totalRecord = res.length;
+      this.artisanLength = res.length;
+      return this.artisanData.reverse();
+    });
   }
 
   // ngAfterViewInit() {
@@ -420,12 +433,18 @@ quotePage: any;
 
   getAllOrder() {
     this.adminApi.getOrder().subscribe((res: any) => {
-      this.order = res;
+      console.log(res);
+      
+      this.order = res.length;
+      console.log(this.order);
+      
       // this.totalLength = res.length;
     });
   }
   getAllTotalSales() {
     this.adminApi.getTotalSales().subscribe((res: any) => {
+      console.log(res);
+      
       this.totalSales = res;
     });
   }

@@ -13,6 +13,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AllurlService } from './allurl.service';
 import { AuthInterceptor } from 'src/_helpers/auth.interceptor';
 import { Router } from '@angular/router';
+import { HttpClientService } from './http-client.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -54,13 +55,15 @@ export class ApiService implements OnInit {
   constructor(
     private http: HttpClient,
     private url: AllurlService,
+    private _http: HttpClientService,
+
     // private tokenStorage: StorageService,
     private router: Router
   ) {}
   ngOnInit(): void {
   
   }
-
+  
   // user signup
   registerUser(model: any) {
     return this.http.post(
@@ -88,9 +91,12 @@ export class ApiService implements OnInit {
 
   
 
-
-  getUserinfo() {
-    return this.http.get(this.baseUrl + '/api/Customer/');
+  // getAll(): Observable<Product[]> {
+	// 	return this._http
+	// 		.get<Product[]>({ url: 'https://example-api/products', cacheMins: 5 })
+	// }
+  getUserinfo():Observable<Product[]> {
+    return this._http.get<Product[]>({url: `${this.baseUrl}/api/Customer/`, cacheMins: 5 });
   }
   getArtisaninfo() {
     return this.http.get(this.baseUrl + '/api/Artisan/');
@@ -305,16 +311,12 @@ export class ApiService implements OnInit {
   userGetApprovedInvoice() {
     return this.http
       .get<any>(this.baseUrl + '/api/Customer/customer/approved/invoices')
-      .pipe(
-        map((res: any) => {
-          return res;
-        })
-      );
   }
 
-  userGetInvoice() {
+  
+  userGetInvoice(){
     return this.http
-      .get<any>(this.baseUrl + '/api/Customer/customer/approved/invoices')
+      .get(this.baseUrl + '/api/Customer/customer/approved/invoices')
       .pipe(
         map((res: any) => {
           return res;
@@ -354,6 +356,16 @@ export class ApiService implements OnInit {
    
     return this.http
       .put<any>(this.baseUrl + '/api/Customer/inspection-date/change', data)
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
+  userUpdateInvoice(data: any) {
+   
+    return this.http
+      .put<any>(this.baseUrl + '/api/Customer/invoice/edit', data)
       .pipe(
         map((res: any) => {
           return res;
@@ -441,4 +453,23 @@ getAllSubCategory(id : number){
       return this.http.put<any>(this.baseUrl + "/api/Transfer/makepayment/" + id, data)
     }
 
+    // wallet
+    creditWallet(data : any){
+      return this.http.post<any>(this.baseUrl + "/api/Wallet/credit", data);
+    }
+    getWalletBalannce(){
+      return this.http.get(this.baseUrl + "/api/Wallet/balance");
+    }
+    getWalletTransactions(){
+      return this.http.get(this.baseUrl + "/api/Wallet/transactions");
+    }
+    debitWallet(data : any){
+      return this.http.post(this.baseUrl + "/api/Wallet/debit", data)
+    }
+}
+export class Product {
+	name !: string
+	description !: string
+	price !: number
+	available !: boolean
 }

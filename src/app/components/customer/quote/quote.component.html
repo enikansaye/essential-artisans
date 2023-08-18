@@ -1,0 +1,545 @@
+<div>
+  <section>
+    <mat-toolbar class="text-success w-100 justify-content-between m-3">
+      <div>Quote History</div>
+    </mat-toolbar>
+    <div class="row d-flex col-12">
+      <div class="col-9">
+        <!-- <div class=" " > -->
+        <input
+          type="date"
+          [(ngModel)]="fromDate1"
+          class="me-2"
+          placeholder="
+            dd/mm/yyyy, --:--
+            "
+        />
+
+        <!-- </div> -->
+        <!-- <div class=" "> -->
+        <input
+          type="date"
+          style="margin-right: 3px"
+          [(ngModel)]="toDate1"
+          placeholder="
+            dd/mm/yyyy, --:--
+            "
+        />
+
+        <!-- </div> -->
+        <!-- <div class="col-md-2 h-50" > -->
+        <button class="btn btn-danger" (click)="filterByDate2()">
+          <i class="bi bi-search"></i>
+        </button>
+        <!-- <button class="btn btn-danger d-none col-md-block" (click)="filterByDate()">Search</button> -->
+
+        <!-- </div> -->
+      </div>
+
+      <div class="col-md-3 my-2">
+        <input
+          class="form-control"
+          type="text"
+          name="search"
+          [(ngModel)]="searchText"
+          autocomplete="off"
+          placeholder="&#61442;  Start searching for Artisans within your location"
+        />
+      </div>
+    </div>
+    <div id="no-tables">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td scope="col">Date</td>
+            <th scope="col">Invoice ID/ Order ID</th>
+            <th scope="col">Artisan's Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Order Categories</th>
+            <th scope="col">Issue</th>
+            <th scope="col">Location</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="getInvoice">
+          <tr
+            *ngFor="
+              let i = index;
+              let data;
+              of: filteredQuoteData
+                | filter : searchText
+                | paginate : { itemsPerPage: 20, currentPage: page }
+            "
+          >
+            <td data-title="Date">{{ data.date }}</td>
+            <td data-title="Invoice ID">
+              {{ data.invoiceId }}/{{ data.serviceOrderUniqueId }}
+            </td>
+            <td data-title="Artisan's Name">{{ data.artisanInfo.name }}</td>
+            <td data-title="Phone Number">
+              {{ data.customerInfo.phoneNumber }}
+            </td>
+            <td data-title="Order Categories">
+              {{ data.artisanInfo.profession }}
+            </td>
+            <!-- <td data-title="Issue">{{data.jobDescription}}</td> -->
+            <td
+              data-title="Issue"
+              data-title="{{ data.jobDescription }}"
+              class="butt"
+            >
+              {{
+                data.jobDescription.length > 6
+                  ? (data.jobDescription | slice : 0 : 10) + "..."
+                  : data.jobDescription
+              }}
+            </td>
+
+            <td data-title="Location">{{ data.serviceOrderAddress }}</td>
+            <td data-title="Status" *ngIf="data.action === 6">Canceled</td>
+            <td data-title="Status" *ngIf="data.action === 4">Canceled</td>
+            <td data-title="Status" *ngIf="data.action === 3">Approved</td>
+            <td data-title="Status" *ngIf="data.action === 2">Pending</td>
+            <td data-title="Status" *ngIf="data.action === 1">
+              Awaiting Approval
+            </td>
+            <!-- <td data-title="Status" *ngIf="data.action ===4 ">Paid</td> -->
+            <td data-title="Status" *ngIf="data.action === 5">Paid</td>
+            <td data-title="Total Amount">{{ data.invoiceTotal }}</td>
+            <td data-title="Action">
+              <button
+                class="btn btn-info"
+                (click)="openModalWithClass(template); onClickInvoce(data)"
+              >
+                View Quote
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </section>
+  <section class="pt" *ngIf="!filteredQuoteData">
+    <!-- <app-emptycart></app-emptycart> -->
+  </section>
+</div>
+
+<!-- view Quote section -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">INVOICE DETAILS</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4>Artisan Details</h4>
+        <h5>
+          Name: <span>{{ artisanName }}</span>
+        </h5>
+        <h5>
+          Email: <span>{{ artisanEmail }}</span>
+        </h5>
+
+        <h5>
+          PhoneNumber: <span>{{ artisanPhoneNumber }}</span>
+        </h5>
+        <h5>
+          Profession: <span>{{ artisanProfession }}</span>
+        </h5>
+      </div>
+      <div>
+        <h4>User Details</h4>
+        <h5>
+          Name: <span>{{ userName }}</span>
+        </h5>
+
+        <h5>
+          Email: <span>{{ userEmail }}</span>
+        </h5>
+        <h5>
+          PhoneNumber: <span>{{ userPhoneNumber }}</span>
+        </h5>
+        <h5>
+          Total:
+          <span class="h6"
+            ><del *ngIf="discountPercentage !== 0"> &#8358;{{ allTotal }} </del>
+            <span *ngIf="discountPercentage === 0"> &#8358;{{ allTotal }} </span
+            ><span *ngIf="discountPercentage !== 0">
+              &#8358;{{ discount }}
+            </span></span
+          >
+        </h5>
+      </div>
+    </div>
+
+    <div class="card border-secondary mt-2 mb-5">
+      <div class="card-body">
+        <!-- <h4 class="card-title d-flex justify-content-between">Items Details <button type="button" class="btn btn-primary" (click)="addRow()">+</button></h4> -->
+
+        <div *ngFor="let item of serviceItemsDetails; let i = index">
+          <h3>Item {{ i + 1 }}</h3>
+          <div class="row">
+            <div class="col-md-3" *ngIf="item.mainProduct.name != '' ">
+              <label for="mainProductName">Main Product Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mainProductName"
+                [(ngModel)]="item.mainProduct.name"
+                placeholder="Main Product Price"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-3" *ngIf="item.mainProduct.price != 0 ">
+              <label for="mainProductPrice">Main Product Price:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="mainProductPrice"
+                [(ngModel)]="item.mainProduct.price"
+                placeholder="Main Product Price"
+                disabled
+              />
+            </div>
+            <div class="col-md-3" *ngIf="item.mainProduct.quantity != 0 ">
+              <label for="mainProductQuantity">Main Product Quantity:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="mainProductQuantity"
+                type="number"
+                [(ngModel)]="item.mainProduct.quantity"
+                placeholder="Main Product Quantity"
+                disabled
+              />
+            </div>
+            <div class="col-md-2" *ngIf="item.mainProduct.total != 0 " >
+              <label for="mainProductTotal">Main Total:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="mainProductTotal"
+                type="number"
+                [(ngModel)]="item.mainProduct.total"
+                placeholder="Main Product Total"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-3" *ngIf="item.suggestedProductOne.name != '' ">
+              <label for="suggestedProductOneName">Suggested Product One</label>
+              <input
+                class="form-control"
+                id="suggestedProductOneName"
+                type="text"
+                [(ngModel)]="item.suggestedProductOne.name"
+                placeholder="Main Product Price"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-3" *ngIf="item.suggestedProductOne.price != 0 ">
+              <label for="suggestedProductOnePrice"
+                >Suggested Product One:</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductOnePrice"
+                type="number"
+                [(ngModel)]="item.suggestedProductOne.price"
+                placeholder="Suggested Product One Price"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-3" *ngIf="item.suggestedProductOne.quantity != 0 ">
+              <label for="suggestedProductOneQuantity"
+                >Suggested Product One:</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductOneQuantity"
+                type="number"
+                [(ngModel)]="item.suggestedProductOne.quantity"
+                placeholder="Suggested Product One Quantity"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-2" *ngIf="item.suggestedProductOne.total != 0 ">
+              <label for="suggestedProductOneTotal"
+                >Total</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductOneTotal"
+                type="number"
+                [(ngModel)]="item.suggestedProductOne.total"
+                placeholder="Suggested Product One Total"
+                disabled
+              />
+            </div>
+             <div class="col-md-1 mt-4" *ngIf="item.suggestedProductOne.name != '' ">
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="onSelectToggle(item.suggestedProductOne.serviceItemId)">
+              </div>
+              <!-- <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input"> -->
+
+          </div>
+
+            <!-- Repeat the same for suggestedProductTwo -->
+
+            <div class="col-md-3" *ngIf="item.suggestedProductTwo.name != '' ">
+              <label for="suggestedProductTwoName"
+                >Suggested Product Two:</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductTwoName"
+                type="text"
+                [(ngModel)]="item.suggestedProductTwo.name"
+                placeholder="Main Product Price"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-3" *ngIf="item.suggestedProductTwo.price != 0 ">
+              <label for="suggestedProductTwoPrice"
+                >Suggested Product Two:</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductTwoPrice"
+                type="number"
+                [(ngModel)]="item.suggestedProductTwo.price"
+                placeholder="Main Product Price"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-3" *ngIf="item.suggestedProductTwo.quantity != 0 ">
+              <label for="suggestedProductTwoQuantity"
+                >Suggested Product Two:</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductTwoQuantity"
+                type="number"
+                [(ngModel)]="item.suggestedProductTwo.quantity"
+                placeholder="Suggested Product Two Quantity"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-2" *ngIf="item.suggestedProductTwo.total != 0 ">
+              <label for="suggestedProductTwoTotal"
+                >Total:</label
+              >
+              <input
+                class="form-control"
+                id="suggestedProductTwoTotal"
+                type="number"
+                [(ngModel)]="item.suggestedProductTwo.total"
+                placeholder="Suggested Product Two Total"
+                disabled
+              />
+            </div>
+
+            <div class="col-md-1 mt-4" *ngIf="item.suggestedProductTwo.name != '' ">
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="onSelectToggle(item.suggestedProductTwo.serviceItemId)">
+              </div>
+
+          </div>
+          </div>
+        </div>
+        <!-- <div *ngIf="isFirstTimeCustomer"> 
+  <p><span class="fs-6 fw-bold">NOTE:</span> Congratulations!!! As a first time user, inspection fee of N1,000 has been waived </p>
+  </div> -->
+      </div>
+      <div class="ms-3 me-2">
+        <div class="d-flex mt-3">
+          <div class="me-4">
+            Service Charge :
+            <input
+              type="text"
+              [(ngModel)]="artisanCharge"
+              [ngModelOptions]="{ standalone: true }"
+              disabled
+            />
+          </div>
+          <div>
+            Inspection Fee :
+            <input
+              type="text"
+              [(ngModel)]="inspectionFee"
+              [ngModelOptions]="{ standalone: true }"
+              disabled
+            />
+          </div>
+        </div>
+        <div class="mt-2">
+          <label>Job Description</label><br />
+
+          <div class="form-floating mt-1">
+            <textarea class="form-control" required disabled>{{
+              jobDescription
+            }}</textarea>
+            <!-- <label for="floatingTextarea">Description of Job to be done</label> -->
+          </div>
+        </div>
+
+        <div>
+          <div class="d-flex mt-3" style="color: #dc3545" *ngIf="hasDiscount">
+            You have &#8358;{{ discountedPrice }} ({{ discountPercentage }}% )
+            off your Transaction
+
+            <!-- <h4 class="mt-2 me-2">Service Charge :</h4><input type="text" name="artisanCharge"   [(ngModel)]="artisanCharge " disabled> -->
+          </div>
+          <div class="d-flex mt-3">
+            <!-- <h4 class="mt-2 me-2"> Inspection fee :</h4><input type="text" name="inspectionFee"  [(ngModel)]="inspectionFee" disabled> -->
+            <div class="form-group" [formGroup]="getInvoiceByIdForm">
+              <label class="h5 " for="date" style="color: red;">
+                Please Select date for your job done</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                formControlName="dateAndTimeOfWhenJobNeedsToBeDone"
+                name="invoiceDate"
+                id="date"
+                required
+              />
+
+              <!-- <label class="form-label mt-2" for="">Date for job done <span style="color: red;">*</span></label> -->
+              <br />
+              <span
+                style="color: #dc3545"
+                *ngIf="(signupFormControl['dateAndTimeOfWhenJobNeedsToBeDone'].touched || submitted) && signupFormControl['dateAndTimeOfWhenJobNeedsToBeDone'].errors?.['required']"
+              >
+                Date is required
+              </span>
+              
+            </div>
+            
+          </div>
+          <div class="d-flex float-end mb-2 ">
+            <div class="col-8">
+              Do you wish to edit your invoice? you can only select item from the the suggested items. if you are okay with the main item, kindly proceed to make payment
+
+            </div>
+            <div class="col-4">
+              <button class="btn btn-info mx-2 ">Edit</button>
+            <button class="btn btn-success" (click)="updateInvoice()">Update</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div>
+        <div class="d-flex float-end me-2" *ngIf="errorData === 'Insufficient wallet balance'">
+          <span class="h5" style="color: red">{{ errorData }}</span>
+          <button class="btn btn-info ms-2 h-50" (click)="openModal2(template2)">
+            Fund Wallet</button
+          ><span class="h1">/</span
+          ><button
+            class="btn btn-success h-50"
+            (click)="userAprroveQuote(getInvoice.invoiceId)"
+          >
+            Pay with Card
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-danger me-2" (click)="modalRef?.hide()">
+        Cancel
+      </button>
+      <button
+        class="btn btn-danger me-2"
+        (click)="userCancelQuote(getInvoice)"
+        *ngIf="invoiceAction === 2"
+      >
+        Reject Quote
+      </button>
+      <!-- <button class="btn btn-info" (click)="userAprroveQuote(getInvoice.invoiceId)" *ngIf="invoiceAction=== 2"> Make Payment</button> -->
+      <button
+        class="btn btn-info"
+        (click)="debitWallet(getInvoice.invoiceId)"
+        *ngIf="invoiceAction === 2"
+      >
+        DebitWallet
+      </button>
+      <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      <button type="button" class="btn btn-info">Update</button> -->
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #template2>
+  <div class="modal-header">
+    <h4 class="modal-title"></h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef2?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2 class="card-title" style="color: #033d94">Fund Wallet</h2>
+
+    <form
+      [formGroup]="addMoneyForm"
+      (ngSubmit)="onSubmit(this.addMoneyForm.value)"
+    >
+      <div class="card-text form">
+        <div class="mb-1">
+          <label for="" class="form-label"
+            >Add Money <span style="color: red">*</span></label
+          >
+
+          <input
+            type="text  "
+            formControlName="amount"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f['amount'].errors
+            }"
+          />
+        </div>
+      </div>
+      <div class="mt-2" style="color: #033d94; font-size: 18px">
+        {{ errorMessage }}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info">Fund Wallet</button>
+        <button
+          type="button"
+          class="btn btn-danger e-3"
+          data-bs-dismiss="modal"
+          (click)="modalRef2?.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

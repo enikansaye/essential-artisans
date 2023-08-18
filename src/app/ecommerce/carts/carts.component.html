@@ -55,7 +55,7 @@
 <ng-template #template>
 
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
+    <!-- <h4 class="modal-title pull-left">Modal</h4> -->
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
@@ -64,7 +64,7 @@
       <div >
      
           
-            <h2 class="card-title" style="color: #ff7359">Order Form</h2>
+            <h2 class="card-title text-info" >Order Form</h2>
 
             <form (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
               <div>
@@ -95,10 +95,13 @@
                 <input type="hidden" [name]="'productId' + item.productId" [ngModel]="item.productId">
               </div>
             
-              <button class="btn" type="submit" style="background-color: #ff7359; border: none; color: white;" [disabled]="!checkoutForm.form.valid">Place Order</button>
             </form>
                 
       </div>
+    </div>
+    <div class="madal-footer">
+      <button class="btn btn-info" type="submit"  [disabled]="!checkoutForm.form.valid">Place Order</button>
+
     </div>
   </ng-template>
   

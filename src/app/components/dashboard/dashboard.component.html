@@ -570,6 +570,65 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-6 col-sm-6 col-lg-4 col-xl-3 cursor" *ngFor="let card of serviceData" >
+      <div class="card shadow h-100">
+        <!-- Image -->
+        <img
+          [src]="card.imageURL"
+
+          class="card-img-top h-50 img-fluid"
+          alt="Essential-AC-Repair"
+        />
+        <div class="card-body pb-0">
+          <!-- Title -->
+          <h5 class="card-title fw-normal">
+            <a class="text-decoration-none text-info">{{card.name}}</a>
+          </h5>
+          <p class="mb-2 text-truncate-2">
+            Get all your {{card.name}} fixed
+          </p>
+          <!-- Rating star -->
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item me-0 small">
+              <i class="bi bi-star-fill text-warning"></i>
+            </li>
+            <li class="list-inline-item me-0 small">
+              <i class="bi bi-star-fill text-warning"></i>
+            </li>
+            <li class="list-inline-item me-0 small">
+              <i class="bi bi-star-fill text-warning"></i>
+            </li>
+            <li class="list-inline-item me-0 small">
+              <i class="bi bi-star-fill text-warning"></i>
+            </li>
+            <li class="list-inline-item me-0 small">
+              <i class="bi bi-star-half-alt-fill text-warning"></i>
+            </li>
+            <li class="list-inline-item ms-2 h6 fw-light mb-0">
+              4.5/5.0
+            </li>
+          </ul>
+        </div>
+        <!-- Card footer -->
+        <div class="card-footer pt-0 pb-3">
+          <hr />
+          <div>
+            See All {{card.name}}
+            <span><i class="bi bi-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <!-- <div class="section" [ngClass]="{ 'hidden': !serviceData}">
+      sdfghj
+    </div> -->
+    <div class="section" [ngClass]="{ 'hidden': !serviceData}">
+      sdfghj
+<div *ngFor="let data of serviceSubCategory" >{{data.name}}</div>
+    </div>
+  </div>
   
 
 

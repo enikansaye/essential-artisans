@@ -1,9 +1,14 @@
 
   <div class="m-3 d-flex justify-content-between">
     <!-- <button  type="button" (click)=" clickAddServiceCategory()" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Add service category</button> -->
-    <button type="button" class="btn btn-info me-2" *ngIf="!hidden" (click)="openModal(template); clickAddServiceCategory()">
-      Add Service Categories
-    </button>
+    <div>
+      <button type="button" class="btn btn-info me-2" *ngIf="!hidden" (click)="openModal(template); clickAddServiceCategory()">
+        Create Service Categories
+      </button>
+      <button type="button" class="btn btn-info me-2" *ngIf="!hidden" (click)="openModal(template2); clickAddSubServiceCategory()">
+        Create Sub-Category
+      </button>
+    </div>
 
 <div class="d-flex">
   <input type="text" class="me-3" *ngIf="hidden" [(ngModel)]="this.feeForm.value.inspectionFee">
@@ -112,12 +117,8 @@
   
 </div>
 <label class="btn btn-default">
-  <input
-    type="file"
-    multiple
-    (change)="selectFiles($event)"
-    formControlName="File"
-  />
+  <input type="file" (change)="handleFileInput2($event)">
+
 </label>
 </form>
 </div>
@@ -144,6 +145,59 @@
   <div class="modal-footer">
     <button type="button" id ="cancel" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
     <button *ngIf="showAddService" type="button" (click)="postServiceCategory(this.formValue.value)" class="btn btn-info">Add Category</button>
+    <!-- <button *ngIf="showUpdate"    type="button" (click)="updateServiceCategory(this.updateFormValue.value)" class="btn btn-primary">Update</button> -->
+    <!-- <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button> -->
+  </div>
+    
+  </ng-template>
+
+
+  <!-- create sub category -->
+  <ng-template #template2>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Service Sub-Category Details</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <!-- modal form -->
+<div *ngIf="showAddService">
+<form [formGroup]="subCategoryFormValue"  >
+<div class="mb-3" >
+  <label for="exampleInputEmail1" class="form-label">Sub Category Name</label>
+  <input formControlName="Name" type="text" class="form-control" />
+  <!-- <input formControlName="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+  
+</div>
+<div class="mb-3">
+  <label for="exampleInputEmail1" class="form-label">Select Category</label>
+
+  <select class="form-select" aria-label="Default select example " formControlName="ServiceCategoryId">
+                    <option >Select Estate</option>
+                    <option *ngFor="let data of categoryData" [value]="data.categoryId" >{{data.name}}</option>
+                    
+                  </select>
+
+</div>
+<div>
+  <label class="btn btn-default">Select File</label>
+ 
+<input type="file" (change)="handleFileInput($event)">
+ 
+
+</div>
+
+</form>
+</div>
+        
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" id ="cancel" class="btn btn-secondary" (click)="modalRef?.hide()">Close</button>
+    <button *ngIf="showAddService" type="button" (click)="submitForm(this.subCategoryFormValue.value)" class="btn btn-info">Add Category</button>
     <!-- <button *ngIf="showUpdate"    type="button" (click)="updateServiceCategory(this.updateFormValue.value)" class="btn btn-primary">Update</button> -->
     <!-- <button *ngIf="showUpdate" type="button" (click)="updateServiceCategory()" class="btn btn-primary">Update</button> -->
   </div>

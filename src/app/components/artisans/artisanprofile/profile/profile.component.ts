@@ -85,6 +85,9 @@ export class ProfileComponent implements OnInit {
     let fileToUpload = <File>files[0];
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
+    console.log(fileToUpload);
+    console.log(fileToUpload.name);
+    
     
     this.http.post(this.api.baseUrl + '/api/Artisan/upload-profile-image', formData, {reportProgress: true, observe: 'events'})
       .subscribe({

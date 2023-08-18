@@ -19,16 +19,17 @@
   src="data:image/png;base64,{{artisanData.profileImage}}" alt=""
   class="img-fluid bg-success rounded-circle w-50"
 />
-<ngx-avatar *ngIf="!artisanData.profileImage " size="130" name="{{artisanData.firstName}} {{artisanData.lastName}}"></ngx-avatar>
+<ngx-avatar *ngIf="profileImage == null " size="130" name="{{firstName}} {{lastName}}"></ngx-avatar>
 
-  <h4 class="mt-2 mt-md-4">{{artisanData.firstName}} {{artisanData.lastName}}</h4>
-  <h4>{{artisanData.email}}</h4>
-  <h4>{{artisanData.profession}}</h4>
+  <h4 class="mt-2 mt-md-4">{{firstName}} {{lastName}}</h4>
+  <h4>{{email}}</h4>
+  <h4>{{profession}}</h4>
+  
 
   <div class=" start">
-  <ngx-star-rating [id]="artisanData.rating" [(ngModel)]="artisanData.rating" [disabled]="true"></ngx-star-rating>
+  <ngx-star-rating [id]="rating" [(ngModel)]="rating" [disabled]="true"></ngx-star-rating>
     <h4>
-Ratings: {{artisanData.rating}}
+Ratings: {{rating}}
 
   </h4>
   </div>
@@ -75,13 +76,13 @@ Ratings: {{artisanData.rating}}
         <li class="nav-item cursor  align-text-center"  style="width: 200px;" >
           <a
             class="nav-link p-2 "
-            [class.active]="expression == 'match4'"
             toggle
-            (click)="expression = 'match4' ; sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true ; this.getAllInvoices()"
+            (click)="sidenav.opened && sidenav.mode === 'over'?  sidenav.toggle() : true ; this.getAllInvoices()"
             data-bs-toggle="collapse"
             data-bs-target="#navDashboard"
             aria-expanded="false"
             aria-controls="navDashboard"
+            routerLink="/artisanprofile/quote"
             
           >
           <i class="fa-solid fa-briefcase me-2"></i>QUOTE

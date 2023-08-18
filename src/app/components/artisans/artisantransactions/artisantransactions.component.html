@@ -596,7 +596,7 @@
           <div class="card border-secondary">
             <div class="card-body">
               <h4 class="card-title">Invoice Details</h4>
-              <form #invoiceinformation="ngForm" >
+             
               <div class="row">
     
                 <div class="col-md-8">
@@ -621,95 +621,96 @@
                 </div>
     
               </div>
-              </form>
+              
             </div>
           </div>
           <div class="card border-secondary mt-2 mb-5">
             <div class="card-body">
               <h4 class="card-title d-flex justify-content-between">Items Details 
-                
-                <form [formGroup]="myForm">
-                 <div (click)="getServiceCategory()">
-                  <select formControlName="firstSelect"  (change)="onChangeState($event.target)" >
-                    <option [value]="" >Select category</option>
-                    <option  *ngFor="let data of categoryData" [value]="data.categoryId"  >{{data.name}}</option>
-                    <!-- <option value="otherValue">Other Value</option> -->
-                  </select>
-                 </div>
-                
-                  <select  (change)="onChangeCity($event.target)"  >
-                    <option value="" >Select sub category</option>
-                    <option  *ngFor="let data of categoryValue" >{{data.name}} {{data.price}} {{data.model}} {{data.size}} {{data.subCategory}}</option>
-                    <!-- <option value="specificValue">Specific Value</option> -->
-                  </select>
-                </form>
-                
-                
-                <button type="button" class="btn btn-info" (click)="addRow()">Add Input</button></h4>
+               
+                <button type="button" class="btn btn-info" (click)="addItem()">Add Input</button></h4>
     
     
-              <form action="" #invoiceBody="ngForm">
-                <div *ngFor="let obj of itemsArray;let i=index">
-              <div class="row" >
-                <!-- <select [(ngModel)]="selectedOption">
-                  <option *ngFor="let option of productData" [value]="option">{{ option.name }}</option>
-                  <option value="">Other</option>
-                </select> -->
-                <select >
-                  <option *ngFor="let option of productData" (click)="assignValueToInput(option)">{{ option.name }}</option>
-                  <option value="">Other</option>
+                <div *ngFor="let item of invoice.items; let i = index">
+                  <h3>Item {{ i + 1 }}</h3>              <div class="row" >
+              
+    
+                    <div class="col-md-3">
 
-                </select>
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="artisanGetAllProduct()">
-                    send email
-                  </button>
-                  <ul class="dropdown-menu" >
-                    <li><a class="dropdown-item"  *ngFor="let data of productData" (click)="assignValueToInput(data)" >{{data.name}}</a></li>
-                  </ul>
-                </div>
-                
-                <input type="text" [(ngModel)]="selectedOption" [disabled]="!allowInput" [ngModelOptions]="{standalone: true}" />
-
-                <!-- <select (change)="onItemSelected($event.target.value)" >
-                  <option value="">Select an item</option>
-                  <option *ngFor="let item of items" [value]="item.value">{{ item.label }}</option>
-                </select>
-                
-                <input type="text" [(ngModel)]="selectedItemValue" placeholder="Auto-filled input" />
-                 -->
-                
-    
-                <div class="col-md-3">
-                  
-                  
-                  
-                  <label>Item name</label>
-
-                  <input type="text" class="form-control" name="name{{i}}" [(ngModel)]="obj.name" value="{{selectedOption}}" #name3="ngModel"   required >
-    
-                
-                </div>
+                      <label for="mainProductName">Main Product Name:</label>
+                      <select class="form-select" aria-label="Default select example" id="mainProductName" [(ngModel)]="item.mainProduct.name" placeholder="Main Product Name" (change)="onMainProductSelected(item, i)">
+                        <option value="">Select a product</option>
+                        <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }} {{ product.name }} {{ product.name }} {{ product.name }}</option>
+                      </select>
+                    </div>
        
                 <div class="col-md-3">
-                  <label>Unit Price</label>
-                  <input type="number" class="form-control" name="price{{i}}" [(ngModel)]="obj.price" [value]="selectedPrice" #name4="ngModel"   required>
-    
-                 
+                  <label for="mainProductPrice">Main Product Price:</label>
+                  <input type="number" class="form-control" id="mainProductPrice" [(ngModel)]="item.mainProduct.price"  placeholder="Main Product Price" >
                 </div>
                 <div class="col-md-3">
                   
-                  <label>Quantity</label>
-                  <input type="number" class="form-control" name="quantity{{i}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
-    
+                 
+                  <label for="mainProductQuantity">Main Product Quantity:</label>
+                  <input type="number" class="form-control" id="mainProductQuantity" type="number" [(ngModel)]="item.mainProduct.quantity" placeholder="Main Product Quantity">
                   
     
                 </div>
                 <div class="col-md-2">
-                  <label>Total</label><br>
-                  <input type="number" class="form-control" name="total{{i}}"  [ngModel]="updateTotalInItemsArray(obj)">
-    
+                  
+                  <label for="mainProductTotal">Main Total:</label>
+                  <input type="number" class="form-control" id="mainProductTotal" type="number" [(ngModel)]="item.mainProduct.total" placeholder="Main Product Total" [ngModel]="updateTotalInItemsArray(item.mainProduct)">
+                
                 </div>
+
+                <div class="col-md-3">
+                  <label for="suggestedProductOneName">Suggested Product One</label>
+                  <select class="form-select" aria-label="Default select example" id="suggestedProductOneName" name="suggestedProductOneName{{i}}" [(ngModel)]="item.suggestedProductOne.name" placeholder="Main Product Name" (change)="onSuggestedItem1Selected(item, i)">
+                    <option value="">Select a product</option>
+                    <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }}</option>
+                  </select>
+                </div>
+              
+                <div class="col-md-3">
+                  <label for="suggestedProductOnePrice">Suggested Product One Price:</label>
+                  <input class="form-control" id="suggestedProductOnePrice" type="number" [(ngModel)]="item.suggestedProductOne.price" placeholder="Suggested Product One Price">
+                </div>
+              
+                <div class="col-md-3">
+                  <label for="suggestedProductOneQuantity">Suggested Product One Quantity:</label>
+                  <input class="form-control" id="suggestedProductOneQuantity" type="number" [(ngModel)]="item.suggestedProductOne.quantity" placeholder="Suggested Product One Quantity">
+                </div>
+              
+                <div class="col-md-3">
+                  <label for="suggestedProductOneTotal">Suggested Product One Total:</label>
+                  <input class="form-control" id="suggestedProductOneTotal" type="number" [(ngModel)]="item.suggestedProductOne.total" placeholder="Suggested Product One Total" [ngModel]="updateTotalInItemsArray(item.suggestedProductOne)">
+                </div>
+              
+                  <!-- Repeat the same for suggestedProductTwo -->
+              
+                  <div class="col-md-3">
+                    <label for="suggestedProductTwoName">Suggested Product Two:</label>
+                    <select class="form-select" aria-label="Default select example" id="suggestedProductTwoName" [(ngModel)]="item.suggestedProductTwo.name" placeholder="Main Product Name" (change)="onSuggestedItem2Selected(item, i)">
+                      <option class="form-select" aria-label="Default select example" value="">Select a product</option>
+                      <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }}</option>
+                    </select>
+                  </div>
+                
+                  <div class="col-md-3">
+                    <label for="suggestedProductTwoPrice">Main Product Price:</label>
+                    <input class="form-control" id="suggestedProductTwoPrice" type="number" [(ngModel)]="item.suggestedProductTwo.price" placeholder="Main Product Price">
+                  </div>
+                
+                  <div class="col-md-3">
+                    <label for="suggestedProductTwoQuantity">Main Product Quantity:</label>
+                    <input class="form-control" id="suggestedProductTwoQuantity" type="number" [(ngModel)]="item.suggestedProductTwo.quantity" placeholder="Main Product Quantity">
+                  </div>
+                
+                  <div class="col-md-3">
+                    <label for="suggestedProductTwoTotal">Main Product Total:</label>
+                    <input class="form-control" id="suggestedProductTwoTotal" type="number" [(ngModel)]="item.suggestedProductTwo.total" placeholder="Main Product Total" [ngModel]="updateTotalInItemsArray(item.suggestedProductTwo)">
+                  </div>
+              
     
                 <div class="col-md-1" *ngIf="i!=0">
                   <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
@@ -718,99 +719,19 @@
     
     
                </div>
-    <div *ngFor="let obj of itemsArray1;let j=index">Suggest Items: <button type="button" class="btn btn-info" ></button>
-      <div class="row" >
-    
-        <div class="col-md-3">
-          
-          
-          
-          <label>Item name</label>
-
-          <input type="text" class="form-control" name="name{{j}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
-
-        
-        </div>
-
-        <div class="col-md-3">
-          <label>Unit Price</label>
-          <input type="number" class="form-control" name="price{{j}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
-
-         
-        </div>
-        <div class="col-md-3">
-          
-          <label>Quantity</label>
-          <input type="number" class="form-control" name="quantity{{j}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
-
-          
-
-        </div>
-        <div class="col-md-2">
-          <label>Total</label><br>
-          <input type="number" class="form-control" name="total{{j}}"  [ngModel]="updateTotalInItemsArray(obj)">
-
-        </div>
-
-        <div class="col-md-1" *ngIf="i!=0">
-          <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
-        </div>
-
-
-
-       </div>
-       <div class="row" >
-    
-        <div class="col-md-3">
-          
-          
-          
-          <label>Item name</label>
-
-          <input type="text" class="form-control" name="name{{j}}" [(ngModel)]="obj.name" #name3="ngModel"   required >
-
-        
-        </div>
-
-        <div class="col-md-3">
-          <label>Unit Price</label>
-          <input type="number" class="form-control" name="price{{j}}" [(ngModel)]="obj.price" #name4="ngModel"   required>
-
-         
-        </div>
-        <div class="col-md-3">
-          
-          <label>Quantity</label>
-          <input type="number" class="form-control" name="quantity{{j}}" [(ngModel)]="obj.quantity" #name5="ngModel"   required>
-
-          
-
-        </div>
-        <div class="col-md-2">
-          <label>Total</label><br>
-          <input type="number" class="form-control" name="total{{j}}"  [ngModel]="updateTotalInItemsArray(obj)">
-
-        </div>
-
-        <div class="col-md-1" *ngIf="i!=0">
-          <button class="btn btn-danger" style="margin-top:30px" (click)="removeRow(i)">-</button>
-        </div>
-
-
-
-       </div>
-    </div>
+   
               </div>
+              
     
-              <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="jobDescription" [(ngModel)]="InvoiceObject.jobDescription" #jobDescription="ngModel"   required ></textarea>
+              <div class="form-floating mt-2">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" [(ngModel)]="invoice.jobDescription"   required ></textarea>
                 <label for="floatingTextarea">Description of Job to be done</label>
               </div>
 
-              <div>
-                <h4>Service Charge:</h4><input type="text" name="artisanCharge" [(ngModel)]="InvoiceObject.artisanCharge" #artisanCharge="ngModel" required="">
+              <div class="col-md-3">
+                <h4>Service Charge:</h4><input class="form-control" type="text" name="artisanCharge" [(ngModel)]="invoice.artisanCharge" required="">
               </div>
-              </form>
+              
     
     
               </div>
@@ -822,7 +743,7 @@
     <!--  [hidden]="!invoiceinformation.valid" [disabled]="!invoiceBody.valid"-->
     <button class="btn btn-danger  btn-lg me-2" (click)="closeModal()" >Cancel</button>
 
-          <button type="button" name="" class="btn btn-info btn-lg" (click)="submitQuote();"   >Send Quote</button>
+          <button type="button" name="" class="btn btn-info btn-lg" (click)="sendInvoice();"   >Send Quote</button>
     
     
     

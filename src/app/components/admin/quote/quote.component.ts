@@ -5,11 +5,42 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 
-class itemObject {
-  itemName!: string;
-  price!: number;
-  quantity!: number;
-  total!: number;
+// class itemObject {
+//   itemName!: string;
+//   price!: number;
+//   quantity!: number;
+//   total!: number;
+// }
+
+export interface InvoiceObject {
+  personName: string;
+  invoiceDate: string;
+  invoiceNo: string;
+  invoiceTotal: number;
+  orderId: number;
+  jobDescription: string;
+  artisanCharge: number;
+  items: InvoiceItem[];
+}
+
+export interface InvoiceItem {
+  mainProduct: Product;
+  suggestedProductOne: Product;
+  suggestedProductTwo: Product;
+}
+
+export interface Product {
+  name: string;
+  price: number;
+  quantity: number;
+  total: number;
+  id: number;
+  marketPlaceProductId: number;
+  model: number;
+  type: number;
+  size: string;
+  serviceItemId : number;
+
 }
 
 @Component({
@@ -18,26 +49,28 @@ class itemObject {
   styleUrls: ['./quote.component.css']
 })
 export class QuoteComponent implements OnInit {
-  itemObject = new itemObject();
-  itemsArray: Array<itemObject> = [
+  hello = [
     {
-      itemName: '',
-      price: 0,
-      quantity: 0,
-      total: 0,
-    },
+      invoiceItemId: 0,
+      mainServiceItemId: 0,
+      mainServiceItemName: '',
+      mainServiceItemNewPrice: 0,
+      mainServiceItemQuantity: 0,
+      suggestedServiceItemOneId: 0,
+      suggestedServiceItemOneName: '',
+      suggestedServiceItemOneNewPrice: 0,
+      suggestedServiceItemOneQuantity: 0,
+      suggestedServiceItemTwoId: 0,
+      suggestedServiceItemTwoName: '',
+      suggestedServiceItemTwoNewPrice: 0,
+      suggestedServiceItemTwoQuantity: 0
+    }
   ];
-  InvoiceObject = {
-    personName: '',
-    invoiceDate: '',
-    invoiceNo: '',
-    invoiceTotal: 0,
-    orderId: 0,
-    invoiceId: 0,
-    jobDescription: '',
-    artisanCharge: 0,
-    serviceItemsDto: (this.itemsArray = []),
-  };
+
+  invoiceId = 0;
+  artisanCharge = 0;
+  discount = 0;
+  suggestedProducts: Product[] = [];
   modalRef?: BsModalRef | null;
   modalRef2?: BsModalRef;
   approveForm!: FormGroup;
@@ -47,7 +80,7 @@ export class QuoteComponent implements OnInit {
   pendingQuote: any;
   viewPendingQoute: any;
   quotePendingError: any;
-  artisanCharge: any;
+  // artisanCharge: any;
   inspectionFee: any;
   isEditMode: boolean = false;
   totalLength: any;
@@ -80,6 +113,7 @@ export class QuoteComponent implements OnInit {
       invoiceId: 0,
       // userId: 0,
     });
+    this.getQouteByAdmin();
   }
   getQouteByAdmin() {
     this.adminApi.getQoute().subscribe((res: any) => {
@@ -130,7 +164,10 @@ export class QuoteComponent implements OnInit {
   accountName: any;
   accountNumber: any;
   bankName: any;
+  mainProductName : any
   onClickViewInvoce(data: any) {
+    console.log(data);
+    
     (this.getInvoiceByIdForm.value.invoiceId = data.invoiceId),
       this.api
         .getInvoiveById(this.getInvoiceByIdForm.value, data.invoiceId)
@@ -158,6 +195,16 @@ export class QuoteComponent implements OnInit {
           this.jobDescription = this.getInvoiceId.jobDescription;
           this.allTotal = this.getInvoiceId.invoiceTotal;
           this.serviceItemsDetails = this.getInvoiceId.serviceItems;
+          console.log(this.serviceItemsDetails);
+          
+          for(let item of this.serviceItemsDetails){
+            this.mainProductName = item.mainProduct.name
+            console.log(item.mainProduct);
+            console.log(this.mainProductName);
+
+
+          }
+          
 
           this.invoiceUserDetails = this.getInvoiceId.customerInfo;
           this.Action = this.getInvoiceId.action;
@@ -171,47 +218,68 @@ export class QuoteComponent implements OnInit {
     this.isEditMode = true;
   }
   grandtotal: number = 0;
-  getInvoiceTotalAmount() {
-    return this.itemsArray.reduce((acc, item) => {
-      acc += this.updateTotalInItemsArray(item);
-      this.grandtotal = acc;
+  // getInvoiceTotalAmount() {
+  //   return this.itemsArray.reduce((acc, item) => {
+  //     acc += this.updateTotalInItemsArray(item);
+  //     this.grandtotal = acc;
 
-      return acc;
-    }, 0);
-  }
+  //     return acc;
+  //   }, 0);
+  // }
 
-  updateTotalInItemsArray(item: itemObject) {
-    item.total = item.quantity && item.price ? item.quantity * item.price : 0;
-    return item.total;
-  }
+  // updateTotalInItemsArray(item: itemObject) {
+  //   item.total = item.quantity && item.price ? item.quantity * item.price : 0;
+  //   return item.total;
+  // }
 
-  submitEditedQuote(data: any) {
+  submitEditedQuote() {
     
-    data = this.serviceItemsDetails;
+    // data = this.serviceItemsDetails;
     this.serviceItemsDetailsiId = this.serviceItemsDetails.serviceItemId;
 
-    let index = this.serviceItemsDetails.findIndex((x: any) => {});
+    let index = this.serviceItemsDetails.findIndex((x: any) => {console.log(x);
+    });
 
-    let itemsDto = [];
+    // let itemsDto = [];
 
-    for (let index = 0; index < data.length; index++) {
-      itemsDto.push(data[index]);
+    for (let index = 0; index < this.serviceItemsDetails.length; index++) {
+      this.hello.push(this.serviceItemsDetails[index]);
+      this.hello = [
+        {
+          invoiceItemId: this.serviceItemsDetails[index].mainProduct.invoiceItemId,
+          mainServiceItemId: this.serviceItemsDetails[index].mainProduct.serviceItemId,
+          mainServiceItemName: this.serviceItemsDetails[index].mainProduct.name,
+          mainServiceItemNewPrice: this.serviceItemsDetails[index].mainProduct.price,
+          mainServiceItemQuantity: this.serviceItemsDetails[index].mainProduct.quantity,
+          suggestedServiceItemOneId: this.serviceItemsDetails[index].suggestedProductOne.serviceItemId,
+          suggestedServiceItemOneName: this.serviceItemsDetails[index].suggestedProductOne.name,
+          suggestedServiceItemOneNewPrice: this.serviceItemsDetails[index].suggestedProductOne.price,
+          suggestedServiceItemOneQuantity: this.serviceItemsDetails[index].suggestedProductOne.quantity,
+          suggestedServiceItemTwoId: this.serviceItemsDetails[index].suggestedProductTwo.serviceItemId,
+          suggestedServiceItemTwoName: this.serviceItemsDetails[index].suggestedProductTwo.name,
+          suggestedServiceItemTwoNewPrice: this.serviceItemsDetails[index].suggestedProductTwo.price,
+          suggestedServiceItemTwoQuantity: this.serviceItemsDetails[index].suggestedProductTwo.quantity
+        }
+      ];
     }
+   
 
     let invoiceEdit = {
       invoiceId: this.getInvoiceId.invoiceId,
       artisanCharge: this.artisanCharge,
-      serviceItemsDto: itemsDto,
+      invoiceItemsDto: this.hello,
       discount: this.discountPercentage
     };
+console.log(invoiceEdit);
+console.log(this.hello);
 
-    this.InvoiceObject.invoiceId = this.getInvoiceId.invoiceId;
-    this.InvoiceObject.artisanCharge = this.getInvoiceId.artisanCharge;
+    // this.InvoiceObject.invoiceId = this.getInvoiceId.invoiceId;
+    // this.InvoiceObject.artisanCharge = this.getInvoiceId.artisanCharge;
 
     const uploadObserver = {
       next: (event: any) => {
         
-        this.getInvoiceId = data;
+        this.getInvoiceId = this.serviceItemsDetails;
         this.toastr.success('Quote Successfully Updated');
   
         this.getQouteByAdmin();
@@ -220,6 +288,8 @@ export class QuoteComponent implements OnInit {
 
       },
       error: (err: any) => {
+        console.log(err);
+        
         
         if (err.error && err.error.message) {
           this.message = err.error.message;
@@ -235,7 +305,12 @@ export class QuoteComponent implements OnInit {
 
     this.adminApi.editQuoteUrl(invoiceEdit).subscribe(uploadObserver);
   }
- 
+  updateTotalInItemsArray(item: Product) {
+    item.total = item.quantity && item.price ? item.quantity * item.price : 0;
+    console.log(item.total);
+    
+    return item.total;
+  }
 
   confirmPayment(row: any) {
     this.approveForm.value.invoiceId = row.invoiceId;

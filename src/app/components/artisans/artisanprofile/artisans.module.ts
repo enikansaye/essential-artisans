@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ResizeObserverDirective } from './invoice/resize-observer.directive';
 import { KeysPipe } from './invoice/keys.pipe';
+import { QuoteComponent } from '../quote/quote.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { KeysPipe } from './invoice/keys.pipe';
     InvoiceComponent,
     ResizeObserverDirective,
     KeysPipe,
+    QuoteComponent,
   ],
   imports: [
     CommonModule,

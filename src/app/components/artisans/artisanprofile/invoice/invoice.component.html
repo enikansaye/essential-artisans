@@ -1,41 +1,128 @@
-<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="items">
-      <div *ngFor="let item of itemForms; let i = index" [formGroupName]="i" class="item-group">
-        <h4>Item {{ i + 1 }}</h4>
-        <div class="form-group">
-          <label>Main Product Name</label>
-          <input type="text" formControlName="mainProduct.name">
-         
-        </div>
-        <!-- Repeat the above pattern for the remaining fields -->
-        <!-- mainProduct.quantity, mainProduct.price, mainProduct.marketPlaceProductId, mainProduct.model, mainProduct.type, mainProduct.size -->
-        <!-- suggestedProductOne.name, suggestedProductOne.quantity, suggestedProductOne.price, suggestedProductOne.marketPlaceProductId, suggestedProductOne.model, suggestedProductOne.type, suggestedProductOne.size -->
-        <!-- suggestedProductTwo.name, suggestedProductTwo.quantity, suggestedProductTwo.price, suggestedProductTwo.marketPlaceProductId, suggestedProductTwo.model, suggestedProductTwo.type, suggestedProductTwo.size -->
+<h2>Invoice Form</h2>
+
+<div>
+  <label for="personName">Person Name:</label>
+  <input id="personName" [(ngModel)]="invoice.personName" placeholder="Person Name">
+</div>
+
+<div>
+  <label for="invoiceDate">Invoice Date:</label>
+  <input id="invoiceDate" [(ngModel)]="invoice.invoiceDate" placeholder="Invoice Date">
+</div>
+
+<div>
+  <label for="invoiceNo">Invoice No:</label>
+  <input id="invoiceNo" [(ngModel)]="invoice.invoiceNo" placeholder="Invoice No">
+</div>
+
+<div>
+  <label for="invoiceTotal">Invoice Total:</label>
+  <input id="invoiceTotal" type="number" [(ngModel)]="invoice.invoiceTotal" placeholder="Invoice Total">
+</div>
+
+<div>
+  <label for="orderId">Order ID:</label>
+  <input id="orderId" type="number" [(ngModel)]="invoice.orderId" placeholder="Order ID">
+</div>
+
+<div>
+  <label for="jobDescription">Job Description:</label>
+  <input id="jobDescription" [(ngModel)]="invoice.jobDescription" placeholder="Job Description">
+</div>
+
+<div>
+  <label for="artisanCharge">Artisan Charge:</label>
+  <input id="artisanCharge" type="number" [(ngModel)]="invoice.artisanCharge" placeholder="Artisan Charge">
+</div>
+
+<hr>
+<button (click)="addItem()">Add Item</button>
+
+<div *ngFor="let item of invoice.items; let i = index">
+  <h3>Item {{ i + 1 }}</h3>
+
+ <div>
+
+    <label for="mainProductName">Main Product Name:</label>
+    <select id="mainProductName" [(ngModel)]="item.mainProduct.name" placeholder="Main Product Name" (change)="onMainProductSelected(item, i)">
+      <option value="">Select a product</option>
+      <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="mainProductPrice">Main Product Price:</label>
+    <input id="mainProductPrice" [(ngModel)]="item.mainProduct.price"  placeholder="Main Product Price" >
+  </div>
+
+  <div>
+    <label for="mainProductQuantity">Main Product Quantity:</label>
+    <input id="mainProductQuantity" type="number" [(ngModel)]="item.mainProduct.quantity" placeholder="Main Product Quantity">
+  </div>
+
+  <div>
+    <label for="mainProductTotal">Main Product Total:</label>
+    <input id="mainProductTotal" type="number" [(ngModel)]="item.mainProduct.total" placeholder="Main Product Total" [ngModel]="updateTotalInItemsArray(item.mainProduct)">
   
-        <button type="button" (click)="removeItem(i)" class="btn-remove">Remove Item</button>
-      </div>
+  </div>
+
+  <!-- Repeat the same for suggestedProductOne -->
+
+  <div>
+    <label for="suggestedProductOneName">Suggested Product One</label>
+    <select id="suggestedProductOneName" name="suggestedProductOneName{{i}}" [(ngModel)]="item.suggestedProductOne.name" placeholder="Main Product Name" (change)="onSuggestedItem1Selected(item, i)">
+      <option value="">Select a product</option>
+      <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="suggestedProductOnePrice">Main Product Price:</label>
+    <input id="suggestedProductOnePrice" type="number" [(ngModel)]="item.suggestedProductOne.price" placeholder="Main Product Price">
+  </div>
+
+  <div>
+    <label for="suggestedProductOneQuantity">Main Product Quantity:</label>
+    <input id="suggestedProductOneQuantity" type="number" [(ngModel)]="item.suggestedProductOne.quantity" placeholder="Main Product Quantity">
+  </div>
+
+  <div>
+    <label for="suggestedProductOneTotal">Main Product Total:</label>
+    <input id="suggestedProductOneTotal" type="number" [(ngModel)]="item.suggestedProductOne.total" placeholder="Main Product Total" [ngModel]="updateTotalInItemsArray(item.suggestedProductOne)">
+  </div>
+
+    <!-- Repeat the same for suggestedProductTwo -->
+
+    <div>
+      <label for="suggestedProductTwoName">Suggested Product Two:</label>
+      <select id="suggestedProductTwoName" [(ngModel)]="item.suggestedProductTwo.name" placeholder="Main Product Name" (change)="onSuggestedItem2Selected(item, i)">
+        <option value="">Select a product</option>
+        <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }}</option>
+      </select>
     </div>
   
-    <button type="button" (click)="addItem()" class="btn-add">Add Item</button>
-  
-    <div class="form-group">
-      <label>Artisan Charge</label>
-      <input type="number" formControlName="artisanCharge">
-      
+    <div>
+      <label for="suggestedProductTwoPrice">Main Product Price:</label>
+      <input id="suggestedProductTwoPrice" type="number" [(ngModel)]="item.suggestedProductTwo.price" placeholder="Main Product Price">
     </div>
   
-    <div class="form-group">
-      <label>Job Description</label>
-      <textarea formControlName="jobDescription"></textarea>
-      
+    <div>
+      <label for="suggestedProductTwoQuantity">Main Product Quantity:</label>
+      <input id="suggestedProductTwoQuantity" type="number" [(ngModel)]="item.suggestedProductTwo.quantity" placeholder="Main Product Quantity">
     </div>
   
-    <div class="form-group">
-      <label>Order ID</label>
-      <input type="number" formControlName="orderId">
-      
+    <div>
+      <label for="suggestedProductTwoTotal">Main Product Total:</label>
+      <input id="suggestedProductTwoTotal" type="number" [(ngModel)]="item.suggestedProductTwo.total" placeholder="Main Product Total" [ngModel]="updateTotalInItemsArray(item.suggestedProductTwo)">
     </div>
-  
-    <button type="submit" [disabled]="orderForm.invalid">Submit</button>
-  </form>
-  
+
+
+  <button (click)="removeItem(i)">Remove Item</button>
+
+  <hr>
+
+
+</div>
+
+<button (click)="sendInvoice()">Send Invoice</button>
+

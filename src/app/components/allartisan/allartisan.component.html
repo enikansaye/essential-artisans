@@ -296,8 +296,9 @@
       <div class="mt-4">
         <!-- <input type="file" formControlName="Files" (change)="uploadfile($event)" multiple> -->
       </div>
-      <div class="h5" style="color: red">{{ message }}</div>
+      <div class="h5" style="color: red">{{ message }} <span class="text-info " style="cursor: pointer;" *ngIf="message === 'Insufficient wallet balance'" routerLink="/User/Wallet" (click)="modalRef?.hide()"> Fund wallet</span></div>
 
+      <button class="btn btn-danger mt-3 me-2" id="ModelId" type="submit" (click)="modalRef?.hide()">Cancel</button>
       <button class="btn btn-info mt-3" id="ModelId" type="submit">Send</button>
     </form>
   </div>

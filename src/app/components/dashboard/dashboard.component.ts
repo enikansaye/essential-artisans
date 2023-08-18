@@ -24,7 +24,8 @@ export class DashboardComponent implements OnInit {
   searchForm!: FormGroup;
   searchArtisan: any;
   location: any;
-  serviceData !: Data[];
+  serviceData : any;
+  serviceSubCategory : any;
   
   serviceCategories: any;
   state2: any;
@@ -79,6 +80,20 @@ export class DashboardComponent implements OnInit {
       console.log(res);
       
       this.serviceData = res;
+      // this.serviceSubCategory = res.subCategories
+// console.log(res.subCategories);
+for( let index = 0; index < this.serviceData.length; index++){
+  console.log(res[index].subCategories);
+  this.serviceSubCategory = (res[index].subCategories)
+  console.log(this.serviceSubCategory);
+  for(let data of this.serviceSubCategory){
+console.log(data.name);
+
+  }
+  
+}
+
+     
     });
   }
 

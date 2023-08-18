@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ArtisantransactionsComponent } from '../artisantransactions/artisantransactions.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { QuoteComponent } from '../quote/quote.component';
 
 const routes: Routes = [
   { path: '',
@@ -30,6 +31,11 @@ const routes: Routes = [
     {
       path: 'wallet',
       component: WalletComponent,
+
+    },
+    {
+      path: 'quote',
+      component: QuoteComponent,
 
     },
     // {

@@ -146,6 +146,12 @@ export class ArtisanprofileComponent implements OnInit {
   Action: any;
   invoiceId: any;
   bankData: any;
+  profileImage : any
+  firstName : any
+  lastName : any
+  email : any
+  profession: any
+  rating: any
 
 
   constructor(
@@ -217,6 +223,12 @@ export class ArtisanprofileComponent implements OnInit {
     this.api.getArtisaninfo().subscribe((res: any) => {
 
       this.artisanData = res;
+      this.profileImage = this.artisanData.profileImage
+      this.firstName = this.artisanData.firstName
+      this.lastName = this.artisanData.lastName
+      this.profession = this.artisanData.profession
+      this.rating = this.artisanData.rating
+      this.email = this.artisanData.email
     });
   }
 

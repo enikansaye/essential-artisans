@@ -41,10 +41,10 @@ export class ProductComponent implements OnInit {
       Name: ['', Validators.required],
       Price: ['', Validators.required],
       Description: ['', Validators.required],
-      CategoryId: [],
+      CategoryId: [''],
       Size: [],
       Model: [],
-      SubCategoryId: [],
+      SubCategoryId: [''],
       VendorName: [],
       VendorAddress: [],
       VendorPhoneNumber: [],
@@ -72,50 +72,51 @@ export class ProductComponent implements OnInit {
   //   this.formData.image = event.target.files[0];
   // }
 
-  onSubmitCheck1(data: any) {
-    this.submitted = true;
-    console.log(data);
+  // onSubmitCheck1(data: any) {
+  //   this.submitted = true;
+  //   console.log(data);
 
-    if (data.length === 0) {
-      return;
-    }
-    let fileToUpload = <File>data[0];
-    // const formData = new FormData();
+  //   if (data.length === 0) {
+  //     return;
+  //   }
+  //   let fileToUpload = <File>data[0];
+  //   // const formData = new FormData();
 
-    // this.productForm.value.ArtisanId = data.ArtisanId;
+  //   // this.productForm.value.ArtisanId = data.ArtisanId;
 
-    const formdata = new FormData();
+  //   const formdata = new FormData();
 
-    formdata.append('Name', data.Name);
-    formdata.append('Description', data.Description);
-    formdata.append('Price', data.Price);
-    formdata.append('StockQuantity', data.StockQuantity);
-    formdata.append('CategoryId', data.CategoryId);
-    formdata.append('SubCategoryId', data.SubCategoryId);
-    // formdata.append('File', data.File);
-    // formdata.append('File', fileToUpload, fileToUpload.File);
+  //   formdata.append('Name', data.Name);
+  //   formdata.append('Description', data.Description);
+  //   formdata.append('Price', data.Price);
+  //   formdata.append('StockQuantity', data.StockQuantity);
+  //   formdata.append('CategoryId', data.CategoryId);
+  //   formdata.append('SubCategoryId', data.SubCategoryId);
+  //   // formdata.append('File', data.File);
+  //   // formdata.append('File', fileToUpload, fileToUpload.File);
 
-    const uploadObserver = {
-      next: (event: any) => {
-        this.modalRef?.hide();
-        this.toastr.success('Order successfully sent!!!');
+  //   const uploadObserver = {
+  //     next: (event: any) => {
+  //       this.modalRef?.hide();
+  //       this.toastr.success('Order successfully sent!!!');
 
-        this.productForm.reset();
-      },
-      error: (err: any) => {
-        this.progress = 0;
-        if (err.error || err.error.message) {
-          this.message = err.error.message;
-        } else {
-        }
-      },
-    };
+  //       this.productForm.reset();
+  //     },
+  //     error: (err: any) => {
+  //       this.progress = 0;
+  //       if (err.error || err.error.message) {
+  //         this.message = err.error.message;
+  //       } else {
+  //       }
+  //     },
+  //   };
 
-    this.api.createProduct(formdata).subscribe(uploadObserver);
-  }
+  //   this.api.createProduct(formdata).subscribe(uploadObserver);
+  // }
 
   onSubmitCheck(data: any) {
     console.log(data);
+    console.log(data.SubCategoryId);
     
     this.submitted = true;
     const formdata = new FormData();
@@ -125,7 +126,12 @@ export class ProductComponent implements OnInit {
     formdata.append('Price', data.Price);
     formdata.append('StockQuantity', data.StockQuantity);
     formdata.append('CategoryId', data.CategoryId);
-    formdata.append('SubCategoryId', data.SubCategoryId);
+    if(data.SubCategoryId === undefined){
+      formdata.append('SubCategoryId', "0");
+    }else{
+      formdata.append('SubCategoryId', data.SubCategoryId);
+
+    }
     formdata.append('Size', data.Size);
     formdata.append('Model', data.Model);
     formdata.append('VendorName', data.VendorName);
@@ -182,17 +188,17 @@ export class ProductComponent implements OnInit {
     });
   }
   // subCategory: any
-  getEstateNotification(data: any) {
-    console.log(data);
-    this.productForm.controls['CategoryId'].setValue(data.categoryId);
+  // getNotification(data: any) {
+  //   console.log(data);
+  //   this.productForm.controls['CategoryId'].setValue(data.categoryId);
 
-    this.subCategory = data.subCategories;
-    console.log(this.subCategory.name);
-    console.log(this.subCategory.SubCategoryId);
-    this.productForm.controls['SubCategoryId'].setValue(
-      this.subCategory.SubCategoryId
-    );
-  }
+  //   this.subCategory = data.subCategories;
+  //   console.log(this.subCategory.name);
+  //   console.log(this.subCategory.SubCategoryId);
+  //   this.productForm.controls['SubCategoryId'].setValue(
+  //     this.subCategory.SubCategoryId
+  //   );
+  // }
   // subCategory: any
   getSubcategory(data: any) {
     console.log(data);
@@ -204,6 +210,7 @@ export class ProductComponent implements OnInit {
     
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
+    
     
   }
 }

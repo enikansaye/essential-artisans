@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ApiService } from './api.service';
+import { Observable } from 'rxjs';
+import { Product } from "../components/artisans/artisanprofile/invoice/invoice.model";
+
 
 @Injectable({
   providedIn: 'root'
@@ -110,4 +113,5 @@ getAllSubCategory(id : number){
   return this.http.get(this.api.baseUrl + "/api/Product/products-sub-category/" + id)
  
 }
+
 }

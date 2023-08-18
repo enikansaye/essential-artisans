@@ -63,6 +63,36 @@ class suggestedProductTwo {
   size !: string
 }
 
+
+export interface InvoiceObject {
+  personName: string;
+  invoiceDate: string;
+  invoiceNo: string;
+  invoiceTotal: number;
+  orderId: number;
+  jobDescription: string;
+  artisanCharge: number;
+  items: InvoiceItem[];
+}
+
+export interface InvoiceItem {
+  mainProduct: Product;
+  suggestedProductOne: Product;
+  suggestedProductTwo: Product;
+}
+
+export interface Product {
+  name: string;
+  price: number;
+  quantity: number;
+  total: number;
+  id: number;
+  marketPlaceProductId: number;
+  model: number;
+  type: number;
+  size: string;
+}
+
 @Component({
   selector: 'app-artisantransactions',
   templateUrl: './artisantransactions.component.html',
@@ -70,6 +100,17 @@ class suggestedProductTwo {
 })
 export class ArtisantransactionsComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<string>();
+
+  invoice: InvoiceObject = {
+    personName: '',
+    invoiceDate: '',
+    invoiceNo: '',
+    invoiceTotal: 0,
+    orderId: 0,
+    jobDescription: '',
+    artisanCharge: 0,
+    items: [],
+  };
 
   itemObject = new itemObject();
   itemsArray: Array<itemObject> = [
@@ -190,6 +231,8 @@ export class ArtisantransactionsComponent implements OnInit {
   AllOrderData: any;
   items: any[] = [];
   selectedItemValue: string = '';
+  suggestedProducts: Product[] = [];
+
   constructor(
     private adminApi: AdminService,
     public api: ApiService,
@@ -238,19 +281,8 @@ export class ArtisantransactionsComponent implements OnInit {
       serviceOrdeId: 0,
     });
 
-
-    this.myForm = new FormGroup({
-      firstSelect: new FormControl(),
-      secondSelect: new FormControl(),
-    });
-
-    this.myForm.get('firstSelect')?.valueChanges.subscribe(value => {
-      // Check the selected value and show/hide the second select accordingly
-      if (value === 'specificValue') {
-        this.showSecondSelect = true;
-      } else {
-        this.showSecondSelect = false;
-      }
+    this.artisanurl.getAllProduct().subscribe((res) => {
+      this.suggestedProducts = res;
     });
   }
   artisanGetAllProduct(){
@@ -264,9 +296,92 @@ export class ArtisantransactionsComponent implements OnInit {
     })
 
   }
-  onItemSelected(selectedValue: string) {
-    // Update the value of the input field
-    this.selectedItemValue = selectedValue;
+  onMainProductSelected(selectedProduct: InvoiceItem, index: number) {
+    console.log(selectedProduct.mainProduct);
+    
+    // When an item name is selected, find the corresponding product object from suggestedProducts
+    const product = this.suggestedProducts.find(p => p.name === selectedProduct.mainProduct.name);
+
+    if (product) {
+      console.log(product);
+      
+      // If the product is found, update the item properties based on the selected product
+      this.invoice.items[index].mainProduct.price = product.price;
+      this.invoice.items[index].mainProduct.price = product.price;
+      // this.itemsArray[index].quantity = 1; // You can set an initial quantity value if needed
+      // this.calculateTotal(index); // Optionally calculate and update the total based on the price and quantity
+    }
+  }
+  onSuggestedItem1Selected(selectedProduct: InvoiceItem, index: number) {
+    console.log(selectedProduct.mainProduct);
+    
+    // When an item name is selected, find the corresponding product object from suggestedProducts
+    const product = this.suggestedProducts.find(p => p.name === selectedProduct.suggestedProductOne.name);
+
+    if (product) {
+      console.log(product);
+      
+      // If the product is found, update the item properties based on the selected product
+      this.invoice.items[index].suggestedProductOne.price = product.price;
+      this.invoice.items[index].suggestedProductOne.price = product.price;
+      // this.itemsArray[index].quantity = 1; // You can set an initial quantity value if needed
+      // this.calculateTotal(index); // Optionally calculate and update the total based on the price and quantity
+    }
+  }
+  onSuggestedItem2Selected(selectedProduct: InvoiceItem, index: number) {
+    console.log(selectedProduct.suggestedProductTwo);
+    
+    // When an item name is selected, find the corresponding product object from suggestedProducts
+    const product = this.suggestedProducts.find(p => p.name === selectedProduct.suggestedProductTwo.name);
+
+    if (product) {
+      console.log(product);
+      
+      // If the product is found, update the item properties based on the selected product
+      this.invoice.items[index].suggestedProductTwo.price = product.price;
+      this.invoice.items[index].suggestedProductTwo.price = product.price;
+      // this.itemsArray[index].quantity = 1; // You can set an initial quantity value if needed
+      // this.calculateTotal(index); // Optionally calculate and update the total based on the price and quantity
+    }
+  }
+  addItem() {
+    const newItem: InvoiceItem = {
+      mainProduct: {
+        name: '',
+        price: 0,
+        quantity: 0,
+        total: 0,
+        id: 0,
+        marketPlaceProductId: 0,
+        model: 0,
+        type: 0,
+        size: '',
+      },
+      suggestedProductOne: {
+        name: '',
+        price: 0,
+        quantity: 0,
+        total: 0,
+        id: 0,
+        marketPlaceProductId: 0,
+        model: 0,
+        type: 0,
+        size: '',
+      },
+      suggestedProductTwo: {
+        name: '',
+        price: 0,
+        quantity: 0,
+        total: 0,
+        id: 0,
+        marketPlaceProductId: 0,
+        model: 0,
+        type: 0,
+        size: '',
+      },
+    };
+
+    this.invoice.items.push(newItem);
   }
 
   openDialog() {}
@@ -281,6 +396,8 @@ export class ArtisantransactionsComponent implements OnInit {
 
   getAllOrder() {
     this.artisanurl.getArtisanOrder().subscribe((res: any) => {
+      console.log(res);
+      
       this.AllOrderData = res;
       this.totalLength = res.length;
 
@@ -318,6 +435,8 @@ export class ArtisantransactionsComponent implements OnInit {
   openModal2(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     this.closeModal(1)
+    console.log(this.InvoiceObject.orderId);
+    
 
   }
  
@@ -434,54 +553,79 @@ export class ArtisantransactionsComponent implements OnInit {
         });
   }
 
-  submitQuote() {
-    this.InvoiceObject.invoiceTotal = this.grandtotal;
-    console.log(this.InvoiceObject.orderId);
+  // submitQuote() {
+  //   this.InvoiceObject.invoiceTotal = this.grandtotal;
+  //   console.log(this.InvoiceObject.orderId);
     
 
-    let itemsDto = [];
+  //   let itemsDto = [];
 
-    for (let index = 0; index < this.InvoiceObject.items.length; index++) {
-      this.itemsArray[index].total = this.hope;
+  //   for (let index = 0; index < this.InvoiceObject.items.length; index++) {
+  //     this.itemsArray[index].total = this.hope;
+  //   }
+
+  //   const uploadObserver = {
+  //     next: (event: any) => {
+  //       this.toastr.success('invoice created successfully');
+  //     this.getAllOrder();
+
+  //     // this.modalRef?.hide();
+  //     this.closeModal()
+
+  //     },
+  //     error: (err: any) => {
+  //       if (err.error && err.error.message) {
+  //         this.message = err.error.message;
+  //         this.toastr.warning(this.message);
+          
+          
+
+  //       } else {
+  //         // this.message = 'Could not upload the file!';
+  //         this.toastr.warning(this.message);
+  //         this.message2 = err.error
+         
+
+  //       }
+  //     },
+  //   };
+  //   this.artisanurl.generateInvoice(this.InvoiceObject).subscribe(uploadObserver);
+  // }
+
+  sendInvoice() {
+    for (let index = 0; index < this.invoice.items.length; index++) {
+      this.invoice.invoiceTotal = this.hope;
+      console.log();
+      
     }
+    this.invoice.orderId = this.InvoiceObject.orderId
+    
+    this.InvoiceObject.invoiceTotal = this.grandtotal;
+console.log(this.InvoiceObject.orderId);
 
+    // Assuming you have an API endpoint to send the invoice data
+    // const apiUrl = 'https://example.com/api/invoices';
     const uploadObserver = {
       next: (event: any) => {
         this.toastr.success('invoice created successfully');
-      this.getAllOrder();
-
-      // this.modalRef?.hide();
-      this.closeModal()
-
+        this.getAllOrder();
+  
+        // this.modalRef?.hide();
+        this.closeModal()
       },
       error: (err: any) => {
         if (err.error && err.error.message) {
-          this.message = err.error.message;
-          this.toastr.warning(this.message);
-          
-          
-
         } else {
-          // this.message = 'Could not upload the file!';
           this.toastr.warning(this.message);
           this.message2 = err.error
-         
-
+          // this.message = 'Could not upload the file!';
         }
       },
     };
-    this.artisanurl.generateInvoice(this.InvoiceObject).subscribe(uploadObserver);
+
+    this.artisanurl.generateInvoice(this.invoice).subscribe(uploadObserver);
   }
 
-  addRow() {
-    this.itemsArray.push(new itemObject());
-  }
-  addsuggested1() {
-    this.itemsArray.push(new suggestedProductOne());
-  }
-  addsuggested2() {
-    this.itemsArray.push(new suggestedProductTwo());
-  }
 
   removeRow(i: number) {
     this.itemsArray.splice(i);

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../service/api.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -50,18 +51,14 @@ export class AdminService {
     );
   }
 
-
-// Service category section
-  postServiceCategory(data: any) {
+  
+  postServiceCategory(formData: any): Observable<any> {
     // const formdata = new FormData();
 
-    return this.http.post(this.apiUrl.baseUrl +'/api/Admin/ServiceCategory/create', data, {
-
-    }).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
+    return this.http.post(this.apiUrl.baseUrl +'/api/Admin/ServiceCategory/create', formData)
+  }
+  createSubCategory(formData: any): Observable<any> {
+    return this.http.post(this.apiUrl.baseUrl +'/api/SubCategory/SubCategory/create', formData)
   }
 
   getServiceCategory() {

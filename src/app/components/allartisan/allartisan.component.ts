@@ -231,10 +231,14 @@ export class AllartisanComponent implements OnInit {
         this.formValue.reset();
       },
       error: (err: any) => {
+        console.log(err.error);
         
         this.progress = 0;
         if (err.error || err.error.message) {
           this.message = err.error.message;
+          this.message = err.error;
+          console.log(this.message);
+          
           
         } else {
           

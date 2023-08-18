@@ -134,7 +134,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 
     ForgetpasswordComponent,
     EmailComponent,
-    UserprofileComponent,
+    // UserprofileComponent,
     ArtisanprofileComponent,
     // AdminpageComponent,
   
@@ -154,7 +154,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
     HelpComponent,
     ArtisantransactionsComponent,
     // DatePipe,
-    PaymentComponent,
+    // PaymentComponent,
     CategoriesComponent,
     InvoiceComponent,
     // EcommerceComponent,
@@ -168,6 +168,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    
+
     // CarouselModule,
     MatSnackBarModule,
     NgbModule,
@@ -244,7 +246,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
         // { path: 'empty', component: EmptycartComponent },
         { path: 'helpcenter', component: HelpComponent },
 
-        { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
+        // { path: 'userprofile', component: UserprofileComponent, canActivate:[RoleGuard] },
         // { path: 'artisanprofile', component: ArtisanprofileComponent, canActivate:[RoleGuard]  },
         { path: 'forgetpassword', component: ForgetpasswordComponent },
         
@@ -272,9 +274,20 @@ import { InvoiceComponent } from './invoice/invoice.component';
             canActivate:[RoleGuard]
         },
         {
+          path: 'User',
+          loadChildren: () => import('./components/customer/customer.module')
+            .then(m => m.CustomerModule),
+            canActivate:[RoleGuard]
+        },
+        {
           path: 'Admin',
           loadChildren: () => import('./components/admin/admin.module')
             .then(m => m.AdminModule),
+        },
+        {
+          path: 'market place',
+          loadChildren: () => import('./ecommerce/ecommerce.module')
+            .then(m => m.EcommerceModule),
         },
         // { path: 'offline', component: OfflineComponent },
         // { path: 'payment', component: PaymentComponent },
