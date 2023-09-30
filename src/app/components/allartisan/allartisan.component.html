@@ -1,4 +1,4 @@
-<div class="d-flex dashboard mt-5 pt-4">
+<div class="d-flex dashboard pt-4">
   <div class="container-fluid">
     <!-- PROFILE CARDS 1 -->
 
@@ -8,16 +8,19 @@
 
         <!-- <div class="col-12  col-md-6 mb-3 float-right">        <input type="text" placeholder="filter with jobDescription"  name="value" [(ngModel)]="value" (keyup)="Search($event.target) " >      
         </div> -->
-        <div class="col-6 my-2">
+        <div class=" w-100 d-flex justify-content-between  ">
+         <div class="col-6 my-2">
           <input
-            class="form-control"
-            type="text"
-            name="search"
-            [(ngModel)]="searchText"
-            autocomplete="off"
-            placeholder="&#61442;  Start searching for Artisans within your location"
-          />
-        </div>
+          class="form-control"
+          type="text"
+          name="search"
+          [(ngModel)]="searchText"
+          autocomplete="off"
+          placeholder="&#61442;  Start searching for Artisans within your location"
+        />
+         </div>
+<div>          <button class="btn btn-info my-2">Select Category</button>
+</div>        </div>
 
         <div class="row mt-4 cursor">
           <div

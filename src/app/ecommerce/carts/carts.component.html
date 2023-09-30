@@ -1,5 +1,5 @@
 <ng-container>
-    <div class="container "*ngIf="product.length == 0" >
+    <div class="container "*ngIf="product == 0" >
         <div class="ms-0">
             <div class="h5 class-title">My Carts</div>
         </div>
@@ -10,9 +10,9 @@
            <button class="btn btn-info" routerLink="/market place">Shop Now</button> 
         </div>
     </div>
-    <div class="container mt-2" *ngIf="product.length != 0">
+    <div class="container mt-2" *ngIf="product != 0">
         <div class="card-table">
-            <div class="cart-product">
+            <div class="cart-product" id="no-tables">
                 <table class="table table-responsive">
                     <thead>
                         <tr>
@@ -28,22 +28,23 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of product let i = index">
-    <td>{{i + 1}}</td>
-    <td>{{item.name}}</td>
-    <td><img class="w-25" src="data:image/png;base64,{{item.productImages}}" alt=""></td>
-    <td>{{item.description}}</td>
-    <td>{{item.price}}</td>
-    <td>{{item.quantity}}</td>
-    <td>{{item.total}}</td>
-    <td>
-        <button class="btn btn-danger" (click)="removeItem(item)"><i class="fas fa-trash"></i></button>
+    <td data-title="Sr">{{i + 1}}</td>
+    <td data-title="Product Name">{{item.name}}</td>
+    <td data-title="Product Image"><img class="w-25" src="data:image/png;base64,{{item.productImages}}" alt=""></td>
+    <td data-title="Description">{{item.description}}</td>
+    <td data-title="Price">{{item.price}}</td>
+    <td data-title="Quantity">{{item.quantity}} </td> 
+    <td data-title="Total">{{item.total}}</td>
+    <td data-title="Action" class="d-flex">
+      <div class="me-3 cursor"> <i class="fa-solid fa-minus " (click)="removeItem(item)"></i></div> <div class="me-2 cursor"> <i class="fa-solid fa-plus" (click)="addToCart(item)"></i></div>
+      <!-- <button class="btn btn-danger" ><div> <span><i class="fa-solid fa-minus me-5" (click)="removeItem(item)"></i> <i class="fa-solid fa-plus" (click)="addToCart(item)"></i></span></div></button> -->
     </td>
                         </tr>
                     </tbody>
                 </table>
    <div class="d-flex justify-content-end me-5 mb-3">
     <button class="btn btn-danger me-2" (click)="emptyCart()">Empty Carts</button>
-    <button class="btn btn-info me-2">Shop more</button>
+    <button class="btn btn-info me-2" routerLink="/market place">Shop more</button>
     <button class="btn btn-success me-3" (click)="openModal(template); getCartItems()">Checkout</button>
 
     <div>Total Amount<br><strong>&#8358; {{grandTotal}} </strong></div>
@@ -87,7 +88,7 @@
             
               <!-- Assuming you have access to the cart items in the component -->
               <div *ngFor="let item of product">
-                <h3>Product: {{ item.productName }}</h3>
+                <h3>Product: {{ item.name }}</h3>
                 <div>
                   <label for="quantity{{ item.productId }}">Quantity:</label>
                   <input type="number" id="quantity{{ item.productId }}" name="quantity{{ item.productId }}" [(ngModel)]="item.quantity" required>
@@ -99,7 +100,7 @@
                 
       </div>
     </div>
-    <div class="madal-footer">
+    <div class="modal-footer">
       <button class="btn btn-info" type="submit"  [disabled]="!checkoutForm.form.valid">Place Order</button>
 
     </div>

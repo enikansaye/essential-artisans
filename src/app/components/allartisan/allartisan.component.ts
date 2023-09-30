@@ -13,7 +13,12 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
@@ -25,7 +30,6 @@ import { UserService } from 'src/app/service/user.service';
 
 import { LoginService } from 'src/app/service/login.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
 
 // Maximum file size allowed to be uploaded = 1MB
 const MAX_SIZE: number = 1048576;
@@ -73,7 +77,7 @@ export class AllartisanComponent implements OnInit {
   countries: any;
   state2: any;
   city2: any;
-  searchText:any
+  searchText: any;
   // myFiles: string[] = [];
   issue!: string;
 
@@ -93,19 +97,18 @@ export class AllartisanComponent implements OnInit {
     private login: LoginService,
     private modalService: BsModalService,
     private toastr: ToastrService,
-    private data: UserService,
-    
+    private data: UserService
   ) {
     this.formValue = this.formBuilder.group({
       id: this.login.loggedinUser.id,
-      Name: ['',Validators.required],
+      Name: ['', Validators.required],
       ArtisanId: 2,
-      PropertyAddress: ['',Validators.required],
-      InspectionDateAndTime: ['',Validators.required],
+      PropertyAddress: ['', Validators.required],
+      InspectionDateAndTime: ['', Validators.required],
       // InspectionTime: ['',Validators.required],
-      PhoneNumber: ['',Validators.required],
-      AlternateNumber: ['',Validators.required],
-      Issue: ['',Validators.required],
+      PhoneNumber: ['', Validators.required],
+      AlternateNumber: ['', Validators.required],
+      Issue: ['', Validators.required],
       profile: [''],
       files: [''],
       Files: [''],
@@ -118,19 +121,17 @@ export class AllartisanComponent implements OnInit {
   get orderFormControl() {
     return this.formValue.controls;
   }
-  
 
   ngOnInit(): void {
     this.getState();
     // this.data.sendClickEvent(this.text)
-    
-// this.getArtisan(this.text)
+
+    // this.getArtisan(this.text)
     this.update();
 
     this.reviewsForm = this.formBuilder.group({
       artisanId: 0,
     });
-  
 
     this.search = this.formBuilder.group({
       state: [''],
@@ -171,22 +172,6 @@ export class AllartisanComponent implements OnInit {
     this.formValue.controls['ArtisanId'].setValue(row.id);
   }
 
-  // submitCheck(data: any) {
-  //   const formData = new FormData();
-
-  //   for (var i = 0; i < this.myFiles.length; i++) {
-  //     formData.append('file[]', this.myFiles[i]);
-  //   }
-
-  //   this.http
-  //     .post(
-  //       this.api.baseUrl + '/api/Customer/ServiceOrder/create',
-  //       this.formValue.value
-  //     )
-  //     .subscribe((res) => {
-  //       alert('Uploaded Successfully.');
-  //     });
-  // }
   selectedFile: File | any = null;
   onSelectedFile(e: any) {
     this.selectedFile = e.target.files[0];
@@ -195,7 +180,6 @@ export class AllartisanComponent implements OnInit {
   onSubmitCheck(data: any) {
     this.orderModelObj.artisanId = data.ArtisanId;
     this.submitted = true;
-    
 
     this.formValue.value.ArtisanId = data.ArtisanId;
 
@@ -232,17 +216,13 @@ export class AllartisanComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err.error);
-        
+
         this.progress = 0;
         if (err.error || err.error.message) {
           this.message = err.error.message;
           this.message = err.error;
           console.log(this.message);
-          
-          
         } else {
-          
-          
         }
       },
     };
@@ -258,29 +238,25 @@ export class AllartisanComponent implements OnInit {
   // get all available artisans
   getAllArtisan() {
     this.adminApi.getArtisan().subscribe((res: any) => {
-      
       this.artisanData = res;
       this.totalRecord = res.length;
     });
   }
   // get all artisan reviews
-  getArtisanReviews(data:any) {
-    
+  getArtisanReviews(data: any) {
     // this.reviewsForm.value.artisanId = data.id
-    
-    
-    this.adminApi.getReviews(data.id,this.reviewsForm.value.artisanId).subscribe((res: any) => {
-      console.log(res);
-      
 
-      this.artisanReviews = res;
-      // this.totalRecord = res.length;
-    });
+    this.adminApi
+      .getReviews(data.id, this.reviewsForm.value.artisanId)
+      .subscribe((res: any) => {
+        console.log(res);
+
+        this.artisanReviews = res;
+        // this.totalRecord = res.length;
+      });
   }
 
-  // selectFile(event: any): void {
-  //   this.selectedFiles = event.target.files;
-  // }
+ 
 
   working = false;
   // uploadFile?: File | null;
@@ -293,6 +269,7 @@ export class AllartisanComponent implements OnInit {
   postResponse: any;
   successResponse!: string;
   image: any;
+  productObject : any
 
   getState() {
     this.api.getLocation().subscribe((data: any) => {
@@ -314,8 +291,8 @@ export class AllartisanComponent implements OnInit {
   hope!: any;
   Search(event: any) {
     if (this.location == '') {
-      this.update()
-        } else {
+      this.update();
+    } else {
       this.artisanData = this.artisanData.filter((res: any) => {
         return res.location
           .toLocaleLowerCase()
@@ -325,22 +302,24 @@ export class AllartisanComponent implements OnInit {
     return this.hope;
   }
 
-
-
   update() {
+    this.productObject = localStorage.getItem('artisan');
+
+    if (!this.productObject) {
     this.artisanData = this.data.getClickEvent().subscribe((data: any) => {
-      
       if (data != '') {
         this.api.getArtisanByService(data).subscribe((res: any) => {
-          
           this.artisanData = res;
           console.log(res);
-          
         });
       }
 
-      // this.checkData();
+      
     });
+  }else {
+      this.artisanData  = JSON.parse(this.productObject) || [];
+      console.log(this.artisanData);
+  }  
   }
 
   openModal(template: TemplateRef<any>) {
@@ -360,5 +339,4 @@ export class AllartisanComponent implements OnInit {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
   }
-  
 }

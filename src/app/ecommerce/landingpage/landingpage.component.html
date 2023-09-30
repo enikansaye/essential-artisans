@@ -8,21 +8,34 @@
       </select>
     </div>
     
-  <div class="row">
+  <div class="row g-4">
     <ng-container *ngFor="let items of productlist">
-      <div class="card col-md-3 col-3 " >
-        <div (click)="productById(items.productId)">
-        <img  src="data:image/png;base64,{{items.productImages}}" alt="">
-        <h5>{{items.name}}</h5>
-      <p  style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 10ch;">{{items.description}}</p>
-      <div class="d-flex justify-content-between">
-        <div>Price</div>
-        <div>&#8358; {{items.price}}</div>
+      
+      
+        <div class="col-6 col-sm-6 col-lg-4 col-xl-3cursor">
+          <div class="card shadow h-100"  >
+           
+            <div (click)="productById(items.productId)">
+              <img  class="card-img-top  img-fluid"
+            src="data:image/png;base64,{{items.productImages}}" alt="">
+            <h5 class="mt-2">{{items.name.toUpperCase()}}</h5>
+                    <div class="card-title"  style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50ch;">{{items.description}}</div>
 
-      </div>
-      </div>
-      <button class="btn btn-info" (click)="addToCart(items)">Add to cart</button>
-      </div>
+
+          <div class="card-text">
+            <div class="d-flex justify-content-between">
+              <div>Price</div>
+              <div>&#8358; {{items.price}}</div>
+      
+            </div>
+          </div>
+        
+            </div>
+          
+          <button class="btn btn-info" (click)="addToCart(items)">Add to cart</button>
+          </div>
+        </div>
+      
     </ng-container>
     
   </div>

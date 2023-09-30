@@ -5,11 +5,18 @@
     transition: 0.3 ease-in-out;
 }
 .card{
-    padding: 15px;
+    padding: 10px;
     margin: 10px;
 }
 
 .card img:hover{
     transition: 0.3 ease-in-out;
 transform: scale(1.1);
+}
+.card{
+    height: 10px;
+}
+.card img{
+    height: 150px;
+    object-fit: cover;
 }

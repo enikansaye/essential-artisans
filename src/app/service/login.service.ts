@@ -40,20 +40,22 @@ export class LoginService {
 
   getToken() {
     return localStorage.getItem('accesstoken');
+    // let data = localStorage.getItem(key)|| "";
+    // return this.decrypt(data);
   }
   getRefreshToken() {
     return localStorage.getItem('refreshtoken');
   }
 
   SaveTokens(tokendata: any) {
-    // console.log(tokendata);
+    console.log(tokendata);
 
     localStorage.removeItem('accesstoken');
     localStorage.setItem('accesstoken', tokendata.data.accessToken);
     // console.log(localStorage.setItem('refrestoken', tokendata.accessToken));
 
     // localStorage.removeItem('refreshtoken');
-    // localStorage.setItem('refreshtoken', tokendata.data.refreshToken);
+    localStorage.setItem('refreshtoken', tokendata.data.refreshToken);
     // console.log(localStorage.setItem('refreshtoken', tokendata.refreshToken));
   }
   // checking if user is logged in
@@ -65,10 +67,13 @@ export class LoginService {
 
   // checking with refresh token
   logout() {
-    // alert('Token Epired, Please login')
-    // this.router.navigate(['/signin']);
+    localStorage.removeItem('expiration');
+  localStorage.removeItem('refreshtoken');
+  localStorage.removeItem('accesstoken');
+  localStorage.removeItem('token');
+  // this.router.navigateByUrl('/signin');
 
-    return localStorage.clear();
+    // return localStorage.clear();
   }
 
   haveaccess(token: any) {

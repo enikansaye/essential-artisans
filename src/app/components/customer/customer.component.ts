@@ -1,9 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
 import { SignalrService } from 'src/app/service/signalr.service';
+import { UserService } from 'src/app/service/user.service';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-customer',
@@ -14,11 +17,19 @@ export class CustomerComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   userData  : any
+  modalRef2?: BsModalRef<unknown>;
+  modalRef?: BsModalRef;
+  serviceData : any
+
+
   constructor( private api : ApiService,
     private observer: BreakpointObserver,
-
+    public data: UserService,
     private toastr : ToastrService,
-    public signalRService: SignalrService
+    public signalRService: SignalrService,
+    private modalService: BsModalService,
+    private userApi: AdminService,
+
     ) { }
 
   ngOnInit(): void {
@@ -53,6 +64,26 @@ export class CustomerComponent implements OnInit {
       this.signalRService.getNotification();
       // this.signalRService.notification
     });
+  }
+
+  getAllServiceCategory() {
+    this.userApi.getServiceCategory().subscribe((res: any) => {
+      console.log(res);
+      
+      this.serviceData = res;
+     
+    });
+  }
+  openModal2(template: TemplateRef<any>) {
+    this.modalRef2 = this.modalService.show(template, {
+      id: 2,
+      class: 'second',
+    });
+    if (!this.modalRef) {
+      return;
+    }
+
+    this.modalRef.hide();
   }
   
 }

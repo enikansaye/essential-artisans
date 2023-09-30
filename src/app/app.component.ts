@@ -237,11 +237,11 @@ public setTitle(newTitle:string){
     this.modalService.hide(modalId);
   }
   Logout() {
-    // this.loginApi.logoutUser().subscribe(()=>{
-  localStorage.clear();
-  // localStorage.removeItem('expiration');
-  // localStorage.removeItem('refreshtoken');
-  this.router.navigateByUrl('/signin');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('refreshtoken');
+    localStorage.removeItem('accesstoken');
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/signin');
     // })
 }
 

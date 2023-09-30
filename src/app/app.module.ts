@@ -291,6 +291,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
         },
         // { path: 'offline', component: OfflineComponent },
         // { path: 'payment', component: PaymentComponent },
+        { path: '404', component: PagenotfoundComponent },
         { path: '**', component: PagenotfoundComponent },
 
        

@@ -5,10 +5,7 @@ import { ApiService } from './api.service';
 
 
 
-// const AUTH_APITOKEN = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/refresh-token/';
-// const AUTH_APISIGNIN = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/login';
-// const AUTH_APISIGNUP = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/register/customer';
-// const AUTH_APISIGNOUT = 'https://lyticalartisanapi.azurewebsites.net/api/Auth/logout';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

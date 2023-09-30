@@ -6,7 +6,7 @@
               <div class="carousel-item active" >
                 <img src="data:image/png;base64,{{images[0]}}" class="d-block w-100" alt="...">
               </div>
-              <div class="carousel-item">
+              <div class="carousel-item" *ngif="images >= 1" >
                 <img src="data:image/png;base64,{{images[1]}}" class="d-block w-100" alt="...">
               </div>
               
@@ -25,15 +25,15 @@
               <div class="card col-2 d-flex me-2">
                 <img src="data:image/png;base64,{{images[0]}}" class="d-block w-100" alt="...">
               </div>
-              <div class="card col-2 d-flex me-2">
+              <div class="card col-2 d-flex me-2" *ngif="images >= 1">
                 <img src="data:image/png;base64,{{images[1]}}" class="d-block w-100" alt="...">
               </div>
               
             </div>
           </div>
 
-          <div>
-            {{this.name}}
+          <div class="mt-2 text-info text-bold">
+            {{this.name.toUpperCase()}}
           </div>
 
           <div>

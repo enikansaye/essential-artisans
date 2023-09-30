@@ -73,22 +73,29 @@
           Product Description is required
           </span>
         </div>
-
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="getCategory()"  >
-             Select Category
-          </button>
-          <ul class="dropdown-menu" >
-            <li  *ngFor="let data of categoryData" [value]="data.CategoryId"><a class="dropdown-item"   >{{data.name}}</a></li>
-          </ul>
+        <div>
+          <label for="exampleInputPassword1" class="form-label"
+          >Select Category</label
+        >
+          <select class="form-select" aria-label="Default select example"  formControlName="CategoryId">
+            <option selected>Open this select menu</option>
+            <option  *ngFor="let data of categoryData" [value]="data.categoryId"  >{{data.name}}</option>
+  
+          </select>
         </div>
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="getCategory()"  >
+        
+        <div >
+          <label class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  >
              Select Sub-category
-          </button>
-          <ul class="dropdown-menu" >
+          </label>
+          <select class="form-select" aria-label="Default select example"  formControlName="ategoryId" (click)="getSubcategory(resValue)">
+            <option selected>Open this select menu</option>
+            <option  *ngFor="let data of serviceSubCategory" [value]="data.subCategoryId"  >{{data.name}}</option>
+  
+          </select>
+          <!-- <ul class="dropdown-menu" >
             <li *ngFor="let data of subCategory" [value]="data.subCategoryId" (click)="getSubcategory(data) "><a class="dropdown-item"    >{{data.name}}</a></li>
-          </ul>
+          </ul> -->
         </div>
        
         

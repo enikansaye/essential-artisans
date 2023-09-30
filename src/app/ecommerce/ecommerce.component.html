@@ -1,13 +1,14 @@
 <ng-container>
     <mat-toolbar class="col-12 d-flex justify-content-between px-5">
         <div>
-                helloo
+                <!-- helloo -->
 
          </div>
            <div>
             <button routerLink="Carts" class="btn btn-primary">
                 <i class="fas fa-cart-plus me-2" style="font-size: 30px;"></i>
-                <div class="badge bg-danger" style="font-size: 10px;">{{totalItem}}</div>
+                <div *ngIf="this.loginApi.loggedIn()" class="badge bg-danger" style="font-size: 10px;" >{{apiLength}}</div>
+                <div *ngIf="!this.loginApi.loggedIn()" class="badge bg-danger" style="font-size: 10px;" >{{this.cartService.value.length}}</div>
             </button>
            </div>
         

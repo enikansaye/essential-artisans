@@ -14,4 +14,22 @@
   input.example-right-align {
     -moz-appearance: textfield;
   }
-  
+  mat-form-field input{
+    height: 10px;
+    margin-top: none;
+    padding-top: none;
+  }
+ /* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.example {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Internet explorer and Edge */
+.example {
+  -ms-overflow-style: none;
+}

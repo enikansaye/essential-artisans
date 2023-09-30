@@ -24,7 +24,7 @@
                 <!-- <h4>{{userData.service}}</h4> -->
                 <h4>{{userData.email}}</h4>
               
-               
+               <button class="btn btn-info" (click)="openModal2(template2); getAllServiceCategory()">Create New Order</button>
                </div>
              
               <h4></h4>
@@ -148,3 +148,26 @@
         </mat-sidenav-container>
     </div>
 </div>
+
+<ng-template #template2>
+  <div class="modal-header">
+    <h4 class="modal-title"></h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef2?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2 class="card-title" style="color: #033d94">SELECT CATEGORY</h2>
+<div>
+  <ul class="list-inline mb-0" *ngFor="let category of serviceData">
+    <li class="list-inline-item me-0 large cursor mb-2" routerLink="/available artisan" (click)="this.data.sendClickEvent(category.name); modalRef2?.hide()">{{category.name}}</li>
+  </ul>
+</div>
+   
+  </div>
+</ng-template>

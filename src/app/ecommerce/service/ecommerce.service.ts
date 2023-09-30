@@ -55,4 +55,26 @@ export class EcommerceService {
   
   }
 
+  addToCart(data : any){
+    return this.http.put<any>(this.ecommerceUrl + "/Cart/add", data).pipe(
+      map((res : any) => {
+        return res;
+      })
+    );
+  }
+  getCartProduct(){
+    return this.http.get<any>(this.ecommerceUrl + "/Cart").pipe(
+      map((res : any) => {
+        return res;
+      })
+    );
+  }
+  removeProduct(data : any){
+    return this.http.put<any>(this.ecommerceUrl + "/Cart/remove", data).pipe(
+      map((res : any) => {
+        return res;
+      })
+    );
+  }
+
 }

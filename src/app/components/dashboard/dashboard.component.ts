@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
   location: any;
   serviceData : any;
   serviceSubCategory : any;
+  displaySubcategories = false;
+
   
   serviceCategories: any;
   state2: any;
@@ -79,20 +81,7 @@ export class DashboardComponent implements OnInit {
     this.adminApi.getServiceCategory().subscribe((res: any) => {
       console.log(res);
       
-      this.serviceData = res;
-      // this.serviceSubCategory = res.subCategories
-// console.log(res.subCategories);
-for( let index = 0; index < this.serviceData.length; index++){
-  console.log(res[index].subCategories);
-  this.serviceSubCategory = (res[index].subCategories)
-  console.log(this.serviceSubCategory);
-  for(let data of this.serviceSubCategory){
-console.log(data.name);
-
-  }
-  
-}
-
+      this.serviceData = res.slice(0,3);
      
     });
   }
@@ -111,5 +100,21 @@ console.log(data.name);
     console.log(card);
     
     card.name = !card.name;
+  }
+
+  toggleSubcategories(data :any): void {
+    console.log(data.subCategories);
+    this.serviceSubCategory = (data.subCategories)
+    
+  }
+  checkToggle(){
+    this.displaySubcategories = !this.displaySubcategories;
+
+  }
+  checkthis(data : any){
+    console.log(data);
+    
+    this.data.sendClickEvent(data.name)
+    localStorage.setItem("name", data.name)
   }
 }

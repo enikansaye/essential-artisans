@@ -1,9 +1,9 @@
 
 
-<section class="w-100 d-flex justify-content-center align-items-center" style="background-color: #f4f4f8;">
+<section class="example w-100 d-flex justify-content-center align-items-center" style="background-color: #f4f4f8;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-xl-6">
+      <div class="col col-xl-10">
         <div class="card" style="border-radius: 1rem;">
           <div class="row ">
            
@@ -16,11 +16,14 @@
                   <img src="/assets/images/logos.png" class="w-50" alt="">
                   </div> -->
 
-                  <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
-                    Sign up as an Artisan
+                  <div class="fw-normal h3 mb-3 pb-3 text-info" style="letter-spacing: 1px">
+                    SIGN UP AS AN ARTISAN
                   </div>
-                  <div class="form-group form-outline mb-4">
-                    <input
+
+                  <div class="row">
+                    <div class="col-6 mb-2">
+                      <label class="form-label text-info" for="">First Name <span style="color: red;">*</span></label>
+                      <input
                       type="text"
                       id=""
                       formControlName="firstName"
@@ -32,12 +35,11 @@
                     *ngIf="(signupFormControl['firstName'].touched || submitted) && signupFormControl['firstName'].errors?.['required']">
                     First Name is required
                 </span>
-                   
-                  <div>  <label class="form-label" for="">First Name <span style="color: red;">*</span></label></div>
-                  </div>
+                    </div>
 
-                  <div class="form-group form-outline mb-4">
-                    <input
+                    <div class="col-6 mb-2">
+                      <label class="form-label text-info" for="form2Example27">Last Name <span style="color: red;">*</span></label>
+                      <input
                       type="text"
                       id=""
                       formControlName="lastName"
@@ -52,11 +54,11 @@
                     >
                       LastName is required
                     </span>
-                    <div class="form-label" for="form2Example27">Last Name <span style="color: red;">*</span></div>
-                  </div>
+                    </div>
 
-                  <div class="form-group form-outline mb-4">
-                    <input
+                    <div class="col-6 mb-2">
+                      <label class="form-label text-info" for="">Email <span style="color: red;">*</span></label>
+                      <input
                       type="email"
                       id=""
                       formControlName="email"
@@ -77,11 +79,10 @@
                     >
                       Enter a valid email address
                     </span>
-                    <div>  <label class="form-label" for="">Email <span style="color: red;">*</span></label></div>
-                  </div>
-
-                  <div class="form-group form-outline mb-4">
-                    <input
+                    </div>
+                    <div class="col-6 mb-2">
+                      <label class="form-label text-info" for="">Phone <span style="color: red;">*</span></label>
+                      <input
                       type="text"
                       id=""
                       formControlName="phoneNumber"
@@ -96,81 +97,41 @@
                     >
                       Phone Number is required
                     </span>
-                    <div>  <label class="form-label" for="">Phone <span style="color: red;">*</span></label></div>
-                  </div>
-                  <!-- <div class="form-group form-outline mb-4">
-                   
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      formControlName="state"
-                      [(ngModel)]="selectedCountry.name"
-                      (change)="onSelect($event.target)"
-                    >
-                      <option selected   *ngFor="let country of state"
-                      
-                        >{{ country.name }}</option>
-                      <option class="form-control form-control-lg mb-1"
-                      *ngFor="let country of state"    value="{{ state.valueOf(country) }}"
-                      >
-                        
-                      </option>
-                    </select>
-                   <div> <label for="country" class="form-label">Select State</label></div>
-                  </div>
-
-                  <div class="form-group form-outline mb-4">
-      
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      formControlName="city"
-                      [(ngModel)]="selectedCountry.cities"
-                    >
-                      <option selected value="">select location</option>
-                      <option *ngFor="let state of city" value="{{state}}">
-                        {{ state }}
-                      </option>
-                    </select>
-                    <label for="country" class="form-label">Select City</label>
-                  </div> -->
-                  <div class="form-group input-group-lg form-outline mb-4" (click)="getState()">
-                  <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
-                    <option value="" selected disabled>Select State</option>
-                    <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
-                    
-                  </select>
-
-                  <span
-                  style="color: #dc3545;"
-                    *ngIf="(signupFormControl['state'].touched || submitted) && signupFormControl['state'].errors?.['required']"
-                  >
-                    State is required
-                  </span>
-
-                  <div> <label for="country" class="form- mt-2">State Location <span style="color: red;">*</span></label></div>
-                 
-                </div>
-
-                  <div class="form-group input-group-lg form-outline mb-4"   >
-                    <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
-                      <option selected value="">Select LGA</option>
-                      <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
-                      
-                    </select>
-                    <span
-                    style="color: #dc3545;"
-                      *ngIf="(signupFormControl['city'].touched || submitted) && signupFormControl['city'].errors?.['required']"
-                    >
-                      LGA is required
-                    </span>
-                    <div> <label for="country" class="form-label mt-2"> LGA Location <span style="color: red;">*</span></label></div>
                     </div>
+                    <div class="col-6 mb-2" (click)="getState()">
+                      <label for="country" class="form-label text-info mt-2">State Location <span style="color: red;">*</span></label>
+                      <select class="form-select form-select-lg" aria-label="Large select example" formControlName="state" (change)="onChangeState($event.target)">
+                        <!-- <option class="" style="font-size: 10px;" value="" selected disabled >Select Location</option> -->
+                        <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
+                        
+                      </select>
 
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['state'].touched || submitted) && signupFormControl['state'].errors?.['required']"
+                      >
+                        State is required
+                      </span>
 
+                    </div>
+                    <div class="col-6 mb-2 mb-2">
+                      <label for="country" class="form-label mt-2 text-info" > LGA Location <span style="color: red;">*</span></label>
+                      <select class="form-select form-select-lg" aria-label="Large select example" formControlName="city" (change)="onChangeCity($event.target)">
+                        <!-- <option selected value="">Select LGA</option> -->
+                        <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
+                        
+                      </select>
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['city'].touched || submitted) && signupFormControl['city'].errors?.['required']"
+                      >
+                        LGA is required
+                      </span>
 
-                  <div class="form-group form-outline mb-4">
-                    <input
+                    </div>
+                    <div class="col-6 mb-2">
+                      <label for="country" class="form-label text-info">Address <span style="color: red;">*</span></label>
+                      <input
                       type="text"
                       id=""
                       formControlName="address"
@@ -185,65 +146,64 @@
                     >
                       Address is required
                     </span>
-                   <div> <label for="country" class="form-label">Address <span style="color: red;">*</span></label></div>
-                  </div>
+                    </div>
+                    <div class="col-6 mb-2">
+                      <label for="country" class="form-label text-info">Service Category <span style="color: red;">*</span></label>
+                      <select class="form-select form-select-lg" aria-label="Large select example" formControlName="categoryId" (click)="getAllServiceCategory()" >
+                        <!-- <option value="" s selected disabled>Select Service category</option> -->
+                        <option *ngFor="let service of serviceData" [ngValue]="service.categoryId">{{service.name}}</option>
+                        
+                      </select>
+    
+                      <span
+                      style="color: #dc3545;"
+                        *ngIf="(signupFormControl['categoryId'].touched || submitted) && signupFormControl['categoryId'].errors?.['required']"
+                      >
+                      Service Category is required
+                      </span>
+                    </div>
+                    <div class="col-6 mb-2">
+                      <label for="" class="form-label text-info">Account Name<span style="color: red;">*</span></label>
+                      <input
+                      type="text"
+                      id=""
+                      formControlName="accountName"
+                      class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['accountName'].errors }"
 
-                  <div class="form-group input-group-lg form-outline mb-4">
-                    <select class="form-select" aria-label="Default select example" formControlName="categoryId" (click)="getAllServiceCategory()" >
-                      <option value="" s selected disabled>Select Service category</option>
-                      <option *ngFor="let service of serviceData" [ngValue]="service.categoryId">{{service.name}}</option>
-                      
-                    </select>
-  
+                    />
+
                     <span
                     style="color: #dc3545;"
-                      *ngIf="(signupFormControl['categoryId'].touched || submitted) && signupFormControl['categoryId'].errors?.['required']"
+                      *ngIf="(signupFormControl['accountName'].touched || submitted) && signupFormControl['accountName'].errors?.['required']"
                     >
-                    Service Category is required
+                      Account Name is required
                     </span>
-                    <div> <label for="country" class="form- mt-2">Service Category <span style="color: red;">*</span></label></div>
-                    </div>
 
-                    <div class="form-group form-outline mb-4">
-                      <input
-                        type="text"
-                        id=""
-                        formControlName="accountName"
-                        class="form-control form-control-lg mb-1"
-                        [ngClass]="{ 'is-invalid': submitted && signupFormControl['accountName'].errors }"
-  
-                      />
-  
-                      <span
-                      style="color: #dc3545;"
-                        *ngIf="(signupFormControl['accountName'].touched || submitted) && signupFormControl['accountName'].errors?.['required']"
-                      >
-                        Account Name is required
-                      </span>
-                     <div> <label for="" class="form-label">Account Name<span style="color: red;">*</span></label></div>
                     </div>
-                    <div class="form-group form-outline mb-4">
+                    <div class="col-6 mb-2">
+                      <label for="" class="form-label text-info">Account Number<span style="color: red;">*</span></label>
                       <input
-                        type="text"
-                        id=""
-                        formControlName="bankAccountNumber"
-                        class="form-control form-control-lg mb-1"
-                        [ngClass]="{ 'is-invalid': submitted && signupFormControl['bankAccountNumber'].errors }"
-  
-                      />
-  
-                      <span
-                      style="color: #dc3545;"
-                        *ngIf="(signupFormControl['bankAccountNumber'].touched || submitted) && signupFormControl['bankAccountNumber'].errors?.['required']"
-                      >
-                        Account Number is required
-                      </span>
-                     <div> <label for="" class="form-label">Account Number<span style="color: red;">*</span></label></div>
-                    </div>
+                      type="text"
+                      id=""
+                      formControlName="bankAccountNumber"
+                      class="form-control form-control-lg mb-1"
+                      [ngClass]="{ 'is-invalid': submitted && signupFormControl['bankAccountNumber'].errors }"
 
-                    <div class="form-group input-group-lg form-outline mb-4" (click)="getBanks()" (change)="onBanks($event.target)" >
-                      <select class="form-select" aria-label="Default select example" formControlName="bankCode" >
-                        <option value="" selected disabled>Bank Name</option>
+                    />
+
+                    <span
+                    style="color: #dc3545;"
+                      *ngIf="(signupFormControl['bankAccountNumber'].touched || submitted) && signupFormControl['bankAccountNumber'].errors?.['required']"
+                    >
+                      Account Number is required
+                    </span>
+
+                    </div>
+                    <div class="col-6 mb-2" (click)="getBanks()" (change)="onBanks($event.target)">
+                      <label for="country" class="form-label mt-2 text-info">Bank Name <span style="color: red;">*</span></label>
+                      <select class="form-select form-select-lg" aria-label="Large select example" formControlName="bankCode" >
+                        <!-- <option value="" selected disabled>Bank Name</option> -->
                         <option *ngFor="let banks of bankData" [ngValue]="banks.code">{{banks.name}}</option>
                         
                       </select>
@@ -254,47 +214,54 @@
                       >
                       Bank Name is required
                       </span>
-                      <div> <label for="country" class="form- mt-2">Bank Name <span style="color: red;">*</span></label></div>
-                      </div>
+                    </div>
+                    
+                    <div class="col-6 mb-2">
+                      <label for="password" class="form-label text-info">Password <span style="color: red;">*</span></label><br/>
+                      <mat-form-field appearance="outline" class="w-100">
+                        <!-- <mat-label>Enter your password</mat-label> -->
+                        <input matInput [type]="hide ? 'password' : 'text'" class="ps-1 fs-5" 
+                        id="mypassword"
+                        formControlName="password"
+                        name="password">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                      </mat-form-field>
 
-                  <mat-form-field appearance="outline" class="w-100">
-                    <!-- <mat-label>Enter your password</mat-label> -->
-                    <input matInput [type]="hide ? 'password' : 'text'" class="ps-1 fs-5" 
-                    id="mypassword"
-                    formControlName="password"
-                    name="password">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
-                  </mat-form-field>
-                  <div
+                      <span
                   style="color: #dc3545;"
                   *ngIf="(signupFormControl['password'].touched || submitted) && signupFormControl['password'].errors?.['required']"
                 >
                   Password is required
-                </div>
-                  <label for="country" class="form-label">Password <span style="color: red;">*</span></label><br/>
+                </span>
 
-                <div>  <span
+                     
+                    </div>
+                  </div>
+                  <span
                   class=" h3" role="alert" style="color: #dc3545;"
                   *ngIf="signupForm.invalid || submitted"
                   
                 >
                  {{ errorMessage }}
-                </span></div>
+                </span>
                   <div class="form-group pt-1 mb-4">
                     <button
-                      class="btn btn-dark btn-lg btn-block"
+                      class="btn btn-info btn-lg btn-block w-100"
                       type="submit"
                       
                     >
                     Sign Up
                     </button>
                   </div>
+                  <div class="d-flex flex-column  align-items-center">
+                    <p class="mb-2 pb-lg-2 cursor" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
+                  <a href="#!" class="small text-muted cursor " routerLink="/ourpolicy">Privacy policy</a>
+                  </div>
 
                   
-                  <p class="mb-5 pb-lg-2 cursor" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
-                  <a href="#!" class="small text-muted cursor " routerLink="/ourpolicy">Privacy policy</a>
+                  
                 </form>
 
               </div>

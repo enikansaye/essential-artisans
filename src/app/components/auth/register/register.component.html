@@ -15,10 +15,12 @@
                     <img class="w-50" src="/assets/images/logos.png" alt="">
                   </div> -->
 
-                  <div class="fw-normal h3 mb-3 pb-3" style="letter-spacing: 1px">
-                    Sign up as a User
+                  <div class="fw-normal h3 mb-3 pb-3 text-info" style="letter-spacing: 1px">
+                    SIGN UP AS A USER 
                   </div>
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group form-outline mb-2">
+                    <label class="form-label text-info" for="">First Name <span style="color: red;">*</span></label>
+
                     <input
                       type="text"
                       id="firstName"
@@ -33,10 +35,11 @@
                 </span>
                 
                    
-                  <div>  <label class="form-label" for="">First Name <span style="color: red;">*</span></label></div>
                   </div>
 
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group form-outline my-3">
+                    <label class="form-label text-info" for="form2Example27">Last Name <span style="color: red;">*</span></label>
+
                     <input
                       type="text"
                       id=""
@@ -52,10 +55,11 @@
                     >
                       LastName is required
                     </span>
-                    <div class="form-label" for="form2Example27">Last Name <span style="color: red;">*</span></div>
                   </div>
 
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group form-outline mb-2">
+                    <label class="form-label text-info" for="">Email <span style="color: red;">*</span></label>
+
                     <input
                       type="email"
                       id=""
@@ -77,10 +81,10 @@
                     >
                       Enter a valid email address
                     </span>
-                    <div>  <label class="form-label" for="">Email <span style="color: red;">*</span></label></div>
                   </div>
 
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group form-outline mb-2">
+                    <label class="form-label text-info" for="">Phone <span style="color: red;">*</span></label>
                     <input
                       type="text"
                       id=""
@@ -96,48 +100,14 @@
                     >
                       Phone Number is required
                     </span>
-                    <div>  <label class="form-label" for="">Phone <span style="color: red;">*</span></label></div>
+                    
                   </div>
 
-                  <!-- <div class="form-group form-outline mb-4">
-                   
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      formControlName="State"
-                      [(ngModel)]="selectedCountry.name"
-                      (change)="onSelect($event.target)"
-                    >
-                      <option selected value="" >select location</option>
-                      <option class="form-control form-control-lg mb-1"
-                        *ngFor="let country of countries"
-                        value="{{ countries.indexOf(country) }}"
-                      >
-                        {{ country.name }}
-                      </option>
-                    </select>
-                   <div> <label for="country" class="form-label">Select State</label></div>
-                  </div>
-
-                  <div class="form-group form-outline mb-4">
-      
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      formControlName="city"
-                      [(ngModel)]="selectedCountry.cities"
-                    >
-                      <option selected value="">select location</option>
-                      <option *ngFor="let state of states" value="cities">
-                        {{ state }}
-                      </option>
-                    </select>
-                    <label for="country" class="form-label">Select City</label>
-                  </div> -->
-
-                  <div class="form-group input-group-lg form-outline mb-4" (click)="getState()">
+                  
+                  <div class="form-group input-group-lg form-outline mb-2" (click)="getState()">
+                    <label class="form-label mt-2 text-info" for="">State Location <span style="color: red;">*</span></label>
                     <select class="form-select" aria-label="Default select example" formControlName="state" (change)="onChangeState($event.target)">
-                      <option value="" selected disabled>Select State</option>
+                      <!-- <option value="" selected disabled>Select State</option> -->
                       <option *ngFor="let data of state2" [ngValue]="data.sate">{{data.sate}}</option>
                       
                     </select>
@@ -147,12 +117,13 @@
                     >
                       State is required
                     </span>
-                    <div>  <label class="form-label mt-2" for="">State Location <span style="color: red;">*</span></label></div>
+                     
                     </div>
   
-                    <div class="form-group input-group-lg form-outline mb-4"   >
+                    <div class="form-group input-group-lg form-outline mb-2"   >
+                      <label class="form-label mt-2 text-info" for="">LGA Location <span style="color: red;">*</span></label>
                       <select class="form-select" aria-label="Default select example" formControlName="city" (change)="onChangeCity($event.target)">
-                        <option selected value="">Select LGA</option>
+                        <!-- <option selected value="">Select LGA</option> -->
                         <option *ngFor="let data of city2" value="{{data}}">{{data}}</option>
                         
                       </select>
@@ -162,10 +133,10 @@
                       >
                         LGA is required
                       </span>
-                      <div>  <label class="form-label mt-2" for="">LGA Location <span style="color: red;">*</span></label></div>
                       </div>
 
-                  <div class="form-group form-outline mb-4">
+                  <div class="form-group form-outline mb-2">
+                    <label for="country" class="form-label text-info">Address <span style="color: red;">*</span></label>
                     <input
                       type="text"
                       id=""
@@ -181,45 +152,14 @@
                     >
                       Address is required
                     </span>
-                   <div> <label for="country" class="form-label">Address <span style="color: red;">*</span></label></div>
+                   
                   </div>
 
-                  <!-- <mat-form-field class="example-full-width" >
-                    
-                    <input
-                      matInput
-                      [type]="hide ? 'password' : 'text'"
-                      type="password"
-                      id="mypassword"
-                      formControlName="password"
-                      name="password"
-                    />
-                    <button
-                      mat-icon-button
-                      matSuffix
-                      (click)="hide = !hide"
-                      [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hide"
-                    >
-                      <mat-icon >{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-                    </button>
-                    <mat-error
-                      *ngIf="
-                        signupForm.controls['password'].dirty &&
-                        signupForm.hasError('required', 'minLength')
-                      "
-                    >
-                      password cann't be less than four
-                    </mat-error>
-                    <mat-error *ngIf="signupForm.hasError('required')">
-                      password is <strong>required</strong>
-                    </mat-error>
-                  </mat-form-field> -->
+                  <div class="form-group form-outline mb-2">
+                    <label for="country" class="form-label text-info">Password <span style="color: red;">*</span></label>
 
-                  <!-- <div class="form-group form-outline mb-4"> -->
                     <mat-form-field appearance="outline" class="w-100">
-                      <!-- <mat-label>Enter your password</mat-label> -->
-                      <input matInput [type]="hide ? 'password' : 'text'"  class="ps-1 fs-5"
+                     <input matInput [type]="hide ? 'password' : 'text'"  class="ps-1 fs-5"
                       id="mypassword"
                       formControlName="password"
                       name="password">
@@ -233,23 +173,22 @@
                   >
                     Password is required
                   </span>
-                    
-                  <!-- </div> -->
               
-                
-                
-                  <div for="country" class="form-label">Password <span style="color: red;">*</span></div>
+              
+                  </div>
 
-                  <span
-                  class=" h3" role="alert" style="color: #dc3545;"
-                  *ngIf="signupForm.valid || submitted"
-                  
-                >
-                 {{ errorMessage }}
-                </span>
-                  <div class="form-group pt-1 mb-4">
+<div>
+  <span
+  class=" h4 mb-1" role="alert" style="color: #dc3545;"
+  *ngIf="signupForm.valid || submitted"
+  
+>
+ {{ errorMessage }}
+</span>
+</div>
+                  <div class="form-group pt-1 mb-2 ">
                     <button
-                      class="btn btn-dark btn-lg btn-block"
+                      class="btn btn-info btn-lg btn-block w-100"
                       type="submit"
                       
                     >
@@ -257,10 +196,11 @@
                     </button>
                   </div>
 
-
+                  <div class="d-flex flex-column  align-items-center">
                   
-                  <p class="mb-5 pb-lg-2 cursor" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
+                  <p class="mb-3 pb-lg-2 cursor" style="color: #393f81;" routerLink="/signin">Already have an account? Sign in here</p>
                   <a href="#!" class="small text-muted" routerLink="/ourpolicy">Privacy policy</a>
+                  </div>
                 </form>
                 <!-- <button class="btn btn-success btn-lg btn-block" (click)="resendEmail()">Resend Link</button> -->
 

@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 // import { DataService } from 'src/app/service/data.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { LoginService } from 'src/app/service/login.service';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { JwtHelperService } from '@auth0/angular-jwt';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,6 @@ import { JwtHelperService } from "@auth0/angular-jwt";
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   jwtHelper = new JwtHelperService();
 
   signinForm!: FormGroup;
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
   isLoginFailed = false;
   hidden: boolean = false;
   userInfo: any;
+  key!: '1234';
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -46,23 +47,21 @@ export class LoginComponent implements OnInit {
     // private alertService: AlertService,
     private toastr: ToastrService,
     private authApi: AuthService,
-    private loginApi: LoginService,
+    private loginApi: LoginService
   ) {}
   submitted = false;
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-
     });
     this.resendForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       // password: ['', Validators.required],
-
     });
     this.api.finaldata;
 
-    this.roleDisplay() 
+    this.roleDisplay();
   }
 
   get signinFormControl() {
@@ -73,9 +72,7 @@ export class LoginComponent implements OnInit {
     if (this.loginApi.getToken() != '') {
       this.currentRole = this.loginApi.haveaccess(this.loginApi.getToken());
 
-
       this.displayUser = this.currentRole === 'CUSTOMER';
-
 
       this.displayArtisan = this.currentRole === 'ARTISAN';
       this.displayAdmin = this.currentRole === 'ADMIN';
@@ -84,98 +81,110 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // this.alertService.info('Working on creating new account');
+   
+    const clickedItem = localStorage.getItem('name');
 
+   
     const registerObserver = {
       next: (result: any) => {
         this.responsedata = result;
-        
 
-// console.log(this.responsedata);
+        console.log(this.responsedata);
 
-        
-          localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
-      // localStorage.setItem('refreshtoken', this.responsedata.data.refreshToken);
-      localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken));
-      // console.log(localStorage.setItem('token', JSON.stringify(this.responsedata.data.accessToken)));
-      
-      this.roleDisplay();
-        // this.api.SaveTokens(result);
+        localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
+
+        console.log(
+          localStorage.setItem(
+            'token',
+            JSON.stringify(this.responsedata.data.accessToken)
+          )
+        );
+
+        this.roleDisplay();
+
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        // this.roles = this.api.haveaccess2().roles;
 
-          // this.toastr.success('Hello world!');
-          this.toastr.success('Welcome you are logged in')
-          // return this.responsedata;
-          if (this.displayArtisan) {
-            this.router.navigate(['/artisanprofile/transactions']).then(() => {
+        this.toastr.success('Welcome you are logged in');
+        if (this.displayUser && clickedItem) {
+          console.log("helo world");
+          
+        
+            console.log("helo world22");
+    
+            // this.router.navigate(['/available artisan']);
+            this.router.navigate(['available artisan']).then(() => {
               window.location.reload();
-            });
-            // this.reloadPage();
-          } else if (this.displayUser) {
-            this.router.navigate(['/']).then(() => {
-              window.location.reload();
-            });
-          } else {
-            this.router.navigate(['/Admin/']).then(() => {
-              window.location.reload();
-            });
-          }
-      // this.reloadPage();
-
+            }); 
+    
+         
+    
+        }else if (this.displayArtisan) {
+          this.router.navigate(['/artisanprofile/transactions']).then(() => {
+            window.location.reload();
+          });
+        } else if (this.displayUser) {
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
+        } else {
+          this.router.navigate(['/Admin/']).then(() => {
+            window.location.reload();
+          });
+        }
+      
       },
       error: (err: any) => {
         console.log(err);
-        
-       return this.errorMessage = err.error
-        // this.alertService.danger('signup failed');
+
+        return (this.errorMessage = err.error);
       },
     };
 
-    this.loginApi.loginUser(this.signinForm.value).subscribe(registerObserver 
-
-   
-     
-    );
-
-    // this.reloadPage();
+    this.loginApi.loginUser(this.signinForm.value).subscribe(registerObserver);
+ 
   }
 
   reloadPage(): void {
     window.location.reload();
   }
   Logout() {
-    this.loginApi.logoutUser().subscribe(()=>{
-  localStorage.clear();
-  localStorage.removeItem('expiration');
-  localStorage.removeItem('refreshtoken');
-  this.router.navigateByUrl('/signin');
-    })
-}
+    this.loginApi.logoutUser().subscribe(() => {
+      // localStorage.clear();
+      localStorage.removeItem('expiration');
+      localStorage.removeItem('refreshtoken');
+      localStorage.removeItem('accesstoken');
+      this.router.navigateByUrl('/signin');
+    });
+  }
 
-sendLink() {
-  this.hidden = !this.hidden;
-}
+  sendLink() {
+    this.hidden = !this.hidden;
+  }
 
+  resendConfirmationMail(data: any) {
+    const inspectionObserver = {
+      next: (res: any) => {
+        this.router.navigate(['/checkemail']);
 
-resendConfirmationMail(data:any) {
-  
-  const inspectionObserver = {
-    next: (res: any) => {
-      
-      this.router.navigate(['/checkemail']);
+        this.resendForm.reset();
+        this.hidden = !this.hidden;
+      },
+      err: (err: any) => {
+        this.toastr.warning('Something Went wrong!!');
+      },
+    };
+    this.loginApi
+      .ResendMail(this.resendForm.value.email, this.resendForm.value.email)
+      .subscribe(inspectionObserver);
+  }
+  private encrypt(txt: string): string {
+    return CryptoJS.AES.encrypt(txt, this.key).toString();
+  }
 
-      this.resendForm.reset();
-      this.hidden = !this.hidden;
-    },
-    err: (err: any) => {
-      
-      this.toastr.warning('Something Went wrong!!');
-    },
-  };
-  this.loginApi
-    .ResendMail(this.resendForm.value.email, this.resendForm.value.email)
-    .subscribe(inspectionObserver);
-}
+  private decrypt(txtToDecrypt: string) {
+    return CryptoJS.AES.decrypt(txtToDecrypt, this.key).toString(
+      CryptoJS.enc.Utf8
+    );
+  }
 }

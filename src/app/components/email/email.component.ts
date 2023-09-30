@@ -43,5 +43,13 @@ export class EmailComponent implements OnInit {
         this.emailConfirmed = false;
       }
     );
+
+    const referrer = document.referrer;
+
+    if (referrer.includes("auth/verify-email?token")) {
+     //Do your stuff
+    } else {
+      this.router.navigate(['/page not found']);
+    }
   }
 }

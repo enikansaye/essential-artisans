@@ -30,7 +30,8 @@ export class ApiService implements OnInit {
   // Content-Security-Policy: script-src 'self' https://myexample.com
 
   // public baseUrl: string = "https://essential-artisans.azurewebsites.net";
-  public baseUrl: string = 'https://localhost:7130';
+  // public baseUrl: string = 'https://localhost:7130';
+  public baseUrl: string = 'https://essential-artisans-v2.azurewebsites.net/';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,
@@ -98,8 +99,8 @@ export class ApiService implements OnInit {
   getUserinfo():Observable<Product[]> {
     return this._http.get<Product[]>({url: `${this.baseUrl}/api/Customer/`, cacheMins: 5 });
   }
-  getArtisaninfo() {
-    return this.http.get(this.baseUrl + '/api/Artisan/');
+  getArtisaninfo():Observable<Product[]> {
+    return this._http.get<Product[]>({url: `${this.baseUrl}/api/Artisan/`, cacheMins: 5 });
   }
 
 

@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit {
   progressInfos!: [];
   categoryData: any;
   subCategory: any;
+  resValue:any;
 
   constructor(
     private adminApi: AdminService,
@@ -44,7 +45,7 @@ export class ProductComponent implements OnInit {
       CategoryId: [''],
       Size: [],
       Model: [],
-      SubCategoryId: [''],
+      SubCategoryId: 0,
       VendorName: [],
       VendorAddress: [],
       VendorPhoneNumber: [],
@@ -54,6 +55,7 @@ export class ProductComponent implements OnInit {
       FileNames: [''],
       
     });
+    this.getCategory()
   }
   get f() {
     return this.productForm.controls;
@@ -117,6 +119,7 @@ export class ProductComponent implements OnInit {
   onSubmitCheck(data: any) {
     console.log(data);
     console.log(data.SubCategoryId);
+    console.log(data.CategoryId);
     
     this.submitted = true;
     const formdata = new FormData();
@@ -184,6 +187,10 @@ export class ProductComponent implements OnInit {
   getCategory() {
     return this.adminApi.getServiceCategory().subscribe((res) => {
       console.log(res);
+      console.log(res.CategoryId);
+     this.resValue = res.CategoryId 
+     console.log(this.resValue);
+     
       this.categoryData = res;
     });
   }
@@ -200,10 +207,13 @@ export class ProductComponent implements OnInit {
   //   );
   // }
   // subCategory: any
+ 
+  serviceSubCategory: any
   getSubcategory(data: any) {
-    console.log(data);
-
-    this.productForm.controls['SubCategoryId'].setValue(data.subCategoryId);
+    console.log(data.categoryId);
+    
+    console.log(data.subCategories);
+    this.serviceSubCategory = (data.subCategories)
   }
 
   selectFiles(event: any) {
