@@ -78,18 +78,18 @@
           >Select Category</label
         >
           <select class="form-select" aria-label="Default select example"  formControlName="CategoryId">
-            <option selected>Open this select menu</option>
+            <option selected>Select Category</option>
             <option  *ngFor="let data of categoryData" [value]="data.categoryId"  >{{data.name}}</option>
   
           </select>
         </div>
         
         <div >
-          <label class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"  >
+          <label class="form-label "  >
              Select Sub-category
           </label>
           <select class="form-select" aria-label="Default select example"  formControlName="ategoryId" (click)="getSubcategory(resValue)">
-            <option selected>Open this select menu</option>
+            <option selected>Select Sub-category</option>
             <option  *ngFor="let data of serviceSubCategory" [value]="data.subCategoryId"  >{{data.name}}</option>
   
           </select>

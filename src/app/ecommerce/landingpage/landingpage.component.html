@@ -1,14 +1,14 @@
-<div class="container">
+<div class="px-3">
   <div class="form-group input-group-lg form-outline mb-4 "   >
-    <div class="col-4 mt-3">
-      <select class="form-select" aria-label="Default select example" (click)="getProductCategory()">
-        <option selected value="">Select Category</option>
-        <option *ngFor="let data of categoryData" >{{data.name}}</option>
+    <div class="col-4 mt-3" >
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedCategory" (ngModelChange)="getproduct()" >
+        <option  value="" disabled selected>Select Category</option>
+        <option *ngFor="let data of categoryData" [ngValue]="data.categoryId">{{data.name}}</option>
         
       </select>
     </div>
     
-  <div class="row g-4">
+  <div class="row g-4" *ngIf="productlist">
     <ng-container *ngFor="let items of productlist">
       
       
@@ -39,4 +39,13 @@
     </ng-container>
     
   </div>
+  
+</div>
+<div class=" pt-4" *ngIf="productlistLength === 0">
+  <div class=" background">
+    
+    <img class="img-fluid" src="/assets/images/15911.jpg" alt="">
+  </div>
+  
+</div>
 </div>

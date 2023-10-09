@@ -135,9 +135,11 @@ export class LoginComponent implements OnInit {
       
       },
       error: (err: any) => {
-        console.log(err);
-
-        return (this.errorMessage = err.error);
+        if(typeof err.error === "object"){
+          this.errorMessage = "Complete all fields for the best service.";
+        }else {
+          this.errorMessage = err.error;
+        }
       },
     };
 

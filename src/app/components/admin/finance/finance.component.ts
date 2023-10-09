@@ -12,7 +12,8 @@ export class FinanceComponent implements OnInit {
   failedData: any;
   queuedData: any;
   pendingData: any;
-  paymentForm !: FormGroup
+  paymentForm !: FormGroup;
+  service = 'completed';
 
   constructor(
     private api : ApiService,
@@ -20,7 +21,10 @@ export class FinanceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCompletedPayment()
+    this.getCompletedPayment();
+    this.getPendingPaymment();
+    this.getQueuedPayment();
+    this.getFailedPayment()
     this.paymentForm = this.formBuilder.group({
       orderId : ['']
     })
@@ -56,8 +60,16 @@ getCompletedPayment(){
   })
 
 }
+orderId !: ""
 makePayment(data: any){
-  return this.api.makePayment(this.paymentForm.value, data.orderId).subscribe(res => {
+  const payload = {
+    orderId:  data.serviceOrderId
+
+  }
+  console.log(payload);
+  const test = this.paymentForm.value.orderId
+  
+  return this.api.makePayment(data.serviceOrderId, payload).subscribe(res => {
     console.log(res);
     
     

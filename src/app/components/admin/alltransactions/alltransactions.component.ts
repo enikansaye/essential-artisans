@@ -110,7 +110,7 @@ export class AlltransactionsComponent implements OnInit {
     this.orderForm.value.orderId = row.id;
 
     this.adminApi.aproveOrderUrl(this.orderForm.value).subscribe((res: any) => {
-      this.toastr.success('Order Approve Successfully!!');
+      this.toastr.success('Order Approved Successfully!!');
 
       this.getAllOrder();
     });

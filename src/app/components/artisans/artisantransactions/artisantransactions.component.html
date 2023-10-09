@@ -587,7 +587,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary px-3 mx-4">
       <a class="navbar-brand" >INVOICE</a>
     </nav>
     
@@ -614,8 +614,9 @@
                   <div class="form-group">
                     <label for="TAmount">Total Amount</label>
     
-    
-                    <input  type="text" class="form-control"[(ngModel)]="InvoiceObject.invoiceTotal" name="invoiceTotal" id="invoiceTotal" [ngModel]="getInvoiceTotalAmount()" disabled >
+                    <!-- <h4>Overall Main Product Total: {{ overallTotal }}</h4> -->
+
+                    <input  type="text" class="form-control" name="invoiceTotal" id="invoiceTotal" [ngModel]="getInvoiceTotalAmount()" disabled [value]="overallTotal" >
     
                   </div>
                 </div>
@@ -638,21 +639,24 @@
                     <div class="col-md-3">
 
                       <label for="mainProductName">Main Product Name:</label>
-                      <select class="form-select" aria-label="Default select example" id="mainProductName" [(ngModel)]="item.mainProduct.name" placeholder="Main Product Name" (change)="onMainProductSelected(item, i)">
+                      <select class="form-select" aria-label="Default select example" id="mainProductName" [(ngModel)]="item.mainProduct.name" placeholder="Main Product Name" *ngIf="!showInput" (change)="onMainProductSelected(item, i)" >
                         <option value="">Select a product</option>
-                        <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }} {{ product.name }} {{ product.name }} {{ product.name }}</option>
+                        <option *ngFor="let product of suggestedProducts" [value]="product.name">{{ product.name }} {{ product.price }} {{ product.model }} {{ product.size }}</option>
+                        <option  value="other">Other</option>
+
                       </select>
+
                     </div>
        
                 <div class="col-md-3">
                   <label for="mainProductPrice">Main Product Price:</label>
-                  <input type="number" class="form-control" id="mainProductPrice" [(ngModel)]="item.mainProduct.price"  placeholder="Main Product Price" >
+                  <input type="number" class="form-control" id="mainProductPrice" [(ngModel)]="item.mainProduct.price" (ngModelChange)="calculateOverallMainProductTotal()"  placeholder="Main Product Price" disabled="true">
                 </div>
                 <div class="col-md-3">
                   
                  
                   <label for="mainProductQuantity">Main Product Quantity:</label>
-                  <input type="number" class="form-control" id="mainProductQuantity" type="number" [(ngModel)]="item.mainProduct.quantity" placeholder="Main Product Quantity">
+                  <input type="number" class="form-control" id="mainProductQuantity" type="number" [(ngModel)]="item.mainProduct.quantity" (ngModelChange)="calculateOverallMainProductTotal()" placeholder="Main Product Quantity">
                   
     
                 </div>
@@ -673,7 +677,7 @@
               
                 <div class="col-md-3">
                   <label for="suggestedProductOnePrice">Suggested Product One Price:</label>
-                  <input class="form-control" id="suggestedProductOnePrice" type="number" [(ngModel)]="item.suggestedProductOne.price" placeholder="Suggested Product One Price">
+                  <input class="form-control" id="suggestedProductOnePrice" type="number" [(ngModel)]="item.suggestedProductOne.price" placeholder="Suggested Product One Price" disabled="true">
                 </div>
               
                 <div class="col-md-3">
@@ -698,17 +702,17 @@
                 
                   <div class="col-md-3">
                     <label for="suggestedProductTwoPrice">Main Product Price:</label>
-                    <input class="form-control" id="suggestedProductTwoPrice" type="number" [(ngModel)]="item.suggestedProductTwo.price" placeholder="Main Product Price">
+                    <input class="form-control" id="suggestedProductTwoPrice" type="number" [(ngModel)]="item.suggestedProductTwo.price" placeholder="Main Product Price" disabled="true">
                   </div>
                 
                   <div class="col-md-3">
-                    <label for="suggestedProductTwoQuantity">Main Product Quantity:</label>
-                    <input class="form-control" id="suggestedProductTwoQuantity" type="number" [(ngModel)]="item.suggestedProductTwo.quantity" placeholder="Main Product Quantity">
+                    <label for="suggestedProductTwoQuantity">Suggested Product Two Quantity:</label>
+                    <input class="form-control" id="suggestedProductTwoQuantity" type="number" [(ngModel)]="item.suggestedProductTwo.quantity" placeholder="Suggested Product Two Quantity">
                   </div>
                 
                   <div class="col-md-3">
-                    <label for="suggestedProductTwoTotal">Main Product Total:</label>
-                    <input class="form-control" id="suggestedProductTwoTotal" type="number" [(ngModel)]="item.suggestedProductTwo.total" placeholder="Main Product Total" [ngModel]="updateTotalInItemsArray(item.suggestedProductTwo)">
+                    <label for="suggestedProductTwoTotal">Suggested Product Two Total:</label>
+                    <input class="form-control" id="suggestedProductTwoTotal" type="number" [(ngModel)]="item.suggestedProductTwo.total" placeholder="Suggested Product Two Total" [ngModel]="updateTotalInItemsArray(item.suggestedProductTwo)">
                   </div>
               
     
@@ -729,7 +733,7 @@
               </div>
 
               <div class="col-md-3">
-                <h4>Service Charge:</h4><input class="form-control" type="text" name="artisanCharge" [(ngModel)]="invoice.artisanCharge" required="">
+                <h4>Service Charge:</h4><input class="form-control" type="text" name="artisanCharge" [(ngModel)]="invoice.artisanCharge" (ngModelChange)="calculateOverallMainProductTotal()" required="">
               </div>
               
     

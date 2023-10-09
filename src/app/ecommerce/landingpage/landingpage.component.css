@@ -20,3 +20,7 @@ transform: scale(1.1);
     height: 150px;
     object-fit: cover;
 }
+.background{
+    background-color: red;
+    max-height: 50vh;
+}

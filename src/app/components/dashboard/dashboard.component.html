@@ -33,12 +33,10 @@
             <div class="btn btn-secondary dropdown-toggle d-flex flex-start"  data-bs-toggle="dropdown" aria-expanded="false">
               Available Services
             </div>
-            <ul class="dropdown-menu w-100">
-              <li><a class="dropdown-item" #AC_Repair name="AC Repair" id="AC Repair" (click)="this.data.sendClickEvent(AC_Repair.id)" routerLink="/available artisan">AC Technician</a></li>
-              <li><a class="dropdown-item" #Carpentry name="Carpentry" id="Carpentry" routerLink="/available artisan" (click)="this.data.sendClickEvent(Carpentry.id)">Carpenter</a></li>
-              <li><a class="dropdown-item" #Electrician name="Electrician" id="Electrician" (click)="this.data.sendClickEvent(Electrician.id)" routerLink="/available artisan">Electrician</a></li>
-              <li><a class="dropdown-item" #Plumbing name="Plumbing" routerLink="/available artisan" id="Plumbing" (click)="this.data.sendClickEvent(Plumbing.id)">Plumbing</a></li>
-              <li><a class="dropdown-item" #Cleaning_Service name="Cleaning Service" routerLink="/available artisan" id="Clearning Service" (click)="this.data.sendClickEvent(Cleaning_Service.id)">Cleaning Service</a></li>
+            <ul class="dropdown-menu w-100" >
+              <ul class="list-inline mb-0 h-100" *ngFor="let category of allServiceData" >
+                <li class="list-inline-item me-0 large cursor mb-2" routerLink="/available artisan" (click)="this.data.sendClickEvent(category.name)">{{category.name}}</li>
+              </ul>
             </ul>
          
           <!-- <select class="form-select" aria-label="Default select example" (change)="onChangeService($event.target)" >

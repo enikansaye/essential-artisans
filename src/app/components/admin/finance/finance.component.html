@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <h2 class="fw-bold mb-1" *ngIf="pendingData">
-                  {{ pendingData.Length }}
+                  {{ pendingData.length }}
                 </h2>
                 <h2 class="fw-bold mb-1" *ngIf="!pendingData">0</h2>
               </div>
@@ -98,5 +98,288 @@
         </div>
       </div>
     </section>
+
+    <nav class="navbar navbar-light bg-light">
+   
+      <div class="container-fluid">
+        <div class="navbar-brand w-100" href="#">
+          <div class="w-100 d-flex w-100 justify-content-between">
+            <div
+              [class.active]="service == 'completed'"
+              class="mat cursor d-none d-lg-block p-2"
+              (click)="service = 'completed'"
+            >
+            Pending Transactions
+            </div>
+            <div
+              [class.active]="service == 'completed1'"
+              class="mat cursor d-none d-lg-block p-2"
+              (click)="service = 'completed1'"
+              
+            >
+                Queued Payment
+            </div>
+            <div
+              [class.active]="service == 'completed2'"
+              class="mat cursor d-none d-lg-block p-2"
+              (click)="service = 'completed2'"
+            >
+            Failed Payment
+            </div>
+            <div
+              [class.active]="service == 'completed3'"
+              class="mat cursor d-none d-lg-block p-2"
+              (click)="service = 'completed3';"
+            >
+            Completed Orders
+          </div>
+          </div>
+        </div>
+        <div
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          ardiva-controls="offcanvasNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </div>
+        <h4 class="d-lg-none">SERVICES</h4>
+        <div
+          class="offcanvas offcanvas-end mt-4 pt-5 w-50"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">SERVICES</h5>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li
+                [class.active]="service == 'completed'"
+                class="mat cursor  p-2"
+                data-bs-dismiss="offcanvas"
+              aria-label="Close"
+                (click)="service = 'completed'"
+              >
+                All Transactions
+              </li>
+              <li
+                [class.active]="service == 'completed1'"
+                class="mat cursor p-2"
+                (click)="service = 'completed1'"
+                data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              >
+                Pending Payment
+              </li>
+              <li
+                [class.active]="service == 'completed2'"
+                class="mat cursor p-2"
+                (click)="service = 'completed2'"
+                data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              > Queued Payment
+              </li>
+              <li
+                [class.active]="service == 'completed3'"
+                class="mat cursor p-2"
+                (click)="service = 'completed3'"
+                data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              >
+              Completed Payment
+            </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section>
+      <div [ngSwitch]="service">
+            <!-- pending data -->
+    <div *ngSwitchCase="'completed'" id="no-tables">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Artisan Name</th>
+            <th scope="col">InspectionFee</th>
+            
+            <th scope="col">Artisan Account Number</th>
+            <th scope="col">ArtisanCharge</th>
+            <th scope="col">Commissioned Amount</th>
+            <th scope="col">TotalAmount</th>
+
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr
+            class="align-center justify-content-center w-100"
+            *ngFor="
+              let data of pendingData
+                
+            "
+          >
+            <td data-title="InspectionFee">{{ data.artisanName }}</td>
+            <td data-title="InspectionFee">{{ data.inspectionFee }}</td>
+            <td data-title=" Artisan Account Number">{{ data.artisanAccountNumber }}</td>
+            <td data-title=" ArtisanCharge">{{ data.artisanCharge }}</td>
+            <td data-title=" Commissioned Amount">{{ data.commissionedAmount }}</td>
+            <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+            <td data-title="TotalAmount">{{ data.totalAmount }}</td>
+           
+           
+
+            
+            
+           
+            <td data-title="Action">
+              <button
+
+                class="btn btn-info me-2"
+               (click)="makePayment(data)"  
+              >
+                Make Payment
+              </button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- queued data -->
+    <div *ngSwitchCase="'completed1'" id="no-tables">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Artisan Name</th>
+            <th scope="col">InspectionFee</th>
+            
+            <th scope="col">Artisan Account Number</th>
+            <th scope="col">ArtisanCharge</th>
+            <th scope="col">Commissioned Amount</th>
+            <th scope="col">TotalAmount</th>
+
+         
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr
+            class="align-center justify-content-center w-100"
+            *ngFor="
+              let data of queuedData
+                
+            "
+          >
+            <td data-title="InspectionFee">{{ data.artisanName }}</td>
+            <td data-title="InspectionFee">{{ data.inspectionFee }}</td>
+            <td data-title=" Artisan Account Number">{{ data.artisanAccountNumber }}</td>
+            <td data-title=" ArtisanCharge">{{ data.artisanCharge }}</td>
+            <td data-title=" Commissioned Amount">{{ data.commissionedAmount }}</td>
+            <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+            <td data-title="TotalAmount">{{ data.totalAmount }}</td>
+        
+           
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- failed data -->
+    <div *ngSwitchCase="'completed2'" id="no-tables">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Artisan Name</th>
+            <th scope="col">InspectionFee</th>
+            
+            <th scope="col">Artisan Account Number</th>
+            <th scope="col">ArtisanCharge</th>
+            <th scope="col">Commissioned Amount</th>
+            <th scope="col">TotalAmount</th>
+
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr
+            class="align-center justify-content-center w-100"
+            *ngFor="
+              let data of failedData
+                
+            "
+          >
+            <td data-title="InspectionFee">{{ data.artisanName }}</td>
+            <td data-title="InspectionFee">{{ data.inspectionFee }}</td>
+            <td data-title=" Artisan Account Number">{{ data.artisanAccountNumber }}</td>
+            <td data-title=" ArtisanCharge">{{ data.artisanCharge }}</td>
+            <td data-title=" Commissioned Amount">{{ data.commissionedAmount }}</td>
+            <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+            <td data-title="TotalAmount">{{ data.totalAmount }}</td>
+           
+            <td data-title="Action">
+              <button
+
+              class="btn btn-info me-2"
+             (click)="makePayment(data)"  
+            >
+              Make Payment
+            </button>
+
+             
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- completed data -->
+    <div *ngSwitchCase="'completed3'" id="no-tables">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Artisan Name</th>
+            <th scope="col">InspectionFee</th>
+            
+            <th scope="col">Artisan Account Number</th>
+            <th scope="col">ArtisanCharge</th>
+            <th scope="col">Commissioned Amount</th>
+            <th scope="col">TotalAmount</th>
+
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr
+            class="align-center justify-content-center w-100"
+            *ngFor="
+              let data of completedData
+                
+            "
+          >
+            <td data-title="InspectionFee">{{ data.artisanName }}</td>
+            <td data-title="InspectionFee">{{ data.inspectionFee }}</td>
+            <td data-title=" Artisan Account Number">{{ data.artisanAccountNumber }}</td>
+            <td data-title=" ArtisanCharge">{{ data.artisanCharge }}</td>
+            <td data-title=" Commissioned Amount">{{ data.commissionedAmount }}</td>
+            <!-- <td data-title="Date">{{data.artisanEmail}}</td> -->
+            <td data-title="TotalAmount">{{ data.totalAmount }}</td>
+            
+          
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+      </div>
+    </section>
+
 </div>
   

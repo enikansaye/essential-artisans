@@ -241,6 +241,8 @@ public setTitle(newTitle:string){
     localStorage.removeItem('refreshtoken');
     localStorage.removeItem('accesstoken');
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    localStorage.removeItem('artisan');
     this.router.navigateByUrl('/signin');
     // })
 }

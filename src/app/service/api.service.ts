@@ -96,11 +96,11 @@ export class ApiService implements OnInit {
 	// 	return this._http
 	// 		.get<Product[]>({ url: 'https://example-api/products', cacheMins: 5 })
 	// }
-  getUserinfo():Observable<Product[]> {
-    return this._http.get<Product[]>({url: `${this.baseUrl}/api/Customer/`, cacheMins: 5 });
+  getUserinfo() {
+    return this.http.get(this.baseUrl + "/api/Customer/");
   }
-  getArtisaninfo():Observable<Product[]> {
-    return this._http.get<Product[]>({url: `${this.baseUrl}/api/Artisan/`, cacheMins: 5 });
+  getArtisaninfo() {
+    return this.http.get(this.baseUrl + "/api/Artisan/");
   }
 
 

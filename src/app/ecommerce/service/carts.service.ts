@@ -71,7 +71,7 @@ export class CartsService {
   addToCart(product: any) {
     const items:any = localStorage.getItem('cartItems')
     let cartItems: any[] = JSON.parse(items) || [];
-    const foundItem = cartItems.find(item => item.id === product.id);
+    const foundItem = cartItems.find(item => item.productId === product.productId);
   
     if (foundItem) {
       foundItem.quantity += 1;

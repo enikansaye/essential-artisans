@@ -68,9 +68,13 @@ export class LoginService {
   // checking with refresh token
   logout() {
     localStorage.removeItem('expiration');
-  localStorage.removeItem('refreshtoken');
-  localStorage.removeItem('accesstoken');
-  localStorage.removeItem('token');
+    localStorage.removeItem('refreshtoken');
+    localStorage.removeItem('accesstoken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    localStorage.removeItem('artisan');
+    this.router.navigateByUrl('/signin');
+    // window.location.reload();
   // this.router.navigateByUrl('/signin');
 
     // return localStorage.clear();

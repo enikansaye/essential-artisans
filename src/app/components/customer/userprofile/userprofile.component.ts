@@ -196,12 +196,13 @@ export class UserprofileComponent implements OnInit {
     this.userprofileModelObj.phoneNumber = this.formValue.value.PhoneNumber;
 
     this.api.userUpdate(this.formValue.value).subscribe((res: any) => {
+      
       // this.toastr.success('Profile updated');
       this.toastr.success('Profile successfully updated!!!');
       this.getUser();
       this.formValue.disable();
 
-      this.showUpdate = !this.showUpdate;
+      this.isEditMode = !this.isEditMode;
     });
   }
 
@@ -255,6 +256,7 @@ export class UserprofileComponent implements OnInit {
 
   getUser() {
     this.api.getUserinfo().subscribe((res: any) => {
+      
       this.userData = res;
     });
   }

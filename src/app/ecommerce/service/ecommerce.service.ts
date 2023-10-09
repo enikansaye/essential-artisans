@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -11,12 +11,18 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class EcommerceService {
-  public ecommerceUrl: string = 'https://localhost:7130/api';
+export class EcommerceService implements OnInit{
+  // public ecommerceUrl: string = 'https://localhost:7130/api';
+  public ecommerceUrl: string = 'https://essential-artisans-v2.azurewebsites.net/api';
+
   public productList !:any
+  public lengthVal !:any
 
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {
+   }
+  ngOnInit() {
+  }
 
 
   // getAllProducts1(){
@@ -24,7 +30,12 @@ export class EcommerceService {
   // }
  
     getAllProducts(){
-      return  this.http.get(this.ecommerceUrl + "/Product/products");
+      return  this.http.get(this.ecommerceUrl + "/Product/products").pipe(
+        map((res : any) => {
+          
+          return res;
+        })
+      );
       }
   
   // getProductById(product : any ){
@@ -35,6 +46,10 @@ export class EcommerceService {
   getProductById1(id : number ){
     
     return this.http.get(this.ecommerceUrl + '/Product/product/' + id)
+  }
+  getProductByCategory(id : number ){
+    
+    return this.http.get(this.ecommerceUrl + '/Product/products-category/' + id)
   }
 
 
@@ -54,17 +69,25 @@ export class EcommerceService {
     );
   
   }
-
-  addToCart(data : any){
+lengthValue : number = 0;
+  addToCart (data : any): Observable<any>{
     return this.http.put<any>(this.ecommerceUrl + "/Cart/add", data).pipe(
       map((res : any) => {
+        
         return res;
       })
     );
   }
+
+  // data.service.ts
+// ...
+
+
   getCartProduct(){
     return this.http.get<any>(this.ecommerceUrl + "/Cart").pipe(
       map((res : any) => {
+        this.lengthVal = res
+        this.lengthValue = this.lengthVal.length
         return res;
       })
     );

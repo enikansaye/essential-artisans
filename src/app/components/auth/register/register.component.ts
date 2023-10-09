@@ -71,7 +71,9 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/checkemail']);
       },
       error: (err: any) => {
-        if (err.error || err.error.message) {
+        if(typeof err.error === "object"){
+          this.errorMessage = "Complete all fields for the best service.";
+        }else {
           this.errorMessage = err.error;
         }
 

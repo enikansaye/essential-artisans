@@ -38,7 +38,8 @@
                 <div class="d-flex justify-content-center"> <h3 class=" mb-1" style="font-weight: 500;" >&#8358; {{balance.amount}}</h3>
                 </div>
                 <div class="d-flex justify-content-between">
-                  <div>Wallet funded &#8358; {{balance.amount}}</div>
+                  <div *ngIf="balance.transactionType === 1">Wallet funded &#8358; {{balance.amount}}</div>
+                  <div *ngIf="balance.transactionType === 0">Wallet Debited &#8358; {{balance.amount}}</div>
                   <div *ngIf="balance.transactionStatus === 0">Pending </div>
                   <div *ngIf="balance.transactionStatus === 1">Successful </div>
                   <div *ngIf="balance.transactionStatus === 2">Failed </div>

@@ -167,8 +167,10 @@ export class ProductComponent implements OnInit {
       next: (event: any) => {
         this.modalRef?.hide();
         this.toastr.success('Order successfully sent!!!');
+        window.location.reload();
 
-        this.productForm.reset();
+        // this.productForm.reset();
+
       },
       error: (err: any) => {
         this.progress = 0;

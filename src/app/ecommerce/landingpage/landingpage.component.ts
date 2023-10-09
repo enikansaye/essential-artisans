@@ -25,8 +25,10 @@ export class LandingpageComponent implements OnInit {
     public loginApi: LoginService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(){
     this.getproduct();
+    this.getProductCategory();
+    this.selectedCategory = ''; 
     // this.productApi.getAllProducts1()
     // .subscribe((res:any)=>{
     //   console.log(res);
@@ -34,21 +36,28 @@ export class LandingpageComponent implements OnInit {
     // this.productlist = res
     //   })
   }
+  data: any;
 
   addToCart(item: any) {
-    console.log(item);
     if (this.loginApi.loggedIn()) {
       const payload = {
-        productName: item.name,
+        name: item.name,
         quantity: item.quantity,
         productId: item.productId,
       };
       // console.log(payload);
       this.productApi.addToCart(payload).subscribe((res) => {
-        console.log(res);
+        this.data = res;
+
+        // console.log(res.cartItems.length);
+        // this.productApi.lengthVal.getCartProduct();
+
         // console.log("hello here");
         // this.cartService.addToCart(item);
         this.cartService.getItemLength()
+// window.location.reload();
+localStorage.setItem('counter' , res.cartItems.length);
+localStorage.getItem("counter");
 
         this.toastr.success('Product added to cart successfully');
       });
@@ -61,6 +70,8 @@ export class LandingpageComponent implements OnInit {
 
   }
 
+
+
   // getDetails(product : any){
   //   this.productApi.getProductById(product)
   //   console.log(product);
@@ -72,14 +83,27 @@ export class LandingpageComponent implements OnInit {
 
   getProductCategory() {
     return this.productApi.getServiceCategory().subscribe((res) => {
-      console.log(res);
       this.categoryData = res;
     });
   }
+  selectedCategory : any
+  productlistLength :any
+  
+ 
   getproduct() {
     return this.productApi.getAllProducts().subscribe((res) => {
       // console.log(res);
-      this.productlist = res;
+      console.log(this.selectedCategory);
+      if (this.selectedCategory !== ""){
+        this.productApi.getProductByCategory(this.selectedCategory).subscribe((res) => {
+          console.log(res);
+          this.productlist = res
+          this.productlistLength = this.productlist.length
+        })
+      }else{
+        this.productlist = res;
+
+      }
 
       this.productlist.forEach((a: any) => {
         // console.log(a);
@@ -89,7 +113,6 @@ export class LandingpageComponent implements OnInit {
     });
   }
   productById(id: number) {
-    console.log(id);
 
     this.router.navigate(['market place/Product', id]);
   }

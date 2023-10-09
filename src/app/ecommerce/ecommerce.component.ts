@@ -21,13 +21,11 @@ apiLength : any;
 
   ngOnInit(): void {
     this.cartService.getItemLength();
-    console.log(this.cartService.value.length);
+    
     if(this.loginApi.loggedIn()){
       this.orderService.getCartProduct().subscribe(res => {
-        console.log(res);
         this.apiLength = res.length
-  
-        // console.log( this.apiData);
+  this.apiLength = localStorage.getItem("counter");
         
         
       })

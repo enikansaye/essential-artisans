@@ -63,7 +63,7 @@ export class AuthInterceptor implements HttpInterceptor {
               }),
               catchError((err: any) => {
                 // console.log(err);
-                // alert('Your Token Expired, please Login');
+                // window.location.reload();
                 this.loginApi.logout();
                 return empty();
               })

@@ -220,6 +220,7 @@ export class ArtisantransactionsComponent implements OnInit {
   selectedName : any;
   selectedPrice : any;
   allowInput: boolean = false;
+  others : string = "";
 
 
   handlePageEvent(event: PageEvent) {
@@ -297,7 +298,16 @@ export class ArtisantransactionsComponent implements OnInit {
 
   }
   onMainProductSelected(selectedProduct: InvoiceItem, index: number) {
-    console.log(selectedProduct.mainProduct);
+    console.log(this.others);
+    if (selectedProduct.mainProduct.name === 'other') {
+      this.showInput = true;
+    } else {
+      this.showInput = false;
+    }
+    
+    // selectedProduct.mainProduct.name = this.others
+
+    
     
     // When an item name is selected, find the corresponding product object from suggestedProducts
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.mainProduct.name);
@@ -312,6 +322,14 @@ export class ArtisantransactionsComponent implements OnInit {
       // this.calculateTotal(index); // Optionally calculate and update the total based on the price and quantity
     }
   }
+  showInput: boolean = false;
+
+  // onInputChange(item: any, newValue: number) {
+  //   console.log(item);
+  //   console.log(newValue);
+    
+  //   item.mainProduct.name = newValue;
+  // }
   onSuggestedItem1Selected(selectedProduct: InvoiceItem, index: number) {
     console.log(selectedProduct.mainProduct);
     
@@ -592,6 +610,8 @@ export class ArtisantransactionsComponent implements OnInit {
   //   this.artisanurl.generateInvoice(this.InvoiceObject).subscribe(uploadObserver);
   // }
 
+
+  
   sendInvoice() {
     for (let index = 0; index < this.invoice.items.length; index++) {
       this.invoice.invoiceTotal = this.hope;
@@ -599,7 +619,7 @@ export class ArtisantransactionsComponent implements OnInit {
       
     }
     this.invoice.orderId = this.InvoiceObject.orderId
-    
+
     this.InvoiceObject.invoiceTotal = this.grandtotal;
 console.log(this.InvoiceObject.orderId);
 
@@ -612,10 +632,12 @@ console.log(this.InvoiceObject.orderId);
   
         // this.modalRef?.hide();
         this.closeModal()
+window.location.reload();
       },
       error: (err: any) => {
-        if (err.error && err.error.message) {
-        } else {
+        if(typeof err.error === "object"){
+          this.message2 = "Complete all fields for the best service.";
+        }else {
           this.toastr.warning(this.message);
           this.message2 = err.error
           // this.message = 'Could not upload the file!';
@@ -625,16 +647,29 @@ console.log(this.InvoiceObject.orderId);
 
     this.artisanurl.generateInvoice(this.invoice).subscribe(uploadObserver);
   }
+ //testing for totals
+ overallTotal: number = 0;
+ calculateOverallMainProductTotal() {
+  this.overallTotal = this.invoice.items.reduce((total, item) => {
+    const mainProductTotal = (item.mainProduct.price || 0) * (item.mainProduct.quantity || 0);
+    return total + mainProductTotal + (+this.invoice.artisanCharge);
+  }, 0);
+}
+
 
 
   removeRow(i: number) {
-    this.itemsArray.splice(i);
+    this.invoice.items.splice(i);
   }
 
   grandtotal: number = 0;
   getInvoiceTotalAmount() {
      const data= this.itemsArray.reduce((acc, item) => {
+      console.log(item);
+      
       acc += this.updateTotalInItemsArray(item);
+      console.log(acc);
+      
       this.grandtotal = (+this.InvoiceObject.artisanCharge) + (+acc);
       
 // const total = +this.InvoiceObject.artisanCharge + (+acc)
@@ -647,9 +682,13 @@ console.log(this.InvoiceObject.orderId);
   }
 
   updateTotalInItemsArray(item: itemObject) {
+    console.log(item);
+    
     item.total = item.quantity && item.price ? item.quantity * item.price : 0;
     return item.total;
   }
+
+  
 
 
   // get() {

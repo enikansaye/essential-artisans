@@ -34,20 +34,22 @@
     <td data-title="Description">{{item.description}}</td>
     <td data-title="Price">{{item.price}}</td>
     <td data-title="Quantity">{{item.quantity}} </td> 
-    <td data-title="Total">{{item.total}}</td>
+    <td data-title="Total">{{item.quantity * item.price }}</td>
     <td data-title="Action" class="d-flex">
-      <div class="me-3 cursor"> <i class="fa-solid fa-minus " (click)="removeItem(item)"></i></div> <div class="me-2 cursor"> <i class="fa-solid fa-plus" (click)="addToCart(item)"></i></div>
+      <div class="me-3 cursor"> <i class="fa-solid fa-minus " (click)="removeItem(item)"></i></div> 
+      <div class="me-2 cursor"> <i class="fa-solid fa-plus" (click)="addToCart(item)"></i></div>
       <!-- <button class="btn btn-danger" ><div> <span><i class="fa-solid fa-minus me-5" (click)="removeItem(item)"></i> <i class="fa-solid fa-plus" (click)="addToCart(item)"></i></span></div></button> -->
     </td>
                         </tr>
                     </tbody>
                 </table>
    <div class="d-flex justify-content-end me-5 mb-3">
-    <button class="btn btn-danger me-2" (click)="emptyCart()">Empty Carts</button>
+    <!-- <button class="btn btn-danger me-2" (click)="emptyCart()">Empty Carts</button> -->
     <button class="btn btn-info me-2" routerLink="/market place">Shop more</button>
     <button class="btn btn-success me-3" (click)="openModal(template); getCartItems()">Checkout</button>
 
-    <div>Total Amount<br><strong>&#8358; {{grandTotal}} </strong></div>
+    <div *ngIf="!loginApi.loggedIn()">Total Amount<br><strong>&#8358; {{grandTotal}} </strong></div>
+    <div *ngIf="loginApi.loggedIn()">Total Amount<br><strong>&#8358; {{totalAmount}} </strong></div>
    </div>
             </div>
         </div>
@@ -67,7 +69,7 @@
           
             <h2 class="card-title text-info" >Order Form</h2>
 
-            <form (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
+            <form  #checkoutForm="ngForm">
               <div>
                 <label for="customerName">Name:</label>
                 <input  class="form-control form-control-lg mb-1" type="text" id="customerName" name="customerName" [(ngModel)]="customerName" required>
@@ -101,7 +103,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-info" type="submit"  [disabled]="!checkoutForm.form.valid">Place Order</button>
+      <button class="btn btn-info" type="submit"  [disabled]="!checkoutForm.form.valid" (click)="placeOrder()">Place Order</button>
 
     </div>
   </ng-template>

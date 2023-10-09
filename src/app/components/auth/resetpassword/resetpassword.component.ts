@@ -31,9 +31,10 @@ export class ResetpasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.resetForm = this.formBuilder.group({
-     password: ['', Validators.required, ],
-      confirmPassword: ['', Validators.required],
-      token:  this.route.snapshot.queryParams['token']
+     password: ['', [Validators.required ]],
+      confirmPassword: ['', [Validators.required]],
+      token: this.route.snapshot.queryParams['token']
+          
 
     });
 
@@ -43,37 +44,72 @@ export class ResetpasswordComponent implements OnInit {
     this.email = this.route.snapshot.queryParams['email'];
   }
 
+  
 
-  onSubmit(data:any) {
 
-const resetPass = { ... this.resetForm };
+//   onSubmit(data:any) {
 
-    const forgetPasswordObserver = {
+// // const resetPass = { ... this.resetForm };
+// if (this.resetForm.valid && this.resetForm.value.password === this.resetForm.value.confirmPassword) {
+
+
+//     const forgetPasswordObserver = {
       
-      next: (res:any) => {
-this.model.token = this.route.snapshot.queryParams['token'];
+//       next: (res:any) => {
+// this.model.token = this.route.snapshot.queryParams['token'];
 
 
+// console.log(this.model.token);
 
        
 
       
-        this.toastr.success('Password Changed');
-        this.router.navigate(['/signin']);
+//         this.toastr.success('Password Changed');
+//         this.router.navigate(['/signin']);
 
-      },
-      error: (err:any) => {
+//       },
+//       error: (err:any) => {
         
-        this.message = err.error
+//         this.message = err.error
      
-        this.toastr.warning('Unable to change password');
+//         this.toastr.warning('Unable to change password');
+//       }
+//     };
+  
+// this.model.token = this.route.snapshot.queryParams['token'];
+
+//     this.toastr.info('Working on changing password');
+   
+//     this.api.resetPassword(this.resetForm.value).subscribe(forgetPasswordObserver)
+//   }
+
+onSubmit(data: any) {
+  if (this.resetForm.valid && this.resetForm.value.password === this.resetForm.value.confirmPassword) {
+    const forgetPasswordObserver = {
+      next: (res: any) => {
+        this.model.token = this.route.snapshot.queryParams['token'];
+    console.log(this.model.token);
+    
+           this.toastr.success('Password Changed');
+             this.router.navigate(['/signin']);      },
+      error: (err: any) => {
+        this.message = err.error
+        // this.model.token = this.route.snapshot.queryParams['token'];
+
+        console.log(this.resetForm.value.token);
+
+      this.toastr.warning('Unable to change password');    
       }
     };
-this.model.token = this.route.snapshot.queryParams['token'];
+// this.model.token = this.route.snapshot.queryParams['token'];
 
     this.toastr.info('Working on changing password');
-   
-    this.api.resetPassword(this.resetForm.value).subscribe(forgetPasswordObserver)
+    this.api.resetPassword(this.resetForm.value).subscribe(forgetPasswordObserver);
+  } else { 
+    this.message = "Password do not match"
+    this.toastr.warning('Password and Confirm Password do not match or form is invalid.');
   }
+}
+
 
 }

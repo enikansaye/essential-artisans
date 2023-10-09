@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   searchArtisan: any;
   location: any;
   serviceData : any;
+  allServiceData : any;
   serviceSubCategory : any;
   displaySubcategories = false;
 
@@ -82,6 +83,7 @@ export class DashboardComponent implements OnInit {
       console.log(res);
       
       this.serviceData = res.slice(0,3);
+      this.allServiceData = res;
      
     });
   }
