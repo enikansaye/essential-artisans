@@ -53,7 +53,6 @@ constructor(private SwUpdate: SwUpdate, private snackbar : MatSnackBar, public d
   
 
   // private updateApp(): void {
-  //   console.log('updating to new version');
   //   this.SwUpdate.activateUpdate().then(() => document.location.reload()); 
   // }
 

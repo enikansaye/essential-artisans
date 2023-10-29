@@ -13,7 +13,8 @@ const httpOptions = {
 })
 export class EcommerceService implements OnInit{
   // public ecommerceUrl: string = 'https://localhost:7130/api';
-  public ecommerceUrl: string = 'https://essential-artisans-v2.azurewebsites.net/api';
+  // public ecommerceUrl: string = 'https://essential-artisans-v2.azurewebsites.net/api';
+  public ecommerceUrl: string = 'https://essential-artisans.azurewebsites.net/api';
 
   public productList !:any
   public lengthVal !:any
@@ -39,7 +40,6 @@ export class EcommerceService implements OnInit{
       }
   
   // getProductById(product : any ){
-  //   console.log(product);
   //    this.productList = product
   //   return this.http.get(this.productUrl + '/id')
   // }

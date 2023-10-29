@@ -29,9 +29,9 @@ export class ApiService implements OnInit {
 
   // Content-Security-Policy: script-src 'self' https://myexample.com
 
-  // public baseUrl: string = "https://essential-artisans.azurewebsites.net";
+  public baseUrl: string = "https://essential-artisans.azurewebsites.net";
   // public baseUrl: string = 'https://localhost:7130';
-  public baseUrl: string = 'https://essential-artisans-v2.azurewebsites.net/';
+  // public baseUrl: string = 'https://essential-artisans-v2.azurewebsites.net/';
 
   userProfile: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>({
     id: 0,

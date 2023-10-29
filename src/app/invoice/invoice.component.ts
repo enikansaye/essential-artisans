@@ -111,7 +111,6 @@ export class InvoiceComponent implements OnInit {
 
     // Make the POST request to the API to send the invoice data
     this.http.post('URL_TO_API_ENDPOINT', requestData).subscribe(data => {
-      console.log('Invoice created successfully:', data);
       // Handle the API response as needed
     });
   }

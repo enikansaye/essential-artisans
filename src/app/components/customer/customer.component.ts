@@ -49,7 +49,6 @@ export class CustomerComponent implements OnInit {
   getUser() {
     this.api.getUserinfo().subscribe((res: any) => {
       this.userData = res;
-      console.log(this.userData);
       
     });
   }
@@ -68,7 +67,6 @@ export class CustomerComponent implements OnInit {
 
   getAllServiceCategory() {
     this.userApi.getServiceCategory().subscribe((res: any) => {
-      console.log(res);
       
       this.serviceData = res;
      

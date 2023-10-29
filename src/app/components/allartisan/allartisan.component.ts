@@ -87,6 +87,7 @@ export class AllartisanComponent implements OnInit {
   fileInfos!: Observable<any>;
   submitted = false;
   artisanReviews: any;
+  allServiceData: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -97,7 +98,7 @@ export class AllartisanComponent implements OnInit {
     private login: LoginService,
     private modalService: BsModalService,
     private toastr: ToastrService,
-    private data: UserService
+    public data: UserService
   ) {
     this.formValue = this.formBuilder.group({
       id: this.login.loggedinUser.id,
@@ -125,7 +126,7 @@ export class AllartisanComponent implements OnInit {
   ngOnInit(): void {
     this.getState();
     // this.data.sendClickEvent(this.text)
-
+    this.getAllServiceCategory()
     // this.getArtisan(this.text)
     this.update();
 
@@ -139,6 +140,14 @@ export class AllartisanComponent implements OnInit {
     });
 
     this.pastDateTime();
+  }
+  getAllServiceCategory() {
+    this.adminApi.getServiceCategory().subscribe((res: any) => {
+      
+      // this.serviceData = res.slice(0,3);
+      this.allServiceData = res;
+     
+    });
   }
 
   // date and time selection
@@ -215,15 +224,17 @@ export class AllartisanComponent implements OnInit {
         this.formValue.reset();
       },
       error: (err: any) => {
-        console.log(err.error);
+        if(typeof err.error === "object"){
+          this.message = "Complete all fields for the best service.";
+        }else {
+
+          this.message = err.error;
+          this.message = err.error.message;
+
+        }
 
         this.progress = 0;
-        if (err.error || err.error.message) {
-          this.message = err.error.message;
-          this.message = err.error;
-          console.log(this.message);
-        } else {
-        }
+        
       },
     };
 
@@ -249,7 +260,6 @@ export class AllartisanComponent implements OnInit {
     this.adminApi
       .getReviews(data.id, this.reviewsForm.value.artisanId)
       .subscribe((res: any) => {
-        console.log(res);
 
         this.artisanReviews = res;
         // this.totalRecord = res.length;
@@ -305,12 +315,12 @@ export class AllartisanComponent implements OnInit {
   update() {
     this.productObject = localStorage.getItem('artisan');
 
-    if (!this.productObject) {
+    if (this.productObject != "yes") {
     this.artisanData = this.data.getClickEvent().subscribe((data: any) => {
       if (data != '') {
         this.api.getArtisanByService(data).subscribe((res: any) => {
           this.artisanData = res;
-          console.log(res);
+          localStorage.removeItem('artisan')
         });
       }
 
@@ -318,7 +328,6 @@ export class AllartisanComponent implements OnInit {
     });
   }else {
       this.artisanData  = JSON.parse(this.productObject) || [];
-      console.log(this.artisanData);
   }  
   }
 

@@ -22,11 +22,17 @@ apiLength : any;
   ngOnInit(): void {
     this.cartService.getItemLength();
     
+
+    
     if(this.loginApi.loggedIn()){
       this.orderService.getCartProduct().subscribe(res => {
-        this.apiLength = res.length
-  this.apiLength = localStorage.getItem("counter");
-        
+        // this.apiLength = res.length
+  // this.apiLength = localStorage.getItem("counter");
+  this.cartService.getCartItems()
+  .subscribe(value => {
+    
+      this.apiLength = value;
+  });
         
       })
 }else{
@@ -35,7 +41,6 @@ apiLength : any;
     
 //     this.cartService.getProducts().subscribe(res => {
 // this.totalItem = parseInt(localStorage.getItem('counter') as string) || 0;
-// console.log(localStorage.getItem('counter'));
 
 // // return localStorage.setItem('cartItemsNo2', JSON.stringify(this.totalItem));
 

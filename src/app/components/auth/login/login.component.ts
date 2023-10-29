@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { LoginService } from 'src/app/service/login.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import * as CryptoJS from 'crypto-js';
+// import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -93,12 +93,12 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('accesstoken', this.responsedata.data.accessToken);
 
-        console.log(
+       
           localStorage.setItem(
             'token',
             JSON.stringify(this.responsedata.data.accessToken)
           )
-        );
+        
 
         this.roleDisplay();
 
@@ -180,13 +180,13 @@ export class LoginComponent implements OnInit {
       .ResendMail(this.resendForm.value.email, this.resendForm.value.email)
       .subscribe(inspectionObserver);
   }
-  private encrypt(txt: string): string {
-    return CryptoJS.AES.encrypt(txt, this.key).toString();
-  }
+  // private encrypt(txt: string): string {
+  //   return CryptoJS.AES.encrypt(txt, this.key).toString();
+  // }
 
-  private decrypt(txtToDecrypt: string) {
-    return CryptoJS.AES.decrypt(txtToDecrypt, this.key).toString(
-      CryptoJS.enc.Utf8
-    );
-  }
+  // private decrypt(txtToDecrypt: string) {
+  //   return CryptoJS.AES.decrypt(txtToDecrypt, this.key).toString(
+  //     CryptoJS.enc.Utf8
+  //   );
+  // }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { log } from 'console';
+// import { log } from 'console';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/service/api.service';
@@ -63,10 +63,9 @@ export class ProductComponent implements OnInit {
 
   // selectFiles(event: any) {
   //   this.progressInfos = [];
-  //   console.log(event);
+  
 
   //   this.selectedFiles = event.target.File;
-  //   console.log(this.selectedFiles);
 
   // }
 
@@ -76,7 +75,6 @@ export class ProductComponent implements OnInit {
 
   // onSubmitCheck1(data: any) {
   //   this.submitted = true;
-  //   console.log(data);
 
   //   if (data.length === 0) {
   //     return;
@@ -117,9 +115,7 @@ export class ProductComponent implements OnInit {
   // }
 
   onSubmitCheck(data: any) {
-    console.log(data);
-    console.log(data.SubCategoryId);
-    console.log(data.CategoryId);
+    
     
     this.submitted = true;
     const formdata = new FormData();
@@ -144,11 +140,9 @@ export class ProductComponent implements OnInit {
    
     if (this.selectedFiles) {
       const fileNames: string[] = [];
-      console.log("this is filesnames: ", fileNames);
 
       const files = Object.values(this.selectedFiles);
-      console.log("this is files: ", files);
-      console.log("this is files.name: ", files);
+      
       
 
       for (const file of files) {
@@ -157,7 +151,7 @@ export class ProductComponent implements OnInit {
       }
 
       for (const File of files) {
-        console.log(File);
+        
         
         formdata.append('Files', File);
       }
@@ -188,22 +182,20 @@ export class ProductComponent implements OnInit {
 
   getCategory() {
     return this.adminApi.getServiceCategory().subscribe((res) => {
-      console.log(res);
-      console.log(res.CategoryId);
+      
      this.resValue = res.CategoryId 
-     console.log(this.resValue);
+     
      
       this.categoryData = res;
     });
   }
   // subCategory: any
   // getNotification(data: any) {
-  //   console.log(data);
+  
   //   this.productForm.controls['CategoryId'].setValue(data.categoryId);
 
   //   this.subCategory = data.subCategories;
-  //   console.log(this.subCategory.name);
-  //   console.log(this.subCategory.SubCategoryId);
+ 
   //   this.productForm.controls['SubCategoryId'].setValue(
   //     this.subCategory.SubCategoryId
   //   );
@@ -212,9 +204,7 @@ export class ProductComponent implements OnInit {
  
   serviceSubCategory: any
   getSubcategory(data: any) {
-    console.log(data.categoryId);
     
-    console.log(data.subCategories);
     this.serviceSubCategory = (data.subCategories)
   }
 

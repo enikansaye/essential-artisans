@@ -161,12 +161,10 @@ export class AlltransactionsComponent implements OnInit {
 
     const reAssignObserver = {
       next: (event: any) => {
-        console.log(event);
         this.assignArtisan = event;
         this.hope2 = data;
       },
       error: (err: any) => {
-        console.log(err.error);
         this.errorMessage = err.error;
       },
     };
@@ -183,23 +181,18 @@ export class AlltransactionsComponent implements OnInit {
   }
 
   reassignArtisan(data: any) {
-    console.log(data);
 
     data = this.hope2;
-    console.log(this.hope3);
 
     this.reassignForm.value.orderId = this.hope.id;
     this.reassignForm.value.artisanId = this.hope3;
-    console.log(this.reassignForm.value);
 
     const reAssignObserver = {
       next: (event: any) => {
-        console.log(event);
 
         this.toastr.success('Order successfully Re-assign to Artisan!!!');
       },
       error: (err: any) => {
-        console.log(err);
 
         if (err.error && err.error.message) {
           this.message = err.error.message;

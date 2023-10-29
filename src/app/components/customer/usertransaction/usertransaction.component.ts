@@ -84,7 +84,6 @@ export class UsertransactionComponent implements OnInit {
   getOrder() {
     this.api.getUserOrder().subscribe((data: any) => {
       this.orderData = data;
-      console.log(data);
       
 
       this.filteredOrderData = [...this.orderData];

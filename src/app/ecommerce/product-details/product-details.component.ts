@@ -25,8 +25,7 @@ product: any;
     // this.price = this.productApi.productList.price;
     // this.images = this.productApi.productList.images;
 
-    // console.log(this.productApi.productList);
-    // console.log(this.images);
+    
     
     this.getproduct()
   }
@@ -34,17 +33,14 @@ product: any;
   getproduct(){
     this.route.params.subscribe(params => {
       const id = params['id'];
-    console.log(id);
   this.productApi.getProductById1(id).subscribe(res => {
-      console.log(res);
       this.product = res
       this.name = this.product.name;
     this.description = this.product.description;
     this.price = this.product.price;
     this.images = this.product.productImages;
 
-    // console.log(this.product.productList);
-    console.log(this.images);
+    
       
     })
     

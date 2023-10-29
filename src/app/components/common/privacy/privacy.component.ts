@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as pdfMake from 'pdfmake/build/pdfmake';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 // const htmlToPdfmake = require('html-to-pdfmake');
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+// (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 class Product{    
   name!: string;    

@@ -31,7 +31,6 @@ export class FinanceComponent implements OnInit {
   }
 getPendingPaymment(){
   return this.api.getPendingPayment().subscribe(res => {
-    console.log(res);
     this.pendingData = res;
     
   })
@@ -39,14 +38,12 @@ getPendingPaymment(){
 }
 getQueuedPayment(){
 return this.api.getQueuedPayment().subscribe(res => {
-  console.log(res);
   this.queuedData = res;
   
 })
 }
 getFailedPayment(){
   return this.api.getFailedPayment().subscribe(res => {
-    console.log(res);
     this.failedData = res
     
   })
@@ -54,7 +51,6 @@ getFailedPayment(){
 }
 getCompletedPayment(){
   return this.api.getCompletedPayment().subscribe(res => {
-    console.log(res);
     this.completedData = res;
     
   })
@@ -66,11 +62,9 @@ makePayment(data: any){
     orderId:  data.serviceOrderId
 
   }
-  console.log(payload);
   const test = this.paymentForm.value.orderId
   
   return this.api.makePayment(data.serviceOrderId, payload).subscribe(res => {
-    console.log(res);
     
     
   })

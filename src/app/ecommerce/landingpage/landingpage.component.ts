@@ -15,6 +15,8 @@ export class LandingpageComponent implements OnInit {
   categoryData: any;
   item: any;
   apiData: any;
+  cartCount = 0;
+
 
   constructor(
     private productApi: EcommerceService,
@@ -31,7 +33,7 @@ export class LandingpageComponent implements OnInit {
     this.selectedCategory = ''; 
     // this.productApi.getAllProducts1()
     // .subscribe((res:any)=>{
-    //   console.log(res);
+    
 
     // this.productlist = res
     //   })
@@ -45,19 +47,26 @@ export class LandingpageComponent implements OnInit {
         quantity: item.quantity,
         productId: item.productId,
       };
-      // console.log(payload);
+      
       this.productApi.addToCart(payload).subscribe((res) => {
         this.data = res;
+        
+        
+        this.cartCount = this.data.cartItems.length;
+        
+        
+        this.cartService.updateCartItems(this.cartCount);
 
-        // console.log(res.cartItems.length);
+
+        
         // this.productApi.lengthVal.getCartProduct();
 
-        // console.log("hello here");
+        
         // this.cartService.addToCart(item);
-        this.cartService.getItemLength()
+        // this.cartService.getItemLength()
 // window.location.reload();
-localStorage.setItem('counter' , res.cartItems.length);
-localStorage.getItem("counter");
+// localStorage.setItem('counter' , res.cartItems.length);
+// localStorage.getItem("counter");
 
         this.toastr.success('Product added to cart successfully');
       });
@@ -74,9 +83,7 @@ localStorage.getItem("counter");
 
   // getDetails(product : any){
   //   this.productApi.getProductById(product)
-  //   console.log(product);
-
-  //   console.log(product.id);
+  
   //   this.router.navigate(["market place/details"])
 
   // }
@@ -92,11 +99,10 @@ localStorage.getItem("counter");
  
   getproduct() {
     return this.productApi.getAllProducts().subscribe((res) => {
-      // console.log(res);
-      console.log(this.selectedCategory);
+      
       if (this.selectedCategory !== ""){
         this.productApi.getProductByCategory(this.selectedCategory).subscribe((res) => {
-          console.log(res);
+         
           this.productlist = res
           this.productlistLength = this.productlist.length
         })
@@ -106,7 +112,7 @@ localStorage.getItem("counter");
       }
 
       this.productlist.forEach((a: any) => {
-        // console.log(a);
+        
 
         Object.assign(a, { quantity: 1, total: a.price });
       });

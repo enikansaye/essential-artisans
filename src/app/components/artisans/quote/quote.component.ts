@@ -75,7 +75,6 @@ export class QuoteComponent implements OnInit {
   }
 //   getAllQuote(){
 // this.artisanApi.artisanGetAllInvoices().subscribe(res => {
-//   console.log(res);
 //   this.AllQuoteData = res
   
   
@@ -83,19 +82,16 @@ export class QuoteComponent implements OnInit {
 // }
 getAllQuote() {
   this.artisanApi.artisanGetAllInvoices().subscribe((data: any) => {
-    console.log(data);
     
     this.AllQuoteData = data;
 
     this.filteredQuoteData = [...this.AllQuoteData];
-    console.log(this.filteredQuoteData );
     
     return this.filteredQuoteData.reverse();
   });
 }
 getQoute() {
   this.api.userGetInvoice().subscribe((data: any) => {
-    console.log(data);
     
     this.getInvoice = data;
 
@@ -129,7 +125,6 @@ onClickInvoce(data: any) {
       this.artisanCharge = this.getInvoiceId.artisanCharge;
       this.serviceItemsDescription = this.getInvoiceId.description;
       this.serviceItemsDetails = this.getInvoiceId.serviceItems;
-console.log(this.serviceItemsDetails);
 
       this.invoiceUserDetails = this.getInvoiceId.customerInfo;
 

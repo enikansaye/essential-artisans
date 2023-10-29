@@ -25,7 +25,6 @@ export class OrderedproductComponent implements OnInit {
   }
 getOrder(){
   this.Api.getAllOrderedProduct().subscribe(res =>{
-    console.log(res);
     this.orderData = res;
     this.customerAddress = this.orderData.customerAddress;
 this.customerName = this.orderData.customerName;
@@ -39,7 +38,6 @@ for(const order of this.orderData ){
 }
 
 onClickOrder(data :any){
-console.log(data);
 // this.customerAddress = data.customerAddress;
 // this.customerName = data.customerName;
 // this.customerPhoneNumber = data.customerPhoneNumber;

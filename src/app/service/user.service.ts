@@ -14,14 +14,18 @@ export class UserService {
   checkArtisan: any;
   sendClickEvent(text: any) {
     this.api.getArtisanByService(text).subscribe((res: any) => {
-      console.log('this is the response', res);
 
       this.checkData = res;
-      console.log(this.checkData);
-      console.log(text);
+      
 
       this.subject.next(text);
-      localStorage.setItem("artisan", JSON.stringify(this.checkData))
+      // localStorage.setItem("artisan", JSON.stringify(this.checkData))
+      if(this.checkData === null){
+
+      }else{
+        localStorage.setItem("artisan", "yes")
+
+      }
     });
   }
 

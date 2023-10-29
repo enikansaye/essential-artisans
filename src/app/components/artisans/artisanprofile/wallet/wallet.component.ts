@@ -44,12 +44,10 @@ this.getTransactions();
     this.submitted = true
     const formObserver = {
       next : (res : any) => {
-console.log(res);
         // this.router.navigateByUrl(res.data.link)
         window.location.href = res.data.link;
 },
       error : (err : any) => {
-console.log(err);
 
       }
     }
@@ -58,7 +56,6 @@ console.log(err);
   }
   getBalance(){
     this.api.getWalletBalannce().subscribe(res => {
-      console.log(res);
       this.balance = res
       this.walletBalance = this.balance.walletBalance
       
@@ -66,11 +63,9 @@ console.log(err);
   }
   getTransactions(){
     this.api.getWalletTransactions().subscribe(res => {
-      console.log(res);
       this.wallet = res;
       this.walletTransactions = this.wallet.reverse();
       for(let data of this.walletTransactions){
-        console.log(data.dateOfTransaction);
         const date = new Date(data.dateOfTransaction);
               this.date = date.toLocaleString();
               // const time1 = new Date(data.offTime);

@@ -49,14 +49,11 @@ export class AuthGuard implements CanActivate {
 
   //     const response = await lastValueFrom(this.http.post(this.api.baseUrl + "/api/Auth/refresh-token", tokenModel));
   //     const newToken = (<any>response).accesstoken;
-  //     // console.log(newToken);
       
   //     const newRefreshToken = (<any>response).refreshtoken;
-  //     // console.log(newRefreshToken);
       
   //     localStorage.setItem("accesstoken", newToken);
   //     localStorage.setItem("refreshtoken", newRefreshToken);
-  //     // console.log("Token renewed successfully");
       
   //     // this.notification.showSuccess("Token renewed successfully", "Success")
   //     isRefreshSuccess = true;

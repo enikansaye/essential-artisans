@@ -57,7 +57,7 @@ export class CartsComponent implements OnInit {
 
       if (this.loginApi.loggedIn() ) {
         // this.orderService.getCartProduct().subscribe((res) => {
-        //   console.log(res);
+        
         //   this.product = res;
         // });
 
@@ -66,7 +66,7 @@ export class CartsComponent implements OnInit {
         this.product = this.product2;
         this.grandTotal = localStorage.getItem('grandTotal');
       }
-      // console.log(this.product);
+      
 
       // get item from database
       // if(this.loginApi.loggedIn()){
@@ -83,25 +83,19 @@ export class CartsComponent implements OnInit {
        
 
         for (const data of this.product2) {
-          console.log(data.name);
           const payload = {
             name: data.name,
             quantity: data.quantity,
             productId: data.productId,
           };
-          console.log(payload);
         
           const valid = this.apiData;
-          console.log(valid);
           if((this.product3).includes(this.product2)){
-            console.log("word of wisdom");
            
 
           }else{
             this.orderService.addToCart(payload).subscribe((res) => {
-              console.log(res);
               this.getProduct()
-              console.log('hello here');
             });
           }
            
@@ -111,17 +105,15 @@ export class CartsComponent implements OnInit {
     // this.getProduct();
   }
   addToCart(item: any) {
-    console.log(item);
+    
     if (this.loginApi.loggedIn()) {
       const payload = {
         quantity: 1,
         productId: item.productId,
         name: item.name,
       };
-      console.log(payload);
       this.orderService.addToCart(payload).subscribe((res) => {
-        console.log(res);
-        // console.log("hello here");
+       
         // this.cartService.addToCart(item);
         this.getProduct();
         this.toastr.success('Product added to cart successfully');
@@ -135,7 +127,7 @@ export class CartsComponent implements OnInit {
   }
 
   removeItem(item: any) {
-    console.log(item);
+    
     
     if (this.loginApi.loggedIn()) {
       const payload = {
@@ -177,7 +169,7 @@ export class CartsComponent implements OnInit {
   }
 
   createOrder(data: any) {
-    // console.log(data);
+    
   }
 
   getCartItems(): {
@@ -187,7 +179,7 @@ export class CartsComponent implements OnInit {
   }[] {
     const cartItems = this.product;
 
-    // console.log(cartItems)
+    
 
     return cartItems.map((item: any) => ({
       quantity: item.quantity,
@@ -197,7 +189,7 @@ export class CartsComponent implements OnInit {
   }
   placeOrder() {
     const cartItems = this.getCartItems();
-    console.log(cartItems);
+    
     
 
     const order = {
@@ -207,7 +199,7 @@ export class CartsComponent implements OnInit {
       customerPhoneNumber: this.customerPhoneNumber,
       customerEmail: this.customerEmail,
     };
-    // console.log(order);
+    
     const orderObserver = {
       next: (res: any) => {
         this.checkout = res;
@@ -225,8 +217,10 @@ export class CartsComponent implements OnInit {
   }
   getProduct() {
     this.orderService.getCartProduct().subscribe((res) => {
-      console.log(res);
+      
       this.product = res;
+      let total = this.product.reduce((total: number, item: { price: number; quantity: number; }) => total + (item.price * item.quantity), 0);
+this.totalAmount = total;
     });
   }
 }

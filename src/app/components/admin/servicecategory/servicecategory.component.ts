@@ -86,11 +86,9 @@ export class ServicecategoryComponent implements OnInit {
   //   }
   // }
   postServiceCategory(data: any) {
-    console.log(data);
   
   const formData = new FormData();
 
-  // console.log(otherFormData.File);
   formData.append('Name', data.Name);
     formData.append('ServiceCategoryId', data.ServiceCategoryId);
   
@@ -145,11 +143,9 @@ handleFileInput2(event : any) {
 }
 
 submitForm(data: any) {
-  console.log(data);
   
   const formData = new FormData();
 
-  // console.log(otherFormData.File);
   formData.append('Name', data.Name);
     formData.append('ServiceCategoryId', data.ServiceCategoryId);
   
@@ -188,14 +184,13 @@ submitForm(data: any) {
     formData.append('image', this.logo, this.logo.name);
 
     this.http.post("uploadUrl", formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
+      (res) => {},
+      (err) => {}
     );
   }
   getAllServiceCategory() {
     this.adminApi.getServiceCategory().subscribe((res: any) => {
       this.serviceData = res;
-      console.log(res);
       
     });
   }
@@ -238,7 +233,6 @@ submitForm(data: any) {
 
   getCategory() {
     return this.adminApi.getServiceCategory().subscribe((res) => {
-      console.log(res);
       this.categoryData = res;
     });
   }

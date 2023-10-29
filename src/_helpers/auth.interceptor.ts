@@ -50,7 +50,6 @@ export class AuthInterceptor implements HttpInterceptor {
     // call next() and handle the response
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        // console.log(error.status);
 
 
         if (error.status === 401) {
@@ -62,7 +61,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 return next.handle(request);
               }),
               catchError((err: any) => {
-                // console.log(err);
                 // window.location.reload();
                 this.loginApi.logout();
                 return empty();
@@ -89,9 +87,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // we want to call a method in the login service to send a request to refresh the access token
       return this.loginApi.getNewAccessToken().pipe(
         tap((res:any) => {
-          // console.log(res);
           
-          // console.log("Access Token Refreshed!");
           this.refreshingAccessToken = false;
           this.accessTokenRefreshed.next(res);
         })
@@ -118,7 +114,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
 AddTokenheader(request: HttpRequest<any>) {
   const token = this.loginApi.getToken();
-  // console.log(token);
   
 
   if(token){

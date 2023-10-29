@@ -80,7 +80,6 @@ export class DashboardComponent implements OnInit {
 
   getAllServiceCategory() {
     this.adminApi.getServiceCategory().subscribe((res: any) => {
-      console.log(res);
       
       this.serviceData = res.slice(0,3);
       this.allServiceData = res;
@@ -99,13 +98,11 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleSection(card:any): void {
-    console.log(card);
     
     card.name = !card.name;
   }
 
   toggleSubcategories(data :any): void {
-    console.log(data.subCategories);
     this.serviceSubCategory = (data.subCategories)
     
   }
@@ -114,7 +111,6 @@ export class DashboardComponent implements OnInit {
 
   }
   checkthis(data : any){
-    console.log(data);
     
     this.data.sendClickEvent(data.name)
     localStorage.setItem("name", data.name)

@@ -26,9 +26,7 @@ export class AdminartisanbyidComponent implements OnInit {
   getAllOthers() {
     // this.adminApi.getOthers().subscribe((res: any) => {
     //   this.othersData = res;
-    //   console.log(this.othersData)
     //   this.totalRecord=res.length;
-    //   console.log(this.totalRecord);
     // });
   }
 

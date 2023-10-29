@@ -19,8 +19,17 @@
           placeholder="&#61442;  Start searching for Artisans within your location"
         />
          </div>
-<div>          <button class="btn btn-info my-2">Select Category</button>
-</div>        </div>
+      <div>
+        <div class="btn btn-info dropdown-toggle d-flex flex-start"  data-bs-toggle="dropdown" aria-expanded="false">
+          Available Services
+        </div>
+        <ul class="dropdown-menu " >
+          <ul class="list-inline mb-0 h-100" *ngFor="let category of allServiceData" >
+            <li class="list-inline-item me-0 large cursor mb-2" routerLink="/available artisan" (click)="this.data.sendClickEvent(category.name)">{{category.name}}</li>
+          </ul>
+        </ul>
+      </div>
+</div>
 
         <div class="row mt-4 cursor">
           <div

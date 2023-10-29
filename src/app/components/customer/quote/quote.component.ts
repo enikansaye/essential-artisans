@@ -93,7 +93,6 @@ export class QuoteComponent implements OnInit {
 
   getQoute() {
     this.api.userGetInvoice().subscribe((data: any) => {
-      console.log(data);
       
       this.getInvoice = data;
 
@@ -129,7 +128,6 @@ export class QuoteComponent implements OnInit {
         this.artisanCharge = this.getInvoiceId.artisanCharge;
         this.serviceItemsDescription = this.getInvoiceId.description;
         this.serviceItemsDetails = this.getInvoiceId.serviceItems;
-console.log(this.serviceItemsDetails);
 
         this.invoiceUserDetails = this.getInvoiceId.customerInfo;
 
@@ -160,15 +158,12 @@ console.log(this.serviceItemsDetails);
     return this.getInvoiceByIdForm.controls;
   }
   onSelectToggle(data : any){
-    console.log(this.serviceItemsDetails);
     for (let index = 0; index < this.serviceItemsDetails.length; index++) {
       this.serviceItemsDetails[index].mainProduct.serviceItemId = data
       this.mainProductID = this.serviceItemsDetails[index].mainProduct.serviceItemId
-      console.log(this.mainProductID);
       // this.hello.push(this.serviceItemsDetails[index]);
     }
     
-    // console.log(this.serviceItemsDetails.mainProduct.serviceItemId);
     
    
     
@@ -196,11 +191,9 @@ console.log(this.serviceItemsDetails);
     
     // data = this.serviceItemsDetails;
     this.serviceItemsDetailsiId = this.serviceItemsDetails.serviceItemId;
-    console.log(this.serviceItemsDetailsiId);
     
 
-    let index = this.serviceItemsDetails.findIndex((x: any) => {console.log(x);
-    });
+    let index = this.serviceItemsDetails.findIndex((x: any) => {});
 
     // let itemsDto = [];
 
@@ -219,8 +212,7 @@ console.log(this.serviceItemsDetails);
       editInvoiceItemIds: this.hello,
       
     };
-console.log(invoiceEdit);
-console.log(this.hello);
+
 
     // this.InvoiceObject.invoiceId = this.getInvoiceId.invoiceId;
     // this.InvoiceObject.artisanCharge = this.getInvoiceId.artisanCharge;
@@ -237,8 +229,7 @@ console.log(this.hello);
 
       },
       error: (err: any) => {
-        console.log(err);
-        
+           
         
         if (err.error && err.error.message) {
           this.errorMessage = err.error.message;
@@ -265,14 +256,12 @@ console.log(this.hello);
 
 const debitObserver = {
   next : (res : any) => {
-    console.log(res);
     this.toastr.success(res.message);
     this.modalRef?.hide()
     
 
   },
   error : (err : any) => {
-console.log(err);
 this.toastr.warning(err.error)
 
 if(err.error === "Insufficient wallet balance"){
@@ -327,12 +316,10 @@ if(err.error === "Insufficient wallet balance"){
     this.submitted = true
     const formObserver = {
       next : (res : any) => {
-console.log(res);
         // this.router.navigateByUrl(res.data.link)
         window.location.href = res.data.link;
 },
       error : (err : any) => {
-console.log(err);
 
       }
     }

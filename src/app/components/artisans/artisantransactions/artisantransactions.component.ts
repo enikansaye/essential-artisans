@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as pdfMake from 'pdfmake/build/pdfmake';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ApiService } from 'src/app/service/api.service';
 import { AdminService } from 'src/app/shared/admin.service';
 import { userProfileModel } from '../../customer/userprofile/userprofile.model';
@@ -26,8 +26,8 @@ import { ArtisansService } from 'src/app/service/artisans.service';
 import { ToastrService } from 'ngx-toastr';
 import { iif } from 'rxjs';
 
-const htmlToPdfmake = require('html-to-pdfmake');
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+// const htmlToPdfmake = require('html-to-pdfmake');
+// (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 class itemObject {
   name!: string;
@@ -245,13 +245,10 @@ export class ArtisantransactionsComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef
   ) {}
   assignValueToInput(data : any) {
-    console.log(data);
     this.selectedOption = data.name
     this.selectedPrice = data.price
     
-    console.log(this.selectedOption);
     // for(let data of this.selectedOption){
-    //   console.log(data);
       
     // }
     
@@ -262,7 +259,6 @@ export class ArtisantransactionsComponent implements OnInit {
     }
   }
   letsee(data : any){
-    console.log(data);
     
   }
 
@@ -288,17 +284,14 @@ export class ArtisantransactionsComponent implements OnInit {
   }
   artisanGetAllProduct(){
     this.artisanurl.getAllProduct().subscribe(res =>{
-      console.log(res);
       
       this.items = res
       this.productData = res
-      console.log(res);
       
     })
 
   }
   onMainProductSelected(selectedProduct: InvoiceItem, index: number) {
-    console.log(this.others);
     if (selectedProduct.mainProduct.name === 'other') {
       this.showInput = true;
     } else {
@@ -313,7 +306,6 @@ export class ArtisantransactionsComponent implements OnInit {
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.mainProduct.name);
 
     if (product) {
-      console.log(product);
       
       // If the product is found, update the item properties based on the selected product
       this.invoice.items[index].mainProduct.price = product.price;
@@ -325,19 +317,15 @@ export class ArtisantransactionsComponent implements OnInit {
   showInput: boolean = false;
 
   // onInputChange(item: any, newValue: number) {
-  //   console.log(item);
-  //   console.log(newValue);
     
   //   item.mainProduct.name = newValue;
   // }
   onSuggestedItem1Selected(selectedProduct: InvoiceItem, index: number) {
-    console.log(selectedProduct.mainProduct);
     
     // When an item name is selected, find the corresponding product object from suggestedProducts
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.suggestedProductOne.name);
 
     if (product) {
-      console.log(product);
       
       // If the product is found, update the item properties based on the selected product
       this.invoice.items[index].suggestedProductOne.price = product.price;
@@ -347,13 +335,11 @@ export class ArtisantransactionsComponent implements OnInit {
     }
   }
   onSuggestedItem2Selected(selectedProduct: InvoiceItem, index: number) {
-    console.log(selectedProduct.suggestedProductTwo);
     
     // When an item name is selected, find the corresponding product object from suggestedProducts
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.suggestedProductTwo.name);
 
     if (product) {
-      console.log(product);
       
       // If the product is found, update the item properties based on the selected product
       this.invoice.items[index].suggestedProductTwo.price = product.price;
@@ -405,8 +391,7 @@ export class ArtisantransactionsComponent implements OnInit {
   openDialog() {}
 
   onEdit(row: any) {
-    console.log(row);
-    console.log(row.id);
+    
     this.modalRef?.hide();
     
     this.InvoiceObject.orderId = row.id;
@@ -414,7 +399,6 @@ export class ArtisantransactionsComponent implements OnInit {
 
   getAllOrder() {
     this.artisanurl.getArtisanOrder().subscribe((res: any) => {
-      console.log(res);
       
       this.AllOrderData = res;
       this.totalLength = res.length;
@@ -442,7 +426,6 @@ export class ArtisantransactionsComponent implements OnInit {
       class: 'modal-lg',
     });
     this.InvoiceObject.orderId
-    console.log(this.InvoiceObject.orderId);
 
     
   }
@@ -453,7 +436,6 @@ export class ArtisantransactionsComponent implements OnInit {
   openModal2(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     this.closeModal(1)
-    console.log(this.InvoiceObject.orderId);
     
 
   }
@@ -560,7 +542,6 @@ export class ArtisantransactionsComponent implements OnInit {
   }
   onClickViewOrder(data: any) {
     (this.signupForm.value.invoiceId = data.id),
-    console.log(data);
     
       this.artisanurl
         .getOrderById(this.signupForm.value, data.id)
@@ -573,7 +554,6 @@ export class ArtisantransactionsComponent implements OnInit {
 
   // submitQuote() {
   //   this.InvoiceObject.invoiceTotal = this.grandtotal;
-  //   console.log(this.InvoiceObject.orderId);
     
 
   //   let itemsDto = [];
@@ -615,13 +595,11 @@ export class ArtisantransactionsComponent implements OnInit {
   sendInvoice() {
     for (let index = 0; index < this.invoice.items.length; index++) {
       this.invoice.invoiceTotal = this.hope;
-      console.log();
       
     }
     this.invoice.orderId = this.InvoiceObject.orderId
 
     this.InvoiceObject.invoiceTotal = this.grandtotal;
-console.log(this.InvoiceObject.orderId);
 
     // Assuming you have an API endpoint to send the invoice data
     // const apiUrl = 'https://example.com/api/invoices';
@@ -665,10 +643,8 @@ window.location.reload();
   grandtotal: number = 0;
   getInvoiceTotalAmount() {
      const data= this.itemsArray.reduce((acc, item) => {
-      console.log(item);
       
       acc += this.updateTotalInItemsArray(item);
-      console.log(acc);
       
       this.grandtotal = (+this.InvoiceObject.artisanCharge) + (+acc);
       
@@ -682,7 +658,6 @@ window.location.reload();
   }
 
   updateTotalInItemsArray(item: itemObject) {
-    console.log(item);
     
     item.total = item.quantity && item.price ? item.quantity * item.price : 0;
     return item.total;
@@ -699,16 +674,13 @@ window.location.reload();
  
   getServiceCategory(){
     this.artisanurl.getAllServiceCategory().subscribe(res =>{
-      console.log(res);
       
       this.categoryData =res
     })
   }
   getSubcategoryid(data: any){
-    console.log(data);
     
     this.artisanurl.getAllCategory(data).subscribe(res =>{
-      console.log(res);
       
     })
   }
@@ -718,7 +690,6 @@ window.location.reload();
     // let userProfile = this.signupForm.controls['state'].value;
     if (userProfile) {
       this.artisanurl.getAllCategory(userProfile).subscribe((data: any) => {
-        console.log(data);
         
         this.categoryValue = data;
       });
@@ -731,7 +702,6 @@ window.location.reload();
 
   }
   checkforchange(data :any){
-    console.log(data);
     
   }
 

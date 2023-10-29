@@ -48,15 +48,12 @@ export class LoginService {
   }
 
   SaveTokens(tokendata: any) {
-    console.log(tokendata);
 
     localStorage.removeItem('accesstoken');
     localStorage.setItem('accesstoken', tokendata.data.accessToken);
-    // console.log(localStorage.setItem('refrestoken', tokendata.accessToken));
 
     // localStorage.removeItem('refreshtoken');
     localStorage.setItem('refreshtoken', tokendata.data.refreshToken);
-    // console.log(localStorage.setItem('refreshtoken', tokendata.refreshToken));
   }
   // checking if user is logged in
   loggedIn() {
@@ -73,7 +70,7 @@ export class LoginService {
     localStorage.removeItem('token');
     localStorage.removeItem('name');
     localStorage.removeItem('artisan');
-    this.router.navigateByUrl('/signin');
+    // this.router.navigateByUrl('/signin');
     // window.location.reload();
   // this.router.navigateByUrl('/signin');
 
@@ -87,8 +84,7 @@ export class LoginService {
 
       let _token = token.split('.')[1];
       this.tokenresp = JSON.parse(atob(_token));
-      // console.log(this.tokenresp.role);
-      // console.log(this.tokenresp);
+      
       localStorage.setItem('expiration', this.tokenresp.exp);
       return this.tokenresp.role;
 

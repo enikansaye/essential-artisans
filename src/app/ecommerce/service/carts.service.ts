@@ -6,14 +6,31 @@ import { EcommerceService } from './ecommerce.service';
   providedIn: 'root',
 })
 export class CartsService {
+  private totalItems: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
   public cartItemList: any = [];
   public productList = new BehaviorSubject<any>([]);
   value : any
   quantity : any;
   constructor(    private orderService: EcommerceService,
     ) {
-    
+      const storedItems = localStorage.getItem('cartItems');
+        const initialItems = storedItems ? Number(storedItems) : 0;
+        this.totalItems = new BehaviorSubject<number>(initialItems);
+    }
+
+    getCartItems() {
+      
+      return this.totalItems.asObservable();
   }
+
+  updateCartItems(items: number) {
+    localStorage.setItem('cartItems', items.toString());
+        this.totalItems.next(items);
+    
+      this.totalItems.next(items);
+  }
+    
   getProducts() {
     
     return this.productList.asObservable();
@@ -32,20 +49,17 @@ export class CartsService {
   }
 
   // addToCart(product: any) {
-  //   // console.log("this is product : ", product);
     
   //   const items:any = localStorage.getItem('cartItems')
   //   this.quantity = parseInt(items);
 
   //   if(items){
   //     let storedCardItems = JSON.parse(items);
-  //     // console.log("asdfghj", storedCardItems);
       
   //     this.cartItemList = [ ...storedCardItems];
   //     this.cartItemList.push(product)
   //     this.productList.next(this.cartItemList);
   //     this.getTotalPrice();
-  //     // console.log(this.cartItemList);
   //     localStorage.setItem('cartItems', JSON.stringify(this.cartItemList));
   //     this.getItemLength();
       
@@ -57,9 +71,7 @@ export class CartsService {
   //     this.cartItemList.push(product)
   //     this.productList.next(this.cartItemList);
   //     this.getTotalPrice();
-  //     // console.log(this.cartItemList);
   //     localStorage.setItem('cartItems', JSON.stringify(this.cartItemList));
-  //     // console.log(localStorage.getItem('cartItems'))
   //     this.getItemLength();
 
   
@@ -94,14 +106,11 @@ export class CartsService {
   getTotalPrice() {
     let grandTotal = 0;
     this.cartItemList.map((a: any) => {
-      // console.log(a);
 
       grandTotal += a.price;
 
-      // console.log(grandTotal);
       localStorage.setItem('grandTotal', JSON.stringify(grandTotal));
 
-      // console.log(a.price * a.quantity);
     });
     return grandTotal;
   }
@@ -109,7 +118,6 @@ export class CartsService {
   getItemLength(){
     const item:any = localStorage.getItem("cartItems")
     this.value = JSON.parse(item) || [];
-    // console.log(this.value.length);
     localStorage.setItem("counter", this.value.length)
     
     return this.value.length

@@ -131,10 +131,8 @@ export class InvoiceComponent implements OnInit {
     );
     if (selectedProduct) {
       item.mainProduct = { ...selectedProduct };
-      console.log(item.mainProduct);
       
       item.mainProduct.price = selectedProduct.price;
-      console.log(item.mainProduct.price);
       
       item.suggestedProductOne = { ...selectedProduct };
       item.suggestedProductTwo = { ...selectedProduct };
@@ -146,13 +144,11 @@ export class InvoiceComponent implements OnInit {
 
   
   onMainProductSelected(selectedProduct: InvoiceItem, index: number) {
-    console.log(selectedProduct.mainProduct);
     
     // When an item name is selected, find the corresponding product object from suggestedProducts
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.mainProduct.name);
 
     if (product) {
-      console.log(product);
       
       // If the product is found, update the item properties based on the selected product
       this.invoice.items[index].mainProduct.price = product.price;
@@ -162,13 +158,11 @@ export class InvoiceComponent implements OnInit {
     }
   }
   onSuggestedItem1Selected(selectedProduct: InvoiceItem, index: number) {
-    console.log(selectedProduct.mainProduct);
     
     // When an item name is selected, find the corresponding product object from suggestedProducts
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.suggestedProductOne.name);
 
     if (product) {
-      console.log(product);
       
       // If the product is found, update the item properties based on the selected product
       this.invoice.items[index].suggestedProductOne.price = product.price;
@@ -178,13 +172,11 @@ export class InvoiceComponent implements OnInit {
     }
   }
   onSuggestedItem2Selected(selectedProduct: InvoiceItem, index: number) {
-    console.log(selectedProduct.suggestedProductTwo);
     
     // When an item name is selected, find the corresponding product object from suggestedProducts
     const product = this.suggestedProducts.find(p => p.name === selectedProduct.suggestedProductTwo.name);
 
     if (product) {
-      console.log(product);
       
       // If the product is found, update the item properties based on the selected product
       this.invoice.items[index].suggestedProductTwo.price = product.price;
@@ -199,7 +191,6 @@ export class InvoiceComponent implements OnInit {
 
   updateTotalInItemsArray(item: Product) {
     item.total = item.quantity && item.price ? item.quantity * item.price : 0;
-    console.log(item.total);
     
     return item.total;
   }

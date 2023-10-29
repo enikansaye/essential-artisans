@@ -167,6 +167,7 @@ export class QuoteComponent implements OnInit {
   mainProductName : any
   onClickViewInvoce(data: any) {
     console.log(data);
+
     
     (this.getInvoiceByIdForm.value.invoiceId = data.invoiceId),
       this.api
@@ -195,12 +196,10 @@ export class QuoteComponent implements OnInit {
           this.jobDescription = this.getInvoiceId.jobDescription;
           this.allTotal = this.getInvoiceId.invoiceTotal;
           this.serviceItemsDetails = this.getInvoiceId.serviceItems;
-          console.log(this.serviceItemsDetails);
           
           for(let item of this.serviceItemsDetails){
             this.mainProductName = item.mainProduct.name
-            console.log(item.mainProduct);
-            console.log(this.mainProductName);
+            
 
 
           }
@@ -237,8 +236,7 @@ export class QuoteComponent implements OnInit {
     // data = this.serviceItemsDetails;
     this.serviceItemsDetailsiId = this.serviceItemsDetails.serviceItemId;
 
-    let index = this.serviceItemsDetails.findIndex((x: any) => {console.log(x);
-    });
+    let index = this.serviceItemsDetails.findIndex((x: any) => { });
 
     // let itemsDto = [];
 
@@ -270,8 +268,7 @@ export class QuoteComponent implements OnInit {
       invoiceItemsDto: this.hello,
       discount: this.discountPercentage
     };
-console.log(invoiceEdit);
-console.log(this.hello);
+
 
     // this.InvoiceObject.invoiceId = this.getInvoiceId.invoiceId;
     // this.InvoiceObject.artisanCharge = this.getInvoiceId.artisanCharge;
@@ -288,7 +285,7 @@ console.log(this.hello);
 
       },
       error: (err: any) => {
-        console.log(err);
+        
         
         
         if (err.error && err.error.message) {
@@ -307,7 +304,6 @@ console.log(this.hello);
   }
   updateTotalInItemsArray(item: Product) {
     item.total = item.quantity && item.price ? item.quantity * item.price : 0;
-    console.log(item.total);
     
     return item.total;
   }

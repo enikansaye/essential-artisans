@@ -59,7 +59,6 @@ export class ResetpasswordComponent implements OnInit {
 // this.model.token = this.route.snapshot.queryParams['token'];
 
 
-// console.log(this.model.token);
 
        
 
@@ -88,7 +87,6 @@ onSubmit(data: any) {
     const forgetPasswordObserver = {
       next: (res: any) => {
         this.model.token = this.route.snapshot.queryParams['token'];
-    console.log(this.model.token);
     
            this.toastr.success('Password Changed');
              this.router.navigate(['/signin']);      },
@@ -96,7 +94,6 @@ onSubmit(data: any) {
         this.message = err.error
         // this.model.token = this.route.snapshot.queryParams['token'];
 
-        console.log(this.resetForm.value.token);
 
       this.toastr.warning('Unable to change password');    
       }

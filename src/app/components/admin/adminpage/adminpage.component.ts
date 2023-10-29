@@ -117,7 +117,8 @@ quotePage: any;
 
     // this.invoiceForm.disable();
 
-    // this.getAllUser();
+    this.getAllUser();
+    this.getAllArtisan();
     // this.getAllPendingArtisan();
 
     // this.getQouteByAdmin();
@@ -128,7 +129,6 @@ quotePage: any;
 
     // this.getAllUser()
     this.artisanLength
-    console.log(this.artisanLength);
     
     this.approveForm = this.formBuilder.group({
       invoiceId: 0,
@@ -433,17 +433,14 @@ quotePage: any;
 
   getAllOrder() {
     this.adminApi.getOrder().subscribe((res: any) => {
-      console.log(res);
       
       this.order = res.length;
-      console.log(this.order);
       
       // this.totalLength = res.length;
     });
   }
   getAllTotalSales() {
     this.adminApi.getTotalSales().subscribe((res: any) => {
-      console.log(res);
       
       this.totalSales = res;
     });
@@ -471,6 +468,15 @@ quotePage: any;
       this.toastr.success('You read this message');
 
       this.signalRService.getNotification();
+    });
+  }
+  getAllUser() {
+    this.adminApi.getUser().subscribe((res: any) => {
+      this.userData = res;
+
+      this.totalRecord = res.length;
+      this.userLength = res.length;
+      return this.userData.reverse();
     });
   }
 }

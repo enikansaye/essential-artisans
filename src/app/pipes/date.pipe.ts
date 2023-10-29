@@ -21,10 +21,8 @@ export class DatePipe implements PipeTransform {
   //   // si ambos arreglos son correctos entonces se crea el nuevo arrego
   //   for (const filteredRow of row) {
   //     let a = new Date(filteredRow.fecha);
-  //     console.log(a);
     
   //     if (a > date1 && a <= date2) {
-  //       console.log("asd", filteredRow);
   //       resultadoFiltro.push(filteredRow);
   //     }
   //   }
