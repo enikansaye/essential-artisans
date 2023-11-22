@@ -7,19 +7,17 @@
 # Only exists if Bazel was run
 /bazel-out
 
-# i commented this out to know if error pesist
-# /allurl
+ /allurl
 
 # dependencies
 /node_modules
 
-# i commented this out to know if error pesist
 
 # profiling files
-# chrome-profiler-events*.json
+chrome-profiler-events*.json
 
 # IDEs and editors
-.idea/
+/.idea
 .project
 .classpath
 .c9/
